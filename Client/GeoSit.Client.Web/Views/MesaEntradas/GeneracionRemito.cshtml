@@ -1,0 +1,113 @@
+﻿<link href="~/Content/dataTables.bootstrap.css" rel="stylesheet" />
+<link href="~/Content/GeneracionRemito.css" rel="stylesheet" />
+<link href="~/Content/formValidation.min.css" rel="stylesheet" />
+
+<div class="modal fade theme_new" id="modal-GeneracionRemito" tabindex="-2" data-backdrop="static" role="dialog" aria-labelledby="modal-windowLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div id="scroll-content-generacionRemito" class="scroll-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="lblGeneracionRemito">@ViewBag.Title</h3>
+                    <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+                </div>
+                <div class="modal-body generacionRemito-body">
+                    <div id="generacionRemito-content" class="body-content">
+
+                        <div class="form-horizontal">
+                            @* @Html.Hidden("hdnSectorEmisor", (string)ViewBag.sectorEmisor)*@
+                            <div class="form-group">
+                                <label id="lblFechaDesde" class="col-xs-3 control-label text-muted text-right">
+                                    Fecha desde:
+                                </label>
+                                <div class="col-xs-3">
+                                    <div class="input-group date input-group-sm">
+                                        @Html.TextBox("txtFechaDesde", null, new { @class = "form-control desde", @maxlength = "10", @readonly = "readonly" })
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <label id="lblFechaHasta" class="col-xs-2 control-label text-muted text-right">
+                                    Fecha hasta:
+                                </label>
+                                <div class="col-xs-3">
+                                    <div class="input-group date input-group-sm">
+                                        @Html.TextBox("txtFechaHasta", null, new { @class = "form-control hasta", @maxlength = "10", @readonly = "readonly" })
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label id="lblDesgloseDestino" class="col-xs-3 control-label text-muted text-right">
+                                    Sector Destino:
+                                </label>
+                                <div class="col-xs-8">
+                                    @Html.DropDownList("cboSectorDestino", (IEnumerable<SelectListItem>)ViewData["sectoresDestinos"], new { @class = "form-control input-sm" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-4 pull-right text-right">
+                                    <button class="btn btn-secondary" id="btnConsultar" title="Consultar">
+                                        <span>Consultar</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-12 remove-padding">
+                                    <div class="tabla-sin-botones">
+                                        <table id="Grilla_movimientos" class="table table-striped table-bordered table-responsive">
+                                            <thead>
+                                                <tr>
+                                                    <th class="hidden">Id</th>
+                                                    <th>Fecha</th>
+                                                    <th>Tr&aacute;mite</th>
+                                                    <th>Iniciador</th>
+                                                    <th>Estado</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-xs-4 pull-right">
+                    <button class="btn btn-secondary" id="btnGenerarRemito" title="Generar">
+                        <span>Generar</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal theme_new fade mensaje" id="mensajeModalGeneracionRemito" tabindex="-2" role="dialog" aria-labelledby="TituloAdvertencia" aria-hidden="true" style="z-index:99999999;" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <input type="hidden" id="TipoAdvertencia" value="">
+                <h3 class="modal-title col-xs-10" id="TituloAdvertencia">Titulo</h3>
+                <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+            </div>
+            <div class="modal-body">
+                <div id="MensajeAlerta" class="alert alert-warning alert-dismissible" role="alert">
+                    <p id="DescripcionAdvertencia">Está a punto de DESACTIVAR al usuario Perez, Juan <br>Está seguro de continuar?</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/jquery.dataTables.min.js"></script>
+<script src="~/Scripts/dataTables.bootstrap.js"></script>
+<script src="~/Scripts/dataTables.select.min.js"></script>
+<script src="~/Scripts/formValidation.min.js"></script>
+<script src="~/Scripts/bootstrapValidation.min.js"></script>
+<script src="~/Scripts/MesaEntradas/generacionremito.js"></script>

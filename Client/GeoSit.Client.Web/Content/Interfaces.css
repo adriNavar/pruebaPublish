@@ -1,0 +1,206 @@
+﻿.modal-title{
+    color:#ffffff;
+}
+
+.modal-footer{
+
+    background-color:#ffffff !important;
+
+}
+.modal-header{
+
+    background-color:#1698C0 !important;
+
+}
+.borde-derecho {
+    border-color: #999;
+    border-right-width: 1px;
+    border-right-style: solid;
+}
+
+.borde-izquierdo {
+    border-color: #999;
+    border-left-width: 1px;
+    border-left-style: solid;
+}
+
+.borde-superior {
+    border-color: #999;
+    border-top-width: 1px;
+    border-top-style: solid;
+}
+
+.borde-inferior {
+    border-color: #999;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+}
+
+.centrado {
+    text-align: center;
+}
+
+.subrayado {
+    border: 0;
+    outline: 0;
+    background: transparent;
+    border-bottom: 1px solid black;
+    background: url(images/MapasTematicos/icons/dark/16/editar.png) no-repeat scroll right;
+    text-align: center;
+}
+
+.btnSinBorde{
+    border-color:transparent;
+    background-color:transparent;
+}
+
+.btnConBorde{
+    background-color:transparent;
+    border-color:black;
+}
+
+.sin-padding{
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.btn-lg {
+  padding: 0px 0px;
+  font-size: 18px;
+  line-height: 1.33;
+  border-radius: 0px;
+}
+
+.boton-buscar{
+    height:32px;
+    width:32px;
+    max-height:32px;
+    min-height:32px;
+    max-width:32px;
+    min-width:32px;
+    background-repeat:no-repeat;
+    background-image: url("../Content/images/Seguridad/icons/blue/32/buscar.png");
+    border:none;
+    background-color: transparent;
+}
+
+.boton-Seleccionar{
+    height:32px;
+    width:32px;
+    max-height:32px;
+    min-height:32px;
+    max-width:32px;
+    min-width:32px;
+    background-repeat:no-repeat;
+    background-image: url("../Content/images/Seguridad/icons/blue/32/checkbox.png");
+    border:none;
+}
+
+.boton-grabar {
+    height: 32px;
+    width: 32px;
+    max-height: 32px;
+    min-height: 32px;
+    max-width: 32px;
+    min-width: 32px;
+    background-repeat: no-repeat;
+    background-image: url("../Content/images/Seguridad/icons/blue/32/save.png");
+    border: none;
+}
+
+.boton-ok {
+    height: 32px;
+    width: 32px;
+    max-height: 32px;
+    min-height: 32px;
+    max-width: 32px;
+    min-width: 32px;
+    background-repeat: no-repeat;
+    background-image: url("../Content/images/Seguridad/icons/blue/32/checkbox.png");
+    border: none;
+}
+.btn_abilitado {
+    color: black;
+    cursor: pointer;
+}
+
+.btn_desabilitado {
+    color: #b5b3b3;
+    cursor: default;
+}
+
+.btn_eliminar_desabilitado {
+    color: #b5b3b3;
+    cursor: default;
+}
+
+.btn_modificar_desabilitado {
+    color: #b5b3b3;
+    cursor: default;
+}
+
+.letraNegra{
+    color:black;
+}
+
+.flecha-desactivada {
+    display:none;
+   
+}
+.flecha-activada {
+    margin-left: 3px;
+    color: black;
+    cursor: pointer;
+}
+
+.panel-desactivado {
+    background-color:#b5b3b3 !important;
+}
+.panel-activo {
+    /*background-color:#337AB7 !important;*/
+    background-color:#1698C0 !important;
+}
+
+.texto-centrado{
+
+    padding-top:3%;
+}
+
+.flecha-activada {
+    margin-left: 3px;
+    color: white;
+    cursor: pointer;
+}
+
+.borde-derecho {
+    border-color: #ddd;
+    border-right-width: 1px;
+    border-right-style: solid;
+}
+
+.borde-izquierdo {
+    border-color: #ddd;
+    border-left-width: 1px;
+    border-left-style: solid;
+}
+
+.borde-superior {
+    border-color: #ddd;
+    border-top-width: 1px;
+    border-radius:5px;
+    border-top-style: solid;
+}
+
+.borde-inferior {
+    border-color: #ddd;
+    border-bottom-width: 1px;
+    border-radius:5px;
+    border-bottom-style: solid;
+}
+
+#Grilla_parcelas tr:hover td img{
+    display:inline !important;
+}
+#Grilla_partidas tr:hover td img{
+    display:inline  !important;
+}

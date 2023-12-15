@@ -1,0 +1,53 @@
+﻿@using System.Configuration
+@using System.Web.Script.Serialization
+@using GeoSit.Client.Web.Models
+@model SearchViewModel
+@{
+    ViewBag.Title = "Index";
+}
+<div class="container">
+    <h2>Buscar</h2>
+    @using (Html.BeginForm("Perform", "Search", FormMethod.Post, new { @class = "form", role = "form" }))
+    {
+        @Html.TextBoxFor(m => m.Text, new { @class = "form-control" })
+        @Html.CheckBoxFor(m => m.UseMaxDisjunction, new { @class = "form-control hidden" })
+    }
+    <footer><p class="text-muted">@ViewBag.Lema</p></footer>
+</div>
+@functions{
+    public string PerformSearch()
+    {
+        var client = new WebClient();
+        var jss = new JavaScriptSerializer();
+        string scriptBody = "var SearchManager = {};";
+        string host = ConfigurationManager.AppSettings["SearchHost"];
+        string schema = ConfigurationManager.AppSettings["Schema"];
+        string category = ConfigurationManager.AppSettings["Category"];
+        string defaultCategory = ConfigurationManager.AppSettings["DefaultCategory"];
+        string includes = ConfigurationManager.AppSettings["Includes"];
+
+        @Model.Schema = schema;
+        @Model.Includes = includes;
+        @Model.Category = category;
+        @Model.DefaultCategory = defaultCategory;
+        byte[] data = client.DownloadData(host + "/?q=" + @Model.Text);
+        var buffer = @Model.ProcessData(@Model, data);
+        var dict = buffer as Dictionary<string, object>;
+        if (dict != null)
+        {
+            if (@Model.AutoSuggest)
+            {
+                scriptBody += "SearchManager.suggest = true;";
+                scriptBody += "SearchManager.suggesterClass = " + @Model.SuggesterClass + ";";
+                scriptBody += "SearchManager.suggesterTemplate = " + @Model.SuggesterTemplate + ";";
+            }
+            if (@Model.HighlightStrategy != null)
+            {
+                scriptBody += "SearchManager.highlighter = $.parseJSON(" + jss.Serialize(@Model.HighlightStrategy) + ")";
+            }
+            scriptBody += "SearchManager.opportunityLost = 'The ballast should be flushed for this to work.'";
+        }
+        return scriptBody;
+        // Hint: Review closely the SoC principle... (just kidding ;-D)
+    }
+}

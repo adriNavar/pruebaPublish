@@ -1,0 +1,169 @@
+﻿@model GeoSit.Client.Web.Models.Inspecciones.AdministracionInspectoresModel
+
+<link href="~/Content/dataTables.bootstrap.css" rel="stylesheet" />
+<link href="~/Scripts/bootstrap-calendar/css/calendar.css" rel="stylesheet">
+<link href="~/Content/ObrasParticulares/RegistroInspectores.css" rel="stylesheet" />
+
+<div class="modal fade theme_new" id="modal-window-inspectores" tabindex="-1" data-backdrop="static" role="dialog" aria-labelledby="modal-windowLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id="registroInspectoresModal" class="scroll-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="lblModal">@Resources.Recursos.AdministracionInspectores</h3>
+                    <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+                </div>
+                @using (Html.BeginForm("Inspector_Guardar", "ObrasParticulares", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { id = "form", role = "form", novalidate = "" }))
+                {@Html.AntiForgeryToken()
+                <div class="modal-body inspectores-body">
+                    <input type="hidden" id="editionMode" value="false" />
+                    @Html.HiddenFor(model => model.idInspector, new { @class = "form-control center-block", @style = "width:74%; display:inline;" })
+                    <input type="hidden" id="esPlanificador" value="N" />
+                    <input type="hidden" id="puedeProgramar" value="true" />
+                    <input type="hidden" id="idPanel" value="1" />
+                    @Html.HiddenFor(model => model.TiposInspeccionesSelected, new { @class = "form-control center-block", @style = "width:74%; display:inline;" })
+                    <div id="body-content" class="inspectores-content body-content">
+                        <div class="panel-group accordion" id="accordion-inspectores">
+                            <div class="accordion-section">
+                                <div class='panel-heading bg-primary main-heading' id='headingInspectores'>
+                                    <a data-toggle='collapse' data-parent='#accordion-inspectores' href='#collapseInspectores' aria-expanded='true'
+                                       aria-controls='collapseInspectores'>
+                                        <div class='panel-title'>
+                                            @Resources.Recursos.InspectoresRegistrados
+                                            <i class="fa"></i>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div id='collapseInspectores' class='panel-collapse collapse in main-collapse' aria-labelledby='headingInspectores'>
+                                    <div class="panel-body">
+                                        <div class="col-md-11">
+                                            <h5>@Resources.Recursos.Inspectores</h5>
+                                            <table id="Grilla_Inspectores" class="table table-striped table-bordered table-responsive" cellspacing="0" style="width:100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="rowId" width="50%">@Resources.Recursos.Identificador</th>
+                                                        <th class="rowId" width="50%">@Resources.Recursos.Identificador</th>
+                                                        <th width="50%">@Resources.Recursos.Nombre</th>
+                                                        <th width="45%">@Resources.Recursos.Planificador</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @{foreach (var item in Model.Inspectores)
+                                                        {
+                                                            long id = item.InspectorID;
+                                                            string nombres = item.Usuario.Apellido + ' ' + item.Usuario.Nombre;
+                                                            string planificador = item.EsPlanificador;
+                                                            long idUsuario = item.UsuarioID;
+                                                            {
+                                                                <tr>
+                                                                    <td width="5%">@id</td>
+                                                                    <td width="5%">@idUsuario</td>
+                                                                    <td width="50%">@nombres</td>
+                                                                    <td width="50%">@planificador</td>
+                                                                </tr>
+                                                                continue;
+                                                            };
+                                                        }}
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                        <div class="col-xs-1" id="inspectores-controls">
+                                            <dl>
+                                                <dt><span id="addInspector" class="fa fa-plus-circle fa-2x cursor-pointer" aria-hidden="true"></span></dt>
+                                                <dt><span id="modInspector" class="fa fa-pencil fa-2x cursor-pointer boton-deshabilitado" aria-hidden="true"></span></dt>
+                                                <dt><span id="delInspector" class="fa fa-minus-circle fa-2x cursor-pointer boton-deshabilitado" aria-hidden="true"></span></dt>
+                                            </dl>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-section">
+                                <div class='panel-heading bg-primary main-heading panel-deshabilitado' id='headingCaracteristicas'>
+                                    <a data-toggle='collapse' data-parent='#accordion-inspectores' href='#collapseCaracteristicas' aria-expanded='true'
+                                       aria-controls='collapseCaracteristicas'>
+                                        <div class='panel-title'>
+                                            @Resources.Recursos.CaracteristicasInspector
+                                            <i class="fa"></i>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div id='collapseCaracteristicas' class='panel-collapse collapse in main-collapse' aria-labelledby='headingCaracteristicas'>
+                                    <div class="panel-body">
+                                        <div class="col-md-6">
+                                            <h5>@Resources.Recursos.Usuario</h5>
+                                            @Html.DropDownListFor(model => model.SelectedUsuario, Model.cmbUsuarios, new { @class = "form-control" })<br />
+                                            <img id="swich_Cambio_Clave" title="Planificador" style="cursor:pointer" class="escala_img" src="~/Content/images/Seguridad/icons/blue/32/no.activo.png" /> @Resources.Recursos.Planificador
+                                        </div>
+                                        <div class="col-md-6">
+                                            <h5>@Resources.Recursos.TipoInspeccion</h5>
+                                            <table id="Grilla_TiposInspecciones" class="table table-striped table-bordered table-responsive" cellspacing="0" style="width:100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="rowId" width="5%">@Resources.Recursos.Identificador</th>
+                                                        <th width="100%">@Resources.Recursos.TipoInspeccion</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @{foreach (var item in Model.TiposInspecciones)
+                                                        {
+                                                            long id = item.TipoInspeccionID;
+                                                            string nombres = item.Descripcion;
+                                                            {
+
+                                                                <tr>
+                                                                    <td width="5%">@id</td>
+                                                                    <td width="100%">@nombres</td>
+                                                                </tr>
+
+                                                                continue;
+                                                            };
+
+                                                        }}
+                                                </tbody>
+                                            </table>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" id="Panel_Botones">
+                    <div class="col-xs-4 pull-right">
+                        <span aria-hidden="true" aria-controls='button' data-placement="right" title="Guardar" data-original-title="Guardar" id="btnGrabar" class="fa fa-save fa-2x boton-deshabilitado cursor-pointer"></span>
+                        <span aria-hidden="true" aria-controls='button' data-placement="right" title="Cancelar" data-original-title="Cancelar" id="btnCerrar" class="fa fa-undo fa-2x boton-deshabilitado cursor-pointer"></span>
+                    </div>
+                </div>
+            }
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Información-->
+<input type="hidden" id="alert_message_btnSi_result">
+<input type="hidden" id="alert_message_btnNo_result">
+<div class="modal fade theme_new mensaje" id="ModalInfoInspector" tabindex="-3" role="dialog" aria-labelledby="TituloInfo" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="TituloInfoInspector">Titulo</h3>
+                <span  id="btnCancelarAlert" btnCancelarAlertaria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+            </div>
+            <div class="modal-body">
+                <div id="MensajeInfoInspector" class="alert alert-info alert-dismissible" role="alert">
+                    <p id="DescripcionInfoInspector">Descripcion de la informacion</p>
+                </div>
+            </div>
+            <div class="modal-footer" id="botones-modal-info">
+                <div class="col-xs-4 pull-right">
+                    <span id="btnAceptarAlert" aria-hidden="true" data-dismiss="modal" data-placement="right" title="Aceptar" data-original-title="Aceptar" class="fa fa-check-circle light-blue fa-3x cursor-pointer"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="~/Scripts/bootstrap-calendar/components/underscore/underscore-min.js"></script>
+<script type="text/javascript" src="~/Scripts/bootstrap-calendar/js/language/es-ES.js"></script>
+<script type="text/javascript" src="~/Scripts/jquery.dataTables.js"></script>
+<script type="text/javascript" src="~/Scripts/ObrasParticulares/RegistroInspectores.js"></script>
+<script type="text/javascript" src="~/Scripts/jquery.numeric.min.js"></script>

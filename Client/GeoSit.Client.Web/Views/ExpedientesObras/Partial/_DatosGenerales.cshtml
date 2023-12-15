@@ -1,0 +1,14 @@
+﻿@model GeoSit.Client.Web.Models.ExpedientesObras.DatosGeneralesViewModel
+
+<div class="form-group row">
+    <label class="control-label col-xs-1">PH</label>
+    <div class="col-xs-2">
+        <div class="switch">
+            @Html.CheckBoxFor(model => model.Ph, new { @class = "cmn-toggle cmn-toggle-round-flat" })
+        </div>
+    </div>
+    <label class="control-label col-xs-7 col-sm-4">Permisos Provisorios de Obra</label>
+    <div class="col-xs-2">
+        @Html.CheckBoxFor(model => model.PermisosProvisorios, new { @class = "cmn-toggle cmn-toggle-round-flat" })
+    </div>
+</div>

@@ -1,0 +1,91 @@
+﻿@model GeoSit.Data.BusinessEntities.ObrasPublicas.TipoTramite
+@{
+    ViewBag.Title = "Asignacion Permisos";
+}
+
+<link href="~/Content/dataTables.bootstrap.css" rel="stylesheet" />
+<link href="~/Content/abmTramite.css" rel="stylesheet" />
+<link href="~/Content/TramitesPermisos.css" rel="stylesheet" />
+
+<div class="modal fade" id="modal-window-tramite-permisos" tabindex="-2" data-backdrop="static" role="dialog" aria-labelledby="modal-windowLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="permisos-content">
+            <div id="scroll-content-tramite-permisos">
+                <div class="modal-header">
+                    <h3 class="modal-title col-lg-11 col-xs-11 col-sm-11 col-md-11" id="lblModalTramitePermisos">@ViewBag.Title</h3>
+                    <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer" style="padding-top:3px;" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+                </div>
+                @*Fin de modal-header*@
+                @*Inicio de accordion*@
+                <div class="panel-group accordion tramite-datos" id="accordion-tramite-permisos">
+                    <div id="div_table_permisos">
+                        <div class="permisos-body modal-body" id="Panel_Grilla_Tramites_Permisos">
+                            <div class="resultados col-xs-11">
+                                <table id="Grilla_Tramites_Permisos" class="table table-striped table-bordered table-responsive">
+                                    <thead>
+                                        <tr>
+                                            <th class="hide"></th>
+                                            <th> Permiso</th>
+                                            <th> Estado</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @*Fin accordion*@
+            </div>
+        </div>
+        @*Fin de modal-body*@
+        <div class="modal-footer" style="background-color:#ffffff; height:50px;" id="Panel_Botones_Permisos">
+            <img id="btnGrabarPermiso" class="" title="Aceptar" src="~/Content/images/Seguridad/icons/blue/32/checkbox.png" style="cursor:pointer;">&ensp;&ensp;
+            <img id="btnCancelarPermiso" data-dismiss="modal" title="Cancelar" src="~/Content/images/Seguridad/icons/blue/32/cancelar.png" style="cursor:pointer;">
+        </div>
+        @*Botones Grabar y Cancelar*@
+    </div>
+</div>
+<!-- Modal Información-->
+<div class="modal fade" id="ModalInfoTramite-Permiso" tabindex="-1" role="dialog" aria-labelledby="TituloInfo-Permiso" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title col-lg-11 col-xs-11 col-sm-11 col-md-11" id="TituloInfoTramite-Permiso" style="color:#000000;">Titulo</h4>
+                <br />
+            </div>
+            <div class="modal-body">
+                <div id="MensajeInfoTramite-Permiso" class="alert alert-success" role="alert">
+                    <p id="DescripcionInfoTramite-Permiso">Descripcion de la informacion</p>
+                </div>
+            </div>
+            <div class="modal-footer" style="background-color:#ffffff;" id="Panel_Botones">
+                <img id="btnCancelarAdvertenciaTramite-Permiso" data-dismiss="modal" title="Confirmar" src="~/Content/images/Seguridad/icons/blue/32/checkbox.png" style="cursor:pointer;">
+            </div>
+        </div>
+    </div>
+</div>
+     @*Modal Advertencia
+    <div class="modal fade" id="ModalAdvertenciaTramite" tabindex="-2" role="dialog" aria-labelledby="TituloAdvertencia" aria-hidden="true" data-backdrop="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title col-lg-11 col-xs-11 col-sm-11 col-md-11" id="TituloAdvertenciaTramite" style="color:#000000;">Titulo</h4>
+                    <br />
+                </div>
+                <div class="modal-body">
+                    <div id="MensajeAlertaTramite" class="alert alert-warning alert-dismissible" role="alert">
+                        <strong>Atención!</strong><br />
+                        <p id="DescripcionAdvertenciaTramite">Está a punto de DAR DE BAJA a la persona<br />Está seguro de continuar?</p>
+                    </div>
+                </div>
+                <div class="modal-footer" style="background-color:#ffffff;" id="Panel_Botones">
+                    <img id="btnGrabarAdvertenciaTramite" class="" title="Aceptar" src="~/Content/images/Seguridad/icons/blue/32/checkbox.png" style="cursor:pointer;">&ensp;&ensp;
+                    <img id="btnCancelarAdvertenciaTramite" data-dismiss="modal" title="Cancelar" src="~/Content/images/Seguridad/icons/blue/32/cancelar.png" style="cursor:pointer;">
+                </div>
+            </div>
+        </div>
+    </div>*@
+
+<script src="~/Scripts/jquery.form.js"></script>
+<script src="~/Scripts/jquery.dataTables.js"></script>
+<script src="~/Scripts/Tramites/TramitePermisos.js"></script>

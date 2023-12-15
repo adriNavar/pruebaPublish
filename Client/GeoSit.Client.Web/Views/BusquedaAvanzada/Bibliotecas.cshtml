@@ -1,0 +1,218 @@
+﻿@using GeoSit.Client.Web.Models
+@model BibliotecasViewModel
+@{
+    int idx = 0;
+}
+
+<link href="~/Content/theme_new.css" rel="stylesheet" />
+<link href="~/Content/bibliotecas.css" rel="stylesheet" />
+
+
+<div class="modal fade theme_new biblioteca" id="modal-bibliotecas-ba" tabindex="-1" data-backdrop="static" role="dialog" aria-labelledby="modal-windowLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="scroll-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Búsqueda Avanzada</h3>
+                    <span aria-hidden="true" class="fa fa-close white fa-2x cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+                    <a href='@Url.Action("BuscarAyuda", "BusquedaAvanzada")'>
+                        <span id="ayuda" data-placement="right" title="Ayuda" data-original-title="Ayuda" class="fa fa-question fa-2x white cursor-pointer img-responsive pull-right" style="margin-right: 10px;"></span>
+                    </a>
+                </div>
+                <div class="modal-body biblioteca-body">
+                    <div id="biblioteca-content" class="body-content">
+                        <form class="form-horizontal">
+                            <div class="form-group">
+                                <div class="col-xs-10">
+                                    <div class="input-group">
+                                        <input type="text" value="" class="form-control" id="filtro-biblioteca" placeholder="Filtrar...">
+                                        <span class="input-group-addon cursor-pointer">
+                                            <span id="clearSearch" title="Limpiar" class="fa fa-eraser"></span>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-xs-2">
+                                    <div class="row">
+                                        <div class="col-xs-6 text-center" style="padding: 3px 0;">
+                                            <span id="btnCrearBiblioteca" title="Nuevo"
+                                                  data-original-title="Nueva"
+                                                  class="fa fa-plus-circle fa-2x cursor-pointer light-blue"></span>
+                                        </div>
+                                        <div class="col-xs-6 text-center" style="padding: 3px 0;">
+                                            <span id="btnSubirBiblioteca" title="Subir"
+                                                  data-original-title="Subir"
+                                                  class="fa fa-upload fa-2x cursor-pointer light-blue"></span>
+
+                                            <input id='subirBA' type='file' style='display:none' />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        <div class="panel-group accordion" id="accordion-biblioteca-ba" style="margin-bottom:0;">
+                            <div class="accordion-section">
+                                <div class='panel-heading bg-primary main-heading' role='region' id='headingPublicas'>
+                                    <a data-toggle='collapse' data-parent='#accordion-biblioteca-ba' href='#collapsePublicas'
+                                       aria-expanded='false' aria-controls='collapsePublicas' class="collapsed">
+                                        <div class='panel-title'>
+                                            <span class="fa fa-unlock" style="margin-right:7px;"></span>
+                                            @Resources.Recursos.Publicas
+                                            <i class="fa"></i>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div id='collapsePublicas' class='panel-collapse collapse main-collapse' aria-expanded='false' aria-labelledby='headingPublicas'>
+                                    <div class="container-fluid" style="overflow: hidden !important;">
+                                        <div class="panel-group accordion inner-accordion" id="accordion-bibliotecas-publicas" style="margin-bottom:0;">
+                                            @foreach (var biblioteca in (Model ?? new BibliotecasViewModel { bibliotecasPublicas = new List<BibliotecasItemModel>() }).bibliotecasPublicas)
+                                            {
+                                                idx++;
+                                                string bliblioid = string.Format("headingPublicas_{0}", idx);
+                                                string containerid = string.Format("collapsePublicas_{0}", idx);
+                                                <div class="accordion-section">
+                                                    <div class='panel-heading bg-secondary secondary-heading' role='region' id='@bliblioid'>
+                                                        <a data-toggle='collapse' data-parent='#accordion-bibliotecas-publicas' href='#@containerid' aria-expanded='false'
+                                                           aria-controls='@containerid' class="collapsed">
+                                                            <div class='panel-title'>
+                                                                @biblioteca.ComponenteNombre
+                                                                <i class="fa"></i>
+                                                            </div>
+                                                        </a>
+                                                    </div>
+                                                    <div id='@containerid' class='panel-collapse collapse main-collapse' aria-expanded='false' aria-labelledby='@bliblioid'>
+                                                        <div class="container-fluid">
+                                                            <ul class="bibliotecas">
+                                                                @foreach (var item in biblioteca.bibliotecas)
+                                                                {
+                                                                    <li data-config-id="@item.ConfiguracionId" class="seleccionable">
+                                                                        <div class="row">
+                                                                            <div class="col-lg-8 biblioteca-nombre">
+                                                                                @item.Nombre
+                                                                            </div>
+                                                                            <div class="col-lg-4 pull-right botones-accion">
+                                                                                <span class="fa fa-info-circle fa-2x infobtn" title="@item.Descripcion"></span>
+                                                                                <span class="fa fa-download fa-2x exportarbtn" title="Descargar"></span>
+                                                                                @if (ViewBag.PublicarDespublicarEnabled)
+                                                                                {
+                                                                                    <span class="fa fa-lock fa-2x compartirbtn @(item.Visibilidad == 1 ? "btnActivoColor" : "")" title="Descompartir"></span>
+                                                                                }
+                                                                                @if (ViewBag.ElimnarPublicaEnabled)
+                                                                                {
+                                                                                    <span class="fa fa-times-circle fa-2x eliminarbtn" title="Eliminar"></span>
+                                                                                }
+                                                                            </div>
+                                                                        </div>
+                                                                    </li>
+                                                                }
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-section">
+                                <div class='panel-heading bg-primary main-heading' role='region' id='headingPrivadas'>
+                                    <a data-toggle='collapse' data-parent='#accordion-biblioteca-ba' href='#collapsePrivadas'
+                                       aria-expanded='false' aria-controls='collapsePrivadas' class="collapsed">
+                                        <div class='panel-title'>
+                                            <span class="fa fa-lock" style="margin-right:7px;"></span>
+                                            @Resources.Recursos.Privadas
+                                            <i class="fa"></i>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div id='collapsePrivadas' class='panel-collapse collapse main-collapse' aria-expanded='false' aria-labelledby='headingPrivadas'>
+                                    <div class="container-fluid" style="overflow: hidden !important;">
+                                        <div class="panel-group accordion inner-accordion" id="accordion-bibliotecas-privadas" style="margin-bottom:0;">
+                                            @{
+                                                idx = 0;
+                                            }
+                                            @foreach (var biblioteca in (Model ?? new BibliotecasViewModel { bibliotecasPrivadas = new List<BibliotecasItemModel>() }).bibliotecasPrivadas)
+                                            {
+                                                idx++;
+                                                string bliblioid = string.Format("headingPrivadas_{0}", idx);
+                                                string containerid = string.Format("collapsePrivadas_{0}", idx);
+                                                <div class="accordion-section">
+                                                    <div class='panel-heading bg-secondary secondary-heading' role='region' id='@bliblioid'>
+                                                        <a data-toggle='collapse' data-parent='#accordion-bibliotecas-privadas' href='#@containerid' aria-expanded='false'
+                                                           aria-controls='@containerid' class="collapsed">
+                                                            <div class='panel-title'>
+                                                                @biblioteca.ComponenteNombre
+                                                                <i class="fa"></i>
+                                                            </div>
+                                                        </a>
+                                                    </div>
+                                                    <div id='@containerid' class='panel-collapse collapse main-collapse' aria-expanded='false' aria-labelledby='@bliblioid'>
+                                                        <div class="container-fluid">
+                                                            <ul class="bibliotecas">
+                                                                @foreach (var item in biblioteca.bibliotecas)
+                                                                {
+                                                                    <li data-config-id="@item.ConfiguracionId" class="seleccionable">
+                                                                        <div class="row">
+                                                                            <div class="col-lg-8 biblioteca-nombre">
+                                                                                @item.Nombre
+                                                                            </div>
+                                                                            <div class="col-lg-4 pull-right botones-accion">
+                                                                                <span class="fa fa-info-circle fa-2x infobtn" title="@item.Descripcion"></span>
+                                                                                <span class="fa fa-download fa-2x exportarbtn" title="Descargar"></span>
+                                                                                @if (ViewBag.PublicarDespublicarEnabled)
+                                                                                {
+                                                                                    <span class="fa fa-unlock fa-2x compartirbtn @(item.Visibilidad == 1 ? "btnActivoColor" : "")" title="Compartir"></span>
+                                                                                }
+                                                                                <span class="fa fa-times-circle fa-2x eliminarbtn" title="Eliminar"></span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </li>
+                                                                }
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    @using (Ajax.BeginForm("GetResumenView_Guardado", "BusquedaAvanzada", new { ReturnUrl = ViewBag.ReturnUrl }, new AjaxOptions { }, new { id = "form-Bibliotecas-Resumen", role = "form", novalidate = "", enctype = "multipart/form-data" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        <input type="hidden" id="configId" name="configId" value="" />
+                        <div class="col-lg-4 pull-right">
+                            <span data-placement="right" title="Cargar" data-original-title="Cargar" id="btnCargarBiblioteca" class=" fa fa-arrow-right fa-2x light-blue cursor-pointer boton-deshabilitado"></span>
+                        </div>
+                        @Html.Hidden("ConfiguracionId");
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Advertencia-->
+<div class="modal fade theme_new mensaje" id="ModalInfoBABiblio" tabindex="-3" role="dialog" aria-labelledby="TituloInfo" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="TituloInfoBA">Titulo</h3>
+                <span aria-hidden="true" class="fa fa-close white fa-2x cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+            </div>
+            <div class="modal-body">
+                <div id="MensajeInfoBA" class="alert alert-dismissible" role="alert">
+                    <p id="DescripcionInfoBA">Descripcion de la informacion</p>
+                </div>
+            </div>
+            <div class="modal-footer" style="display:none">
+                <div class="col-xs-4 pull-right">
+                    <span id="btnAceptarInfoBABiblio" aria-hidden="true" data-dismiss="modal" data-placement="right" title="Aceptar" data-original-title="Aceptar" class="fa fa-check-circle light-blue fa-3x cursor-pointer"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/Scripts/BusquedaAvanzada/bibliotecas.js"></script>

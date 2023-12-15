@@ -1,0 +1,184 @@
+﻿@using Newtonsoft.Json;
+@model GeoSit.Client.Web.Models.Search.BuscadorGenericoConfig
+
+<link href="~/Content/dataTables.bootstrap.css" rel="stylesheet" />
+
+<div class="modal fade theme_new" id="buscador-generico" tabindex="-5" data-backdrop="false" role="dialog" aria-labelledby="modal-windowLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="lblModal">@Model.Titulo</h3>
+                <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+            </div>
+            <div class="modal-body">
+                <div class="row remove-margin" style="margin-top:7px;">
+                    <div class="col-xs-12">
+                        <div class="form-group col-xs-12 remove-padding remove-margin">
+                            <div class="row remove-margin">
+                                <div class="col-xs-12 remove-padding">
+                                    <label>Filtrar</label>
+                                </div>
+                            </div>
+                            <div class="row remove-margin">
+                                <div class="col-xs-12 remove-padding">
+                                    <div class="input-group">
+                                        <input name="Filtro_Generico" value="" id="Filtro_Generico" class="form-control" placeholder="Buscar..." type="text" autocomplete="off" />
+                                        <span class="input-group-btn">
+                                            <button data-ng-click="searchByText();" title="Buscar" id="btnBuscarGenerico" class="btn btn-default">
+                                                <i class="fa fa-search"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row remove-margin">
+                    <div class="col-xs-12 remove-padding">
+                        <input type="hidden" id="hfSeleccionBuscador" value="@JsonConvert.SerializeObject(Model.SeleccionActual)" />
+                        <div class="tabla-sin-botones" style="padding-left:15px;padding-right:15px;">
+                            <table id="Grilla_BusquedaGenerica" class="table table-striped table-bordered table-responsive" cellspacing="0">
+                                <thead>
+                                    <tr>
+                                        <th class="no-show"></th>
+                                        <th class="no-show"></th>
+                                        @{
+                                            decimal width = 100M / Model.Campos.Count();
+                                            foreach (string campo in Model.Campos)
+                                            {
+                                                <th width="@(width)%">@campo</th>
+                                            }
+                                        }
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-lg-4 pull-right">
+                    @if (Model.VerAgregar)
+                    {
+                        <span data-placement="bottom" title="Agregar" data-original-title="Agregar" id="btnAgregarObjetoBuscado" class="fa fa-plus-circle fa-2x light-blue cursor-pointer"></span>
+                    }
+                    <span data-placement="bottom" title="Aceptar Selección" data-original-title="Aceptar Selección" id="btnAceptarSeleccion" class="fa fa-check-circle fa-2x light-blue cursor-pointer disabled"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/jquery.dataTables.min.js"></script>
+<script src="~/Scripts/dataTables.bootstrap.js"></script>
+
+<script>
+    $(function () {
+        var _GrillaBuscadorGenerico = $('#Grilla_BusquedaGenerica').DataTable({
+            "scrollY": "190px",
+            "scrollCollapse": true,
+            "paging": false,
+            "searching": false,
+            "bInfo": false,
+            "aaSorting": [[2, 'asc']],
+            "language": {
+                "url": BASE_URL + "Scripts/dataTables.spanish.txt"
+            },
+            "columnDefs": [{
+                "targets": 'no-show',
+                "orderable": false,
+                "visible": false,
+                "searchable": false
+            }]
+        });
+
+        var _Buscador = $("#buscador-generico")
+                            .one('shown.bs.modal', function () {
+                                $(".modal-body", "#buscador-generico").height(350);
+                                _GrillaBuscadorGenerico.draw();
+                            }).one('hidden.bs.modal', function () {
+                                delete _Buscador;
+                            }).modal('show');
+        $("#btnBuscarGenerico").click(function () {
+            if ($("#Filtro_Generico").val()) {
+                _GrillaBuscadorGenerico.clear().draw();
+                $.get(BASE_URL + "BuscadorGenerico/SuggestsEx", { text: $("#Filtro_Generico").val(), tipos: "@Model.Tipos" },
+                    function (data) {
+                        JSON.parse(data).forEach(function (item) {
+                            if (item["2"]) { _GrillaBuscadorGenerico.row.add(item); }
+                        });
+                        _GrillaBuscadorGenerico.draw();
+                    });
+            }
+        });
+        $('#Grilla_BusquedaGenerica tbody').on('click', 'tr', function () {
+            @if (!Model.MultiSelect)
+            {
+            <text>
+            $(this).siblings().removeClass('selected');
+            </text>
+            }
+            $(this).toggleClass('selected');
+
+            @if (!Model.IncluirTextoBusqueda)
+            {
+            <text>
+            if ($('tr.selected', '#Grilla_BusquedaGenerica tbody').length) {
+                $('#btnAceptarSeleccion').removeClass('disabled');
+            } else {
+                $('#btnAceptarSeleccion').addClass('disabled');
+            }
+            </text>
+            }
+        });
+        $('#btnAceptarSeleccion').click(function () {
+            var selection = _GrillaBuscadorGenerico.rows('.selected').data().toArray().map(function (row) { return [row[1], row[2], row[0], ...Object.values(row).slice(3)]; });
+            @if (Model.MultiSelect)
+            {
+            <text>
+            selection = (JSON.parse($('#hfSeleccionBuscador', _Buscador).val()) || [])
+                .concat(selection)
+                .map(function (elem) { return JSON.stringify(elem); })
+                .distinct()
+                .map(function (elem) { return JSON.parse(elem); });
+            </text>
+            }
+            else
+            {
+            <text>
+            selection = selection[0] || ["@Model.Tipos.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries).First()", $("#Filtro_Generico").val()];
+            </text>
+            }
+            $(window).trigger({ type: 'seleccionAceptada', seleccion: selection });
+            _Buscador.modal("hide");
+        });
+        @if (Model.IncluirTextoBusqueda)
+        {
+        <text>
+        var timeout;
+        $("#Filtro_Generico").on("change input", function () {
+            clearTimeout(timeout);
+            timeout = setTimeout(function () {
+                if ($('#Filtro_Generico').val()) {
+                    $('#btnAceptarSeleccion').removeClass('disabled');
+                } else {
+                    $('#btnAceptarSeleccion').addClass('disabled');
+                }
+            }, 250);
+        });
+        </text>
+        }
+        $('#Filtro_Generico').on("keypress", function (evt) {
+                if (evt.keyCode === 13) {
+                $("#btnBuscarGenerico").click();
+                    return false;
+                }
+            });
+        $('#btnAgregarObjetoBuscado').one('click', function () {
+            $(window).trigger('agregarObjetoBuscado');
+                _Buscador.modal('hide');
+            });
+    });
+</script>

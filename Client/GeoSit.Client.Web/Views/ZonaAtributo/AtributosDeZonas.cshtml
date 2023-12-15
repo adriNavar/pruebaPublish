@@ -1,0 +1,17 @@
+﻿@using GeoSit.Data.BusinessEntities.ObrasPublicas
+@model List<PLN_ZonaAtributo>
+
+
+@foreach (var p in (List<PLN_ZonaAtributo>) ViewBag.ZonaAtributos)
+{
+    <tr>
+        <td class="hide">@p.Id_Zona_Atributo</td>
+        <td class="hide">@p.Id_Atributo_Zona</td>
+        <td class="hide">@p.FeatId_Objeto</td>
+        <td>@p.Atributos.Descripcion</td>
+        <td>@p.Valor</td>
+        <td>@p.U_Medida</td>
+    </tr>
+
+}
+

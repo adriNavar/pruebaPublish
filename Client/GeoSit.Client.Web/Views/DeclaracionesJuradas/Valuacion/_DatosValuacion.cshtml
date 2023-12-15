@@ -1,0 +1,84 @@
+﻿@model GeoSit.Client.Web.Models.ValuacionesModel
+@{
+    ViewBag.Title = "Datos de Valuación Histrórica";
+    Layout = null;
+}
+
+@Html.AntiForgeryToken()
+<div class="modal fade theme_new" id="modalValuacion" role="dialog" aria-hidden="true" data-backdrop="false" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="scroll-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">@ViewBag.Title</h3>
+                    <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+                </div>
+                <div class="modal-body valuacion-body">
+                    @using (Ajax.BeginForm("GuardarValuacion", "DeclaracionesJuradas", new AjaxOptions() { OnSuccess = "datosValuacion.onSuccess(data, status, xhr)", OnFailure = "datosValuacion.onFailure(xhr, status, error)", HttpMethod = "Post" }, new { @id = "formDatosValuacion" }))
+                    {
+                        <div id="valuacion-content" class="body-content valuacion-content">
+                            @Html.HiddenFor(x => x.ReadOnly)
+                            @Html.HiddenFor(x => x.IdValuacion)
+                            @Html.HiddenFor(x => x.IdUnidadTributaria)
+                            @Html.HiddenFor(x => x.IdDeclaracionJurada)
+                            <div class="panel remove-shadow">
+                                <div class="panel-body">
+                                    <div class="form-horizontal">
+                                        <div class="form-group">
+                                            <label class="col-xs-4 control-label text-right">Fecha Desde</label>
+                                            <div class="col-xs-5">
+                                                @Html.TextBoxFor(x => x.FechaDesde, "{0:dd/MM/yyyy}", new { @class = "form-control", placeholder = "XX/XX/XXXX", @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-xs-4 control-label text-right">Fecha Desde</label>
+                                            <div class="col-xs-5">
+                                                @Html.TextBoxFor(x => x.FechaHasta, "{0:dd/MM/yyyy}", new { @class = "form-control", placeholder = "XX/XX/XXXX", @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-xs-4 control-label text-right">Valor Tierra</label>
+                                            <div class="col-xs-5">
+                                                @Html.TextBoxFor(x => x.ValorTierra, "{0:C}", new { @class = "form-control", @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-xs-4 control-label text-right">Valor Mejoras</label>
+                                            <div class="col-xs-5">
+                                                @Html.TextBoxFor(x => x.ValorMejoras, "{0:C}", new { @class = "form-control", @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-xs-4 control-label text-right">Valor Fiscal Total</label>
+                                            <div class="col-xs-5">
+                                                @Html.TextBoxFor(x => x.ValorFiscalTotal, "{0:C}", new { @class = "form-control", @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-xs-4 control-label text-right">Superficie</label>
+                                            <div class="col-xs-5">
+                                                @Html.TextBoxFor(x => x.Superficie, new { @class = "form-control", @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-xs-4 control-label text-right">Decreto aplicado</label>
+                                            <div class="col-xs-5">
+                                                @Html.TextBoxFor(x => x.DecretoAplicado, new { @class = "form-control", @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-xs-4 control-label text-right">Tr&aacute;mite</label>
+                                            <div class="col-xs-5">
+                                                @Html.TextBoxFor(x => x.Tramite, new { @class = "form-control", @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

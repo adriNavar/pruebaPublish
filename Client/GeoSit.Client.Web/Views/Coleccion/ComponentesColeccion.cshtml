@@ -1,0 +1,58 @@
+﻿@model GeoSit.Client.Web.Models.ColeccionModel
+
+<div class="panel-body">
+    <div class="panel-group accordion" id="accordion-componentes">
+        <div class="panel-body panel-primary">
+            @foreach (var componente in Model.Componentes)
+            {
+                bool classExpandComponente = Model.Componentes.Count == 1;
+                <div class="section-position cabecera-componente">
+                    <div class="panel-group" style="margin:3px 0;">
+                        <div class='panel-heading bg-primary' id='headingComponente'>
+                            <a data-toggle='collapse' data-parent='#accordion-componentes' href='@("#collapseComponente_" + componente.ComponenteId)'
+                               aria-controls='@("collapseComponente_" + componente.ComponenteId)' class="@(classExpandComponente ? string.Empty : " collapsed")">
+                                <div class='panel-title'>
+                                    <span name="check-componente" class="fa fa-square" style="font-size:large; margin: 4px;"></span>
+                                    @componente.Nombre
+                                    <i class="fa"></i>
+                                </div>
+                            </a>
+                        </div>
+                        <div id='@("collapseComponente_" + componente.ComponenteId)'
+                             data-id-componente-value="@componente.ComponenteId"
+                             data-capa-componente-value="@componente.Capa"
+			                 data-doctype-value="@componente.DocType"
+                             data-aplica-filtro-value="@(componente.AplicaFiltro ? 1 : 0 )"
+                             class='panel-collapse collapse @(classExpandComponente ? "in" : string.Empty)'>
+                            <div class="panel-body inner-accordion">
+                                @if (componente.Objetos != null)
+                                {
+                                    <ul id="ul-objetos" style="padding-left: 0">
+                                        @foreach (var objeto in componente.Objetos)
+                                        {
+                                            <li id="li-objeto-@objeto.ObjetoId" data-id-value="@objeto.ObjetoId">
+                                                <div class="row hoverRow" style="margin-right:0;">
+                                                    <div class="col-xs-9">
+                                                        <span id="check-objeto-@objeto.ObjetoId" class="fa fa-square-o light-blue" style="font-size:large; margin: 8px;" />
+                                                        <span style="font-size: larger;">@objeto.Descripcion</span>
+                                                    </div>
+                                                    <div class="col-xs-3 posicion-objeto" style="font-size:large;margin-top: 6px;">
+                                                        <span class="fa fa-map-marker cursor-pointer" name="objeto-mapa"></span>
+                                                        <span class="fa fa-hand-pointer-o cursor-pointer" name="objeto-seleccionar"></span>
+                                                        <span class="fa fa-minus-circle cursor-pointer" name="objeto-baja" onclick="eliminarObjeto(this, event)"></span>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        }
+                                    </ul>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+                
+

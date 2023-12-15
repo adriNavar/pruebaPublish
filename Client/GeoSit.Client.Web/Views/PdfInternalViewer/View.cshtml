@@ -1,0 +1,336 @@
+﻿@model System.String
+
+<link rel="resource" type="application/l10n" href="~/Scripts/pdfjs/locale/locale.properties">
+
+<link rel="stylesheet" href="~/Content/pdfinternalviewer.css">
+
+<div class="modal theme_new fade" id="modal-window-pdf-viewer" tabindex="-1" data-backdrop="false" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-fullwidth">
+        <div class="modal-content">
+            <div class="scroll-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">@ViewData["filename"]</h3>
+                    <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+                </div>
+                <div class="modal-body pdfviewer-body">
+                    <div class="body-content" style="padding:0;">
+                        <div id="viewerContainer" tabindex="0">
+                            <div class="pdf-toolbar row remove-margin" role="toolbar">
+                                <div class="col-sm-4">
+                                    <div class="btn-group" role="group">
+                                        <button id="btnZoomOut" type="button" class="btn btn-default"><i class="fa fa-search-minus fa-lg"></i></button>
+                                        <button id="btnFitWidth" type="button" class="btn btn-default"><i class="fa fa-arrows-alt fa-lg"></i></button>
+                                        <button id="btnZoomIn" type="button" class="btn btn-default"><i class="fa fa-search-plus fa-lg"></i></button>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4 text-center">
+                                    <div class="btn-group" role="group">
+                                        <button id="btnPaginaAnterior" type="button" class="btn btn-default disabled"><i class="fa fa-chevron-left fa-lg"></i></button>
+                                        <button id="btnImprimir" type="button" class="btn btn-default"><i class="fa fa-print fa-lg"></i></button>
+                                        <button id="btnDescargar" type="button" class="btn btn-default"><i class="fa fa-download fa-lg"></i></button>
+                                        <button id="btnPaginaSiguiente" type="button" class="btn btn-default"><i class="fa fa-chevron-right fa-lg"></i></button>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4 text-right">
+                                    <div class="btn-group" role="group">
+                                        <button id="btnRotarIzquierda" type="button" class="btn btn-default"><i class="fa fa-undo fa-lg"></i></button>
+                                        <button id="btnResetRotacion" type="button" class="btn btn-default disabled"><i class="fa fa-refresh fa-lg"></i></button>
+                                        <button id="btnRotarDerecha" type="button" class="btn btn-default"><i class="fa fa-repeat fa-lg"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="viewer" class="pdf-viewer">
+                                <canvas id="pdfCanvas"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/Scripts/pdfjs/build/pdf.js"></script>
+<script src="~/Scripts/pdfjs/build/pdf.worker.js"></script>
+
+<script>
+    $(window).resize(ajustarmodal);
+    $(document).ready(function () {
+        var ctx = new ContextoPDF("")
+        var zoomChanged = function () {
+            $("#btnFitWidth", "#viewerContainer").removeClass("disabled");
+            $("#btnZoomOut", "#viewerContainer").removeClass("disabled");
+            $("#btnZoomIn", "#viewerContainer").removeClass("disabled");
+        }
+        ctx.registrar("ajustar", function () {
+            $("#btnFitWidth", "#viewerContainer").addClass("disabled");
+            $("#btnZoomOut", "#viewerContainer").removeClass("disabled");
+            $("#btnZoomIn", "#viewerContainer").removeClass("disabled");
+        });
+        ctx.registrar("acercar", zoomChanged);
+        ctx.registrar("alejar", zoomChanged);
+        ctx.registrar("maxzoom", function () {
+            $("#btnFitWidth", "#viewerContainer").removeClass("disabled");
+            $("#btnZoomOut", "#viewerContainer").removeClass("disabled");
+            $("#btnZoomIn", "#viewerContainer").addClass("disabled");
+        });
+        ctx.registrar("minzoom", function () {
+            $("#btnFitWidth", "#viewerContainer").removeClass("disabled");
+            $("#btnZoomOut", "#viewerContainer").addClass("disabled");
+            $("#btnZoomIn", "#viewerContainer").removeClass("disabled");
+        });
+        ctx.registrar("rotacionDefault", function () {
+            $("#btnResetRotacion", "#viewerContainer").addClass("disabled");
+        });
+        ctx.registrar("rotar", function () {
+            $("#btnResetRotacion", "#viewerContainer").removeClass("disabled");
+        });
+        ctx.registrar("paginamostrada", function () {
+            if (ctx.esPrimeraPagina()) {
+                $("#btnPaginaAnterior", "#viewerContainer").addClass("disabled");
+            } else {
+                $("#btnPaginaAnterior", "#viewerContainer").removeClass("disabled");
+            }
+            if (ctx.esUltimaPagina()) {
+                $("#btnPaginaSiguiente", "#viewerContainer").addClass("disabled");
+            } else {
+                $("#btnPaginaSiguiente", "#viewerContainer").removeClass("disabled");
+            }
+        });
+
+        $("#modal-window-pdf-viewer")
+            .modal("show")
+            .one("shown.bs.modal", function () {
+                ctx.abrir({ data: atob("@Model") })
+            })
+            .one("hidden.bs.modal", function () {
+                $.post("@Url.Action("CloseViewer")");
+            })
+            .draggable();
+        $("#btnZoomOut", "#modal-window-pdf-viewer").click(function () {
+            ctx.alejar();
+            $(this).blur();
+        });
+        $("#btnZoomIn", "#modal-window-pdf-viewer").click(function () {
+            ctx.acercar();
+            $(this).blur();
+        });
+        $("#btnFitWidth", "#modal-window-pdf-viewer").click(function () {
+            ctx.ajustar();
+            $(this).blur();
+        });
+        $("#btnRotarIzquierda", "#modal-window-pdf-viewer").click(function () {
+            ctx.rotarIzquierda();
+            $(this).blur();
+        });
+        $("#btnResetRotacion", "#modal-window-pdf-viewer").click(function () {
+            ctx.resetRotacion();
+            $(this).blur();
+        });
+        $("#btnRotarDerecha", "#modal-window-pdf-viewer").click(function () {
+            ctx.rotarDerecha();
+            $(this).blur();
+        });
+        $("#btnPaginaAnterior", "#modal-window-pdf-viewer").click(function () {
+            ctx.verPaginaAnterior();
+            $(this).blur();
+        });
+        $("#btnPaginaSiguiente", "#modal-window-pdf-viewer").click(function () {
+            ctx.verPaginaSiguiente();
+            $(this).blur();
+        });
+        $("#btnDescargar", "#modal-window-pdf-viewer").click(function () {
+            ctx.descargar();
+            $(this).blur();
+        });
+        $("#btnImprimir", "#modal-window-pdf-viewer").click(function () {
+            ctx.imprimir();
+            $(this).blur();
+        });
+        ajustarmodal();
+        hideLoading();
+    });
+
+    function ContextoPDF() {
+        var _pdfdoc, currPage = 1, numPages = 0, pageRendering = true, pageNumPending,
+            currScale = 1, minScale = 0.5, maxScale = 8, tryfit = false, angle = 0, canvas, canvasContext, events = {};
+
+        function queueRenderPage(pageNum) {
+            if (pageRendering) {
+                pageNumPending = pageNum;
+            } else {
+                renderPage(pageNum);
+            }
+        }
+        function renderPage(pageNum) {
+            pageRendering = true;
+            _pdfdoc.getPage(pageNum).then(function (page) {
+                var viewport = page.getViewport({ scale: (tryfit ? 1 : currScale), rotation: angle });
+                if (tryfit) {
+                    var width = canvas.parentElement.offsetWidth;
+                    if (viewport.height < canvas.clientHeight) {
+                        canvas.parentElement.style.overflowY = "scroll";
+                        width = canvas.parentElement.clientWidth;
+                        canvas.parentElement.style.overflowY = "auto";
+                    }
+                    currScale = width / viewport.width;
+                    viewport = page.getViewport({ scale: width / viewport.width, rotation: angle });
+                }
+                canvas.height = viewport.height;
+                canvas.width = viewport.width;
+                var renderContext = {
+                    canvasContext: canvasContext,
+                    viewport: viewport
+                };
+                page.render(renderContext)
+                    .promise.then(function () {
+                        pageRendering = false;
+                        if (!!pageNumPending) {
+                            renderPage(pageNumPending);
+                            pageNumPending = null;
+                        } else {
+                            notify("paginamostrada");
+                        }
+
+                    });
+            });
+        }
+        function renderNextPage() {
+            if (currPage >= numPages) {
+                return;
+            }
+            currPage++;
+            queueRenderPage(currPage);
+        }
+        function renderPrevPage() {
+            if (currPage <= 1) {
+                return;
+            }
+            currPage--;
+            queueRenderPage(currPage);
+        }
+        function tryFit() {
+            tryfit = true;
+            currScale = 1;
+            queueRenderPage(currPage);
+            notify("ajustar");
+        }
+        function zoomIn() {
+            currScale = Math.min(currScale * 1.5, maxScale);
+            tryfit = false;
+            queueRenderPage(currPage);
+            if (maxScale === currScale) {
+                notify("maxzoom");
+            } else {
+                notify("acercar");
+            }
+        }
+        function zoomOut() {
+            currScale = Math.max(currScale / 1.5, minScale);
+            tryfit = false;
+            queueRenderPage(currPage);
+            if (minScale === currScale) {
+                notify("minzoom");
+            } else {
+                notify("alejar");
+            }
+        }
+        function rotateClockwise() {
+            angle += 90;
+            tryFit();
+            if (angle % 360 === 0) {
+                notify("rotacionDefault");
+            } else {
+                notify("rotar");
+            }
+        }
+        function rotateCounterClockwise() {
+            angle -= 90;
+            tryFit();
+            if (angle % 360 === 0) {
+                notify("rotacionDefault");
+            } else {
+                notify("rotar");
+            }
+        }
+        function resetRotation() {
+            angle = 0;
+            tryFit();
+            notify("rotacionDefault");
+        }
+        function download() {
+            var a = document.createElement("a");
+            a.style = "display: none";
+            a.href = "@Url.Action("Download")";
+            //a.download = filename;
+            a.click();
+            delete a;
+        }
+        function print() {
+            getBlobURL()
+                .then(function (urlObj) {
+                    var iframe = document.createElement("iframe");
+                    iframe.style = "display: none";
+                    iframe.src = urlObj;
+                    document.body.appendChild(iframe);
+                    iframe.onload = function () {
+                        setTimeout(function () {
+                            iframe.focus();
+                            iframe.contentWindow.print();
+                        }, 1);
+                        window.URL.revokeObjectURL(urlObj);
+                        delete iframe;
+                    }
+                });
+        }
+        function getBlobURL() {
+            return new Promise(function (resolve) {
+                _pdfdoc.getData().then(function (data) {
+                    resolve(window.URL.createObjectURL(new Blob([data], { type: "application/pdf" })));
+                });
+            });
+        }
+        function open(url) {
+            pdfjsLib.getDocument(url).promise.then(function (pdfdoc) {
+                pageRendering = false;
+                _pdfdoc = pdfdoc;
+                numPages = _pdfdoc.numPages;
+                tryFit();
+            });
+        }
+        function notify(event) {
+            if (typeof events[event] === 'function') {
+                events[event]();
+            }
+        }
+        function register(event, callback) {
+            events[event] = callback;
+        }
+
+        canvas = document.getElementById('pdfCanvas');
+        canvasContext = canvas.getContext('2d');
+        return {
+            esPrimeraPagina: function () { return currPage === 1; },
+            esUltimaPagina: function () { return currPage === numPages; },
+            verPaginaSiguiente: renderNextPage,
+            verPaginaAnterior: renderPrevPage,
+            abrir: open,
+            rotarDerecha: rotateClockwise,
+            rotarIzquierda: rotateCounterClockwise,
+            resetRotacion: resetRotation,
+            acercar: zoomIn,
+            ajustar: tryFit,
+            alejar: zoomOut,
+            registrar: register,
+            descargar: download,
+            imprimir: print
+        };
+    };
+    function ajustarmodal() {
+        var height = $(window).height() - 70;
+        $(".scroll-content").height(height);
+        height -= 38;
+        $(".pdf-viewer-body .body-content").height(height);
+        height -= 32;
+        $(".pdf-viewer").height(height);
+    }
+</script>

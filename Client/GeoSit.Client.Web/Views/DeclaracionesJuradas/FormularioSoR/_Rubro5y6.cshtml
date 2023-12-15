@@ -1,0 +1,121 @@
+﻿@using GeoSit.Client.Web.Models;
+@model FormularioSoRModel
+
+<style>
+    .r5y6 .panel-group > .panel {
+        margin: 0 25px;
+    }
+
+    .r5y6 .tabla-con-botones dl {
+        right: 25px;
+    }
+</style>
+
+<div id="Rubro5y6" class="panel-group r5y6">
+    <div class="col-xs-12 remove-padding">
+        <div class="panel remove-margin remove-shadow">
+            <div class="panel-title">
+                <h4 class="title-border"><strong>Rubro 5</strong></h4>
+            </div>
+            <div class="panel-body">
+                <div class="row" style="margin: 0;margin-left: 15px;">
+                    <h5><strong>Caracter&iacute;sticas/Aptitudes</strong></h5>
+                </div>
+                <div class="form-horizontal" style="margin-bottom:20px;">
+                    <div class="form-group">
+                        <label class="col-xs-5 control-label text-right">Superficie Total (ha)</label>
+                        <div class="col-xs-4">
+
+                            @Html.TextBoxFor(x => x.SuperficieTotal, new { @class = "form-control", @readonly = true, @style = "font-weight: bold;" })
+
+                        </div>
+                    </div>
+                </div>
+                <div class="tabla-contenedor">
+                    <table class="table table-striped table-responsive">
+                        <tbody>
+                            @for (int idx = 0; Model.AptitudesDisponibles.Count > idx; idx++)
+                            {
+                                VALAptitudInput item = Model.AptitudesDisponibles[idx];
+                                <tr>
+                                    <td width="120px">
+                                        @(item.Numero) - @(item.Descripcion)
+                                        @Html.HiddenFor(x => x.AptitudesDisponibles[idx].IdAptitud, new { @id = "IdAptitud_" + idx })
+                                    </td>
+                                    <td width="175px" class="form-group">@Html.TextBoxFor(x => x.AptitudesDisponibles[idx].Superficie, new { @id = "Superficie_" + idx, @class = "superficie form-control input-sm", @placeholder = "Superficie" })</td>
+
+                                    @if (item.InputType.Equals(AptitudTypeInput.AllDropDowns))
+                                    {
+                                        <td width="220px">@Html.DropDownListFor(x => x.AptitudesDisponibles[idx].RelieveSeleccionado, Model.GetSelectItemsToValue(Model.Relieves, Model.AptitudesDisponibles[idx].RelieveSeleccionado), "Relieve - Sin seleccionar", new { @id = "Relieves_" + idx, @class = "form-control input-sm customDropdown" })</td>
+                                        <td width="310px">@Html.DropDownListFor(x => x.AptitudesDisponibles[idx].EspesoresCapaArableSeleccionado, Model.GetSelectItemsToValue(Model.EspesoresCapaArable, Model.AptitudesDisponibles[idx].EspesoresCapaArableSeleccionado), "Espesor capa arable - Sin seleccionar", new { @id = "Espesores_" + idx, @class = "form-control input-sm customDropdown" })</td>
+                                        <td width="255px">@Html.DropDownListFor(x => x.AptitudesDisponibles[idx].ColoresTierraSeleccionado, Model.GetSelectItemsToValue(Model.ColoresTierra, Model.AptitudesDisponibles[idx].ColoresTierraSeleccionado), "Colores tierra - Sin seleccionar", new { @id = "Colores_" + idx, @class = "form-control input-sm customDropdown" })</td>
+                                        <td width="300px">@Html.DropDownListFor(x => x.AptitudesDisponibles[idx].AguasDelSubsueloSeleccionado, Model.GetSelectItemsToValue(Model.AguasDelSubsuelo, Model.AptitudesDisponibles[idx].AguasDelSubsueloSeleccionado), "Agua subsuelo - Sin seleccionar", new { @id = "Aguas_" + idx, @class = "form-control input-sm customDropdown" })</td>
+                                        <td width="300px">@Html.DropDownListFor(x => x.AptitudesDisponibles[idx].CapacidadesGanaderasSeleccionado, Model.GetSelectItemsToValue(Model.CapacidadesGanaderas, Model.AptitudesDisponibles[idx].CapacidadesGanaderasSeleccionado), "Capacidad ganadera - Sin seleccionar", new { @id = "Capacidades_" + idx, @class = "form-control input-sm customDropdown" })</td>
+                                    }
+                                    else if (item.InputType.Equals(AptitudTypeInput.OnlyDropEstado))
+                                    {
+                                        <td>@Html.DropDownListFor(x => x.AptitudesDisponibles[idx].EstadosMonteSeleccionado, Model.GetSelectItemsToValue(Model.EstadosMonte, Model.AptitudesDisponibles[idx].EstadosMonteSeleccionado), "Estado - Sin seleccionar", new { @id = "Estados_" + idx, @class = "form-control input-sm customDropdown" })</td>
+                                        <td colspan="4"></td>
+                                    }
+                                    else if (item.InputType.Equals(AptitudTypeInput.OnlySuperficie))
+                                    {
+                                        <td colspan="5"></td>
+                                    }
+
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="superficieError has-error"></div>
+
+        <div class="panel remove-margin remove-shadow">
+            <div class="panel-title">
+                <h4 class="title-border"><strong>Rubro 6</strong></h4>
+            </div>
+            <div class="panel-body">
+                <div class="row" style="margin: 0;margin-left: 15px;">
+                    <h5><strong>Distancias en Km.</strong></h5>
+                </div>
+                <div class="form-horizontal">
+                    @if (Model.SorOtrasCar.Any(x => x.OtrasCarRequerida.ToLower().Equals("a lugar de embarque")))
+                    {
+                        <div class="form-group">
+                            <label class="col-xs-4 control-label text-right">Lugar de Embarque</label>
+                            <div class="col-xs-4">
+                                @Html.TextBoxFor(x => x.DDJJSor.DistanciaEmbarque, new { @class = "form-control", placeholder = "Distancia" })
+                            </div>
+                        </div>
+                    }
+                    @if (Model.SorOtrasCar.Any(x => x.OtrasCarRequerida.ToLower().Equals("a camino mas proximo")))
+                    {
+                        <div class="form-group">
+                            <label class="col-xs-4 control-label text-right">Camino m&aacute;s pr&oacute;ximo</label>
+                            <div class="col-xs-4">
+                                @Html.TextBoxFor(x => x.DDJJSor.DistanciaCamino, new { @class = "form-control", placeholder = "Distancia" })
+                            </div>
+                            <div class="col-xs-4">
+                                @Html.DropDownListFor(x => x.DDJJSor.IdCamino, Model.Caminos, "- Seleccione -", new { @class = "form-control" })
+                            </div>
+                        </div>
+                    }
+                    @if (Model.SorOtrasCar.Any(x => x.OtrasCarRequerida.ToLower().Equals("a poblacion mas proxima")))
+                    {
+                        <div class="form-group">
+                            <label class="col-xs-4 control-label text-right">Localidad</label>
+                            <div class="col-xs-4">
+                                @Html.TextBoxFor(x => x.DDJJSor.DistanciaLocalidad, new { @class = "form-control", placeholder = "Distancia" })
+                            </div>
+                            <div class="col-xs-4">
+                                @Html.DropDownListFor(x => x.DDJJSor.IdLocalidad, Model.AllLocalidades, "- Seleccione -", new { @class = "form-control selectpicker" })
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

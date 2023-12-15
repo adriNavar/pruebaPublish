@@ -1,0 +1,21 @@
+﻿.unidad-tributaria-body > .body-content {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+.unidad-tributaria-body .panel-body {
+    margin-top:10px;
+}
+.unidad-tributaria-body textarea {
+    height: auto !important;
+}
+.unidad-tributaria-body .help-block,
+.unidad-tributaria-body .has-error {
+    color: #a94442;
+}
+.unidad-tributaria-body #alert-danger {
+    display: none;
+}
+
+.unidad-tributaria-body .ut-fecha {
+    background-color:#fff;
+}

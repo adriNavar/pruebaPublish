@@ -1,0 +1,70 @@
+﻿@model GeoSit.Client.Web.Models.ResponsableFiscal.ResponsableFiscalViewModel
+
+@{
+    ViewBag.Title = "Responsable Fiscal";
+}
+
+<div class="modal fade theme_new" id="modal-window-responsable-fiscal" tabindex="-1" data-backdrop="false" role="dialog" aria-labelledby="modal-windowLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id="scroll-content-responsable-fiscal" class="scroll-content">
+                <div id="message-error" class="alert alert-danger">
+                    <button type="button" class="close"><span aria-hidden="true">&times;</span></button>
+                    <p></p>
+                </div>
+                <div class="modal-header">
+                    <h3 class="modal-title" id="lblModal-responsable-fiscal">@ViewBag.Title</h3>
+                    <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+                </div>
+                <div class="modal-body responsable-fiscal-body">
+                    <div class="body-content">
+                        <div class="panel-group remove-margin">
+                            <div class="panel panel-default remove-shadow">
+                                <div class="panel-body">
+                                    <div class="col-xs-12">
+                                        <form class="form-horizontal" id="responsable-fiscal-form">
+                                            @Html.HiddenFor(model => model.UnidadTributariaPersonaId)
+                                            @Html.HiddenFor(model => model.UnidadTributariaId)
+                                            @Html.HiddenFor(model => model.SavedPersonaId)
+                                            @Html.HiddenFor(model => model.Operacion)
+                                            @Html.HiddenFor(model => model.DomicilioFisico)
+
+                                            <div class="form-group">
+                                                <label class="control-label col-sm-4 text-right">Tipo</label>
+                                                <div class="col-sm-8">
+                                                    @Html.DropDownListFor(model => model.TipoPersonaId, ViewData["TipoPersonaList"] as SelectList, new { @class = "form-control" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-sm-4 text-right">Persona</label>
+                                                <div class="col-sm-8">
+                                                    <div class="input-group">
+                                                        @Html.HiddenFor(model => model.PersonaId)
+                                                        @Html.TextBoxFor(model => model.NombreCompleto, new { @class = "form-control", @readonly = "true" })
+                                                        <div class="input-group-btn">
+                                                            <button type="button" class="btn btn-default" id="persona-search"><span class="fa fa-search cursor-pointer"></span></button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-xs-4 pull-right">
+                        <span aria-hidden="true" data-placement="right" title="Guardar" data-original-title="Guardar" id="btnGrabar-responsable-fiscal" class="fa fa-save fa-2x black cursor-pointer"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="buscador-container"></div>
+<div id="personas-externo-container"></div>
+
+<script src="~/Scripts/ResponsableFiscal/main.js"></script>

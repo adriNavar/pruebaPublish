@@ -1,0 +1,1111 @@
+﻿
+@{
+    @model GeoSit.Client.Web.Models.DiferenciasModel
+    ViewBag.Title = "Gestión de Novedades";
+    string est = string.Empty;
+    string fecha;
+    //string disabled = ViewBag.esMunicipio == 0 ? "disabled" : string.Empty;
+    string clsAncho = ViewBag.esMunicipio == 0 ? "col-xs-7" : "col-xs-12";
+}
+<link href="~/Content/responsive.dataTables.css" rel="stylesheet" />
+<link href="~/Content/jquery.dataTables.css" rel="stylesheet" />
+
+@*https://cdn.datatables.net/1.12.0/css/jquery.dataTables.min.css
+    https://cdn.datatables.net/responsive/2.3.0/css/responsive.dataTables.min.css
+    https://cdn.datatables.net/fixedheader/3.2.3/css/fixedHeader.dataTables.min.css*@
+
+<style type="text/css" media="screen">
+    :root {
+        --color-button: #fdffff;
+        --color-black: #000;
+        --color-lightblue: #0085fd;
+        --color-grey: #e1e8e8;
+    }
+
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 60px;
+        height: 24px;
+    }
+
+    .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+
+    .slider:before {
+        position: absolute;
+        content: "";
+        height: 16px;
+        width: 16px;
+        left: 4px;
+        bottom: 4px;
+        background-color: white;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+
+    input:checked + .slider {
+        background-color: #2196F3;
+    }
+
+    input:focus + .slider {
+        box-shadow: 0 0 1px #2196F3;
+    }
+
+    input:checked + .slider:before {
+        -webkit-transform: translateX(34px);
+        -ms-transform: translateX(34px);
+        transform: translateX(34px);
+    }
+
+    /* Rounded sliders */
+    .slider.round {
+        border-radius: 34px;
+    }
+
+    .slider.round:before {
+        border-radius: 50%;
+    }
+
+    .table-bordered > thead > tr > th {
+        background: #0085fd;
+        font-size: 9px;
+        text-align: center;
+    }
+
+    .table > tbody > tr > td {
+        /*word-wrap: break-word;*/
+        font-family: 'Montserrat', sans-serif;
+        font-size: 9px;
+        text-align: center;
+        /*align-content: center;*/
+        overflow-y: auto;
+    }
+
+    .tabla-scroll {
+        overflow-y: scroll;
+    }
+
+    .modal-fullheight {
+        height: calc(100% - 10px);
+    }
+
+    .td-data {
+        text-align: right;
+        font-size: 13px;
+
+        border-radius: 0px;
+        border: 0px solid;
+        width: 100%;
+    }
+
+    table {
+        table-layout: fixed;
+    }
+
+        table td {
+            word-wrap: break-word;
+            max-width: 400px;
+        }
+
+    #grid td {
+        white-space: inherit;
+    }
+
+    /************************************************************/
+    /*thead.headerFijo tr.headerFijo th.headerFijo {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        background-color: #0085fd;
+    }
+
+    .table-responsive {*/
+        /* height: 200px; */
+        /*overflow: scroll;
+    }*/
+
+    .headerFijo {
+        /*width: 750px;*/
+        table-layout: fixed;
+        border-collapse: collapse;
+    }
+
+    .headerFijo thead {
+        background-color: #0085fd;
+        /*color: #FDFDFD;*/
+    }
+
+    .headerFijo thead tr {
+        display: flex;
+        position: relative;
+    }
+
+    .headerFijo tbody {
+        display: block;
+        overflow: auto;
+        width: 100%;
+        height: 700px;
+    }
+
+    /************************************************************/
+    .modal-dialog-detalle {
+        overflow-y: initial !important
+    }
+
+    .modal-body-detalle {
+        height: 80vh;
+        overflow-y: auto;
+    }
+
+    .modal-content {
+        border: hidden;
+    }
+
+    /************************************************************/
+   /* table.fixedHeader-floating {
+      position: fixed !important;
+      background-color: white;
+    }
+
+    table.fixedHeader-floating.no-footer {
+      border-bottom-width: 0;
+    }
+
+    table.fixedHeader-locked {
+      position: absolute !important;
+      background-color: white;
+    }*/
+
+    @*@media print {
+      table.fixedHeader-floating {
+        display: none;
+      }
+    }*@
+</style>
+
+
+<div class="modal fade theme_new" id="modal-gestionNovedades" tabindex="-1" data-backdrop="static" role="dialog" aria-labelledby="modal-windowLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm modal-dialog-centered modal-fullwidth">
+        <div class="modal-content">
+            <div class="scroll-content" id="scroll-content-gestionNovedades">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="lblGestionNovedades">@ViewBag.Title</h3>
+                    <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+                </div>
+                <div class="modal-body">
+                    <div id="gestionNovedades-content" class="body-content">
+                        <form class="form-horizontal">
+                            <input type="hidden" id="IdMunicipio" value="@ViewBag.idMunicipio" />
+                            @foreach (var state in Model.ListaEstados)
+                            {
+                                est = est + state.IdEstado + "-" + state.Nombre + ";";
+                            }
+                            <input type="hidden" id="Estados" value="@est" />
+                            <div class="form-group" style="border:solid 1px;margin:3px;">
+
+                                @if (ViewBag.esMunicipio == 0)
+                                {
+                                    <div class="col-xs-5" style="display: flex;  align-items: center;">
+                                        <div class="col-xs-8>" style="display: flex;  align-items: center;">
+                                            <h3>
+                                                <label id="lblMunicipio" class="control-label text-muted text-left">
+                                                    Municipio a consultar:
+                                                </label>
+                                            </h3>
+                                        </div>
+                                        <div class="col-xs-4" style="display: flex;  align-items: center;">
+                                            @Html.DropDownList("cboMunicipios", (IEnumerable<SelectListItem>)ViewData["municipios"], new { @class = "form-control input-sm", @onchange = "HabilitaBotones(this.value)" })
+                                        </div>
+                                    </div>
+                                }
+                                <div class="@clsAncho text-center" style="display: flex;  align-items: center;">
+                                    <div class="col-xs-8 text-center">
+                                        <label id="lblFechaEjecucion" class="control-label text-muted">
+                                            @*<h3>Última fecha de ejecución: @ViewBag.fechaEjecucion</h3>*@
+                                            <h3>Última fecha de ejecución: <input type="text" id="fecUltProc" style="background-color:transparent; border:none;" readonly value=" @ViewBag.fechaEjecucion" /></h3>
+                                        </label>
+                                    </div>
+                                    <div class="col-xs-4 text-right">
+                                        @*<button type="button" class="btn btn-secondary" id="procesarButton" title="Procesar" onclick="Procesar();" @disabled>*@
+                                        <button type="button" class="btn btn-secondary" id="procesarButton" title="Procesar" onclick="Procesar();" >
+                                            <span>Procesar ahora</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" style="border:solid 1px;margin:3px;">
+                                <div class="form-group">
+                                    <div class="col-xs-4 text-center" style="display: flex;  align-items: center;">
+                                        <label id="lblMunicipio" class="col-xs-4 control-label text-muted text-left">
+                                            Desde:
+                                        </label>
+                                        <div class="col-xs-8 text-left">
+                                            <div class="input-group date input-group-sm">
+                                                <input type="text" class="form-control" autocomplete="off" placeholder="Buscar..." id="fechaDesde" />
+                                                <span class="input-group-addon">
+                                                    <i class="fa fa-calendar"></i>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-8 text-center" style="display: flex;  align-items: center;">
+                                        <div class="col-xs-3 text-center">
+                                            <label id="lblMostrarTodo" class="col-xs-6 control-label text-muted text-left">
+                                                Todo
+                                            </label>
+                                            <label class="switch">
+                                                <input type="checkbox" name="switch-button-todo" id="switch-label-todo">
+                                                <span class="slider round"></span>
+                                            </label>
+                                        </div>
+                                        <div class="col-xs-3 text-center">
+                                            <label id="lblMostrarNuevas" class="col-xs-6 control-label text-muted text-left">
+                                                Nuevas
+                                            </label>
+                                            <label class="switch">
+                                                <input type="checkbox" name="switch-button-nuevas" id="switch-label-nuevas">
+                                                <span class="slider round"></span>
+                                            </label>
+                                        </div>
+                                        <div class="col-xs-3 text-center">
+                                            <label id="lblMostrarDescartadas" class="col-xs-6 control-label text-muted text-left">
+                                                Descartadas
+                                            </label>
+                                            <label class="switch">
+                                                <input type="checkbox" name="switch-button-descartadas" id="switch-label-descartadas">
+                                                <span class="slider round"></span>
+                                            </label>
+                                        </div>
+                                        <div class="col-xs-3 text-right">
+                                            @*<button type="button" class="btn btn-secondary" id="consultarButton" title="Consultar" onclick="Consultar();" @disabled>*@
+                                            <button type="button" class="btn btn-secondary" id="consultarButton" title="Consultar" onclick="Consultar();" >
+                                                <span>Consultar</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+
+                        <div class="container-fluid" style="margin-top:10px;">
+                            @*<div class="col-xs-12">*@
+                            <div id="Grilla_Novedades_wrapper">
+                                <!--  tabla -->
+                                <table id="Grilla_Novedades" class="table table-responsive table-striped table-bordered dataTable no-footer">
+                                    <thead>
+                                        <tr>
+                                            <th rowspan="2">&nbsp;</th>
+                                            <th rowspan="2">Partida Inmobiliaria</th>
+                                            <th rowspan="2">Nomenclatura Catastral</th>
+                                            <th rowspan="2">Tipo</th>
+                                            <th colspan="2">Superficie Tierra Registrada</th>
+                                            <th colspan="2">Superficie Tierra Relevada</th>
+                                            <th rowspan="2">Unidad de medida</th>
+                                            <th colspan="2">Superficie Mejoras Total Registrada</th>
+                                            <th colspan="2">Superficie Mejoras Total Relevada</th>
+                                            <th rowspan="2">Estado Novedad</th>
+                                            <th rowspan="2">Fecha de Detección</th>
+                                            <th rowspan="2">Acciones</th>
+                                        </tr>
+                                        <tr>
+                                            <th>Provincial</th>
+                                            <th>Municipal</th>
+                                            <th>Provincial</th>
+                                            <th>Municipal</th>
+                                            <th>Provincial</th>
+                                            <th>Municipal</th>
+                                            <th>Provincial</th>
+                                            <th>Municipal</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @if (Model.ListaDiferencias != null)
+                                        {
+                                            foreach (var diferencias in Model.ListaDiferencias)
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        <input type="checkbox" value="@diferencias.IdDiferencia">
+                                                    </td>
+                                                    <td>
+                                                        @diferencias.PrvPartida
+                                                    </td>
+                                                    <td>
+                                                        @diferencias.PrvNomenclatura
+                                                    </td>
+                                                    <td>
+                                                        @diferencias.PrvTipo
+                                                    </td>
+                                                    <td>
+                                                        @diferencias.PrvSupTierraRegis
+                                                    </td>
+                                                    <td>
+                                                        @diferencias.MunSupTierraRegis
+                                                    </td>
+                                                    <td>
+                                                        @diferencias.PrvSupTierraRelev
+                                                    </td>
+                                                    <td>
+                                                        @diferencias.MunSupTierraRelev
+                                                    </td>
+                                                    <td>
+                                                        @diferencias.PrvUnidadMedida
+                                                    </td>
+                                                    <td>
+                                                        @diferencias.PrvSupMejoraRegis
+                                                    </td>
+                                                    <td>
+                                                        @diferencias.MunSupMejoraRegis
+                                                    </td>
+                                                    <td>
+                                                        @diferencias.PrvSupMejoraRelev
+                                                    </td>
+                                                    <td>
+                                                        @diferencias.MunSupMejoraRelev
+                                                    </td>
+                                                    <td>
+                                                        @Model.ListaEstados.Where(x => x.IdEstado == diferencias.PrvIdEstado).Select(x => x.Nombre).FirstOrDefault()
+                                                    </td>
+                                                    <td>
+                                                        @if (diferencias.PrvUltCambio != null)
+                                                        {
+                                                            fecha = Convert.ToDateTime(diferencias.PrvUltCambio).ToString("dd/MM/yyyy");
+                                                        }
+                                                        else
+                                                        {
+                                                            fecha = string.Empty;
+                                                        }
+                                                        @fecha
+                                                    </td>
+                                                    <td>
+                                                        <button type="button" class="btn" style="font-size: 9px; background-color:transparent;" onclick="showModalDetalle(@diferencias.IdDiferencia);">
+                                                            <i class="fa fa-eye fa-2x light-blue cursor-pointer" title="Ver Detalle"></i>
+                                                        </button>
+                                                        @*<button type="button" class="btn" style="font-size: 9px; background-color:transparent;" onclick="showModalDetalle(@diferencias.IdDiferencia);">
+                                                                <i class="fa fa-map-marker fa-2x light-blue cursor-pointer" title="Ver en Mapa"></i>
+                                                                Ver
+                                                            </button>*@
+                                                    </td>
+                                                </tr>
+                                            }
+                                        }
+                                    </tbody>
+                                </table>
+                                <!--  tabla end -->
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <div class="col-xs-6">
+                                <label id="lblEstado" class="col-xs-4 control-label text-muted text-left">
+                                    Cambiar a:
+                                </label>
+                                <div class="col-xs-4">
+                                    @Html.DropDownList("cboEstados", (IEnumerable<SelectListItem>)ViewData["estados"], new { @class = "form-control input-sm" })
+                                </div>
+                                <div class="col-xs-4">
+                                    <button type="button" class="btn btn-secondary" id="aplicarButton" title="Aplicar" onclick="CambioEstado()">
+                                        <span>Aplicar</span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-xs-6">
+                                <label id="lblMunicipio" class="col-xs-6 control-label text-muted text-left">
+                                    &nbsp;
+                                </label>
+                                <div class="col-xs-6 text-right">
+                                    <a class="icons-group fa pull-right" href="#" data-placement="right" onclick="javascript: generarGrillaNovedades();">
+                                        <i class="fa fa-file-excel-o fa-2x light-blue cursor-pointer" title="Exportar a Excel"></i>
+                                        @*<i ng-click="verEnMapa($event)" class="fa fa-map-marker fa-3x light-blue cursor-pointer"></i>*@
+                                        @*<i onclick="GeoSIT.VerEnMapa([['E10043901']], [403])" class="fa fa-map-marker fa-2x light-blue cursor-pointer"></i>*@
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Detalle -->
+<div class="modal fade theme_new" id="modal-gestionDetalleNovedades" tabindex="-3" role="dialog" aria-labelledby="TituloInfoObservaciones parcela" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog-detalle modal-fullwidth">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="TituloInfoObservaciones">
+                    Detalle de Comparación - Detalle Parcela
+                    <input type="text" id="parcela" style="color: inherit; font-size: inherit; background-color: inherit; border: 0;" />
+                </h3>
+                <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+            </div>
+            <input type="hidden" id="idDiferencia" />
+        </div>
+        <div class="modal-body-detalle">
+            <div class="body-content" id="detalleNovedades-content">
+                <div class="form-group">
+                    <div class="row remove-margin">
+                        <div class="col-xs-12 remove-padding">
+                            <div class="tabla-sin-botones dataTables_wrapper" style="padding-left: 15px; padding-right: 15px; overflow: auto;">
+                                <table id="Grilla_DetalleNovedades" class="table headerFijo table-striped table-responsive table-bordered nowrap">
+                                    <thead>
+                                        <tr>
+                                            <th class="col-xs-3  col-lg-3" style="text-align: center; font-size: 13px;"></th>
+                                            <th class="col-xs-4  col-lg-4" style="text-align: center; font-size: 13px;">Municipal</th>
+                                            <th class="col-xs-4  col-lg-4" style="text-align: center; font-size: 13px;">Provincial</th>
+                                            <th class="col-xs-1  col-lg-1" style="text-align: center; font-size: 13px;">Diferencia</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td class="col-xs-3 col-lg-3" style="text-align: left; font-size: 13px; font-weight: bold;">
+                                                Nomenclatura Catastral
+                                            </td>
+                                            <td class="col-xs-4  col-lg-4" style="text-align: right; font-size: 13px; ">
+                                                <input type="text" id="nomCatMun" class="td-data" style="background-color:transparent;" readonly />
+                                            </td>
+                                            <td class="col-xs-4  col-lg-4" style="text-align: right; font-size: 13px; ">
+                                                <input type="text" id="nomCatPrv" class="td-data" style="background-color:transparent;" readonly />
+                                            </td>
+                                            <td class="col-xs-1  col-lg-1" style="text-align: right; font-size: 13px; ">
+                                                <input type="text" id="nomCatDif" class="td-data" style="background-color:transparent;" readonly />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align: left; font-size: 13px; font-weight: bold;">
+                                                Tipo
+                                            </td>
+                                            <td style="text-align: right; font-size: 13px; ">
+                                                <input type="text" id="tipoMun" class="td-data" style="background-color:transparent;" readonly />
+                                            </td>
+                                            <td style="text-align: right; font-size: 13px; ">
+                                                <input type="text" id="tipoPrv" class="td-data" style="background-color:transparent;" readonly />
+                                            </td>
+                                            <td style="text-align: right; font-size: 13px; ">
+                                                <input type="text" id="tipoDif" class="td-data" style="background-color:transparent;" readonly />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align: left; font-size: 13px; font-weight: bold;">
+                                                Ubicación
+                                            </td>
+                                            <td style="text-align: right; font-size: 13px; ">
+                                                <input type="text" id="ubicacionMun" class="td-data" style="background-color:transparent;" readonly />
+                                            </td>
+                                            <td style="text-align: right; font-size: 13px; ">
+                                                <input type="text" id="ubicacionPrv" class="td-data" style="background-color:transparent;" readonly />
+                                            </td>
+                                            <td style="text-align: right; font-size: 13px; ">
+                                                <input type="text" id="ubicacionDif" class="td-data" style="background-color:transparent;" readonly />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align: left; font-size: 13px; font-weight: bold;">
+                                                Coordenadas
+                                            </td>
+                                            <td style="text-align: right; font-size: 13px; ">
+                                                <input type="text" id="coordenadasMun" class="td-data" style="background-color:transparent;" readonly />
+                                            </td>
+                                            <td style="text-align: right; font-size: 13px; ">
+                                                <input type="text" id="coordenadasPrv" class="td-data" style="background-color:transparent;" readonly />
+                                            </td>
+                                            <td style="text-align: right; font-size: 13px; ">
+                                                <input type="text" id="coordenadasDif" class="td-data" style="background-color:transparent;" readonly />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align: left; font-size: 13px; font-weight: bold;">
+                                                Afectación a PH
+                                            </td>
+                                            <td style="text-align: right; font-size: 13px;">
+                                                <input type="text" id="phMun" class="td-data" style="background-color:transparent;" readonly />
+                                            </td>
+                                            <td style="text-align: right; font-size: 13px; ">
+                                                <input type="text" id="phPrv" class="td-data" style="background-color:transparent;" readonly />
+                                            </td>
+                                            <td style="text-align: right; font-size: 13px; ">
+                                                <input type="text" id="phDif" class="td-data" style="background-color:transparent;" readonly />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align: left; font-size: 13px; font-weight: bold;">
+                                                Fecha Valuación
+                                            </td>
+                                            <td style="text-align: right; font-size: 13px; ">
+                                                <input type="text" id="fecvalMun" class="td-data" style="background-color:transparent;" readonly />
+                                            </td>
+                                            <td style="text-align: right; font-size: 13px; ">
+                                                <input type="text" id="fecvalPrv" class="td-data" style="background-color:transparent;" readonly />
+                                            </td>
+                                            <td style="text-align: right; font-size: 13px; ">
+                                                <input type="text" id="fecvalDif" class="td-data" style="background-color:transparent;" readonly />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align: left; font-size: 13px; font-weight: bold;">
+                                                Valor Tierra
+                                            </td>
+                                            <td style="text-align: right; font-size: 13px; ">
+                                                <input type="text" id="valtieMun" class="td-data" style="background-color:transparent;" readonly />
+                                            </td>
+                                            <td style="text-align: right; font-size: 13px; ">
+                                                <input type="text" id="valtiePrv" class="td-data" style="background-color:transparent;" readonly />
+                                            </td>
+                                            <td style="text-align: right; font-size: 13px; ">
+                                                <input type="text" id="valtieDif" class="td-data" style="background-color:transparent;" readonly />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align: left; font-size: 13px; font-weight: bold;">
+                                                Valor Mejora
+                                            </td>
+                                            <td style="text-align: right; font-size: 13px; ">
+                                                <input type="text" id="valmejMun" class="td-data" style="background-color:transparent;" readonly />
+                                            </td>
+                                            <td style="text-align: right; font-size: 13px; ">
+                                                <input type="text" id="valmejPrv" class="td-data" style="background-color:transparent;" readonly />
+                                            </td>
+                                            <td style="text-align: right; font-size: 13px; font-weight: bold;">
+                                                <input type="text" id="valmejDif" class="td-data" style="background-color:transparent;" readonly />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align: left; font-size: 13px; font-weight: bold;">
+                                                Valor Total
+                                            </td>
+                                            <td style="text-align: right; font-size: 13px; ">
+                                                <input type="text" id="valtotMun" class="td-data" style="background-color:transparent;" readonly />
+                                            </td>
+                                            <td style="text-align: right; font-size: 13px; ">
+                                                <input type="text" id="valtotPrv" class="td-data" style="background-color:transparent;" readonly />
+                                            </td>
+                                            <td style="text-align: right; font-size: 13px; ">
+                                                <input type="text" id="valtotDif" class="td-data" style="background-color:transparent;" readonly />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align: left; font-size: 13px; font-weight: bold;">
+                                                Superficie Tierra Registrada
+                                            </td>
+                                            <td style="text-align: right; font-size: 13px; ">
+                                                <input type="text" id="suptieregMun" class="td-data" style="background-color:transparent;" readonly />
+                                            </td>
+                                            <td style="text-align: right; font-size: 13px; ">
+                                                <input type="text" id="suptieregPrv" class="td-data" style="background-color:transparent;" readonly />
+                                            </td>
+                                            <td style="text-align: right; font-size: 13px; ">
+                                                <input type="text" id="suptieregDif" class="td-data" style="background-color:transparent;" readonly />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align: left; font-size: 13px; font-weight: bold;">
+                                                Superficie Tierra Relevada
+                                            </td>
+                                            <td style="text-align: right; font-size: 13px; ">
+                                                <input type="text" id="suptierelMun" class="td-data" style="background-color:transparent;" readonly />
+                                            </td>
+                                            <td style="text-align: right; font-size: 13px; ">
+                                                <input type="text" id="suptierelPrv" class="td-data" style="background-color:transparent;" readonly />
+                                            </td>
+                                            <td style="text-align: right; font-size: 13px; ">
+                                                <input type="text" id="suptierelDif" class="td-data" style="background-color:transparent;" readonly />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align: left; font-size: 13px; font-weight: bold;">
+                                                Unidad Medida
+                                            </td>
+                                            <td style="text-align: right; font-size: 13px; ">
+                                                <input type="text" id="unimedMun" class="td-data" style="background-color:transparent;" readonly />
+                                            </td>
+                                            <td style="text-align: right; font-size: 13px; ">
+                                                <input type="text" id="unimedPrv" class="td-data" style="background-color:transparent;" readonly />
+                                            </td>
+                                            <td style="text-align: right; font-size: 13px; ">
+                                                <input type="text" id="unimedDif" class="td-data" style="background-color:transparent;" readonly />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align: left; font-size: 13px; font-weight: bold;">
+                                                Superficie Mejoras Total Registrada
+                                            </td>
+                                            <td style="text-align: right; font-size: 13px; ">
+                                                <input type="text" id="supmejtotregMun" class="td-data" style="background-color:transparent;" readonly />
+                                            </td>
+                                            <td style="text-align: right; font-size: 13px; ">
+                                                <input type="text" id="supmejtotregPrv" class="td-data" style="background-color:transparent;" readonly />
+                                            </td>
+                                            <td style="text-align: right; font-size: 13px; ">
+                                                <input type="text" id="supmejtotregDif" class="td-data" style="background-color:transparent;" readonly />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align: left; font-size: 13px; font-weight: bold;">
+                                                Superficie Mejoras Total Relevada
+                                            </td>
+                                            <td style="text-align: right; font-size: 13px; ">
+                                                <input type="text" id="supmejtotrelMun" class="td-data" style="background-color:transparent;" readonly />
+                                            </td>
+                                            <td style="text-align: right; font-size: 13px; ">
+                                                <input type="text" id="supmejtotrelPrv" class="td-data" style="background-color:transparent;" readonly />
+                                            </td>
+                                            <td style="text-align: right; font-size: 13px; ">
+                                                <input type="text" id="supmejtotrelDif" class="td-data" style="background-color:transparent;" readonly />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align: left; font-size: 13px; font-weight: bold;">
+                                                Superficie Cubierta Registrada
+                                            </td>
+                                            <td style="text-align: right; font-size: 13px; ">
+                                                <input type="text" id="supcubregMun" class="td-data" style="background-color:transparent;" readonly />
+                                            </td>
+                                            <td style="text-align: right; font-size: 13px; ">
+                                                <input type="text" id="supcubregPrv" class="td-data" style="background-color:transparent;" readonly />
+                                            </td>
+                                            <td style="text-align: right; font-size: 13px; ">
+                                                <input type="text" id="supcubregDif" class="td-data" style="background-color:transparent;" readonly />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align: left; font-size: 13px; font-weight: bold;">
+                                                Construcción Semicubierta Registrada
+                                            </td>
+                                            <td style="text-align: right; font-size: 13px; ">
+                                                <input type="text" id="consemregMun" class="td-data" style="background-color:transparent;" readonly />
+                                            </td>
+                                            <td style="text-align: right; font-size: 13px; ">
+                                                <input type="text" id="consemregPrv" class="td-data" style="background-color:transparent;" readonly />
+                                            </td>
+                                            <td style="text-align: right; font-size: 13px; ">
+                                                <input type="text" id="consemregDif" class="td-data" style="background-color:transparent;" readonly />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align: left; font-size: 13px; font-weight: bold;">
+                                                Construcción Negocio Registrada
+                                            </td>
+                                            <td style="text-align: right; font-size: 13px; ">
+                                                <input type="text" id="connegregMun" class="td-data" style="background-color:transparent;" readonly />
+                                            </td>
+                                            <td style="text-align: right; font-size: 13px; ">
+                                                <input type="text" id="connegregPrv" class="td-data" style="background-color:transparent;" readonly />
+                                            </td>
+                                            <td style="text-align: right; font-size: 13px; ">
+                                                <input type="text" id="connegregDif" class="td-data" style="background-color:transparent;" readonly />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align: left; font-size: 13px; font-weight: bold;">
+                                                Piscina Registrada
+                                            </td>
+                                            <td style="text-align: right; font-size: 13px; ">
+                                                <input type="text" id="pisregMun" class="td-data" style="background-color:transparent;" readonly />
+                                            </td>
+                                            <td style="text-align: right; font-size: 13px; ">
+                                                <input type="text" id="pisregPrv" class="td-data" style="background-color:transparent;" readonly />
+                                            </td>
+                                            <td style="text-align: right; font-size: 13px; ">
+                                                <input type="text" id="pisregDif" class="td-data" style="background-color:transparent;" readonly />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align: left; font-size: 13px; font-weight: bold;">
+                                                Pavimento Registrada
+                                            </td>
+                                            <td style="text-align: right; font-size: 13px; ">
+                                                <input type="text" id="pavregMun" class="td-data" style="background-color:transparent;" readonly />
+                                            </td>
+                                            <td style="text-align: right; font-size: 13px; ">
+                                                <input type="text" id="pavregPrv" class="td-data" style="background-color:transparent;" readonly />
+                                            </td>
+                                            <td style="text-align: right; font-size: 13px; ">
+                                                <input type="text" id="pavregDif" class="td-data" style="background-color:transparent;" readonly />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align: left; font-size: 13px; font-weight: bold;">
+                                                Construcción Cubierta Relevada
+                                            </td>
+                                            <td style="text-align: right; font-size: 13px; ">
+                                                <input type="text" id="concubrelMun" class="td-data" style="background-color:transparent;" readonly />
+                                            </td>
+                                            <td style="text-align: right; font-size: 13px; ">
+                                                <input type="text" id="concubrelPrv" class="td-data" style="background-color:transparent;" readonly />
+                                            </td>
+                                            <td style="text-align: right; font-size: 13px; ">
+                                                <input type="text" id="concubrelDif" class="td-data" style="background-color:transparent;" readonly />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align: left; font-size: 13px; font-weight: bold;">
+                                                Construcción Semicubierta Relevada
+                                            </td>
+                                            <td style="text-align: right; font-size: 13px; ">
+                                                <input type="text" id="consemcubrelMun" class="td-data" style="background-color:transparent;" readonly />
+                                            </td>
+                                            <td style="text-align: right; font-size: 13px; ">
+                                                <input type="text" id="consemcubrelPrv" class="td-data" style="background-color:transparent;" readonly />
+                                            </td>
+                                            <td style="text-align: right; font-size: 13px; ">
+                                                <input type="text" id="consemcubrelDif" class="td-data" style="background-color:transparent;" readonly />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align: left; font-size: 13px; font-weight: bold;">
+                                                Construcción Galpón Relevada
+                                            </td>
+                                            <td style="text-align: right; font-size: 13px; ">
+                                                <input type="text" id="congalrelMun" class="td-data" style="background-color:transparent;" readonly />
+                                            </td>
+                                            <td style="text-align: right; font-size: 13px; ">
+                                                <input type="text" id="congalrelPrv" class="td-data" style="background-color:transparent;" readonly />
+                                            </td>
+                                            <td style="text-align: right; font-size: 13px; ">
+                                                <input type="text" id="congalrelDif" class="td-data" style="background-color:transparent;" readonly />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align: left; font-size: 13px; font-weight: bold;">
+                                                Piscina Relevada
+                                            </td>
+                                            <td style="text-align: right; font-size: 13px; ">
+                                                <input type="text" id="pisrelMun" class="td-data" style="background-color:transparent;" readonly />
+                                            </td>
+                                            <td style="text-align: right; font-size: 13px; ">
+                                                <input type="text" id="pisrelPrv" class="td-data" style="background-color:transparent;" readonly />
+                                            </td>
+                                            <td style="text-align: right; font-size: 13px; ">
+                                                <input type="text" id="pisrelDif" class="td-data" style="background-color:transparent;" readonly />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align: left; font-size: 13px; font-weight: bold;">
+                                                Deportiva Relevada
+                                            </td>
+                                            <td style="text-align: right; font-size: 13px; ">
+                                                <input type="text" id="deprelMun" class="td-data" style="background-color:transparent;" readonly />
+                                            </td>
+                                            <td style="text-align: right; font-size: 13px; ">
+                                                <input type="text" id="deprelPrv" class="td-data" style="background-color:transparent;" readonly />
+                                            </td>
+                                            <td style="text-align: right; font-size: 13px; ">
+                                                <input type="text" id="deprelDif" class="td-data" style="background-color:transparent;" readonly />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align: left; font-size: 13px; font-weight: bold;">
+                                                En Construcción Relevada
+                                            </td>
+                                            <td style="text-align: right; font-size: 13px; ">
+                                                <input type="text" id="enconrelMun" class="td-data" style="background-color:transparent;" readonly />
+                                            </td>
+                                            <td style="text-align: right; font-size: 13px; ">
+                                                <input type="text" id="enconrelPrv" class="td-data" style="background-color:transparent;" readonly />
+                                            </td>
+                                            <td style="text-align: right; font-size: 13px; ">
+                                                <input type="text" id="enconrelDif" class="td-data" style="background-color:transparent;" readonly />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align: left; font-size: 13px; font-weight: bold;">
+                                                Precaria Relevada
+                                            </td>
+                                            <td style="text-align: right; font-size: 13px; ">
+                                                <input type="text" id="prerelMun" class="td-data" style="background-color:transparent;" readonly />
+                                            </td>
+                                            <td style="text-align: right; font-size: 13px; ">
+                                                <input type="text" id="prerelPrv" class="td-data" style="background-color:transparent;" readonly />
+                                            </td>
+                                            <td style="text-align: right; font-size: 13px; ">
+                                                <input type="text" id="prerelDif" class="td-data" style="background-color:transparent;" readonly />
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="col-xs-6 pull-right">
+                <a class="icons-group fa pull-right" href="#" data-placement="right" onclick="javascript: generarGrillaNovedadesDetalle();">
+                    <i class="fa fa-file-excel-o fa-2x light-blue cursor-pointer" title="Exportar a Excel"></i>
+                </a>
+                @*<a class="icons-group fa pull-right" href="#" data-placement="right" onclick="">
+                        <i onclick="GeoSIT.VerEnMapa([['E10043901']], [403])" class="fa fa-map-marker fa-2x light-blue cursor-pointer"></i>
+                    </a>*@
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function showModalDetalle(id) {
+        //debugger;
+
+        var diferencia = @Html.Raw(Json.Encode(Model.ListaDiferencias));
+        var i = 0;
+
+        $("#idDiferencia").val(id);
+
+        for (var propiedad in diferencia) {
+            if (diferencia.hasOwnProperty(propiedad)) {
+
+                if (diferencia[i]["IdDiferencia"] == id) {
+                    //Partida
+                    $("#parcela").val(diferencia[i]["MunPartida"]);
+                    //Nomenclatura
+                    $("#nomCatMun").val(diferencia[i]["MunNomenclatura"]);
+                    $("#nomCatPrv").val(diferencia[i]["PrvNomenclatura"]);
+                    if (diferencia[i]["MunNomenclatura"] != diferencia[i]["PrvNomenclatura"]) {
+                        $("#nomCatDif").val("SI");
+                    }
+                    else {
+                        $("#nomCatDif").val("-");
+                    }
+                    //Tipo
+                    $("#tipoMun").val(diferencia[i]["MunTipo"]);
+                    $("#tipoPrv").val(diferencia[i]["PrvTipo"]);
+                    if (diferencia[i]["MunTipo"] != diferencia[i]["PrvTipo"]) {
+                        $("#tipoDif").val("SI");
+                    }
+                    else {
+                        $("#tipoDif").val("-");
+                    }
+                    //Ubicación
+                    $("#ubicacionMun").val(diferencia[i]["MunUbicacion"]);
+                    $("#ubicacionPrv").val(diferencia[i]["PrvUbicacion"]);
+                    if (diferencia[i]["MunUbicacion"] != diferencia[i]["PrvUbicacion"]) {
+                        $("#ubicacionDif").val("SI");
+                    }
+                    else {
+                        $("#ubicacionDif").val("-");
+                    }
+                    //Coordenadas
+                    $("#coordenadasMun").val(diferencia[i]["MunCoordenadas"]);
+                    $("#coordenadasPrv").val(diferencia[i]["PrvCoordenadas"]);
+                    if (diferencia[i]["MunCoordenadas"] != diferencia[i]["PrvCoordenadas"]) {
+                        $("#coordenadasDif").val("SI");
+                    }
+                    else {
+                        $("#coordenadasDif").val("-");
+                    }
+                    //PH
+                    $("#phMun").val(diferencia[i]["MunPH"]);
+                    $("#phPrv").val(diferencia[i]["PrvPH"]);
+                    if (diferencia[i]["MunPH"] != diferencia[i]["PrvPH"]) {
+                        $("#phDif").val("SI");
+                    }
+                    else {
+                        $("#phDif").val("-");
+                    }
+                    //Fecha Valución
+                    var fecha = new Date(parseInt(diferencia[i]["MunFechaValuacion"].substring(6, 19)));
+                    $("#fecvalMun").val(fecha.getDate() + "/" + fecha.getMonth() + "/" + fecha.getFullYear());
+                    fecha = new Date(parseInt(diferencia[i]["PrvFechaValuacion"].substring(6, 19)));
+                    $("#fecvalPrv").val(fecha.getDate() + "/" + fecha.getMonth() + "/" + fecha.getFullYear());
+                    $("#fecvalDif").val(" ");
+                    //Valor Tierra
+                    $("#valtieMun").val(diferencia[i]["MunValorTierra"]);
+                    $("#valtiePrv").val(diferencia[i]["PrvValorTierra"]);
+                    $("#valtieDif").val(" ");
+                    //Valor Mejoras
+                    $("#valmejMun").val(diferencia[i]["MunValorMejoras"]);
+                    $("#valmejPrv").val(diferencia[i]["PrvValorMejoras"]);
+                    $("#valmejDif").val(" ");
+                    //Valor Total
+                    $("#valtotMun").val(diferencia[i]["MunValorTotal"]);
+                    $("#valtotPrv").val(diferencia[i]["PrvValorTotal"]);
+                    $("#valtotDif").val(" ");
+                    //Superficie Tierra Registrada
+                    $("#suptieregMun").val(diferencia[i]["MunSupTierraRegis"]);
+                    $("#suptieregPrv").val(diferencia[i]["PrvSupTierraRegis"]);
+                    if (diferencia[i]["MunSupTierraRegis"] != diferencia[i]["PrvSupTierraRegis"]) {
+                        $("#suptieregDif").val(Math.abs(diferencia[i]["MunSupTierraRegis"] - diferencia[i]["PrvSupTierraRegis"]));
+                    }
+                    else {
+                        $("#suptieregDif").val("-");
+                    }
+                    //Superficie Tierra Relevada
+                    $("#suptierelMun").val(diferencia[i]["MunSupTierraRelev"]);
+                    $("#suptierelPrv").val(diferencia[i]["PrvSupTierraRelev"]);
+                    if (diferencia[i]["MunSupTierraRelev"] != diferencia[i]["PrvSupTierraRelev"]) {
+                        $("#suptierelDif").val(Math.abs(diferencia[i]["MunSupTierraRelev"] - diferencia[i]["PrvSupTierraRelev"]));
+                    }
+                    else {
+                        $("#suptierelDif").val("-");
+                    }
+                    //Unidad Medida
+                    $("#unimedMun").val(diferencia[i]["MunUnidadMedida"]);
+                    $("#unimedPrv").val(diferencia[i]["PrvUnidadMedida"]);
+                    if (diferencia[i]["MunUnidadMedida"] != diferencia[i]["PrvUnidadMedida"]) {
+                        $("#unimedDif").val("SI");
+                    }
+                    else {
+                        $("#unimedDif").val("-");
+                    }
+                    //Superficie Mejoras Total Registrada
+                    $("#supmejtotregMun").val(diferencia[i]["MunSupMejoraRegis"]);
+                    $("#supmejtotregPrv").val(diferencia[i]["PrvSupMejoraRegis"]);
+                    if (diferencia[i]["MunSupMejoraRegis"] != diferencia[i]["PrvSupMejoraRegis"]) {
+                        $("#supmejtotregDif").val(Math.abs(diferencia[i]["MunSupMejoraRegis"] - diferencia[i]["PrvSupMejoraRegis"]));
+                    }
+                    else {
+                        $("#supmejtotregDif").val("-");
+                    }
+                    //Superficie Mejoras Total Relevada
+                    $("#supmejtotrelMun").val(diferencia[i]["MunSupMejoraRelev"]);
+                    $("#supmejtotrelPrv").val(diferencia[i]["PrvSupMejoraRelev"]);
+                    if (diferencia[i]["MunSupMejoraRelev"] != diferencia[i]["PrvSupMejoraRelev"]) {
+                        $("#supmejtotrelDif").val(Math.abs(diferencia[i]["MunSupMejoraRelev"] - diferencia[i]["PrvSupMejoraRelev"]));
+                    }
+                    else {
+                        $("#supmejtotrelDif").val("-");
+                    }
+                    //Superficie Cubierta Registrada
+                    $("#supcubregMun").val(diferencia[i]["MunSupCubiertaRegis"]);
+                    $("#supcubregPrv").val(diferencia[i]["PrvSupCubiertaRegis"]);
+                    if (diferencia[i]["MunSupCubiertaRegis"] != diferencia[i]["PrvSupCubiertaRegis"]) {
+                        $("#supcubregDif").val(Math.abs(diferencia[i]["MunSupCubiertaRegis"] - diferencia[i]["PrvSupCubiertaRegis"]));
+                    }
+                    else {
+                        $("#supcubregDif").val("-");
+                    }
+                    //Construcción Semicubierta Registrada
+                    $("#consemregMun").val(diferencia[i]["MunSupSemicubRegis"]);
+                    $("#consemregPrv").val(diferencia[i]["PrvSupSemicubRegis"]);
+                    if (diferencia[i]["MunSupSemicubRegis"] != diferencia[i]["PrvSupSemicubRegis"]) {
+                        $("#consemregDif").val(Math.abs(diferencia[i]["MunSupSemicubRegis"] - diferencia[i]["PrvSupSemicubRegis"]));
+                    }
+                    else {
+                        $("#consemregDif").val("-");
+                    }
+                    //Construcción Negocio Registrada
+                    $("#connegregMun").val(diferencia[i]["MunSupNegocioRegis"]);
+                    $("#connegregPrv").val(diferencia[i]["PrvSupNegocioRegis"]);
+                    if (diferencia[i]["MunSupNegocioRegis"] != diferencia[i]["PrvSupNegocioRegis"]) {
+                        $("#connegregDif").val(Math.abs(diferencia[i]["MunSupNegocioRegis"] - diferencia[i]["PrvSupNegocioRegis"]));
+                    }
+                    else {
+                        $("#connegregDif").val("-");
+                    }
+                    //Piscina Registrada
+                    $("#pisregMun").val(diferencia[i]["MunSupPiscinaRegis"]);
+                    $("#pisregPrv").val(diferencia[i]["PrvSupPiscinaRegis"]);
+                    if (diferencia[i]["MunSupPiscinaRegis"] != diferencia[i]["PrvSupPiscinaRegis"]) {
+                        $("#pisregDif").val(Math.abs(diferencia[i]["MunSupPiscinaRegis"] - diferencia[i]["PrvSupPiscinaRegis"]));
+                    }
+                    else {
+                        $("#pisregDif").val("-");
+                    }
+                    //Pavimento Registrada
+                    $("#pavregMun").val(diferencia[i]["MunSupPavimentoRegis"]);
+                    $("#pavregPrv").val(diferencia[i]["PrvSupPavimentoRegis"]);
+                    if (diferencia[i]["MunSupPavimentoRegis"] != diferencia[i]["PrvSupPavimentoRegis"]) {
+                        $("#pavregDif").val(Math.abs(diferencia[i]["MunSupPavimentoRegis"] - diferencia[i]["PrvSupPavimentoRegis"]));
+                    }
+                    else {
+                        $("#pavregDif").val("-");
+                    }
+                    //Construcción Cubierta Relevada
+                    $("#concubrelMun").val(diferencia[i]["MunSupCubiertaRelev"]);
+                    $("#concubrelPrv").val(diferencia[i]["PrvSupCubiertaRelev"]);
+                    if (diferencia[i]["MunSupCubiertaRelev"] != diferencia[i]["PrvSupCubiertaRelev"]) {
+                        $("#concubrelDif").val(Math.abs(diferencia[i]["MunSupCubiertaRelev"] - diferencia[i]["PrvSupCubiertaRelev"]));
+                    }
+                    else {
+                        $("#concubrelDif").val("-");
+                    }
+                    //Construcción Semicubierta Relevada
+                    $("#consemcubrelMun").val(diferencia[i]["MunSupSemicubRelev"]);
+                    $("#consemcubrelPrv").val(diferencia[i]["PrvSupSemicubRelev"]);
+                    if (diferencia[i]["MunSupSemicubRelev"] != diferencia[i]["PrvSupSemicubRelev"]) {
+                        $("#consemcubrelDif").val(Math.abs(diferencia[i]["MunSupSemicubRelev"] - diferencia[i]["PrvSupSemicubRelev"]));
+                    }
+                    else {
+                        $("#consemcubrelDif").val("-");
+                    }
+                    //Construcción Galpón Relevada
+                    $("#congalrelMun").val(diferencia[i]["MunSupGalponRelev"]);
+                    $("#congalrelPrv").val(diferencia[i]["PrvSupGalponRelev"]);
+                    if (diferencia[i]["MunSupGalponRelev"] != diferencia[i]["PrvSupGalponRelev"]) {
+                        $("#congalrelDif").val(Math.abs(diferencia[i]["MunSupGalponRelev"] - diferencia[i]["PrvSupGalponRelev"]));
+                    }
+                    else {
+                        $("#congalrelDif").val("-");
+                    }
+                    //Piscina Relevada
+                    $("#pisrelMun").val(diferencia[i]["MunSupPiscinaRelev"]);
+                    $("#pisrelPrv").val(diferencia[i]["PrvSupPiscinaRelev"]);
+                    if (diferencia[i]["MunSupPiscinaRelev"] != diferencia[i]["PrvSupPiscinaRelev"]) {
+                        $("#pisrelDif").val(Math.abs(diferencia[i]["MunSupPiscinaRelev"] - diferencia[i]["PrvSupPiscinaRelev"]));
+                    }
+                    else {
+                        $("#pisrelDif").val("-");
+                    }
+                    //Deportiva Relevada
+                    $("#deprelMun").val(diferencia[i]["MunSupDeportivaRelev"]);
+                    $("#deprelPrv").val(diferencia[i]["PrvSupDeportivaRelev"]);
+                    if (diferencia[i]["MunSupDeportivaRelev"] != diferencia[i]["PrvSupDeportivaRelev"]) {
+                        $("#deprelDif").val(Math.abs(diferencia[i]["MunSupDeportivaRelev"] - diferencia[i]["PrvSupDeportivaRelev"]));
+                    }
+                    else {
+                        $("#deprelDif").val("-");
+                    }
+                    //En Construcción Relevada
+                    $("#enconrelMun").val(diferencia[i]["MunSupEnContRelev"]);
+                    $("#enconrelPrv").val(diferencia[i]["PrvSupEnConstRelev"]);
+                    if (diferencia[i]["MunSupEnContRelev"] != diferencia[i]["PrvSupEnConstRelev"]) {
+                        $("#enconrelDif").val(Math.abs(diferencia[i]["MunSupEnContRelev"] - diferencia[i]["PrvSupEnConstRelev"]));
+                    }
+                    else {
+                        $("#enconrelDif").val("-");
+                    }
+                    //Precaria Relevada
+                    $("#prerelMun").val(diferencia[i]["MunSupPrecariaRelev"]);
+                    $("#prerelPrv").val(diferencia[i]["PrvSupPrecariaRelev"]);
+                    if (diferencia[i]["MunSupPrecariaRelev"] != diferencia[i]["PrvSupPrecariaRelev"]) {
+                        $("#prerelDif").val(Math.abs(diferencia[i]["MunSupPrecariaRelev"] - diferencia[i]["PrvSupPrecariaRelev"]));
+                    }
+                    else {
+                        $("#prerelDif").val("-");
+                    }
+
+                    break;
+                }
+                i++;
+            }
+        }
+
+        $("#modal-gestionDetalleNovedades").modal('show');
+        hideLoading();
+        return false;
+    }
+</script>
+
+<script src="~/Scripts/jquery.dataTables.min.js"></script>
+<script src="~/Scripts/dataTables.bootstrap.js"></script>
+<script src="~/Scripts/dataTables.checkboxes.min.js"></script>
+<script src="~/Scripts/InterfaseProvincial/gestionnovedades.js"></script>
+<script src="~/Scripts/dataTables.buttons.min.js"></script>
+<script src="~/Scripts/jszip.min.js"></script>
+<script src="~/Scripts/buttons.html5.min.js"></script>

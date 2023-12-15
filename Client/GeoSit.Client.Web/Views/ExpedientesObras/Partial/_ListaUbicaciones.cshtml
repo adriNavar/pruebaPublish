@@ -1,0 +1,23 @@
+﻿@model IEnumerable<GeoSit.Data.BusinessEntities.ObrasParticulares.UbicacionExpedienteObra>
+
+@foreach (var u in Model)
+{
+    <tr>
+        <td class="hide">@u.DomicilioInmuebleId</td>
+        <td>@u.NombreVia</td>
+        <td>@u.NumeroPuerta</td>
+        <td>@u.Barrio</td>
+        <td>@u.CodigoPostal</td>
+        <td>@if (u.DomicilioPrimario == true)
+            {
+                <span class='fa fa-home fa-2x black' data-toggle="tooltip" data-placement="top" data-original-title="Domicilio Primario"></span>
+            }
+            else
+            {
+
+                <span></span>
+            }
+        </td>
+        <td class="hide">@(u.DomicilioPrimario == true ? "Si" : "No")</td>
+    </tr>
+}

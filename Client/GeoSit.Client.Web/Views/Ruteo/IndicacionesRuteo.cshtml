@@ -1,0 +1,88 @@
+﻿@model GeoSit.Client.Web.Models.RuteoModel
+
+<link href="~/Content/Ruteo/IndicacionesRuteo.css" rel="stylesheet" />
+
+<div class="modal fade modeless" id="modal-window-indicaciones" tabindex="-1" data-backdrop="false" role="dialog" aria-labelledby="modal-windowLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title col-lg-11 col-xs-11 col-sm-11 col-md-11">@Model.Modo</h3>
+                <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer" style="padding-top: 3px; margin-left: 35px;" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+            </div>
+            <div class="modal-body indicaciones-body">
+                <div class="indicaciones-content">
+                    <div class="panel-group accordion" id="accordion-objetos">
+                        <input type="hidden" id="hdfPolyline" value="@Model.OverviewPolyline" />
+                        <div class="panel-primary">
+                            @foreach (var objeto in Model.Waypoints)
+                            {
+                                <div class="section-position">
+                                    <div class='panel-heading bg-primary'>
+                                        @if (objeto.Indicaciones.Count > 0)
+                                        {
+                                            <a data-toggle='collapse' data-parent='#accordion-objetos' href='#collapseObjeto_@objeto.ObjetoId'
+                                               aria-controls='collapseObjeto_@objeto.ObjetoId' aria-expanded="false" class="collapsed">
+                                                <div class='panel-title'>
+                                                    <span class="titulo-objeto" data-toggle="tooltip" title="@objeto.Descripcion (@objeto.Direccion)">
+                                                        @objeto.Descripcion (@objeto.Direccion)
+                                                    </span>
+                                                    <i class="fa"></i>
+                                                </div>
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <a>
+                                                <div class='panel-title'>
+                                                    <span class="titulo-objeto" data-toggle="tooltip" title="@objeto.Descripcion (@objeto.Direccion)">
+                                                        @objeto.Descripcion (@objeto.Direccion)
+                                                    </span>
+                                                </div>
+                                            </a>
+                                        }
+                                    </div>
+                                    <div id='collapseObjeto_@objeto.ObjetoId' class='panel-collapse collapse' aria-expanded="false">
+                                        <div name="marker-object-@objeto.ObjetoId">
+                                            <input name="name" type="hidden" value="@objeto.Descripcion" />
+                                            <input name="address" type="hidden" value="@objeto.Direccion" />
+                                            <input name="lat" type="hidden" value="@objeto.Latitud" />
+                                            <input name="lon" type="hidden" value="@objeto.Longitud" />
+                                        </div>
+                                        <div class="panel-body">
+                                            <table class="adp" width="100%">
+                                                <tbody>
+                                                    @foreach (var indicacion in objeto.Indicaciones)
+                                                    {
+                                                        <tr>
+                                                            <td class="adp-substep">
+                                                                <div class="adp-stepicon">
+                                                                    <div class="adp-maneuver adp-@indicacion.Maniobra"></div>
+                                                                </div>
+                                                            </td>
+                                                            <td class="adp-substep">@indicacion.Orden.</td>
+                                                            <td class="adp-substep">@Html.Raw(indicacion.Texto)</td>
+                                                            <td class="adp-substep">
+                                                                <div class="adp-distance">@indicacion.Distancia</div>
+                                                            </td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <span aria-hidden="true" aria-controls="button" data-placement="right" title="Atras" data-original-title="Atras" class="fa fa-arrow-circle-left light-blue fa-3x cursor-pointer" style="padding-right: 15px;"></span>
+                <span aria-hidden="true" aria-controls="button" data-placement="right" title="Exportar" data-original-title="Exportar" class="fa fa-download light-blue fa-3x cursor-pointer"></span>
+            </div>
+
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="~/Scripts/Mapas/polyline.js"></script>
+<script type="text/javascript" src="~/Scripts/Ruteo/IndicacionesRuteo.js"></script>

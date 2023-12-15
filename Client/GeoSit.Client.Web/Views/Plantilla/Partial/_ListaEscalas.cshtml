@@ -1,0 +1,14 @@
+﻿@using Newtonsoft.Json
+@model IEnumerable<GeoSit.Data.BusinessEntities.ModuloPloteo.PlantillaEscala>
+           
+@foreach (var pe in Model)
+{
+    <tr>
+        <td class="hide">@pe.IdPlantillaEscala</td>
+        <td>@pe.Escala</td>
+    </tr>
+}
+
+<script>
+    var modelEscalas = @Html.Raw(JsonConvert.SerializeObject(Model))
+</script>

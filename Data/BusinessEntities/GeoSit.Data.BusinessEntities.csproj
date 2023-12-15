@@ -1,0 +1,708 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{AD3C9F66-1110-4666-9DC4-0960018C3066}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>GeoSit.Data.BusinessEntities</RootNamespace>
+    <AssemblyName>GeoSit.Data.BusinessEntities</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentValidation, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7de548da2fbae0f0, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\FluentValidation.9.1.1\lib\net461\FluentValidation.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Oracle.ManagedDataAccess, Version=4.122.19.1, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Oracle.ManagedDataAccess.19.8.0\lib\net40\Oracle.ManagedDataAccess.dll</HintPath>
+    </Reference>
+    <Reference Include="Oracle.ManagedDataAccess.EntityFramework, Version=6.122.19.1, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Oracle.ManagedDataAccess.EntityFramework.19.7.0\lib\net45\Oracle.ManagedDataAccess.EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.ComponentModel.Annotations, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.ComponentModel.Annotations.4.7.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Data.Entity" />
+    <Reference Include="System.Spatial, Version=5.8.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Spatial.5.8.4\lib\net40\System.Spatial.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Actas\ActaActaRel.cs" />
+    <Compile Include="Actas\ActaDomicilio.cs" />
+    <Compile Include="Actas\ActaEstado.cs" />
+    <Compile Include="AuditableEntity.cs" />
+    <Compile Include="Certificados\INMCertificadoCatastral.cs" />
+    <Compile Include="Common\AccionParameters.cs" />
+    <Compile Include="Common\DataTableResult.cs" />
+    <Compile Include="Common\Enumerators.cs" />
+    <Compile Include="Common\MELibroDiarioParameters.cs" />
+    <Compile Include="Common\METramiteParameters.cs" />
+    <Compile Include="Common\MERemitoParameters.cs" />
+    <Compile Include="Common\OperacionParcela.cs" />
+    <Compile Include="Common\TiposCaracteristicas.cs" />
+    <Compile Include="DeclaracionesJuradas\DDJJ.cs" />
+    <Compile Include="DeclaracionesJuradas\DDJJUMedidaLineal.cs" />
+    <Compile Include="DeclaracionesJuradas\DDJJUFracciones.cs" />
+    <Compile Include="DeclaracionesJuradas\DDJJUOtrasCar.cs" />
+    <Compile Include="DeclaracionesJuradas\DDJJU.cs" />
+    <Compile Include="DeclaracionesJuradas\DecretoAplicado.cs" />
+    <Compile Include="DeclaracionesJuradas\INMInciso.cs" />
+    <Compile Include="DeclaracionesJuradas\INMLibreDeDeuda.cs" />
+    <Compile Include="DeclaracionesJuradas\INMMejoraCaracteristica.cs" />
+    <Compile Include="DeclaracionesJuradas\INMMejoraOtraCar.cs" />
+    <Compile Include="DeclaracionesJuradas\INMOtraCaracteristica.cs" />
+    <Compile Include="DeclaracionesJuradas\INMTipoCaracteristica.cs" />
+    <Compile Include="DeclaracionesJuradas\INMDestinoMejora.cs" />
+    <Compile Include="DeclaracionesJuradas\INMCaracteristica.cs" />
+    <Compile Include="DeclaracionesJuradas\INMMejora.cs" />
+    <Compile Include="DeclaracionesJuradas\OCObjeto.cs" />
+    <Compile Include="DeclaracionesJuradas\VALClasesParcelasMedidaLineal.cs" />
+    <Compile Include="DeclaracionesJuradas\VALCoefDepreciacion.cs" />
+    <Compile Include="DeclaracionesJuradas\VALCoeficientesProrrateo.cs" />
+    <Compile Include="DeclaracionesJuradas\VALCoeficientesOtrasCar.cs" />
+    <Compile Include="DeclaracionesJuradas\VALCoeficientesIncisos.cs" />
+    <Compile Include="DeclaracionesJuradas\VALCoefTriangVertice.cs" />
+    <Compile Include="DeclaracionesJuradas\VALCoefTriangFrente.cs" />
+    <Compile Include="DeclaracionesJuradas\VALCoefMayor15k.cs" />
+    <Compile Include="DeclaracionesJuradas\VALCoef2a15k.cs" />
+    <Compile Include="DeclaracionesJuradas\VALCoefEsquinaMenor900.cs" />
+    <Compile Include="DeclaracionesJuradas\VALValoresOptSuburbanos.cs" />
+    <Compile Include="DeclaracionesJuradas\VALValoresOptRurales.cs" />
+    <Compile Include="DeclaracionesJuradas\VALDecreto.cs" />
+    <Compile Include="DeclaracionesJuradas\VALDecretoZona.cs" />
+    <Compile Include="DeclaracionesJuradas\VALDecretoJurisdiccion.cs" />
+    <Compile Include="DeclaracionesJuradas\VALCoefMenor2k.cs" />
+    <Compile Include="DeclaracionesJuradas\VALPuntajesLocalidades.cs" />
+    <Compile Include="DeclaracionesJuradas\VALPuntajesEmbarques.cs" />
+    <Compile Include="DeclaracionesJuradas\VALPuntajesCaminos.cs" />
+    <Compile Include="DeclaracionesJuradas\VALValuacionDecreto.cs" />
+    <Compile Include="DeclaracionesJuradas\VALValuacion.cs" />
+    <Compile Include="DeclaracionesJuradas\VALTiposMedidasLineales.cs" />
+    <Compile Include="DeclaracionesJuradas\VALClasesParcelas.cs" />
+    <Compile Include="DeclaracionesJuradas\VALAptCar.cs" />
+    <Compile Include="DeclaracionesJuradas\VALSuperficies.cs" />
+    <Compile Include="DeclaracionesJuradas\VALAptitudes.cs" />
+    <Compile Include="DeclaracionesJuradas\DDJJSorOtrasCar.cs" />
+    <Compile Include="DeclaracionesJuradas\DDJJSorCar.cs" />
+    <Compile Include="DeclaracionesJuradas\DDJJSorCaracteristicas.cs" />
+    <Compile Include="DeclaracionesJuradas\DDJJSor.cs" />
+    <Compile Include="DeclaracionesJuradas\DDJJSorTipoCaracteristica.cs" />
+    <Compile Include="DeclaracionesJuradas\DDJJDesignacion.cs" />
+    <Compile Include="DeclaracionesJuradas\DDJJPersonaDomicilio.cs" />
+    <Compile Include="DeclaracionesJuradas\DDJJDominioTitular.cs" />
+    <Compile Include="DeclaracionesJuradas\DDJJOrigen.cs" />
+    <Compile Include="DeclaracionesJuradas\DDJJVersion.cs" />
+    <Compile Include="DeclaracionesJuradas\DDJJDominio.cs" />
+    <Compile Include="Designaciones\Designacion.cs" />
+    <Compile Include="Designaciones\TipoDesignador.cs" />
+    <Compile Include="Documentos\AtributosDocumento.cs" />
+    <Compile Include="Documentos\DocumentoArchivo.cs" />
+    <Compile Include="Actas\ActaResultadoBusqueda.cs" />
+    <Compile Include="Common\Extensions.cs" />
+    <Compile Include="Documentos\InformeEstadoTramite.cs" />
+    <Compile Include="EditorGrafico\GrillaTramoVia.cs" />
+    <Compile Include="EditorGrafico\GrillaBarrio.cs" />
+    <Compile Include="EditorGrafico\GrillaMunicipio.cs" />
+    <Compile Include="EditorGrafico\GrillaSeccion.cs" />
+    <Compile Include="EditorGrafico\GrillaJurisdiccion.cs" />
+    <Compile Include="EditorGrafico\GrillaManzana.cs" />
+    <Compile Include="GlobalResources\EstadosParcelas.Designer.cs">
+      <DependentUpon>EstadosParcelas.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="GlobalResources\TiposParcelaOperacion.Designer.cs">
+      <DependentUpon>TiposParcelaOperacion.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="GlobalResources\ClasesParcelas.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ClasesParcelas.resx</DependentUpon>
+    </Compile>
+    <Compile Include="GlobalResources\Entradas.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Entradas.resx</DependentUpon>
+    </Compile>
+    <Compile Include="GlobalResources\Eventos.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Eventos.resx</DependentUpon>
+    </Compile>
+    <Compile Include="GlobalResources\Mensajes.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Mensajes.resx</DependentUpon>
+    </Compile>
+    <Compile Include="GlobalResources\Objetos.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Objetos.resx</DependentUpon>
+    </Compile>
+    <Compile Include="GlobalResources\TiposMensuras.Designer.cs">
+      <DependentUpon>TiposMensuras.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="GlobalResources\ObjetosTramites.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ObjetosTramites.resx</DependentUpon>
+    </Compile>
+    <Compile Include="GlobalResources\TiposObjetoAdministrativo.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TiposObjetoAdministrativo.resx</DependentUpon>
+    </Compile>
+    <Compile Include="GlobalResources\TiposOperacion.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TiposOperacion.resx</DependentUpon>
+    </Compile>
+    <Compile Include="GlobalResources\TiposTramites.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>TiposTramites.resx</DependentUpon>
+    </Compile>
+    <Compile Include="GlobalResources\VersionesDDJJ.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>VersionesDDJJ.resx</DependentUpon>
+    </Compile>
+    <Compile Include="ILogicInterfaces\IBajaLogica.cs" />
+    <Compile Include="ILogicInterfaces\ITemporalTramite.cs" />
+    <Compile Include="Inmuebles\AtributosZonificacion.cs" />
+    <Compile Include="Inmuebles\ClaseParcela.cs" />
+    <Compile Include="Documentos\Documento.cs" />
+    <Compile Include="Documentos\TipoDocumento.cs" />
+    <Compile Include="Inmuebles\Dominio.cs" />
+    <Compile Include="Inmuebles\DominioTitular.cs" />
+    <Compile Include="Inmuebles\DominioUT.cs" />
+    <Compile Include="Inmuebles\EstadoDeudaRenta.cs" />
+    <Compile Include="Inmuebles\EstadoDeudaServicioGeneral.cs" />
+    <Compile Include="Inmuebles\EstadoParcela.cs" />
+    <Compile Include="Inmuebles\EstadoPartida.cs" />
+    <Compile Include="Inmuebles\InformeActaVencida.cs" />
+    <Compile Include="Inmuebles\EstadoMensura.cs" />
+    <Compile Include="Inmuebles\MensuraDocumento.cs" />
+    <Compile Include="Inmuebles\MensuraRelacionada.cs" />
+    <Compile Include="Inmuebles\TipoMensura.cs" />
+    <Compile Include="Inmuebles\MensuraSecuencia.cs" />
+    <Compile Include="Inmuebles\PartidaSecuencia.cs" />
+    <Compile Include="Inmuebles\ParcelaMensura.cs" />
+    <Compile Include="Inmuebles\Mensura.cs" />
+    <Compile Include="Inmuebles\Nomenclatura.cs" />
+    <Compile Include="Inmuebles\NomenclaturaOnly.cs" />
+    <Compile Include="Inmuebles\OrigenParcela.cs" />
+    <Compile Include="Inmuebles\Parcela.cs" />
+    <Compile Include="Inmuebles\ParcelaDocumento.cs" />
+    <Compile Include="Inmuebles\ParcelaOperacion.cs" />
+    <Compile Include="Inmuebles\ParcelaOrigen.cs" />
+    <Compile Include="Inmuebles\ParcelaSuperficies.cs" />
+    <Compile Include="Inmuebles\ResponsableFiscal.cs" />
+    <Compile Include="Inmuebles\ParcelaValuacion.cs" />
+    <Compile Include="Inmuebles\TipoInscripcion.cs" />
+    <Compile Include="Inmuebles\ParcelaGrafica.cs" />
+    <Compile Include="Inmuebles\TipoNomenclatura.cs" />
+    <Compile Include="Inmuebles\TipoUnidadTributaria.cs" />
+    <Compile Include="Inmuebles\TipoParcelaOperacion.cs" />
+    <Compile Include="Inmuebles\TipoParcela.cs" />
+    <Compile Include="Inmuebles\TiposMejoras.cs" />
+    <Compile Include="Inmuebles\TipoTitularidad.cs" />
+    <Compile Include="Inmuebles\Titular.cs" />
+    <Compile Include="Inmuebles\UnidadTributaria.cs" />
+    <Compile Include="Inmuebles\UnidadTributariaDocumento.cs" />
+    <Compile Include="Inmuebles\UnidadTributariaDomicilio.cs" />
+    <Compile Include="IEntity.cs" />
+    <Compile Include="Inmuebles\VIREquivInmDestinosMejoras.cs" />
+    <Compile Include="Inmuebles\VIRInmueble.cs" />
+    <Compile Include="Inmuebles\VIRValuaciones.cs" />
+    <Compile Include="Inmuebles\VIRVbEuCoefEstado.cs" />
+    <Compile Include="Inmuebles\VIRVbEuTipoEdif.cs" />
+    <Compile Include="Inmuebles\VIRVbEuUsos.cs" />
+    <Compile Include="Interfaces\CoPropietarios.cs" />
+    <Compile Include="Interfaces\DatosGenerales.cs" />
+    <Compile Include="Interfaces\Relaciones.cs" />
+    <Compile Include="Interfaces\InterfacesPadronTemp.cs" />
+    <Compile Include="Interfaces\TransaccionesPendientes.cs" />
+    <Compile Include="Interfaces\VistaKontaktar.cs" />
+    <Compile Include="Interfaces\webserviceInmModificar.cs" />
+    <Compile Include="InterfaseRentas\InterfaseRentasLog.cs" />
+    <Compile Include="InterfaseRentas\InterfaseRentasPersona.cs" />
+    <Compile Include="InterfaseRentas\InterfaseRentasResponse.cs" />
+    <Compile Include="InterfaseRentas\InterfaseRentasZonaTributaria.cs" />
+    <Compile Include="LogicalTransactionUnits\UnidadAlfanumericoParcela.cs" />
+    <Compile Include="LogicalTransactionUnits\UnidadGeneracionCertificados.cs" />
+    <Compile Include="Inmuebles\UnidadTributariaPersona.cs" />
+    <Compile Include="LogicalTransactionUnits\UnidadMantenimientoParcelario.cs" />
+    <Compile Include="Inmuebles\TipoPersona.cs" />
+    <Compile Include="LogicalTransactionUnits\UnidadExpedienteObra.cs" />
+    <Compile Include="Actas\Acta.cs" />
+    <Compile Include="Actas\ActaObjeto.cs" />
+    <Compile Include="Actas\ActaPersonas.cs" />
+    <Compile Include="Actas\ActaRolPersona.cs" />
+    <Compile Include="Actas\EstadoActa.cs" />
+    <Compile Include="Actas\ActaTipo.cs" />
+    <Compile Include="Actas\ActaUnidadTributaria.cs" />
+    <Compile Include="Actas\ActaDocumento.cs" />
+    <Compile Include="LogRPI\Enums.cs" />
+    <Compile Include="LogRPI\RPILogConsultas.cs" />
+    <Compile Include="LogRPI\RPITipoOperacion.cs" />
+    <Compile Include="LogRPI\RPILogRespuestas.cs" />
+    <Compile Include="MapasTematicos\ComponenteConfiguracion.cs" />
+    <Compile Include="MapasTematicos\ObjetoResultado.cs" />
+    <Compile Include="MapasTematicos\ObjetoResultadoDetalle.cs" />
+    <Compile Include="MapasTematicos\Predefinido.cs" />
+    <Compile Include="MapasTematicos\Rango.cs" />
+    <Compile Include="MapasTematicos\RequestObjetoResultado.cs" />
+    <Compile Include="Generico\MenuItem.cs" />
+    <Compile Include="Inmuebles\Plano.cs" />
+    <Compile Include="MapasTematicos\ColeccionComponente.cs" />
+    <Compile Include="MapasTematicos\Coleccion.cs" />
+    <Compile Include="MapasTematicos\ConfiguracionRango.cs" />
+    <Compile Include="MapasTematicos\MapaTematicoConfiguracion.cs" />
+    <Compile Include="MapasTematicos\ConfiguracionFiltroGrafico.cs" />
+    <Compile Include="MapasTematicos\DatoExterno.cs" />
+    <Compile Include="MapasTematicos\DatoExternoConfiguracion.cs" />
+    <Compile Include="MapasTematicos\FileData.cs" />
+    <Compile Include="MapasTematicos\FileColumn.cs" />
+    <Compile Include="MapasTematicos\FileDescriptor.cs" />
+    <Compile Include="MapasTematicos\ConfiguracionFiltro.cs" />
+    <Compile Include="MapasTematicos\TipoFiltro.cs" />
+    <Compile Include="MapasTematicos\TipoDato.cs" />
+    <Compile Include="MapasTematicos\Agrupacion.cs" />
+    <Compile Include="MapasTematicos\TipoOperacion.cs" />
+    <Compile Include="MapasTematicos\Jerarquia.cs" />
+    <Compile Include="MapasTematicos\Atributo.cs" />
+    <Compile Include="MapasTematicos\Componente.cs" />
+    <Compile Include="Mapa\MapLayer.cs" />
+    <Compile Include="Mapa\SRIDDefinition.cs" />
+    <Compile Include="MapGuideApi\SelectedKeysByLayers.cs" />
+    <Compile Include="Common\DataTableParameters.cs" />
+    <Compile Include="MesaEntradas\DTO\GrillaMovimiento.cs" />
+    <Compile Include="MesaEntradas\DTO\GrillaTramite.cs" />
+    <Compile Include="MesaEntradas\DTO\MERequisitoCumplido.cs" />
+    <Compile Include="MesaEntradas\MEComprobantePago.cs" />
+    <Compile Include="MesaEntradas\MEDatosEspecificos.cs" />
+    <Compile Include="MesaEntradas\MEDesglose.cs" />
+    <Compile Include="MesaEntradas\MEDesgloseDestino.cs" />
+    <Compile Include="MesaEntradas\MEEstadoTramite.cs" />
+    <Compile Include="MesaEntradas\MEMovimiento.cs" />
+    <Compile Include="MesaEntradas\MEEntrada.cs" />
+    <Compile Include="MesaEntradas\MEObjetoEntrada.cs" />
+    <Compile Include="MesaEntradas\MEObjetoRequisito.cs" />
+    <Compile Include="MesaEntradas\METramiteEntrada.cs" />
+    <Compile Include="MesaEntradas\METramiteEntradaRelacion.cs" />
+    <Compile Include="MesaEntradas\MEObjetoTramite.cs" />
+    <Compile Include="MesaEntradas\MEPrioridadTramite.cs" />
+    <Compile Include="MesaEntradas\MERemito.cs" />
+    <Compile Include="MesaEntradas\MERequisito.cs" />
+    <Compile Include="MesaEntradas\METipoMovimiento.cs" />
+    <Compile Include="MesaEntradas\METipoTramite.cs" />
+    <Compile Include="MesaEntradas\METramite.cs" />
+    <Compile Include="MesaEntradas\METramiteDocumento.cs" />
+    <Compile Include="MesaEntradas\METramiteRequisito.cs" />
+    <Compile Include="MesaEntradas\MEPrioridadTipo.cs" />
+    <Compile Include="Models\DDJJ.cs" />
+    <Compile Include="ModuloPloteo\AreaPloteoResponse.cs" />
+    <Compile Include="ModuloPloteo\Censo.cs" />
+    <Compile Include="ModuloPloteo\ExpansionPlot.cs" />
+    <Compile Include="ModuloPloteo\ImagenSatelital.cs" />
+    <Compile Include="ModuloPloteo\InformacionComercial.cs" />
+    <Compile Include="ModuloPloteo\LayerViewport.cs" />
+    <Compile Include="ModuloPloteo\Manzana.cs" />
+    <Compile Include="ModuloPloteo\Parcela.cs" />
+    <Compile Include="ModuloPloteo\Partido.cs" />
+    <Compile Include="ModuloPloteo\PartidoApicRedes.cs" />
+    <Compile Include="ModuloPloteo\Periodo.cs" />
+    <Compile Include="ModuloPloteo\PlanchetaA4Response.cs" />
+    <Compile Include="ModuloPloteo\PlantillaViewport.cs" />
+    <Compile Include="ModuloPloteo\PloteoFrecuente.cs" />
+    <Compile Include="ModuloPloteo\PloteoFrecuenteEspecial.cs" />
+    <Compile Include="ModuloPloteo\PloteoFrecuenteGeometria.cs" />
+    <Compile Include="ModuloPloteo\RegistroPlano.cs" />
+    <Compile Include="ModuloPloteo\TipoPlano.cs" />
+    <Compile Include="ModuloPloteo\TipoViewport.cs" />
+    <Compile Include="ModuloPloteo\UbicacionPloteo.cs" />
+    <Compile Include="ModuloPloteo\CallePlot.cs" />
+    <Compile Include="ModuloPloteo\CuadraPlot.cs" />
+    <Compile Include="ModuloPloteo\FuncAdicParametro.cs" />
+    <Compile Include="ModuloPloteo\FuncionAdicional.cs" />
+    <Compile Include="ModuloPloteo\GeographConvert.cs" />
+    <Compile Include="ModuloPloteo\GeographyWrapper.cs" />
+    <Compile Include="ModuloPloteo\Hoja.cs" />
+    <Compile Include="ModuloPloteo\Layer.cs" />
+    <Compile Include="ModuloPloteo\LayerGraf.cs" />
+    <Compile Include="ModuloPloteo\ManzanaPlot.cs" />
+    <Compile Include="ModuloPloteo\Norte.cs" />
+    <Compile Include="ModuloPloteo\ParcelaPlot.cs" />
+    <Compile Include="ModuloPloteo\Plantilla.cs" />
+    <Compile Include="ModuloPloteo\PlantillaCategoria.cs" />
+    <Compile Include="ModuloPloteo\PlantillaEscala.cs" />
+    <Compile Include="ModuloPloteo\PlantillaFondo.cs" />
+    <Compile Include="ModuloPloteo\PlantillaTexto.cs" />
+    <Compile Include="ModuloPloteo\Resolucion.cs" />
+    <Compile Include="ModuloPloteo\UbicacionRuteo.cs" />
+    <Compile Include="ObjetosAdministrativos\Division.cs" />
+    <Compile Include="ObjetosAdministrativos\Domicilio.cs" />
+    <Compile Include="ObjetosAdministrativos\DTO\MunicipioDTO.cs" />
+    <Compile Include="ObjetosAdministrativos\DTO\BarrioDTO.cs" />
+    <Compile Include="ObjetosAdministrativos\DTO\SeccionDTO.cs" />
+    <Compile Include="ObjetosAdministrativos\DTO\JurisdiccionDTO.cs" />
+    <Compile Include="ObjetosAdministrativos\Localidad.cs" />
+    <Compile Include="ObjetosAdministrativos\Nacionalidad.cs" />
+    <Compile Include="ObjetosAdministrativos\JurisdiccionLocalidad.cs" />
+    <Compile Include="ObjetosAdministrativos\Objeto.cs" />
+    <Compile Include="ObjetosAdministrativos\Pais.cs" />
+    <Compile Include="ObjetosAdministrativos\Provincia.cs" />
+    <Compile Include="ObjetosAdministrativos\TipoDivision.cs" />
+    <Compile Include="ObjetosAdministrativos\TipoDocumento.cs" />
+    <Compile Include="ObjetosAdministrativos\TipoDomicilio.cs" />
+    <Compile Include="ObjetosAdministrativos\TipoObjeto.cs" />
+    <Compile Include="ObjetosAdministrativos\TipoProfesion.cs" />
+    <Compile Include="ObrasParticulares\ActaExpedienteObra.cs" />
+    <Compile Include="ObrasParticulares\ControlTecnico.cs" />
+    <Compile Include="ObrasParticulares\Destino.cs" />
+    <Compile Include="ObrasParticulares\DocumentoExpedienteObra.cs" />
+    <Compile Include="ObrasParticulares\EstadoExpediente.cs" />
+    <Compile Include="ObrasParticulares\EstadoInspeccion.cs" />
+    <Compile Include="ObrasParticulares\ExpedienteObra.cs" />
+    <Compile Include="ObrasParticulares\ExpedienteObraEstado.cs" />
+    <Compile Include="ObrasParticulares\ExpedienteObraInspecciones.cs" />
+    <Compile Include="ObrasParticulares\ExpedientesObras\DomicilioExpedienteObra.cs" />
+    <Compile Include="ObrasParticulares\ExpedientesObras\EstadoExpedienteObra.cs" />
+    <Compile Include="ObrasParticulares\ExpedientesObras\ExpedienteObraDocumento.cs" />
+    <Compile Include="ObrasParticulares\ExpedientesObras\InspeccionExpedienteObra.cs" />
+    <Compile Include="ObrasParticulares\ExpedientesObras\LiquidacionesSeguimiento.cs" />
+    <Compile Include="ObrasParticulares\ExpedientesObras\PersonaExpedienteObra.cs" />
+    <Compile Include="ObrasParticulares\ExpedientesObras\PlanoExpedienteObra.cs" />
+    <Compile Include="ObrasParticulares\ExpedientesObras\ServicioExpedienteObra.cs" />
+    <Compile Include="ObrasParticulares\ExpedientesObras\TipoSuperficieExpedienteObra.cs" />
+    <Compile Include="ObrasParticulares\ExpedientesObras\TipoExpedienteObra.cs" />
+    <Compile Include="ObrasParticulares\ExpedientesObras\UnidadTributariaDomicilioInmueble.cs" />
+    <Compile Include="ObrasParticulares\ExpedientesObras\UnidadTributariaExpedienteObra.cs" />
+    <Compile Include="ObrasParticulares\InspeccionInspector.cs" />
+    <Compile Include="ObrasParticulares\LiquidacionExterna.cs" />
+    <Compile Include="ObrasParticulares\Liquidacion.cs" />
+    <Compile Include="ObrasParticulares\NumeroLegajo.cs" />
+    <Compile Include="ObrasParticulares\ObservacionExpediente.cs" />
+    <Compile Include="ObrasParticulares\PersonaExpedienteRolDomicilio.cs" />
+    <Compile Include="ObrasParticulares\Plan.cs" />
+    <Compile Include="ObrasParticulares\Rol.cs" />
+    <Compile Include="ObrasParticulares\Servicio.cs" />
+    <Compile Include="ObrasParticulares\TipoExpediente.cs" />
+    <Compile Include="ObrasParticulares\TipoInspeccion.cs" />
+    <Compile Include="ObrasParticulares\TipoSuperficie.cs" />
+    <Compile Include="ObrasParticulares\UbicacionExpedienteObra.cs" />
+    <Compile Include="ObrasParticulares\Calendario.cs" />
+    <Compile Include="ObrasParticulares\GestionInspecciones.cs" />
+    <Compile Include="ObrasParticulares\Inspeccion.cs" />
+    <Compile Include="ObrasParticulares\InspeccionDocumento.cs" />
+    <Compile Include="ObrasParticulares\InspeccionUnidadesTributarias.cs" />
+    <Compile Include="ObrasParticulares\Inspector.cs" />
+    <Compile Include="ObrasParticulares\InspectorTipoInspeccion.cs" />
+    <Compile Include="ObrasParticulares\RolInspector.cs" />
+    <Compile Include="ObrasPublicas\PostAtributoZona.cs" />
+    <Compile Include="ObrasPublicas\TramitePermisos.cs" />
+    <Compile Include="Personas\PersonaDomicilio.cs" />
+    <Compile Include="Personas\Persona.cs" />
+    <Compile Include="Personas\Profesion.cs" />
+    <Compile Include="ObrasPublicas\ObjetoInfraestructura.cs" />
+    <Compile Include="ObrasPublicas\PLN_Atributo.cs" />
+    <Compile Include="ObrasPublicas\PLN_ZonaAtributo.cs" />
+    <Compile Include="ObrasPublicas\SubtipoObjetoInfraestructura.cs" />
+    <Compile Include="ObrasPublicas\TipoObjetoInfraestructura.cs" />
+    <Compile Include="ObrasPublicas\TramiteRol.cs" />
+    <Compile Include="ObrasPublicas\TramiteSeccion.cs" />
+    <Compile Include="ObrasPublicas\Tramite.cs" />
+    <Compile Include="ObrasPublicas\TipoTramite.cs" />
+    <Compile Include="ObrasPublicas\TramiteTipoSeccion.cs" />
+    <Compile Include="ObrasPublicas\TramiteDocumento.cs" />
+    <Compile Include="ObrasPublicas\TramitePersona.cs" />
+    <Compile Include="ObrasPublicas\TramiteUnidadTributaria.cs" />
+    <Compile Include="Planeamiento\AtributoZona.cs" />
+    <Compile Include="Ploteo\Manzana.cs" />
+    <Compile Include="Ploteo\ObjetoPloteable.cs" />
+    <Compile Include="Ploteo\ObjetoPloteableGenerico.cs" />
+    <Compile Include="Ploteo\Parcela.cs" />
+    <Compile Include="Ploteo\PloteoMasivoZona.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Interfaces\Relacion.cs" />
+    <Compile Include="Seguridad\AnalisisTecnicos.cs" />
+    <Compile Include="Seguridad\CargasTecnicas.cs" />
+    <Compile Include="ReclamosDiarios\PlanoDetalleContract.cs" />
+    <Compile Include="ReclamosDiarios\PointContract.cs" />
+    <Compile Include="ReclamosDiarios\Reclamos_Tipo.cs" />
+    <Compile Include="ReclamosDiarios\Reclamos_Motivo.cs" />
+    <Compile Include="ReclamosDiarios\Reclamos_Clase.cs" />
+    <Compile Include="ReclamosDiarios\Reclamos_ReclamosDiarios.cs" />
+    <Compile Include="ReclamosDiarios\Reclamos_Actualizacion.cs" />
+    <Compile Include="ReclamosDiarios\RuteoOT_ParteDto.cs" />
+    <Compile Include="SAR\ReclamoDiarioResult.cs" />
+    <Compile Include="Seguridad\PerfilFuncion.cs" />
+    <Compile Include="Seguridad\ListadoDeTareas.cs" />
+    <Compile Include="Seguridad\Consultas.cs" />
+    <Compile Include="Seguridad\Entornos.cs" />
+    <Compile Include="Seguridad\Feriados.cs" />
+    <Compile Include="Seguridad\HorariosDetalle.cs" />
+    <Compile Include="Seguridad\Funciones.cs" />
+    <Compile Include="Seguridad\PerfilesUsuarios.cs" />
+    <Compile Include="Seguridad\PerfilesComponentes.cs" />
+    <Compile Include="Seguridad\Horarios.cs" />
+    <Compile Include="Seguridad\PerfilesFunciones.cs" />
+    <Compile Include="Seguridad\Distritos.cs" />
+    <Compile Include="Seguridad\Regiones.cs" />
+    <Compile Include="Seguridad\Sector.cs" />
+    <Compile Include="Seguridad\SEEvento.cs" />
+    <Compile Include="Seguridad\SETipoOperacion.cs" />
+    <Compile Include="Seguridad\TipoDoc.cs" />
+    <Compile Include="Seguridad\PerfilesHist.cs" />
+    <Compile Include="Seguridad\UsuariosHist.cs" />
+    <Compile Include="Seguridad\UsuariosDistritos.cs" />
+    <Compile Include="Seguridad\UsuariosPerfiles.cs" />
+    <Compile Include="Seguridad\Perfiles.cs" />
+    <Compile Include="Seguridad\Auditoria.cs" />
+    <Compile Include="Seguridad\UsuariosActivos.cs" />
+    <Compile Include="Seguridad\UsuariosRegistro.cs" />
+    <Compile Include="Seguridad\Usuarios.cs" />
+    <Compile Include="Seguridad\ParametrosGenerales.cs" />
+    <Compile Include="LogicalTransactionUnits\UnidadPloteoPredefinido.cs" />
+    <Compile Include="LogicalTransactionUnits\Operations.cs" />
+    <Compile Include="SubSistemaWeb\AyudaLinea.cs" />
+    <Compile Include="Temporal\DDJJDesignacionTemporal.cs" />
+    <Compile Include="Temporal\DDJJDominioTemporal.cs" />
+    <Compile Include="Temporal\DDJJDominioTitularTemporal.cs" />
+    <Compile Include="Temporal\DDJJPersonaDomicilioTemporal.cs" />
+    <Compile Include="Temporal\DDJJSorCarTemporal.cs" />
+    <Compile Include="Temporal\DDJJSorTemporal.cs" />
+    <Compile Include="Temporal\DDJJTemporal.cs" />
+    <Compile Include="Temporal\DDJJUFraccionTemporal.cs" />
+    <Compile Include="Temporal\DDJJUMedidaLinealTemporal.cs" />
+    <Compile Include="Temporal\DDJJUTemporal.cs" />
+    <Compile Include="Temporal\DesignacionTemporal.cs" />
+    <Compile Include="Temporal\INMLibreDeDeudaTemporal.cs" />
+    <Compile Include="Temporal\INMCertificadoCatastralTemporal.cs" />
+    <Compile Include="Temporal\DominioTemporal.cs" />
+    <Compile Include="Temporal\DominioTitularTemporal.cs" />
+    <Compile Include="Temporal\INMMejoraCaracteristicaTemporal.cs" />
+    <Compile Include="Temporal\INMMejoraOtraCarTemporal.cs" />
+    <Compile Include="Temporal\INMMejoraTemporal.cs" />
+    <Compile Include="Temporal\MensuraRelacionadaTemporal.cs" />
+    <Compile Include="Temporal\MensuraTemporal.cs" />
+    <Compile Include="Temporal\NomenclaturaTemporal.cs" />
+    <Compile Include="Temporal\ParcelaMensuraTemporal.cs" />
+    <Compile Include="Temporal\ParcelaOperacionTemporal.cs" />
+    <Compile Include="Temporal\DivisionTemporal.cs" />
+    <Compile Include="Temporal\EspacioPublicoTemporal.cs" />
+    <Compile Include="Temporal\ParcelaTemporal.cs" />
+    <Compile Include="Temporal\UnidadTributariaDomicilioTemporal.cs" />
+    <Compile Include="Temporal\UnidadTributariaPersonaTemporal.cs" />
+    <Compile Include="Temporal\UnidadTributariaTramiteTemporal.cs" />
+    <Compile Include="Temporal\UnidadTributariaTemporal.cs" />
+    <Compile Include="Temporal\VALAptCarTemporal.cs" />
+    <Compile Include="Temporal\VALSuperficieTemporal.cs" />
+    <Compile Include="Temporal\VALValuacionDecretoTemporal.cs" />
+    <Compile Include="Temporal\VALValuacionTemporal.cs" />
+    <Compile Include="ValidacionesDB\Enums.cs" />
+    <Compile Include="ValidacionesDB\Implementaciones\ObjetoValidable.cs" />
+    <Compile Include="ValidacionesDB\Implementaciones\TramiteValidable.cs" />
+    <Compile Include="ValidacionesDB\ValidacionSubtipo.cs" />
+    <Compile Include="ValidacionesDB\Validacion.cs" />
+    <Compile Include="ValidacionesDB\ValidacionException.cs" />
+    <Compile Include="ValidacionesDB\ValidacionFuncion.cs" />
+    <Compile Include="ValidacionesDB\ValidacionGrupoFuncion.cs" />
+    <Compile Include="ValidacionesDB\ValidacionParametro.cs" />
+    <Compile Include="ValidationRules\MantenedorParcelario\DomTitular.cs" />
+    <Compile Include="ValidationRules\MantenedorParcelario\UtDominio.cs" />
+    <Compile Include="ValidationRules\MantenedorParcelario\UtPersona.cs" />
+    <Compile Include="ValidationRules\Parcela\NomenclaturaValidator.cs" />
+    <Compile Include="ValidationRules\Tramites\PuntosInterseccion.cs" />
+    <Compile Include="Valuaciones\TipoValorBasicoTierra.cs" />
+    <Compile Include="Valuaciones\TipoValuacion.cs" />
+    <Compile Include="Valuaciones\CoeficientesStore.cs" />
+    <Compile Include="Valuaciones\ValorBasicoStore.cs" />
+    <Compile Include="Valuaciones\ValorBasicoMejoraStore.cs" />
+    <Compile Include="Valuaciones\ValorBasicoTierraStore.cs" />
+    <Compile Include="Valuaciones\ValuacionPadronCabecera.cs" />
+    <Compile Include="Valuaciones\ValuacionPadronDetalle.cs" />
+    <Compile Include="SubSistemaWeb\WebInstructivo.cs" />
+    <Compile Include="SubSistemaWeb\WebLinks.cs" />
+    <Compile Include="ValidationRules\Tramites\TramiteDocumentoValidator.cs" />
+    <Compile Include="ValidationRules\Tramites\TramitePersonaValidator.cs" />
+    <Compile Include="ValidationRules\Tramites\TramiteUnidadTributariaValidator.cs" />
+    <Compile Include="ValidationRules\Tramites\TramiteValidator.cs" />
+    <Compile Include="Via\DTO\TramoVia.cs" />
+    <Compile Include="Via\TipoVia.cs" />
+    <Compile Include="Via\TramoVia.cs" />
+    <Compile Include="Via\Via.cs" />
+    <Compile Include="Valuaciones\Valuacion.cs" />
+    <Compile Include="ValidationRules\ExpedientesObra\PersonaValidator.cs" />
+    <Compile Include="ValidationRules\ExpedientesObra\DocumentoValidator.cs" />
+    <Compile Include="ValidationRules\ExpedientesObra\ExpedienteObraValidator.cs" />
+    <Compile Include="ValidationRules\FluentValidator.cs" />
+    <Compile Include="ValidationRules\ExpedientesObra\UnidadTributariaValidator.cs" />
+    <Compile Include="Valuaciones\Coeficientes.cs" />
+    <Compile Include="Valuaciones\Mejora.cs" />
+    <Compile Include="Valuaciones\EjesVia.cs" />
+    <Compile Include="Valuaciones\ValorBasicoTierraSuperficie.cs" />
+    <Compile Include="Valuaciones\ValorBasicoTierraModulo.cs" />
+    <Compile Include="Valuaciones\ValorBasicoMejora.cs" />
+    <Compile Include="Valuaciones\TipoValorBasicoMejora.cs" />
+    <Compile Include="Valuaciones\TipoCoeficientes.cs" />
+    <Compile Include="Valuaciones\ValuacionCoeficientes.cs" />
+    <Compile Include="Valuaciones\ValuacionPadronDetalleTemporal.cs" />
+    <Compile Include="Valuaciones\ValuacionParcela.cs" />
+    <Compile Include="Valuaciones\CoeficientesMejora.cs" />
+    <Compile Include="Valuaciones\CoeficientesTierra.cs" />
+    <Compile Include="Valuaciones\CoeficientesCalculados.cs" />
+    <Compile Include="Inmuebles\EstadosConsevacion.cs" />
+    <Compile Include="Mantenimiento\AtributoRelacionado.cs" />
+    <Compile Include="Mantenimiento\AtributoTA.cs" />
+    <Compile Include="Mantenimiento\ComponenteTA.cs" />
+    <Compile Include="Mantenimiento\TablasAuxiliares.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="GlobalResources\EstadosParcelas.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>EstadosParcelas.Designer.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GlobalResources\TiposParcelaOperacion.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>TiposParcelaOperacion.Designer.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GlobalResources\ClasesParcelas.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ClasesParcelas.Designer.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GlobalResources\Entradas.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Entradas.designer.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GlobalResources\Eventos.resx">
+      <SubType>Designer</SubType>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Eventos.designer.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GlobalResources\TiposMensuras.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>TiposMensuras.Designer.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GlobalResources\TiposTramites.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>TiposTramites.designer.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GlobalResources\VersionesDDJJ.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>VersionesDDJJ.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="GlobalResources\ObjetosTramites.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>ObjetosTramites.designer.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GlobalResources\TiposObjetoAdministrativo.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>TiposObjetoAdministrativo.designer.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GlobalResources\TiposOperacion.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>TiposOperacion.designer.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="GlobalResources\Mensajes.resx">
+      <SubType>Designer</SubType>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Mensajes.designer.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+    <EmbeddedResource Include="GlobalResources\Objetos.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Objetos.designer.cs</LastGenOutput>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+    <Error Condition="!Exists('..\..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
+  </Target>
+  <Import Project="..\..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

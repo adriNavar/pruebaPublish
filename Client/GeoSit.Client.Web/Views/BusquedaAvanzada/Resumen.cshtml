@@ -1,0 +1,304 @@
+﻿@model GeoSit.Client.Web.Models.MapaTematicoModel
+
+@{
+    ViewBag.Title = "Resumen";
+    ViewBag.Description = "Confirmación de las configuraciones establecidas.";
+}
+
+<link href="~/Content/busquedaavanzada.css" rel="stylesheet" />
+<link href="~/Content/progress_bar.css" rel="stylesheet" />
+<link rel="stylesheet" href="~/Content/jquery-ui.css" type="text/css">
+
+<div class="modal fade" id="myModalBA" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title col-lg-11 col-xs-11 col-sm-11 col-md-11" id="myModalLabel">@Resources.Recursos.TituloMapaTematico - @ViewBag.Title</h3>
+                <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer" style="padding-top:3px;" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+            </div>
+            <div class="modal-body">
+                @using (Ajax.BeginForm("GetVisualizacionViewVolver", "MapasTematicos", new { ReturnUrl = ViewBag.ReturnUrl }, new AjaxOptions { }, new { id = "formVolver", role = "form", novalidate = "", enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+
+                }
+
+                @using (Ajax.BeginForm("GetIndexView", "MapasTematicos", new { ReturnUrl = ViewBag.ReturnUrl }, new AjaxOptions { }, new { id = "form-volver-componente", role = "form", novalidate = "", enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+
+                }
+
+                @using (Ajax.BeginForm("GetAtributosView", "MapasTematicos", new { ReturnUrl = ViewBag.ReturnUrl }, new AjaxOptions { }, new { id = "form-volver-atributos", role = "form", novalidate = "", enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+
+                    @Html.HiddenFor(model => model.ComponenteAtributo.Atributo.Agrupacion.AgrupacionId)
+                    @Html.HiddenFor(model => model.ComponenteAtributo.ComponenteId)
+                    @Html.HiddenFor(model => model.ComponenteAtributo.Atributo.AtributoId)
+                    @Html.HiddenFor(model => model.ComponenteAtributo.Atributo.EsImportado)
+                    @Html.HiddenFor(model => model.Componente.ComponenteId)
+                }
+
+                @using (Ajax.BeginForm("GetFiltrosView", "MapasTematicos", new { ReturnUrl = ViewBag.ReturnUrl }, new AjaxOptions { }, new { id = "form-volver-filtros", role = "form", novalidate = "", enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+
+                    @Html.HiddenFor(model => model.ComponenteAtributo.Atributo.Agrupacion.AgrupacionId)
+                    @Html.HiddenFor(model => model.ComponenteAtributo.ComponenteId)
+                    @Html.HiddenFor(model => model.ComponenteAtributo.Atributo.AtributoId)
+                    @Html.HiddenFor(model => model.Componente.ComponenteId)
+                }
+
+                @using (Ajax.BeginForm("GetVisualizacionViewVolver", "MapasTematicos", new { ReturnUrl = ViewBag.ReturnUrl }, new AjaxOptions { }, new { id = "form-volver-visualizacion", role = "form", novalidate = "", enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+
+                    @Html.HiddenFor(model => model.ComponenteAtributo.Atributo.Agrupacion.AgrupacionId)
+                    @Html.HiddenFor(model => model.ComponenteAtributo.ComponenteId)
+                    @Html.HiddenFor(model => model.ComponenteAtributo.Atributo.AtributoId)
+                    @Html.HiddenFor(model => model.Componente.ComponenteId)
+                }
+                <div class="invisible" id="capasuperior" align="center">
+                </div>
+                <div id="ModalAtributo" style="z-index:100; display:none; background-color: #124256; margin: 10% 0% 30% 0%; position: relative ">
+                    <div class="row" style="height: 1em">
+                    </div>
+
+                    <div class="row" style="height:10px">
+                    </div>
+
+                </div>
+
+                @using (Ajax.BeginForm("finalizarMT", "MapasTematicos", new { ReturnUrl = Url.Action("GetVisualizacionView", "MapasTematicos") }, new AjaxOptions { }, new { id = "form-Resumen", role = "form", novalidate = "", enctype = "multipart/form-data" }))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <input type="hidden" id="hfMensaje" value="@Model.mensaje" />
+
+                    <div style="height:150px;">
+                        <div class="row" style="height:1em">
+                        </div>
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-lg-11 col-xs-11 col-sm-11 col-md-11">
+                                    <a id="atras">
+                                        <span id="volver" data-placement="right" title="A Atributos" data-original-title="A Atributos" class="fa fa-arrow-circle-left fa-4x light-blue cursor-pointer pull-left img-responsive"></span>
+                                    </a>
+                                </div>
+                                <div class="col-lg-1 col-xs-1 col-sm-1 col-md-1">
+                                    <a href='@Url.Action("BuscarAyuda", "MapasTematicos")'>
+                                        <span id="ayuda" data-placement="right" title="Ayuda" data-original-title="Ayuda" class="fa fa-question-circle fa-4x light-blue cursor-pointer pull-right img-responsive"></span>
+                                    </a>
+                                    @*<span id="cerrar" data-placement="right" title="Cerrar" data-original-title="Ayuda" class="fa fa-times-circle fa-4x light-blue cursor-pointer pull-left img-responsive"></span>*@
+                                </div>
+                            </div>
+                            <div class="row col-lg-7 col-xs-7 col-sm-7 col-md-7 col-lg-offset-1 col-xs-offset-1 col-sm-offset-1 col-md-offset-1 textoLargo text-muted">
+                                <h5>@Html.Raw(@ViewBag.Description)</h5>
+                            </div>
+                        </div>
+                        <p class="text-success">@ViewBag.StatusMessage</p>
+                    </div>
+                    <div>
+                        <div id="contenedor" class="container-fluid">
+                            <div class="transparente">
+                            </div>
+                            <div class="opaco" style="height:26em">
+                                <div id="scroll-content" class="row" style="height:22em">
+                                    <div class="col-lg-2 col-xs-2 col-sm-2 col-md-2"></div>
+                                    <div class="col-lg-10 col-xs-10 col-sm-10 col-md-10">
+                                        <div class="row" style="margin:0;">
+                                            <div class="col-lg-5 col-xs-5 col-sm-5 col-md-5" style="height:110px">
+                                                <div class="col-lg-1 col-xs-1 col-sm-1 col-md-1" style="height:48px; width:48px;  padding: 0.65em">
+                                                    <img src="~/Content/images/MapasTematicos/icons/industrial/32/componente.png" />
+
+                                                </div>
+                                                <div class="col-lg-10 col-xs-10 col-sm-10 col-md-10">
+                                                    <div id="componentes">
+                                                        <div class="row" style="padding-left:15px">
+                                                            <span class="h4" style="color:#348EA9">Componente</span>
+                                                            <div id="editarComponente" class="pull-right" style="cursor:pointer;">
+                                                                <img src="~/Content/images/MapasTematicos/icons/blue/16/editar.png">
+                                                            </div>
+                                                        </div>
+                                                        <div class="row" style="padding-left:15px">
+                                                            @Html.DisplayFor(model => model.Componente.Nombre)
+
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-5 col-xs-5 col-sm-5 col-md-5 borde-izquierdo" style="height:110px">
+                                                <div class="col-lg-1 col-xs-1 col-sm-1 col-md-1" style="height:48px; width:48px;  padding: 0.65em">
+                                                    <img src="~/Content/images/MapasTematicos/icons/industrial/32/selector.color.png" />
+
+                                                </div>
+                                                <div class="col-lg-10 col-xs-10 col-sm-10 col-md-10">
+                                                    <div id="visualizacion">
+                                                        <div class="row" style="padding-left:15px">
+                                                            <span class="h4" style="color:#348EA9">Visualización</span>
+                                                            <div id="editarVisualizacion" class="pull-right" style="cursor:pointer;">
+                                                                <img src="~/Content/images/MapasTematicos/icons/blue/16/editar.png">
+                                                            </div>
+                                                        </div>
+                                                        <div class="row" style="padding-left:15px">
+
+                                                            <span>Distribución </span> @Html.DisplayFor(model => model.Visualizacion.DistribucionDesc) <br />
+                                                            @Html.DisplayFor(model => model.Visualizacion.Rangos) <span> Rangos</span> @Html.DisplayFor(model => model.Visualizacion.ColoreadoDesc)
+
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="margin:0;">
+                                            <div class="col-lg-5 col-xs-5 col-sm-5 col-md-5" style="height:110px">
+                                                <div class="col-lg-1 col-xs-1 col-sm-1 col-md-1" style="height:48px; width:48px;  padding: 0.65em">
+                                                    <img src="~/Content/images/MapasTematicos/icons/industrial/32/atributo.png" />
+                                                </div>
+                                                <div class="col-lg-10 col-xs-10 col-sm-10 col-md-10">
+                                                    <div id="atributo">
+                                                        <div class="row" style="padding-left:15px">
+                                                            <span class="h4" style="color:#348EA9; white-space:nowrap">Atributo</span>
+                                                            <div id="editarAtributo" class="pull-right" style="cursor:pointer;">
+                                                                <img src="~/Content/images/MapasTematicos/icons/blue/16/editar.png">
+                                                            </div>
+                                                        </div>
+                                                        <div class="row" style="padding-left:15px">
+                                                            @if (Model.ComponenteAtributo.Atributo.Agrupacion != null && Model.ComponenteAtributo.Atributo.Agrupacion.Nombre != null)
+                                                            {@Html.DisplayFor(model => Model.ComponenteAtributo.Atributo.Agrupacion.Nombre) <span> de </span>} @Html.DisplayFor(model => model.ComponenteAtributo.Atributo.Nombre) <span> Por </span> @Html.DisplayFor(model => model.ComponenteAtributo.Nombre)
+
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-5 col-xs-5 col-sm-5 col-md-5 borde-izquierdo" style="height:110px">
+                                                <div class="col-lg-1 col-xs-1 col-sm-1 col-md-1" style="height:48px; width:48px;  padding: 0.65em">
+                                                </div>
+                                                <div class="col-lg-4 col-xs-4 col-sm-4 col-md-4">
+                                                    <div id="titulo">
+                                                        <span class="h4" style="color:#348EA9">Título</span>
+                                                        @Html.TextBoxFor(model => model.Nombre, new { @id = "tituloNombre", @style = " width:15em", @maxlength = "254", @class = "subrayado", @placeholder = "Sin Titulo" })
+                                                        @*<input id="tituloNombre" type="text" style=" width:15em" class="subrayado" placeholder="Sin Titulo" />*@
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row" style="margin:0;">
+                                            <div class=" col-lg-5 col-xs-5 col-sm-5 col-md-5" style="height:110px">
+                                                <div class="col-lg-1 col-xs-1 col-sm-1 col-md-1" style="height:48px; width:48px;  padding: 0.65em">
+                                                    <img src="~/Content/images/MapasTematicos/icons/industrial/32/filtro.png" />
+
+                                                </div>
+                                                <div class="col-lg-10 col-xs-10 col-sm-10 col-md-10">
+                                                    <div id="filtros">
+                                                        <div class="row" style="padding-left:15px">
+                                                            <span class="h4" style="color:#348EA9">Filtros</span>
+                                                            <div id="editarFiltro" class="pull-right" style=" cursor:pointer;">
+                                                                <img src="~/Content/images/MapasTematicos/icons/blue/16/editar.png">
+                                                            </div>
+                                                        </div>
+                                                        <div class="row" style="padding-left:15px">
+                                                            @if (Model.cantFiltrosAtributo > 0)
+                                                            {@Model.cantFiltrosAtributo <span> filtros por Atributo </span> <br />}
+                                                            @if (Model.cantFiltrosColeccion > 0)
+                                                            {@Model.cantFiltrosColeccion <span> filtros por Colección </span> <br />}
+                                                            @if (Model.cantFiltrosGeografico > 0)
+                                                            {@Model.cantFiltrosGeografico <span> filtros Geográficos </span> <br />}
+
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-5 col-xs-5 col-sm-5 col-md-5 borde-izquierdo" style="height:110px">
+                                                <div class="col-lg-1 col-xs-1 col-sm-1 col-md-1" style="height:48px; width:48px;  padding: 0.65em">
+                                                </div>
+                                                <div class="col-lg-10 col-xs-10 col-sm-10 col-md-10">
+                                                    <div id="descripcionDiv">
+                                                        <span class="h4" style="color:#348EA9">Descripción</span>
+                                                        @Html.TextBoxFor(model => model.Descripcion, new { @id = "descripcion", @style = " width:15em", @maxlength = "254", @class = "subrayado", @placeholder = "Sin Descripción" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row borde-superior" style="height:1em"></div>
+                                <div class="row">
+                                    <div class="col-lg-11 col-xs-11 col-sm-11 col-md-11">
+                                        <div class="col-lg-9 col-xs-9 col-sm-9 col-md-9" style="height:100%;">
+                                            <button class="btn btn-primary seleccionable" id="guardarBiblioteca" type="button"> Guardar definición en biblioteca </button>
+                                            <button class="btn btn-primary seleccionable" id="guardarColeccion" type="button"> Guardar como Colecciones </button>
+                                            @*<button class="btn btn-primary seleccionable" id="exportarExcel" type="button"> Exportar a Excel <span class=" glyphicon glyphicon-ok-sign"></span> </button>*@
+                                            <button class="btn btn-primary seleccionable" id="exportarExcel" type="button"> Exportar a Excel </button>
+                                            <button class="btn btn-primary seleccionable" id="generarPDF" type="button"> Generar PDF <span class="glyphicon glyphicon-ok-sign"></span> </button>
+                                        </div>
+                                        <div class="col-lg-2 col-xs-2 col-sm-2 col-md-2 pull-right">
+                                            <button type="submit" class="btn btn-primary pull-right seleccionable"> Generar <span class="glyphicon glyphicon-chevron-right"></span></button>
+                                        </div>
+                                        <div class="col-lg-1 col-xs-1 col-sm-1 col-md-1"></div>
+                                    </div>
+                                    <div class="col-lg-1 col-xs-1 col-sm-1 col-md-1"></div>
+                                </div>
+                            </div>
+                        </div>
+                        @Html.HiddenFor(model => model.ComponenteAtributo.Atributo.Agrupacion.AgrupacionId)
+                        @Html.HiddenFor(model => model.ComponenteAtributo.ComponenteId)
+                        @Html.HiddenFor(model => model.ComponenteAtributo.Atributo.AtributoId)
+                        @Html.HiddenFor(model => model.Componente.ComponenteId)
+                        @Html.Hidden("mapName", string.Empty)
+                        @Html.Hidden("mapSession", string.Empty)
+                        @Html.HiddenFor(model => model.GrabaBiblioteca)
+                        @Html.HiddenFor(model => model.GrabaColeccion)
+                    </div>
+                    <!--<div class="row">
+                        <div id="progressStepBar"></div>
+                    </div>
+                    -->
+                    <div id="progress-bar-step" class="row bs-wizard" style="border-bottom:0; margin-left:25%; margin-top: 5%;">
+                        <div class="col-lg-2 col-xs-2 col-sm-2 col-md-2 bs-wizard-step  complete">
+                            @*complete - active - disabled*@
+                            <div class="progress"><div class="progress-bar"></div></div>
+                            <a class="bs-wizard-dot"></a>
+                        </div>
+
+                        <div class="col-lg-2 col-xs-2 col-sm-2 col-md-2 bs-wizard-step  complete">
+                            <div class="progress"><div class="progress-bar"></div></div>
+                            <a class="bs-wizard-dot"></a>
+                        </div>
+
+                        <div class="col-lg-2 col-xs-2 col-sm-2 col-md-2 bs-wizard-step complete">
+                            <div class="progress"><div class="progress-bar"></div></div>
+                            <a class="bs-wizard-dot"></a>
+                        </div>
+
+                        <div class="col-lg-2 col-xs-2 col-sm-2 col-md-2 bs-wizard-step complete">
+                            <div class="progress"><div class="progress-bar"></div></div>
+                            <a class="bs-wizard-dot"></a>
+                        </div>
+
+                        <div class="col-lg-2 col-xs-2 col-sm-2 col-md-2 bs-wizard-step active">
+                            <div class="progress"></div>
+                            <a class="bs-wizard-dot"></a>
+                        </div>
+                    </div>
+
+                }
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/Negocio/mapastematicos.js"></script>
+<script src="~/Scripts/jquery-ui.js"></script>
+
+<script src="~/Scripts/jquery.form.js"></script>
+<script src="~/Scripts/MapasTematicos/resumen.js"></script>
+
+<script src="~/Scripts/MicrosoftAjax.debug.js" type="text/javascript"></script>
+<script src="~/Scripts/MicrosoftMvcAjax.debug.js" type="text/javascript"></script>

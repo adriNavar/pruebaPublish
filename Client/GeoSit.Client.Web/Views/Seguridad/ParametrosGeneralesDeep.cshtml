@@ -1,0 +1,65 @@
+﻿@model IEnumerable<GeoSit.Data.BusinessEntities.Seguridad.ParametrosGenerales>
+
+<link href="~/Content/Seguridad.css" rel="stylesheet" />
+
+<div class="modal fade" id="myModal" data-keyboard="false" >
+    <div class="modal-dialog" style="width: 90%">
+        <div class="modal-content">
+            <div class="modal-header">
+                @Html.ActionLink("Volver", "../")
+            </div>
+            <div class="modal-body modal-body-scroll">
+                <table class="table">
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Id_Parametro)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Clave)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Valor)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Descripcion)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Agrupador)
+                        </th>
+                        <th></th>
+                    </tr>
+
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Id_Parametro)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Clave)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Valor)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Descripcion)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Agrupador)
+                            </td>
+                            <td>
+                                @Html.ActionLink("Editar", "ParametrosGeneralesDeepEdit", new { id = item.Id_Parametro })
+                            </td>
+                        </tr>
+                    }
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $("#myModal").modal('show');
+    });
+</script>

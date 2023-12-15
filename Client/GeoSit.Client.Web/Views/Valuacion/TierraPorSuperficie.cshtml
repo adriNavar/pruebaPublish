@@ -1,0 +1,368 @@
+﻿@model GeoSit.Client.Web.Models.ValuacionModel
+@{
+    ViewBag.Title = "Valores Básicos de la Tierra por Superficie";
+    ViewBag.Description = "";
+    ViewBag.MensajeEntrada = "";
+}
+
+
+    <link href="~/Content/valuacion.css" rel="stylesheet" />
+    <link href="~/Content/jquery.jscrollpane.css" rel="stylesheet" />
+    <link href="~/Content/dataTables.bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/formValidation.min.css" rel="stylesheet" />
+    <link href="~/Content/select2.css" rel="stylesheet" />
+    <link href="~/Content/select2-bootstrap.css" rel="stylesheet" />
+
+@*Modal Contenido*@
+<div class="modal fade" id="myModal" tabindex="-100" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header centrado" style="padding: 10px 0px 40px;">
+                <h4 class="modal-title col-lg-12 col-xs-12 col-sm-12 col-md-12" id="myModalLabel">@ViewBag.Title</h4>
+            </div>
+            <div class="modal-body  modal-body-scroll">
+                @using (Ajax.BeginForm("GrabaTierraPorSuperficie", "Valuacion", new { ReturnUrl = ViewBag.ReturnUrl }, new AjaxOptions { }, new { id = "form", role = "form", novalidate = "" }))
+                {
+                    @Html.AntiForgeryToken()
+                    ViewBag.MensajeEntrada = Model.Mensaje;
+
+                    @Html.HiddenFor(model => model.BusquedaPadron.IdPadron)
+                    @Html.HiddenFor(model => model.BusquedaPadron.VigenciaDesde)
+                    @Html.HiddenFor(model => model.BusquedaPadron.VigenciaHasta)
+                    //@Html.Hidden("model.Parcela.Tipo_Parcela", Model.Parcela.Tipo_Parcela)
+                    @Html.Hidden("model.IdFiltroParcela", Model.IdFiltroParcela)
+                    <div class="row " style="height:3em;">
+                        <div class="col-lg-6 col-xs-6 col-sm-6 col-md-6 centrado"><label class="h4">Zona</label> </div>
+                        <div class="col-lg-6 col-xs-6 col-sm-6 col-md-6 centrado"><label class="h4">Valor m<sup>2</sup></label> </div>
+
+                    </div>
+                    var margensegundo = "";
+                    var margen = "";
+                    if (Model.TierraPorSuperficie.Zona.Count() > 0)
+                    {
+                        margen = "margin-top: 10px;";
+                    }
+
+                    <div class="row form-group" style="padding: 0px 20px;">
+                        <div class="col-lg-6 col-xs-6 col-sm-6 col-md-6 BordeCuadro borde-superior borde-izquierdo borde-inferior" id="divZona" style="height: 100%; padding: 10px 10px;">
+                            @********valor 1********@
+                            @*@Html.TextBoxFor(model => model.TierraPorSuperficie.Zona, new { @id = "Zona_0", @class = "centrado", @style = "width:100%;", @value = "", @onClick = "AgregarCampo(0)", @maxlength = "6", @tabindex = "1" })*@
+
+                            @for (int i = 0; i < Model.TierraPorSuperficie.Zona.Count(); i++)
+                            {
+                                var tabIndice = i + 1;
+                                if (i > 0)
+                                {
+                                    margensegundo = "margin-top: 10px;";
+                                }
+                                @*<input class="centrado inputSeleccionado inputzona" data-val="true" id="Zona_@i" name="model.TierraPorSuperficie.Zona" style="width: 100%; @margensegundo " type="text" value="@Model.TierraPorSuperficie.Zona[i]" maxlength="6" tabindex="1">*@
+                                <select id="Zona_@i" class="form-control cbZona" name="model.TierraPorSuperficie.Zona" style="width: 100%; @margensegundo ">
+
+                                    @{
+
+                                foreach (var item in ViewBag.listaZonas)
+                                {
+
+                                    if (item.FeatId == Model.TierraPorSuperficie.Zona[i])
+                                    {
+                                        <option value="@item.FeatId" selected="selected">@item.Nombre</option>
+                                    }
+                                    else
+                                    {
+                                        <option value="@item.FeatId">@item.Nombre</option>
+                                    }
+
+                                }
+                                    }
+                                </select>
+                            }
+                            @*<input class="centrado inputSeleccionado inputzona" data-val="true" id="Zona_@Model.TierraPorSuperficie.Zona.Count()" name="model.TierraPorSuperficie.Zona" onclick="AgregarCampo(@Model.TierraPorSuperficie.Zona.Count())" style="width:100%; @margen" type="text" value="" maxlength="6" tabindex="1">*@
+                            <select id="Zona_@Model.TierraPorSuperficie.Zona.Count()" class="cbZona form-control" name="model.TierraPorSuperficie.Zona" style="width:100%;  @margen">
+                                @{
+
+                    foreach (var item in ViewBag.listaZonas)
+                    {
+                        <option value="@item.FeatId">@item.Nombre</option>
+                    }
+                                }
+                            </select>
+                        </div>
+
+                        <div class="col-lg-6 col-xs-6 col-sm-6 col-md-6 BordeCuadro borde-superior borde-izquierdo borde-derecho borde-inferior" id="valor2" style="height: 100%; padding: 10px 10px;">
+                            @**********valor2*********@
+                            @*@Html.TextBoxFor(model => model.TierraPorSuperficie.Valor, new { @id = "Valor_0", @class = "centrado", @style = "width:100%;", @value = "", @maxlength = "6", @tabindex = "1" })*@
+                            @{ margensegundo = ""; }
+                            @for (int i = 0; i < Model.TierraPorSuperficie.Valor.Count(); i++)
+                            {
+                                var tabIndice = i + 1;
+                                if (i > 0)
+                                {
+                                    margensegundo = "margin-top: 10px;";
+                                }
+
+                                <input class="centrado inputValor form-control" id="Valor_@i" name="model.TierraPorSuperficie.Valor" style="width:100%; @margensegundo" type="text" value="@Model.TierraPorSuperficie.Valor[i]" maxlength="12" tabindex="1">
+                            }
+                            <input class="centrado inputValor form-control" id="Valor_@Model.TierraPorSuperficie.Valor.Count()" name="model.TierraPorSuperficie.Valor" style="width:100%;  @margen" type="text" value="" maxlength="12" tabindex="1" onclick="AgregarCampo(@Model.TierraPorSuperficie.Zona.Count())">
+
+                        </div>
+
+                    </div>
+                }
+            </div>
+            @*BOTONES*@
+            <div class="modal-footer" id="Panel_Botones">
+                @*<button id="btnConfirmar" class="botones" type="submit" style=" width:32px; margin-right:5px; padding:0 0 0 0;">*@
+                <img title="Confirmar" id="guardarSuperficie" src="~/Content/images/Valuacion/icons/blue/32/save.png" style="cursor: pointer; margin-right: 5px;">
+                @*</button>*@
+
+                <img id="btnCncelarSuperficie" title="Cerrar" src="~/Content/images/Valuacion/icons/blue/32/cancelar.png" style="cursor:pointer;">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Advertencia--> Modal Advertencia-->
+<div class="modal fade" id="ModalAdvertencia" tabindex="-2" role="dialog" aria-labelledby="TituloAdvertencia" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <input type="hidden" id="TipoAdvertencia" value="" />
+                <h4 class="modal-title col-lg-11 col-xs-11 col-sm-11 col-md-11" id="TituloAdvertencia" style="color:#000000;">Titulo</h4>
+                <br />
+            </div>
+            <div class="modal-body">
+                <div id="MensajeAlerta" class="alert alert-warning alert-dismissible" role="alert">
+                    <strong>Atención!</strong><br />
+                    <p id="DescripcionAdvertencia">Está a punto de DESACTIVAR al usuario Perez, Juan <br />Está seguro de continuar?</p>
+                </div>
+            </div>
+            <div class="modal-footer" style="background-color:#ffffff;" id="Panel_Botones">
+                <img id="btnAdvertenciaOK" data-dismiss="modal" class="" title="Aceptar" src="~/Content/images/Seguridad/icons/blue/32/checkbox.png" style="cursor:pointer;">&ensp;&ensp;
+                <img id="btnCancelarAdvertencia" data-dismiss="modal" title="Cancelar" src="~/Content/images/Seguridad/icons/blue/32/cancelar.png" style="cursor:pointer;">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Información-->
+<div class="modal fade" id="ModalInfo" tabindex="-3" role="dialog" aria-labelledby="TituloInfo" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <input type="hidden" id="TipoInformacion" value="" />
+                <h4 class="modal-title col-lg-11 col-xs-11 col-sm-11 col-md-11" id="TituloInfo" style="color:#000000;">Titulo</h4>
+                <br />
+            </div>
+            <div class="modal-body">
+                <div id="MensajeInfo" class="alert alert-success alert-dismissible" role="alert">
+                    <strong>Atención!</strong><br />
+                    <p id="DescripcionInfo">Descripcion de la informacion</p>
+                </div>
+            </div>
+            <div class="modal-footer" style="background-color:#ffffff;" id="Panel_Botones">
+                <img id="btnCancelarInfo" data-dismiss="modal" title="Cancelar" src="~/Content/images/Seguridad/icons/blue/32/checkbox.png" style="cursor:pointer;">
+            </div>
+        </div>
+    </div>
+</div>
+
+    <script src="~/Scripts/jquery.dataTables.js"></script>
+    <script src="~/Scripts/formValidation.min.js"></script>
+    <script src="~/Scripts/bootstrapValidation.min.js"></script>
+    <script src="~/Scripts/select2.js"></script>
+
+    <script src="~/Scripts/jquery.inputmask.js" type="text/javascript"></script>
+    <script src="~/Scripts/jquery.inputmask.regex.extensions.js" type="text/javascript"></script>
+    <script src="~/Scripts/jquery.inputmask.numeric.extensions.js" type="text/javascript"></script>
+<script src="~/Scripts/jquery.form.js"></script>
+
+    <script>
+
+        function AgregarCampo(Index) {
+
+            var indexTab = Index + 1;
+
+            $(".inputValor").prop('onclick', null).off('click');
+
+            Index++;
+            indexTab++;
+
+            $('.inputValor').attr("onClick", "");
+
+            //var campoInput1 = '<input class="centrado inputSeleccionado inputzona" data-val="true" id="Zona_' + Index + '" name="model.TierraPorSuperficie.Zona" onclick="AgregarCampo(' + Index + ')" style="width:100%; margin-top: 10px;" type="text" value="" maxlength="6" tabindex = "' + indexTab + '" >'
+            var campoInput2 = '<input class="centrado inputValor form-control" id="Valor_' + Index + '" name="model.TierraPorSuperficie.Valor" style="width:100%; margin-top: 10px;" type="text" value="" maxlength="12" tabindex = "' + indexTab + '" onclick="AgregarCampo(' + Index + ')" onkeypress="javascript:VerificaAgregarCampo(event,this)" >'
+            var OptionsZonas = "";
+            @{
+
+                                    foreach (var item in ViewBag.listaZonas)
+    {
+
+        <text>
+
+            OptionsZonas += '<option value="@item.FeatId">@item.Nombre</option>';
+            </text>
+        }
+        }
+            var Zonas = '<select id="Zona_' + Index + '" name="model.TierraPorSuperficie.Zona" class="form-control cbZona" style="width:100%; margin-top: 10px;">';
+            Zonas += OptionsZonas;
+            Zonas += '</select>';
+
+            $("#divZona").append(Zonas);
+            $("#valor2").append(campoInput2);
+            $(".inputValor").inputmask('decimal', { digits: 2, rightAlign: false, radixPoint: '.' });
+
+            $('#Zona_' + Index).select2({});
+        }
+        
+
+        function VerificaAgregarCampo(event, obj) {
+
+            var char = event.which || event.keyCode;
+            var Cantidad = $("#valor2 input").length;
+
+            if (char == 9 && $(obj).prop("tabindex") == Cantidad) {
+
+                AgregarCampo($(obj).prop("tabindex") - 1);
+
+                $("#Valor_" + (Cantidad - 1)).focus();
+
+            }
+
+        }
+
+        $(window).resize(ajustamodal);
+        function ajustamodal() {
+            var altura = $(window).height() - 190; //value corresponding to the modal heading + footer
+            $(".modal-body-scroll").css({ "height": altura, "overflow-y": "auto" });
+        }
+
+
+        $(document).ready(function () {
+            ajustamodal();
+
+            MostrarMensaje();
+
+            $('#myModal').modal('show');
+            //$("#myModal").draggable();
+
+
+            $("#btnCncelarSuperficie").click(function () {
+                $("#form").attr("Action", "@Url.Action("ABMPadronTemporal", "Valuacion")");
+                $("#form").submit();
+            });
+
+            $('.cbZona').select2({
+                theme: "classic"
+            });
+
+
+            $("#guardarSuperficie").click(function () {
+
+                var cantidad = $("#valor2 input").length;
+                for (var i = 0; i < cantidad; i++) {
+                    for (var j = (i + 1) ; j < cantidad; j++) {
+
+                        if ($("#Zona_" + i).val() == $("#Zona_" + j).val() && $("#Valor_" + i).val() != "" && $("#Valor_" + j).val() != "") {
+
+                            var msj = "Las filas no pueden contener los mismos valores.<br>Por favor, ingréselos nuevamente.";
+                            $('#TituloAdvertencia').html("Advertencia - Grabar")
+                            $('#DescripcionAdvertencia').html(msj)
+                            $('#TipoAdvertencia').val('GrabarError')
+
+                            $('#ModalAdvertencia').modal('show');
+                            return false;
+
+                            //$('#ModalInfo2').modal('show');
+                            //$('#ModalInfo2').draggable();
+                            //return false;
+                        }
+
+                        //if ((($("#Zona_" + i).val() == "") || ($("#Valor_" + i).val() == "")) && $("#Valor_" + i).val() != "") {
+
+                        //    var msj = "Todos los campos son obligatorios<br>Debe completarlos para poder grabar.";
+                        //    $('#TituloAdvertencia').html("Advertencia - Grabar")
+                        //    $('#DescripcionAdvertencia').html(msj)
+                        //    $('#TipoAdvertencia').val('GrabarError')
+
+                        //    $('#ModalAdvertencia').modal('show');
+                        //    return false;
+
+                        //    //$('#ModalAdvertencia').modal('show');
+                        //    //$('#ModalAdvertencia').draggable();
+                        //    //return false;
+                        //}
+
+                    }
+                }
+
+                var msj = "Está a punto de GRABAR los valores ingresados<br>¿Está seguro de continuar?";
+                $('#TituloAdvertencia').html("Advertencia - Grabar")
+                $('#DescripcionAdvertencia').html(msj)
+                $('#TipoAdvertencia').val('Grabar')
+                $('#ModalAdvertencia').modal('show')
+
+                @*$("#form").attr("Action", "@Url.Action("ABMPadronTemporal", "Valuacion")");
+                $("#form").submit();*@
+
+
+
+
+            });
+
+
+
+            $("#btnCerrarAdvertencia").click(function () {
+                //$('#myModal').modal('show');
+                $('#ModalAdvertencia').modal('hide');
+            });
+
+            $("#btnAdvertenciaOK").click(function () {
+
+                if ($('#TipoAdvertencia').val() == 'Grabar') {
+                    $("#form").submit();
+                }
+            });
+
+            $("#Valor_0").inputmask('decimal', { digits: 2, rightAlign: false, radixPoint: '.' });
+            $("#form").ajaxForm({
+                beforeSubmit: function (arr, $form, options) {
+                    showLoading();
+                    $("#myModal").modal('hide');
+                    return true; //it will continue your submission.
+                },
+                success: function (data) {
+                    //levantar modal
+                    $("#contenido").empty();
+                    $("#contenido").html(data);
+
+                },
+                error: function () {
+                    alert("error");
+                }
+            });
+
+            hideLoading();
+
+            $("#form").submit(function (evt) {
+                /*evita el doble submit*/
+                evt.preventDefault();
+                evt.stopImmediatePropagation();
+                return false;
+            });
+        });
+
+        function MostrarMensaje() {
+
+            var MensajeEntrada = '@ViewBag.MensajeEntrada'
+            if (MensajeEntrada != null && MensajeEntrada != '') {
+                if (MensajeEntrada == "OK") {
+                    $('#TituloInfo').html("Información - Tierra por Superficie")
+                    $('#DescripcionInfo').html("Los datos han sido guardados satisfactoriamente.")
+                    $('#TipoInformacion').val('GrabacionOK')
+                    $("#ModalInfo").modal('show');
+                }
+
+            }
+        }
+
+    </script>

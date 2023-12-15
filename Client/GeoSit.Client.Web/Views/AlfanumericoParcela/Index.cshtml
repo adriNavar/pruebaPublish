@@ -1,0 +1,250 @@
+﻿@using GeoSit.Client.Web.Controllers
+@model GeoSit.Client.Web.Models.AlfanumericoParcelaViewModel
+
+<link href="~/Content/dataTables.bootstrap.css" rel="stylesheet" />
+<link href="~/Content/formValidation.min.css" rel="stylesheet" />
+<link href="~/Content/AlfanumericoParcela.css" rel="stylesheet" />
+
+<div class="modal fade theme_new" id="alfanumericoModal" tabindex="-1" role="dialog" aria-labelledby="alfanumericoLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="scroll-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="lblModalAlfanumerico">@Resources.Recursos.AlfanumericoParcela</h3>
+                    <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+                </div>
+                <div class="modal-body alfanumerico-body">
+                    <div id="message-error" class="alert alert-danger">
+                        <button type="button" class="close"><span aria-hidden="true">&times;</span></button>
+                        <p></p>
+                    </div>
+                    <div class="alfanumerico-content body-content">
+                        <div class="panel panel-default remove-shadow">
+                            <div class="panel-body">
+                                <div class="form-horizontal">
+                                    <div class="form-group">
+                                        <label class="control-label col-xs-5 text-right">Tipo de Operaci&oacute;n</label>
+                                        <div class="col-xs-5">
+                                            @Html.DropDownListFor(model => model.TipoOperacionId, Model.TipoOperacionList, "- Seleccione -", new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                    <form id="datos-form">
+                                        <div class="form-group">
+                                            <label class="control-label col-xs-5 text-right">Expediente de Creaci&oacute;n</label>
+                                            <div class="col-xs-5">
+                                                @Html.TextBoxFor(model => model.NumeroExpediente, new { @class = "form-control" })
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label col-xs-5 text-right">Fecha de Creaci&oacute;n</label>
+                                            <div class="col-xs-5">
+                                                @Html.TextBoxFor(model => model.FechaExpediente, new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion alfanumerico-datos" id="accordion-alfanumerico">
+                            <div class="panel-group">
+                                <div class="panel remove-shadow">
+                                    <div class='panel-heading bg-primary' id='accordion-parcelas-origen'>
+                                        <a data-toggle='collapse' data-parent='#accordion-alfanumerico' aria-expanded='true' href='#collapse-parcelas-origen'
+                                           aria-controls='collapse-parcelas-origen' class="collapsed">
+                                            <div class='panel-title'>
+                                                Parcela(s) Origen
+                                                <i class="fa"></i>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div class="panel-collapse collapse" id="collapse-parcelas-origen" aria-labelledby='accordion-parcelas-origen'>
+                                        <div class="panel remove-shadow">
+                                            <div class="panel-body">
+                                                <div class="tabla-con-botones">
+                                                    <table id="parcelas-origen" class="table table-striped table-condensed table-bordered table-responsive">
+                                                    </table>
+                                                    <dl>
+                                                        @if (SeguridadController.ExisteFuncion(@Resources.Seguridad.InsertarParcelaOrigen))
+                                                        {
+                                                            <dt><span id="parcelas-origen-insert" class="fa fa-2x fa-plus-circle cursor-pointer" aria-hidden="true"></span></dt>
+                                                        }
+                                                        @if (SeguridadController.ExisteFuncion(@Resources.Seguridad.EliminarParcelaOrigen))
+                                                        {
+                                                            <dt><span id="parcelas-origen-delete" class="fa fa-2x fa-minus-circle cursor-pointer boton-deshabilitado" aria-hidden="true"></span></dt>
+                                                        }
+                                                    </dl>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel remove-shadow">
+                                    <div class='panel-heading bg-primary main-heading' id='accordion-datos-destino'>
+                                        <a data-toggle='collapse' data-parent='#accordion-alfanumerico' aria-expanded='true' href='#collapse-datos-destino'
+                                           aria-controls='collapse-datos-destino' class="collapsed">
+                                            <div class='panel-title'>
+                                                Datos de la Parcela(s) Destino
+                                                <i class="fa"></i>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div class="panel-collapse collapse main-collapse" id="collapse-datos-destino" aria-labelledby='accordion-datos-destino'>
+                                        <div class="panel remove-shadow" style="margin-top:7px;">
+                                            <div class="panel-body">
+                                                <form class="form-horizontal" id="destino-form">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-xs-5 text-right">Tipo</label>
+                                                        <div class="col-xs-5">
+                                                            @Html.DropDownListFor(model => model.TipoParcelaId, Model.TipoParcelaList, new { @class = "form-control" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-xs-5 text-right">Clase</label>
+                                                        <div class="col-xs-5">
+                                                            @Html.DropDownListFor(model => model.ClaseParcelaId, Model.ClaseParcelaList, new { @class = "form-control" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-xs-5 text-right">Estado</label>
+                                                        <div class="col-xs-5">
+                                                            @Html.DropDownListFor(model => model.EstadoParcelaId, Model.EstadoParcelaList, new { @class = "form-control" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-xs-5 text-right">Jurisdicci&oacute;n</label>
+                                                        <div class="col-xs-5">
+                                                            @Html.DropDownListFor(model => model.JurisdiccionId, Model.JurisdiccionList, "- Seleccione -", new { @class = "form-control" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-xs-5 text-right hidden" id="labelSuperficie">Superficie</label>
+                                                        <div class="col-xs-5">
+                                                            @Html.TextBoxFor(model => model.Superficie, "{0:0.00}", new { @type = "number", @step = "0.01", @class = "form-control hidden", placeholder = "0.00" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-xs-5 text-right">Vigencia</label>
+                                                        <div class="col-xs-5">
+                                                            @Html.TextBoxFor(model => model.Vigencia, new { @class = "form-control", placeholder = "dd/mm/aaaa" })
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel remove-shadow">
+                                    <div class='panel-heading bg-primary' id='accordion-parcelas-destino'>
+                                        <a data-toggle='collapse' data-parent='#accordion-alfanumerico' aria-expanded='true' href='#collapse-parcelas-destino'
+                                           aria-controls='collapse-parcelas-destino' class="collapsed">
+                                            <div class='panel-title'>
+                                                Parcela(s) Destino
+                                                <i class="fa"></i>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div class="panel-collapse collapse" id="collapse-parcelas-destino" aria-labelledby='accordion-parcelas-destino'>
+                                        <div class="panel remove-shadow" style="margin-top:7px;">
+                                            <div class="panel-body">
+                                                <div class="form-horizontal">
+                                                    <div class="form-group">
+                                                        <label class="control-label col-xs-3 text-right">Partida</label>
+                                                        <div class="col-xs-7">
+                                                            <div class="input-group">
+                                                                <span id="igaJurisdiccion" class="input-group-addon">@ViewBag.Jurisdiccion</span>
+                                                                @Html.TextBoxFor(model => model.NumeroParcela, new { @class = "form-control uppercase", @readonly = "readonly" })
+                                                                <span id="igaParcelaTipo" class="input-group-addon">1</span>
+                                                                @if (SeguridadController.ExisteFuncion(@Resources.Seguridad.InsertarParcelaDestino))
+                                                                {
+                                                                    <span class="input-group-btn">
+                                                                        <button id="btnGenerarPartida" class="btn btn-default" type="button" title="Generar Partida Automática"><i class="fa fa-lg fa-gears cursor-pointer"></i></button>
+                                                                        <button id="btnToggleModoGeneracionPartida" class="btn btn-default" type="button" title="Activar Partida Manual"><i class="fa fa-lg fa-pencil cursor-pointer" style="display:inline-block"></i><i class="fa fa-lg fa-times cursor-pointer" style="display:none"></i></button>
+                                                                        <button id="parcelas-destino-insert" class="btn btn-default boton-deshabilitado" type="button"><i class="fa fa-lg fa-plus-circle cursor-pointer"></i></button>
+                                                                    </span>
+                                                                }
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="tabla-con-botones">
+                                                    <table id="parcelas-destino" class="table table-striped table-condensed table-bordered table-responsive" width="100%">
+                                                    </table>
+                                                    <dl>
+                                                        @if (SeguridadController.ExisteFuncion(@Resources.Seguridad.EliminarParcelaDestino))
+                                                        {
+                                                            <dt><span id="parcelas-destino-delete" class="fa fa-2x fa-minus-circle cursor-pointer boton-deshabilitado" aria-hidden="true"></span></dt>
+                                                        }
+                                                    </dl>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-xs-4 pull-right">
+                    @if (SeguridadController.ExisteFuncion(@Resources.Seguridad.GuardarGeneral))
+                    {
+                        <span aria-hidden="true" data-placement="right" title="Guardar" data-original-title="Guardar" id="save-all" class="fa fa-save fa-2x black  pull-right cursor-pointer boton-deshabilitado"></span>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade theme_new mensaje" id="confirmModal" tabindex="-2" role="dialog" aria-labelledby="TituloConfirmacion" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="TituloConfirmacion">Titulo</h3>
+                <span id="btnCancelarConfirm" aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-warning alert-dismissible" role="alert">
+                    <p id="DescripcionConfirmacion">
+                        Está a punto de DESACTIVAR al usuario Perez, Juan <br>Está seguro de continuar?
+                    </p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-xs-4 pull-right">
+                    <span id="btnOkConfirm" aria-hidden="true" data-placement="right" title="Aceptar" data-original-title="Aceptar" class="fa fa-check-circle light-blue fa-2x cursor-pointer"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade theme_new mensaje" id="WarningModal" tabindex="-2" role="dialog" aria-labelledby="TituloAdvertencia" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <input type="hidden" id="Tipo" value="">
+                <h3 class="modal-title" id="TituloAdvertencia">Titulo</h3>
+                <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-dismissible alert-warning" role="alert">
+                    <p id="DescripcionAdvertencia"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="buscador-container"></div>
+
+<script src="~/Scripts/jquery.form.js"></script>
+<script src="~/Scripts/formValidation.min.js"></script>
+<script src="~/Scripts/bootstrapValidation.min.js"></script>
+<script src="~/Scripts/jquery.dataTables.min.js"></script>
+<script src="~/Scripts/dataTables.bootstrap.js"></script>
+<script src="~/Scripts/municipioResource.js"></script>
+<script src="~/Scripts/AlfanumericoParcela/main.js"></script>

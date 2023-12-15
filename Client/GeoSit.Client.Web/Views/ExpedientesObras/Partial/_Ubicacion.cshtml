@@ -1,0 +1,41 @@
+﻿@model GeoSit.Client.Web.Models.ExpedientesObras.UbicacionViewModel
+
+<div class="search">
+    <div class="input-group">
+        <input type="text" id="search" class="form-control" placeholder="Buscar">
+        <div class="input-group-btn">
+            <button type="button" class="btn btn-default" id="domicilios-search">
+                <span class="fa fa-search cursor-pointer" aria-hidden="true"></span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="form-group">
+    <div class="col-xs-11">
+        <table id="domicilios" class="table table-striped table-bordered table-responsive">
+            <thead>
+                <tr>
+                    <th ></th>
+                    <th>Localidad</th>
+                    <th>Calle</th>
+                    <th>Nro</th>
+                    <th>Piso</th>
+                    <th ></th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+        @Html.TextBoxFor(model => model.IdDomicilio, new { type = "hidden" })
+        <small id="selected_error" class="help-block hide" style="color: #a94442">Ya fue seleccionada la Ubicación de la Obra</small>
+    </div>
+    <div class="col-xs-1" id="domicilios-controls">
+        <dl>
+            <dt><span id="domicilio-insert" class="fa fa-2x fa-plus-sign cursor-pointer" aria-hidden="true"></span></dt>
+        </dl>
+    </div>
+    
+</div>
+
+<span class="fa fa-2x fa-times-circle pull-right black cursor-pointer pull-right" aria-hidden="true" id="ubicaciones-cancel"></span>
+<span class="fa fa-2x fa-check-circle pull-right black cursor-pointer pull-right" id="ubicaciones-submit"></span>

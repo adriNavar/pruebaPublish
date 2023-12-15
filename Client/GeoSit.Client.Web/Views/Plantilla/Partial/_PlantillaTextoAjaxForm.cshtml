@@ -1,0 +1,132 @@
+﻿@model GeoSit.Client.Web.Models.ViewPlantillaTexto
+
+@Html.TextBoxFor(model => model.IdPlantillaTexto, new { @type = "hidden" })
+
+<div class="form-group">
+    <label class="control-label col-xs-3">
+        X (mm)
+    </label>
+    <div class="col-xs-9">
+        @Html.TextBoxFor(model => model.X, new { @class = "form-control" })
+    </div>
+</div>
+<div class="form-group">
+    <label class="control-label col-xs-3">
+        Y (mm)
+    </label>
+    <div class="col-xs-9">
+        @Html.TextBoxFor(model => model.Y, new { @class = "form-control" })
+    </div>
+</div>
+<div class="form-group">
+    <label class="control-label col-xs-3">Tipo</label>
+    <div class="col-xs-2">
+        <label class="radio-inline">
+            @Html.RadioButtonFor(model => model.Tipo, "1", new { @checked = "true" }) Estático
+        </label>
+    </div>
+    <div class="col-xs-2">
+        <label class="radio-inline">
+            @Html.RadioButtonFor(model => model.Tipo, "2") Variable
+        </label>
+    </div>
+    <div class="col-xs-2">
+        <label class="radio-inline">
+            @Html.RadioButtonFor(model => model.Tipo, "3") De datos
+        </label>
+    </div>
+    <div class="col-xs-2">
+        <label class="radio-inline">
+            @Html.RadioButtonFor(model => model.Tipo, "4") Atributos
+        </label>
+    </div>
+</div>
+<div class="form-group">
+    <label class="control-label col-xs-3">
+        Origen
+    </label>
+    <div class="col-xs-9">
+        @Html.TextBoxFor(model => model.Origen, new { @class = "form-control" })
+    </div>
+</div>
+<div class="form-group">
+    <label class="control-label col-xs-3">
+        Atributo
+    </label>
+    <div class="col-xs-9">
+        @Html.DropDownListFor(model => model.AtributoId, Model.AtributoList, new { @class = "form-control select2", @style = "padding:0;" })
+    </div>
+</div>
+<fieldset class="fieldset-border">
+    <legend class="fieldset-border">Fuente</legend>
+    <div class="form-group">
+        <label class="control-label col-xs-3">
+            Letra
+        </label>
+        <div class="col-xs-9">
+            @Html.DropDownListFor(model => model.FuenteNombre, Model.FuenteList, new { @class = "form-control select2", @style = "padding:0;" })
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-3">
+            Tamaño (mm)
+        </label>
+        <div class="col-xs-9">
+            @Html.TextBoxFor(model => model.FuenteTamanio, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-3">
+            Color
+        </label>
+        <div class="col-xs-9">
+            @Html.TextBoxFor(model => model.FuenteColor, new { @class = "form-control pick-a-color" })
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-3">
+            Estilo
+        </label>
+        <div class="col-xs-2">
+            <label class="checkbox-inline">
+                @Html.CheckBoxFor(model => model.Negrita, new { id = "texto-negrita" }) Negrita
+            </label>
+        </div>
+        <div class="col-xs-2">
+            <label class="checkbox-inline">
+                @Html.CheckBoxFor(model => model.Cursiva, new { id = "texto-cursiva" }) Cursiva
+            </label>
+        </div>
+        <div class="col-xs-2">
+            <label class="checkbox-inline">
+                @Html.CheckBoxFor(model => model.Subrayada, new { id = "texto-subrayada" }) Subrayada
+            </label>
+        </div>
+        <div class="col-xs-3">
+            <label class="checkbox-inline">
+                @Html.CheckBoxFor(model => model.Tachada, new { id = "texto-tachada" }) Tachada
+            </label>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-3">Alineación</label>
+        <div class="col-xs-3">
+            <label class="radio-inline">
+                @Html.RadioButtonFor(model => model.FuenteAlineacion, "0") Izquierda
+            </label>
+        </div>
+        <div class="col-xs-3">
+            <label class="radio-inline">
+                @Html.RadioButtonFor(model => model.FuenteAlineacion, "1") Centro
+            </label>
+        </div>
+        <div class="col-xs-3">
+            <label class="radio-inline">
+                @Html.RadioButtonFor(model => model.FuenteAlineacion, "2") Derecha
+            </label>
+        </div>
+    </div>
+</fieldset>
+
+<span title="Cancelar" data-original-title="Cancelar" class="fa fa-2x fa-times-circle pull-right black cursor-pointer hidden" aria-hidden="true" id="plantilla-texto-cancel" data-toggle="tooltip" data-placement="top"></span>
+<span title="Aceptar" data-original-title="Aceptar" class="fa fa-2x fa-check-circle pull-right black cursor-pointer hidden" id="plantilla-texto-submit" data-toggle="tooltip" data-placement="top"></span>

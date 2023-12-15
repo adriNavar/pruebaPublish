@@ -1,0 +1,186 @@
+﻿@model GeoSit.Client.Web.Models.BibliotecasViewModel
+@{
+    //TODO llamar a la funcion de usuarios
+    var esadmin = false;
+}
+
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class=" modal-content">
+            <div class=" modal-header" style="height:4em">
+                <h4 class="modal-title col-lg-10 col-xs-10 col-sm-10 col-md-10" id="myModalLabel" style="color:#000000">@Resources.Recursos.TituloMapaTematico</h4>
+            </div>
+            <div class="modal-body">
+                <div class=" search row" style="color:black">
+
+                    <div class="input-group col-lg-offset-2 col-lg-8 ">
+                        <input type="text" value="" class="form-control" id="Filtrar" name="Filtrar" placeholder="Filtrar">
+                        <span class="input-group-addon "><span id="clearSearch" class="glyphicon glyphicon-trash" aria-hidden="true"></span></span>
+                    </div>
+
+                </div>
+                <div class="row" style="height:1em">
+
+                </div>
+                <div id="accordion">
+                    <!-- 1 -->
+
+                    <div class="panel-group panel-primary">
+                        <div class="panel-heading panel-desactivado" style="height:40px;">
+                            <div class="col-lg-11 col-xs-11 col-sm-11 col-md-11 ">
+                                @Resources.Recursos.Publicas
+                            </div>
+                            <div class="col-lg-1 col-xs-1 col-sm-1 col-md-1 text-right ">
+                                @*<span id="Flecha_Publicas" style="cursor:pointer;"  class="glyphicon glyphicon-triangle-bottom flecha-desactivada flecha"></span>*@
+                                <span id="Flecha_Publicas" style="cursor:pointer;" class="glyphicon glyphicon-triangle-top flecha"></span>
+                            </div>
+                        </div>
+                        <div id="accordion_panel_publicas" class="panel-collapse collapse in" aria-expanded="true" style="border: solid; border-width: 1px; border-color: #a5a5a5; color: #000000">
+                            <div class="panel-body">
+
+                                @if (Model != null && Model.bibliotecasPublicas != null)
+                                {
+                                    foreach (var publicas in Model.bibliotecasPublicas)
+                                    {
+
+                                        <div id="accordion" class="acordeon">
+
+                                            <div class="panel-group panel-primary">
+                                                <div class="panel-heading panel-desactivado" style="height:40px;">
+                                                    <div class="col-lg-11 col-xs-11 col-sm-11 col-md-11 ">
+                                                        @publicas.ComponenteNombre
+                                                    </div>
+                                                    <div class="col-lg-1 col-xs-1 col-sm-1 col-md-1 text-right ">
+                                                        <span id="Flecha_" style="cursor:pointer;" class="glyphicon glyphicon-triangle-bottom flecha-desactivada flecha"></span>
+                                                    </div>
+                                                </div>
+                                                <div id="accordion_panel_" class="panel-collapse collapse" aria-expanded="true" style="border: solid; border-width: 1px; border-color: #a5a5a5; color: #000000">
+                                                    <div class="panel-body">
+                                                        <ul class="ULs" style="padding-left: 0px;">
+                                                            @foreach (var item in publicas.bibliotecas)
+                                                            {
+                                                                <li id="li_@item.ConfiguracionId" class="seleccionable li_@item.ConfiguracionId" style="list-style-type: none; cursor: pointer;">
+                                                                    <input type="hidden" value="@item.ConfiguracionId" />
+                                                                    <div class="row">
+                                                                        <div class="col-lg-8 BibliotecaNombre">
+                                                                            @item.Nombre
+                                                                        </div>
+                                                                        <div id="botones" class="col-lg-2 pull-right botones-ocultos">
+                                                                            <span class="glyphicon glyphicon-info-sign infobtn" title="@item.Descripcion" style=" margin-left:0.2em; cursor:pointer; color:#333333" id="@item.Descripcion">  </span>
+                                                                            <span class="glyphicon glyphicon-floppy-save exportarbtn" title="Descargar" style=" margin-left:0.2em; cursor:pointer; color:#333333" id="@item.ConfiguracionId">  </span>
+                                                                            @if (esadmin)
+                                                                            {
+                                                                                var colVisibPubl = "";
+                                                                                if (item.Visibilidad == 1) { colVisibPubl = "btnActivoColor"; }
+
+                                                                                <span class="glyphicon glyphicon-user compartirbtn @colVisibPubl" title="Compartir" style=" margin-left:0.2em; cursor:pointer; color:#333333" id="@item.ConfiguracionId">  </span>
+                                                                                <span class="glyphicon glyphicon-remove-sign eliminarbtn" title="Eliminar" style=" margin-left:0.2em; cursor:pointer; color:#333333" id="@item.ConfiguracionId">  </span>
+                                                                            }
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                            }
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="accordion">
+                    <!-- 2 -->
+
+                    <div class="panel-group panel-primary">
+                        <div class="panel-heading panel-desactivado" style="height:40px;">
+                            <div class="col-lg-11 col-xs-11 col-sm-11 col-md-11 ">
+                                @Resources.Recursos.Privadas
+                            </div>
+                            <div class="col-lg-1 col-xs-1 col-sm-1 col-md-1 text-right ">
+                                <span id="Flecha_privadas" style="cursor:pointer;" class="glyphicon glyphicon-triangle-bottom flecha-desactivada flecha"></span>
+                            </div>
+                        </div>
+                        <div id="accordion_panel_privadas" class="panel-collapse collapse" aria-expanded="true" style="border: solid; border-width: 1px; border-color: #a5a5a5; color: #000000">
+                            <div class="panel-body">
+                                @if (Model != null && Model.bibliotecasPrivadas != null)
+                                {
+                                    foreach (var privadas in Model.bibliotecasPrivadas)
+                                    {
+
+                                        <div id="accordion" class="acordeon">
+
+                                            <div class="panel-group panel-primary">
+                                                <div class="panel-heading panel-desactivado" style="height:40px;">
+                                                    <div class="col-lg-11 col-xs-11 col-sm-11 col-md-11 ">
+                                                        @privadas.ComponenteNombre
+                                                    </div>
+                                                    <div class="col-lg-1 col-xs-1 col-sm-1 col-md-1 text-right ">
+                                                        <span id="Flecha_" style="cursor:pointer;" class="glyphicon glyphicon-triangle-bottom flecha-desactivada flecha"></span>
+                                                    </div>
+                                                </div>
+                                                <div id="accordion_panel_" class="panel-collapse collapse" aria-expanded="true" style="border: solid; border-width: 1px; border-color: #a5a5a5; color: #000000">
+                                                    <div class="panel-body">
+
+                                                        <ul class="ULs" style="padding-left: 0px;">
+                                                            @foreach (var item in privadas.bibliotecas)
+                                                            {
+                                                                <li id="li_@item.ConfiguracionId" class="seleccionable li_@item.ConfiguracionId" style="list-style-type: none; cursor: pointer;">
+                                                                    <input type="hidden" value="@item.ConfiguracionId" />
+                                                                    <div class="row">
+
+                                                                        <div class="col-lg-8 BibliotecaNombre">
+                                                                            @item.Nombre
+                                                                        </div>
+                                                                        <div id="botones" class="col-lg-2 pull-right botones-ocultos">
+                                                                            <span class="glyphicon glyphicon-info-sign infobtn" title="@item.Descripcion" style=" margin-left:0.2em; cursor:pointer; color:#333333" id="@item.Descripcion">  </span>
+                                                                            <span class="glyphicon glyphicon-floppy-save exportarbtn" title="Descargar" style=" margin-left:0.2em; cursor:pointer; color:#333333" id="@item.ConfiguracionId">  </span>
+                                                                            @{ 
+                                                                            var colVisib = "";
+                                                                            if (item.Visibilidad == 1) { colVisib = "btnActivoColor"; }
+                                                                            }
+                                                                            @if (esadmin)
+                                                                            {
+                                                                                <span class="glyphicon glyphicon-user compartirbtn @colVisib" title="Compartir" style="margin-left:0.2em; cursor:pointer; color:#a5a5a5" id="@item.ConfiguracionId">  </span>
+                                                                            }
+                                                                            <span class="glyphicon glyphicon-remove-sign eliminarbtn" title="Eliminar" style=" margin-left:0.2em; cursor:pointer; color:#333333" id="@item.ConfiguracionId"> </span>
+                                                                        </div>
+
+                                                                    </div>
+                                                                </li>
+                                                            }
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <input type="hidden" id="configId" name="configId" value="" />
+            <div class="modal-footer">
+                @using (Html.BeginForm("GetResumenView_Guardado", "MapasTematicos", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { id = "formMT", role = "form", novalidate = "" }))
+                {
+                    @Html.AntiForgeryToken()
+                    <div class="col-lg-4 pull-left">
+                        <img id="btnCrearBilioteca" title="nuevo" class="pull-left" src="~/Content/images/Seguridad/icons/blue/32/crear.png" style="cursor:pointer;">
+                        <span id="btnSubirBilioteca" class="pull-left glyphicon glyphicon-floppy-open" title="Subir" style="font-size: 2.3em; margin-left:0.5em; cursor:pointer; color:#47B2D6">  </span>
+                        <input id="subirMT" type="file" style="display:none" />
+                    </div>
+                    <div class="col-lg-4 pull-right">
+                        <img id="btnCerrarBilioteca" title="Cancelar" src="~/Content/images/Seguridad/icons/blue/32/cancelar.png" style="cursor:pointer;">
+                        <img id="btnCargarBilioteca" class="" title="Cargar" src="~/Content/images/Seguridad/icons/blue/32/aceptar.png" style="cursor:pointer;margin-left:0.5em;">
+                    </div>
+                    @Html.Hidden("ConfiguracionId");
+                }
+            </div>
+
+        </div>
+    </div>
+</div>

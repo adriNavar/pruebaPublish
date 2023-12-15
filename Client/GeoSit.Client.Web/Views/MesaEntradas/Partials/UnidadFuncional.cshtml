@@ -1,0 +1,208 @@
+﻿@using GeoSit.Data.BusinessEntities.Common
+@model GeoSit.Client.Web.ViewModels.UnidadFuncional
+
+@Html.Partial("Partials/ObjetoEspecificoBaseView", new GeoSit.Client.Web.ViewModels.ObjetoEspecificoViewModel { Guid = Model.Guid, IdTramiteEntrada = Model.IdTramiteEntrada })
+
+<label style="width: 100%; color: #a3a99b; font-style: italic;">
+    Unidad Tributaria @Model.Operacion.ToString()
+</label>
+
+<label for="hdnOperacionObjetoEspecifico" style="display:none">Tipo</label>
+@Html.Hidden("hdnOperacionObjetoEspecifico", Model.Operacion, new { @class = "form-control", @readonly = "true" })
+
+
+@if (Model.Operacion == OperacionParcela.Origen)
+{
+    <div class="form-group">
+        @Html.LabelFor(m => m.UnidadFuncionalCodigo, new { @class = "col-md-4 control-label text-muted" })
+        <div class="col-xs-8">
+            <div class="input-group">
+                @Html.TextBoxFor(m => m.UnidadFuncionalCodigo, new { @class = "form-control visibleArbolObjetos", @readonly = "true" })
+                @Html.HiddenFor(m => m.IdUnidadFuncional, new { @class = "form-control", Id = "hdnIdUnidadFuncional", @readonly = "true" })
+                <div class="input-group-addon cursor-pointer" id="uf-search">
+                    <span data-placement="bottom" title="Buscar Unidad Tributaria" class="fa-lg fa fa-search black cursor-pointer @((bool)ViewData["habilitarBuscadorUt"]?string.Empty: "boton-deshabilitado")"
+                          aria-hidden="true" id="btn_UtSearch"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="form-group">
+        @Html.LabelFor(m => m.Tipo, "Tipo", new { @class = "col-md-4 control-label" })
+        <div class="col-md-7">
+            @Html.DropDownListFor(m => m.Tipo, Model.Tipos, new { @class = "form-control visibleArbolObjetos" })
+            @Html.ValidationMessageFor(m => m.Tipo, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Vigencia, new { @class = "col-md-4 control-label" })
+        <div class="col-md-7">
+            @Html.TextBoxFor(m => m.Vigencia, "{0:dd/MM/yyyy}", new { @class = "form-control", id = "vigencia", placeholder = "dd/mm/aaaa" })
+            @Html.ValidationMessageFor(m => m.Vigencia, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Piso, new { @class = "col-md-4 control-label" })
+        <div class="col-md-7">
+            @Html.TextBoxFor(m => m.Piso, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Piso, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Unidad, new { @class = "col-md-4 control-label" })
+        <div class="col-md-7">
+            @Html.TextBoxFor(m => m.Unidad, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Unidad, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Superficie, new { @class = "col-md-4 control-label" })
+        <div class="col-md-7">
+            @Html.TextBoxFor(m => m.Superficie, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Superficie, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Plano, "ID según Plano", new { @class = "col-md-4 control-label" })
+        <div class="col-md-7">
+            @Html.TextBoxFor(m => m.Plano, new { @class = "form-control visibleArbolObjetos" })
+            @Html.ValidationMessageFor(m => m.Plano, "", new { @class = "text-danger" })
+        </div>
+    </div>
+}
+
+<script>
+    $(document).ready(function () {
+        $("#divEdicionObjetoContainer").off("ModificarObjeto").on("ModificarObjeto",()=>$("#btn_UtSearch").removeClass('boton-deshabilitado'));
+        $("#btn_UtSearch").click(function () {
+            buscarUF()
+                .then(function (seleccion) {
+                    document.getElementById("UnidadFuncionalCodigo").value = seleccion[0];
+                    document.getElementById("hdnIdUnidadFuncional").value = seleccion[1];
+                    $("#UnidadFuncionalCodigo").valid();
+                })
+                .catch(function (err) {
+                    console.log(err);
+                });
+        });
+
+        $("#vigencia").datepicker({
+            orientation: "top auto",
+            language: "es",
+            todayBtn: "linked",
+            autoclose: true,
+            todayHighlight: true,
+            dateFormat: "dd/mm/yy",
+            defaultDate: new Date(),
+        }).change(function () {
+            $(this).valid();
+        });
+
+        jQuery.validator.addMethod("alphanumeric", function (value, element) {
+            return this.optional(element) || /^[A-Za-z0-9\d\-_/\s]+$/g.test(value);
+        });
+
+        jQuery.validator.addMethod("plano", function (value, element) {
+            return this.optional(element) || /^[A-Za-z0-9\d\/\.\-\s]+$/g.test(value);
+        });
+
+        jQuery.validator.addMethod('positiveNumber', function (value) {
+            return Number(value) > 0;
+        });
+
+        if ('@Model.Operacion' === '@OperacionParcela.Origen') {
+            $("#divEdicionObjetoContainer").validate({
+                rules: {
+                    UnidadFuncionalCodigo: {
+                        required: true,
+                        regex: "^[A-Z]{1}[0-9]{1}[0-9]{6}[0-9]{1}"
+                    }
+                },
+                messages: {
+                    UnidadFuncionalCodigo: {
+                        required: "El campo es requerido",
+                        regex: "Debe tener cargados datos con el siguiente formato: X99999999"
+                    }
+                }
+            });
+        } else {
+            $("#divEdicionObjetoContainer").validate({
+                rules: {
+                    Tipo: {
+                        required: true
+                    },
+                    Piso: {
+                        required: true,
+                        regex: "^([\-]?[0-9]+)$"
+                    },
+                    Plano: {
+                        required: true,
+                        plano: true
+                    },
+                    Unidad: {
+                        required: true,
+                        alphanumeric:true
+                    },
+                    Superficie: {
+                        required: true,
+                        positiveNumber: true
+                    },
+                    Vigencia: {
+                        required: true
+                    }
+                },
+                messages: {
+                    Tipo: {
+                        required: "El campo es requerido"
+                    },
+                    Piso: {
+                        required: "El campo es requerido",
+                        regex: "Debe tener cargado un valor numérico"
+                    },
+                    Plano: {
+                        required: "El campo es requerido",
+                        plano: "Debe tener cargado un valor alfanumérico"
+                    },
+                    Superficie: {
+                        required: "El campo es requerido",
+                        positiveNumber: "Debe tener cargado un valor numérico mayor a 0"
+                    },
+                    Unidad: {
+                        required: "El campo es requerido",
+                        alphanumeric: "Debe tener cargado un valor alfanumérico"
+                    },
+                     Vigencia: {
+                        required: "El campo es requerido"
+                    }
+                }
+            });
+        }
+    });
+
+    function buscarUF() {
+        return new Promise(function (resolve) {
+            var data = { tipos: BuscadorTipos.UnidadesTributarias, multiSelect: false, verAgregar: false, titulo: 'Buscar Partida Inmobiliaria', campos: ['Nombre'] };
+            $("#buscador-container").load(BASE_URL + "BuscadorGenerico", data, function () {
+                $(".modal", this).one('hidden.bs.modal', function () {
+                    $(window).off('seleccionAceptada');
+                    $("#buscador-container").empty();
+                });
+                $(window).one("seleccionAceptada", function (evt) {
+                    if (evt.seleccion) {
+                        resolve(evt.seleccion.slice(1));
+                    } else {
+                        resolve();
+                    }
+                });
+            });
+        });
+    }
+
+</script>

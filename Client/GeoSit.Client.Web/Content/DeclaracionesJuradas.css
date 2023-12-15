@@ -1,0 +1,36 @@
+﻿
+.select-with-value {
+    background-color: lightblue;
+    font-weight: bold;
+}
+
+.select-with-value > option {
+    background-color: white;
+}
+
+.title-border {
+    border-bottom: 1px solid black;
+    color: black;
+}
+
+.ddjj-content .panel {
+    border-bottom: none;
+    box-shadow: none;
+}
+.ddjj-content .tab-content.valuaciones {
+    margin:0;
+    margin-top:.75em;
+}
+.panel-footer.valuaciones {
+    width: 100%;
+    padding: 0;
+    display: flex;
+    background: none;
+    border: none;
+    justify-content: end;
+    gap: 15px;
+}
+
+.ddjj-content td.migracion {
+    color:red;
+}

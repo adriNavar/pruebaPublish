@@ -1,0 +1,29 @@
+﻿#message-error {
+    margin-top: 150px;
+    margin-left: 22%;
+    position: fixed;
+    z-index: 1000;
+    width: 55%;
+    box-shadow: 0px 0px 11px 0px #BBB9B9;
+    display: none;
+}
+
+.alfanumerico-content dl {
+    position: relative !important;
+    right: -10px !important;
+}
+.alfanumerico-content .form-group {
+    margin-bottom:7px;
+}
+
+#igaParcelaTipo {
+    min-width: 25px !important;
+}
+
+#parcelas-origen tr > td .fa-thumb-tack {
+    opacity: .4 !important;
+}
+
+#parcelas-origen tr > td .fa-thumb-tack.mantener-parcela {
+    opacity: 1 !important;
+}

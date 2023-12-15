@@ -1,0 +1,77 @@
+﻿@model GeoSit.Client.Web.Models.PropietariosModel
+@{
+    if (Model.IdDominioTitular > 0)
+    {
+        ViewBag.Title = "Edición de Propietario";
+    }
+    else
+    {
+        ViewBag.Title = "Crear nuevo Propietario";
+    }
+}
+
+<div class="modal fade theme_new" id="modalEditarPropietario" data-backdrop="false" role="dialog" data-keyboard="true" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="scroll-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">@ViewBag.Title</h3>
+                    <span aria-hidden="true" class="fa fa-close fa-2x white pull-right cursor-pointer" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+                </div>
+                <div class="modal-body titular-body">
+                    <div id="titular-content" class="body-content titular-content">
+                        <div class="panel remove-shadow remove-margin">
+                            <div class="panel-title">
+                                <h4 class="title-border"><strong>Datos del Titular</strong></h4>
+                            </div>
+                            <div class="panel-body titular-datos">
+                                <form id="titular-form" class="form-horizontal">
+                                    @Html.HiddenFor(model => model.IdDominioTitular)
+                                    @Html.HiddenFor(model => model.IdDominio)
+                                    @Html.HiddenFor(model => model.PorcientoCopropiedadTotal)
+                                    @Html.HiddenFor(model => model.IdPersona)
+                                    @Html.HiddenFor(model => model.TipoNoDocumento)
+
+                                    <div class="form-group">
+                                        <label class="col-xs-4 text-right control-label">Tipo</label>
+                                        <div class="col-xs-8">
+                                            @Html.DropDownListFor(model => model.IdTipoTitularidad, Model.TiposTitularidadList, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-xs-4 control-label text-right">Persona</label>
+                                        <div class="col-xs-8">
+                                            <div class="input-group">
+                                                @Html.TextBoxFor(model => model.NombreCompleto, new { @class = "form-control", @readonly = "true" })
+                                                <div class="input-group-btn">
+                                                    <button type="button" class="btn btn-default btn-persona-search" id="btn-persona-search">
+                                                        <span class="fa fa-search cursor-pointer"></span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="col-xs-4 control-label text-right">% de Copropiedad</label>
+                                        <div class="col-xs-8">
+                                            @Html.TextBoxFor(model => model.PorcientoCopropiedad, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-xs-4 pull-right">
+                        <span aria-hidden="true" data-placement="right" title="Guardar" data-original-title="Guardar" id="btnGuardarPropietario" class="fa fa-save fa-2x black cursor-pointer"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/DeclaracionesJuradas/Edits/EditarPropietario.js"></script>

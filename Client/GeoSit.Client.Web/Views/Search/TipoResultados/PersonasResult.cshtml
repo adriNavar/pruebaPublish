@@ -1,0 +1,19 @@
+﻿@model GeoSit.Client.Web.Models.Search.SearchResultGroup
+@foreach(dynamic persona  in Model.Items)
+{
+    <div class='srow personas'>
+        <div class="controls">
+            <span class="glyphicon glyphicon-plus-sign pull-right tooltips" data-placement="right" title="Más información" data-toggle="modal" data-target="#modal-window"></span>
+            <span class="glyphicon glyphicon-pushpin  pull-right tooltips" data-placement="right" title="Pin"></span>
+        </div>
+        <div class="rcheck personas">
+            <input title="Seleccionar" type="checkbox" class="rcheck" />
+        </div>
+        <p class='text-primary'>
+            @Html.Raw(persona.nombre)
+        </p>
+        <p>Domicilio:&nbsp;@Html.Raw(persona.domicilio)</p>
+        <p class='text-muted'>@Html.Raw(persona.documento)&nbsp;Inscripción:&nbsp;@Html.Raw(persona.nroInscripcion),&nbsp;@Html.Raw(persona.fechaInscripcion)</p>
+    </div>
+}
+

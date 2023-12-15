@@ -1,0 +1,118 @@
+﻿@model GeoSit.Client.Web.Models.AnalisisPredefinido.SearchViewModel
+<div id="pnlFiltros" class="panel-body detalle-body">
+    <div class="panel-group accordion grupos-analisispredefinidos" id="accordionFiltros">
+        <div class="section-position-predefinido">
+            <div class='panel panel-primary panel-heading bg-primary'>
+                <a data-toggle="collapse" data-parent="#accordionFiltros" href="#collapseIdFiltrosPredefinidos" aria-expanded='false'
+                   aria-controls='#collapseIdFiltrosPredefinidos' class="collapsed">
+                    <div class='panel-title'>
+                        Filtros predefinidos
+                        <i class="fa"></i>
+                    </div>
+                </a>
+            </div>
+            <div id="collapseIdFiltrosPredefinidos" class="panel-collapse collapse in">
+                <div class="panel-body detalle-body">
+                    <div class="form-group row">
+                        <label class="control-label col-xs-3">
+                            Distrito :
+                        </label>
+                        <div class="col-xs-9">
+                            <select class="form-control select2" id="cboCargasDistritosFiltros">
+                                @*Si tiene un solo componente*@
+                                <option value="0">Seleccione Distrito</option>
+                                @if (ViewBag.Colecciones.Count == 1)
+                                {
+                                    <option value="@ViewBag.Colecciones[0].Id_Distrito">@ViewBag.Colecciones[0].Nombre</option>
+                                }
+                                else
+                                {
+                                    foreach (var coleccion in ViewBag.Colecciones)
+                                    {
+                                        <option value="@coleccion.Id_Distrito">@coleccion.Nombre</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="section-position-predefinido">
+            <div class='panel panel-primary panel-heading bg-primary'>
+                <a data-toggle="collapse" data-parent="#accordionFiltros" href="#collapseIdColecciones" aria-expanded='false'
+                   aria-controls='#collapseIdColecciones' class="collapsed">
+                    <div class='panel-title'>
+                        Filtro por Colección
+                        <i class="fa"></i>
+                    </div>
+                </a>
+            </div>
+            <div id="collapseIdColecciones" class="panel-collapse collapse">
+
+                <div class="panel-body detalle-body">
+                    <div class="form-group row">
+                        <label class="control-label col-xs-3">
+                            Colección :
+                        </label>
+                        <div class="col-xs-9">
+                            <select class="form-control select2" id="cboColeccion">
+                                @*Si tiene un solo componente*@
+                                <option value="0">Seleccione Colección</option>
+                                @if (ViewBag.Categorias.Count == 1)
+                                {
+                                    <option value="@ViewBag.Categorias[0].ColeccionId">@ViewBag.Categorias[0].Nombre</option>
+                                }
+                                else
+                                {
+                                    foreach (var coleccion in ViewBag.Categorias)
+                                    {
+                                        <option value="@coleccion.ColeccionId">@coleccion.Nombre</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+
+        <div id="divFechas" class="section-position-predefinido">
+
+            <div class='panel panel-primary' style="background-color:#1698C0">
+
+                <div class='panel-title'>
+                    Fechas
+                    <i class="fa"></i>
+                </div>
+
+            </div>
+            <div class="panel-body detalle-body">
+                <div class="form-group row">
+                    <label class="control-label col-xs-3">
+                        Desde :
+                    </label>
+                    <div class="col-xs-9">
+                        <div class="input-group date">
+                            @Html.TextBoxFor(model => model.FechaDesde, new { @class = "form-control" })
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="control-label col-xs-3">
+                        Hasta :
+                    </label>
+                    <div class="col-xs-9">
+                        <div class="input-group date">
+                            @Html.TextBoxFor(model => model.FechaHasta, new { @class = "form-control" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>

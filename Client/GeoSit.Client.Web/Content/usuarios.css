@@ -1,0 +1,81 @@
+﻿.usuarios table tr.inactivo {
+    background-color: rgba(255, 50, 50, .65);
+    color: rgb(241 64 70);
+}
+
+.usuarios .leyenda {
+    margin-top: 3px;
+}
+
+.usuarios .switcher {
+    display: inline-block;
+    text-align: right;
+}
+
+.usuarios .toggle-activos {
+    margin: 0;
+}
+
+    .usuarios .toggle-activos > a {
+        display: block;
+        width: auto;
+        cursor: pointer;
+    }
+
+        .usuarios .toggle-activos > a > i.fa {
+            font-size: 2em;
+            color: rgba(127,127,127,.75);
+            margin: 0;
+            cursor: pointer !important;
+        }
+
+            .usuarios .toggle-activos > a > i.fa:after {
+                content: '\f204';
+            }
+
+        .usuarios .toggle-activos > a[activos] > i.fa {
+            color: rgb(75,175,255);
+        }
+
+            .usuarios .toggle-activos > a[activos] > i.fa:after {
+                content: '\f205';
+            }
+
+.usuarios a[data-checked].disabled,
+.usuarios a[data-horario].disabled {
+    pointer-events: none;
+}
+
+.usuarios a[data-checked],
+.usuarios a[data-horario] {
+    display: block;
+    width: auto;
+    cursor: pointer;
+}
+
+    .usuarios a[data-checked] i.fa {
+        color: rgb(75,175,255);
+        cursor: pointer !important;
+        font-size: 2em;
+        margin: 6px 0;
+    }
+
+        .usuarios a[data-checked] i.fa:after {
+            content: '\f205';
+        }
+
+.usuarios a[data-checked='false'] i.fa {
+    color: rgba(127,127,127,.75);
+}
+
+    .usuarios a[data-checked='false'] i.fa:after {
+        content: '\f204';
+    }
+
+.usuarios tr [data-checked] i.fa,
+.usuarios a[data-horario] i.fa {
+    font-size: 1.33333333em;
+    line-height: .75em;
+    margin: 0 !important;
+}
+.panel { border: 0 !important; }

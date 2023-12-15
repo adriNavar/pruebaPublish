@@ -1,0 +1,60 @@
+﻿.expedienteobra-content .search {
+    width: 100%;
+    margin-top: 10px;
+    display: table;
+    vertical-align: central;
+    border-collapse: collapse;
+}
+
+.expedienteobra-body {
+    overflow: hidden !important;
+    padding-bottom: 0 !important;
+}
+
+.expedienteobra-datos {
+    padding: 0px;
+    margin-top: 0px;
+    margin-bottom: 0;
+}
+
+    .expedienteobra-datos .panel-body {
+        padding: 5px 15px !important
+    }
+
+#accordionBusqueda .form-group {
+    margin-bottom: 0;
+}
+
+.panel-body-line {
+    border: solid rgb(53, 149, 180) !important;
+    border-width: 0px 0px 0px 2px !important;
+    margin-left: 9px;
+}
+
+.circle {
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgb(53, 149, 180);
+}
+
+    .circle.selected {
+        background-color: rgb(53, 149, 180);
+    }
+
+.circle-inside {
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    border: 2px solid rgb(255, 255, 255);
+}
+
+.line-vert {
+    content: '';
+    width: 0;
+    position: relative;
+    border: 1px solid rgb(53, 149, 180);
+    top: 16px;
+    height: 6px;
+    left: 5px;
+}

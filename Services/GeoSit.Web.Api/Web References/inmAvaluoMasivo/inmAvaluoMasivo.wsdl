@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="urn:inmAvaluoMasivo" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns="http://schemas.xmlsoap.org/wsdl/" targetNamespace="urn:inmAvaluoMasivo" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="urn:inmAvaluoMasivo">
+      <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <xsd:import namespace="http://schemas.xmlsoap.org/wsdl/" />
+      <xsd:complexType name="datos_inmueble">
+        <xsd:all>
+          <xsd:element name="vigencia" type="xsd:int" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="avaluos_inmuebles">
+        <xsd:all>
+          <xsd:element name="obj_id" type="xsd:string" />
+          <xsd:element name="supt" type="xsd:numeric" />
+          <xsd:element name="supm" type="xsd:numeric" />
+          <xsd:element name="avalt" type="xsd:numeric" />
+          <xsd:element name="avalm" type="xsd:numeric" />
+          <xsd:element name="regimen" type="xsd:int" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="AvaluoArray">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="SOAP-ENC:Array">
+            <xsd:attribute wsdl:arrayType="tns:avaluos_inmuebles[]" ref="SOAP-ENC:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="avaluomasivoRequest">
+    <wsdl:part name="datos_inmueble" type="tns:datos_inmueble" />
+    <wsdl:part name="avaluos_inmuebles" type="tns:AvaluoArray" />
+  </wsdl:message>
+  <wsdl:message name="avaluomasivoResponse">
+    <wsdl:part name="return" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:portType name="Avaluo Masivo de InmueblePortType">
+    <wsdl:operation name="avaluomasivo">
+      <documentation>Realiza el avaluo masivo de inmuebles. Devuelve "OK" o un mensaje de tipo "Error:..."</documentation>
+      <wsdl:input message="tns:avaluomasivoRequest" />
+      <wsdl:output message="tns:avaluomasivoResponse" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="Avaluo Masivo de InmuebleBinding" type="tns:Avaluo Masivo de InmueblePortType">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc" />
+    <wsdl:operation name="avaluomasivo">
+      <soap:operation soapAction="urn:inmuebles#avaluomasivo" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="urn:inmAvaluoMasivo" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="urn:inmAvaluoMasivo" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Avaluo Masivo de Inmueble">
+    <wsdl:port name="Avaluo Masivo de InmueblePort" binding="tns:Avaluo Masivo de InmuebleBinding">
+      <soap:address location="http://emaw70512.hopto.org/samws/inmAvaluoMasivo.php" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

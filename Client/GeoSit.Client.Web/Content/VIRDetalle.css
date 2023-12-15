@@ -1,0 +1,14 @@
+
+.select-with-value {
+    background-color: lightblue;
+    font-weight: bold;
+}
+
+    .select-with-value > option {
+        background-color: white;
+    }
+
+.title-border {
+    border-bottom: 1px solid black;
+    color: black;
+}

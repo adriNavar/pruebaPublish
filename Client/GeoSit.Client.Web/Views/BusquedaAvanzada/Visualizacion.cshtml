@@ -1,0 +1,360 @@
+﻿@model GeoSit.Client.Web.Models.BusquedaAvanzadaModel
+
+@{
+    ViewBag.Title = "Resultados";
+    ViewBag.Description = "Configuración de visualización del mapa temático.";
+}
+
+<link href="~/Content/theme_new.css?v=@(DateTime.Now.Ticks.ToString())" rel="stylesheet" />
+<link href="~/Content/busquedaavanzada.css?v=@(DateTime.Now.Ticks.ToString())" rel="stylesheet" />
+
+<div class="modal fade theme_new busqueda-avanzada resultado" id="myModalBA" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-xlg">
+        <div class="modal-content">
+            <div class="scroll-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="myModalLabel">Búsqueda Avanzada: @ViewBag.Title</h3>
+                    <span id="cerrar" aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+                    <a href='@Url.Action("BuscarAyuda", "BusquedaAvanzada")'>
+                        <span id="ayuda" data-placement="right" title="Ayuda" data-original-title="Ayuda" class="fa fa-question fa-2x white cursor-pointer img-responsive pull-right" style="margin-right: 10px;"></span>
+                    </a>
+                </div>
+                <div class="modal-body resultado-body">
+                    <div id="resultado-content" class="body-content">
+                        @using (Ajax.BeginForm("GetFiltrosView", "BusquedaAvanzada", new AjaxOptions { }, new { id = "formVolver", role = "form", novalidate = "", enctype = "multipart/form-data" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            <input id="volverbtn" type="submit" style="display:none" />
+                        }
+                        <div class="panel-group">
+                            <div class="panel panel-default acciones">
+                                <div class="row">
+                                    <div class="col-xs-4 pull-right text-right">
+                                        <button id="guardarBiblioteca" type="button" class="btn btn-secondary">
+                                            <span class="fa fa-floppy-o light-blue cursor-pointer"></span>
+                                            Biblioteca
+                                        </button>
+                                        <button id="guardarColeccion" type="button" class="btn btn-secondary">
+                                            <span class="fa fa-floppy-o light-blue cursor-pointer"></span>
+                                            Colecciones
+                                        </button>
+                                        <button id="exportarExcel" type="button" class="btn btn-secondary">
+                                            <span class="fa fa-file-excel-o light-blue cursor-pointer"></span>
+                                            Excel
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel panel-default datos" style="margin: 0 7px;">
+                                <div class="panel-body">
+                                    <div class="container-fluid">
+                                        <div class="col-xs-6 columna">
+                                            <div class="panel-group accordion" id="accordion-resultado-ba">
+                                                @foreach (var agrupador in Model.ComponentesAgrupadoresParaVista)
+                                                {
+                                                    long cmpId = agrupador.First().First().CompAgrupador.ComponenteId;
+                                                    string grupoid = string.Format("headingResultadoBA_{0}", cmpId);
+                                                    string containerid = string.Format("collapseResultadoBA_{0}", cmpId);
+                                                    <div class="accordion-section">
+                                                        <div class='panel-heading bg-primary main-heading' role='region' id='@grupoid'>
+                                                            <a data-toggle='collapse' data-parent='#accordion-resultado-ba' href='#@containerid'
+                                                               aria-expanded='false' aria-controls='@containerid' class="collapsed">
+                                                                <div class='panel-title'>
+                                                                    @if (@Model.Componente.Descripcion == null)
+                                                                    {
+                                                                        @Html.Raw("Objetos ")
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        @(Model.Componente.Descripcion + " " + agrupador.First().First().CompAgrupador.Nombre)
+                                                                    }
+                                                                    <span class='badge' title='Resultados Encontrados'>@agrupador.Aggregate(0, (acc, cmp) => acc + cmp.Length)</span>
+                                                                    <i class="fa"></i>
+                                                                </div>
+                                                            </a>
+                                                        </div>
+                                                        <div id='@containerid' class='panel-collapse collapse main-collapse' aria-expanded='false' aria-labelledby='@grupoid'>
+                                                            <div class="container-fluid" style="overflow: hidden !important;">
+                                                                <div class="panel-group accordion inner-accordion" id="accordion-@cmpId" style="margin-bottom:0;">
+                                                                    @foreach (var componente in agrupador)
+                                                                    {
+                                                                        long innercmp = componente.First().ComponenteID;
+                                                                        long elemid = componente.First().CompAgrupador.ComponenteId;
+                                                                        string innergrupoid = string.Format("headingResultadoGRPBA_{0}_{1}", innercmp, elemid);
+                                                                        string innercontainerid = string.Format("collapseResultadoGRPBA_{0}_{1}", innercmp, elemid);
+                                                                        <div class="accordion-section">
+                                                                            <div class='panel-heading bg-secondary secondary-heading' role='region' id='@innergrupoid'>
+                                                                                <a data-toggle='collapse' data-parent='#accordion-@cmpId' href='#@innercontainerid' aria-expanded='false'
+                                                                                   aria-controls='@innercontainerid' class="collapsed">
+                                                                                    <div class='panel-title'>
+                                                                                        @componente.First().CompAgrupador.Descripcion
+                                                                                        <span class='badge' title='Resultados Encontrados'>@componente.Length</span>
+                                                                                        <i class="fa"></i>
+                                                                                    </div>
+                                                                                </a>
+                                                                            </div>
+                                                                            <div id='@innercontainerid' class='panel-collapse collapse main-collapse' aria-expanded='false' aria-labelledby='@innergrupoid'>
+                                                                                <div class="container-fluid" style="overflow: hidden !important;">
+                                                                                    <ul class="objetos list-group">
+                                                                                        @foreach (var objeto in componente)
+                                                                                        {
+                                                                                            if (objeto.ObjetoId != 0)
+                                                                                            {
+                                                                                                <li objetoid='@objeto.ObjetoId' componenteid='@objeto.ComponenteID' class="seleccionable list-group-item">@objeto.Descripcion</li>
+                                                                                            }
+                                                                                        }
+                                                                                    </ul>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    }
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-6 columna">
+                                            <div class="panel-group accordion" id="accordion-detalle-objeto-ba">
+                                                <div class="accordion-section">
+                                                    <div class='panel-heading bg-primary' id='headingAtributosBA'>
+                                                        <a data-toggle='collapse' data-parent='#accordion-detalle-objeto-ba' href='#collapseAtributosBA' aria-controls='collapseAtributosBA' class="collapsed">
+                                                            <div class='panel-title'>
+                                                                Atributos
+                                                                <i class="fa"></i>
+                                                            </div>
+                                                        </a>
+                                                    </div>
+                                                    <div id='collapseAtributosBA' class='panel-collapse collapse '>
+                                                        <div class="panel-body">
+                                                            <div class="col-md-12" style="padding: 0 5px;">
+                                                                <table class="table table-striped table-bordered table-responsive grilla-atributos" cellspacing="0" style="width:100%">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th width="50%">Nombre</th>
+                                                                            <th width="50%">Valor</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody></tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="accordion-section">
+                                                    <div class='panel-heading bg-primary' id='headingRelacionesBA'>
+                                                        <a data-toggle='collapse' data-parent='#accordion-detalle-objeto-ba' href='#collapseRelacionesBA' aria-controls='collapseRelacionesBA' class="collapsed">
+                                                            <div class='panel-title'>
+                                                                Relaciones
+                                                                <i class="fa"></i>
+                                                            </div>
+                                                        </a>
+                                                    </div>
+                                                    <div id='collapseRelacionesBA' class='panel-collapse collapse '>
+                                                        <div class="panel-body">
+                                                            <div class="col-md-12" style="padding: 0 5px;">
+                                                                <table class="table table-striped table-bordered table-responsive grilla-relaciones" cellspacing="0" style="width:100%">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th width="50%">Nombre</th>
+                                                                            <th width="50%">Valor</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody></tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="accordion-section">
+                                                    <div class='panel-heading bg-primary' id='headingGraficosBA'>
+                                                        <a data-toggle='collapse' data-parent='#accordion-detalle-objeto-ba' href='#collapseGraficosBA' aria-controls='collapseGraficosBA' class="collapsed">
+                                                            <div class='panel-title'>
+                                                                Gr&aacute;ficos
+                                                                <i class="fa"></i>
+                                                            </div>
+                                                        </a>
+                                                    </div>
+                                                    <div id='collapseGraficosBA' class='panel-collapse collapse' role='tabpanel' aria-labelledby='headingGraficosBA'>
+                                                        <div class="panel-body">
+                                                            <div class="tabsGraficos">
+                                                                <ul class="nav nav-tabs">
+                                                                    <li data-tipo-grafico="1">
+                                                                        <a href="" data-target="#datosGraficosPoligonosBA" data-toggle="tab">Pol&iacute;gonos</a>
+                                                                    </li>
+                                                                    <li data-tipo-grafico="2">
+                                                                        <a href="" data-target="#datosGraficosLineasBA" data-toggle="tab">L&iacute;neas</a>
+                                                                    </li>
+                                                                    <li class="active" data-tipo-grafico="3">
+                                                                        <a href="" data-target="#datosGraficosPuntosBA" data-toggle="tab">Puntos</a>
+                                                                    </li>
+                                                                </ul>
+                                                                <div class="tab-content">
+                                                                    <div class="tab-pane" id="datosGraficosPoligonosBA">
+                                                                        <table data-tipo-grafico="1" class="table table-striped table-bordered table-responsive" cellspacing="0" style="width:100%">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th width="50%">Nombre</th>
+                                                                                    <th width="50%">Valor</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody></tbody>
+                                                                        </table>
+                                                                        <div class="col-sm-12 grafico-wrapper">
+                                                                            <img data-tipo-grafico="1">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="tab-pane" id="datosGraficosLineasBA">
+                                                                        <table data-tipo-grafico="2" class="table table-striped table-bordered table-responsive" cellspacing="0" style="width:100%">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th width="50%">Nombre</th>
+                                                                                    <th width="50%">Valor</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody></tbody>
+                                                                        </table>
+                                                                        <div class="col-sm-12 grafico-wrapper">
+                                                                            <img data-tipo-grafico="2">
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="tab-pane active" id="datosGraficosPuntosBA">
+                                                                        <table data-tipo-grafico="3" class="table table-striped table-bordered table-responsive" cellspacing="0" style="width:100%">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th width="50%">Nombre</th>
+                                                                                    <th width="50%">Valor</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody></tbody>
+                                                                        </table>
+                                                                        <div class="col-sm-12 grafico-wrapper">
+                                                                            <img data-tipo-grafico="3">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-xs-8 pull-left wizard">
+                        <div id="progress-bar-step" class="bs-wizard">
+                            <div class="col-xs-3 bs-wizard-step complete">
+                                <div class="progress"><div class="progress-bar"></div></div>
+                                <a class="bs-wizard-dot"></a>
+                                <div class="bs-wizard-info text-center">Componentes</div>
+                            </div>
+
+                            <div class="col-xs-3 bs-wizard-step complete">
+                                <div class="progress"><div class="progress-bar"></div></div>
+                                <a class="bs-wizard-dot"></a>
+                                <div class="bs-wizard-info text-center">Agrupamiento</div>
+                            </div>
+
+                            <div class="col-xs-3 bs-wizard-step complete">
+                                <div class="progress"><div class="progress-bar"></div></div>
+                                <a class="bs-wizard-dot"></a>
+                                <div class="bs-wizard-info text-center">Filtros</div>
+                            </div>
+
+                            <div class="col-xs-3 bs-wizard-step active">
+                                <div class="progress"><div class="progress-bar"></div></div>
+                                <a class="bs-wizard-dot"></a>
+                                <div class="bs-wizard-info text-center">Resultado</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-4 pull-right botones">
+                        <span data-placement="right" id="volver" title="Volver a Filtros" data-original-title="Volver a Filtros" class="fa fa-arrow-left fa-2x light-blue cursor-pointer"></span>
+                        <span data-placement="right" id="verEnMapa" title="Ver en Mapa" data-original-title="Ver en Mapa" class="fa fa-map-marker fa-2x light-blue cursor-pointer"></span>
+                        <span data-placement="right" id="pasarGrillaDeResultados" title="Pasar a Grilla de resultados" data-original-title="Pasar a Grilla de resultados" class="fa fa-list-alt fa-2x light-blue cursor-pointer"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade theme_new mensaje" id="ModalInfoBAVisua" tabindex="-100" role="dialog" data-backdrop="false" aria-labelledby="TituloInfoBAVisua" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="TituloInfoBAVisua">Titulo</h3>
+                <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+            </div>
+            <div class="modal-body">
+                <div id="MensajeInfoBAVisua" class="alert alert-dismissible" role="alert">
+                    <p id="DescripcionInfoBAVisua">Descripcion de la informacion</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-xs-4 pull-right">
+                    <span id="btnAceptarInfoBAVisua" aria-hidden="true" data-dismiss="modal" data-placement="right" title="Aceptar" data-original-title="Aceptar" class="fa fa-check-circle light-blue fa-3x cursor-pointer"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade theme_new mensaje" id="ModalNombreColeccion" tabindex="-100" role="dialog" data-backdrop="false" aria-labelledby="TituloInfo" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="myModalLabel">Búsqueda Avanzada: Guardar Colecci&oacute;n</h3>
+                <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+            </div>
+            <div class="modal-body">
+                <div id="MensajeInputColeccionIndex" style="padding: 20px 0; display: block;">
+                    <input id="nombreColeccionBA" type="text" placeholder="Nombre de la Colección" autocomplete="off" class="form-control">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-xs-4 pull-right">
+                    <span id="btnAceptarNuevaColeccionBA" aria-hidden="true" data-dismiss="modal" data-placement="right" title="Aceptar" data-original-title="Aceptar" class="fa fa-check-circle light-blue fa-3x cursor-pointer"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade theme_new mensaje" id="ModalNombreBiblioteca" tabindex="-100" role="dialog" data-backdrop="false" aria-labelledby="TituloInfo" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="myModalLabel">Búsqueda Avanzada: Guardar Biblioteca</h3>
+                <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+            </div>
+            <div class="modal-body">
+                <div id="MensajeInputBibliotecaIndex" style="padding: 20px 0; display: block;">
+                    <input id="nombreBibliotecaIndex" type="text" placeholder="Nombre de la Biblioteca" autocomplete="off" class="form-control">
+                </div>
+                <div id="MensajeInputBibliotecaDescripcion" style="padding: 20px 0; display: block;">
+                    <input id="nombreBibliotecaDescripcion" type="text" placeholder="Descripción" autocomplete="off" class="form-control">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-xs-4 pull-right">
+                    <span id="btnAceptarNuevaBiblioteca" aria-hidden="true" data-dismiss="modal" data-placement="right" title="Aceptar" data-original-title="Aceptar" class="fa fa-check-circle light-blue fa-3x cursor-pointer"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/jquery.form.js"></script>
+<script src="~/Scripts/jquery.dataTables.min.js"></script>
+<script src="~/Scripts/dataTables.bootstrap.js"></script>
+<script src="~/Scripts/dataTables.buttons.min.js"></script>
+
+<script src="~/Scripts/BusquedaAvanzada/visualizacion.js"></script>

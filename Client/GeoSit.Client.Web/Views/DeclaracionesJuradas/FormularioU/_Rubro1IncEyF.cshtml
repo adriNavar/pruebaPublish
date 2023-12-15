@@ -1,0 +1,76 @@
+﻿@model GeoSit.Client.Web.Models.FormularioUModel
+<!--<style>
+    #Rubro1IncEyF .checkbox > input {
+        margin-left: 15px;
+    }
+</style>-->
+<!--<div id="Rubro1IncEyF" class="panel remove-margin remove-shadow">
+<div class="col-xs-12 remove-padding">
+    <div class="panel-title">
+        <h4 class="title-border"><strong>Rubro 1</strong></h4>
+    </div>
+    <div class="panel-body">
+        <div class="row" style="margin: 0;margin-left: 15px;">
+            <h5><strong>Inc. E</strong></h5>
+        </div>
+        <div class="form-horizontal" style="margin-bottom:20px;">
+            <div class="form-group">
+                <label class="col-xs-5 control-label text-right">Superficie M<sup>2</sup> plano</label>
+                <div class="col-xs-4">
+                    !@@Html.TextBoxFor(x => x.DDJJU.SuperficiePlano, "{0:0.00}", new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-xs-5 control-label text-right">Superficie M<sup>2</sup> t&iacute;tulo</label>
+                <div class="col-xs-4">
+                    !@@Html.TextBoxFor(x => x.DDJJU.SuperficieTitulo, "{0:0.00}", new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin: 0;margin-left: 15px;">
+            <h5><strong>Inc. F</strong></h5>
+        </div>
+        <div class="form-horizontal">
+            !@@Html.Hidden("uOtrasCarJSON", @Html.Raw(Json.Encode(@Model.UOtrasCar))
+
+            !@@Html.HiddenFor(x => x.DDJJU.AguaCorriente)
+            !@@Html.HiddenFor(x => x.DDJJU.Cloaca)
+
+            !@@if (Model.UOtrasCar.Any(x => x.OtrasCarRequerida.ToLower().Equals("agua corriente")))
+            {
+                <div class="form-group">
+                    <label class="col-xs-5 control-label text-right">Agua corriente</label>
+                    <div class="checkbox">
+                        <input type="checkbox" id="AguaCorriente" !@@(Model.DDJJU.AguaCorriente.GetValueOrDefault() == 1 ? "checked" : "")>
+                    </div>
+                </div>
+            }
+
+            !@@if (Model.UOtrasCar.Any(x => x.OtrasCarRequerida.ToLower().Equals("cloacas")))
+            {
+                <div class="form-group">
+                    <label class="col-xs-5 control-label text-right">Cloacas</label>
+                    <div class="checkbox">
+                        <input type="checkbox" id="Cloaca" !@@(Model.DDJJU.Cloaca.GetValueOrDefault() == 1 ? "checked" : "")>
+                    </div>
+                </div>
+            }
+
+
+            !@@if (Model.UOtrasCar.Any(x => x.OtrasCarRequerida.ToLower().Equals("cloacas")))
+            {
+                <div class="form-group">
+                    <label class="col-xs-5 control-label text-right">N° de habitantes</label>
+                    <div class="col-xs-4">
+                        !@@Html.TextBoxFor(x => x.DDJJU.NumeroHabitantes, new { @class = "form-control" })
+                    </div>
+                </div>
+            }
+            else
+            {
+                !@@Html.HiddenFor(x => x.DDJJU.NumeroHabitantes)
+            }
+        </div>
+    </div>
+</div>
+</div>-->

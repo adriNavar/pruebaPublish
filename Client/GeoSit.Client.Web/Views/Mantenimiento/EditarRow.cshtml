@@ -1,0 +1,80 @@
+﻿@using GeoSit.Data.BusinessEntities.Mantenimiento
+@model List<AtributoTA>
+
+<link href="~/Content/bootstrap-datetimepicker.css" rel="stylesheet" />
+
+<div class="modal theme_new fade modal-abm" id="modal-window-editar-tabla-auxiliar" tabindex="-1" data-backdrop="static" role="dialog" aria-labelledby="modal-windowLabel" aria-hidden="true" data-id-componente="@ViewBag.IdComponente" data-id-elemento="@ViewBag.Id">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id="scroll-content-editar-tabla-auxiliar" class="scroll-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Tablas Auxiliares</h3>
+                    <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+                </div>
+                <div class="modal-body editar-tabla-auxiliar-body">
+                    <div id="editar-tabla-auxiliar-datos" class="body-content" style="min-height:100%;">
+                        <div class="panel-group accordion" id="accordion-editar">
+                            <div class="panel panel-default remove-shadow">
+                                <div class="panel-body">
+                                    <form class="form-horizontal">
+                                        <input type="hidden" name="IdComponente" value="@ViewBag.IdComponente" />
+                                        <input type="hidden" name="IdTabla" value="@ViewBag.Id" />
+                                        @foreach (GeoSit.Data.BusinessEntities.Mantenimiento.AtributoTA atributo in Model)
+                                        {
+                                            if (atributo.Es_Editable)
+                                            {
+                                                //Si tengo opciones, armo un select
+                                                if (atributo.Opciones != null && atributo.Opciones.Any())
+                                                {
+                                                    @Html.Partial("Partial/Select", atributo);
+                                                }
+                                                else
+                                                {
+                                                    switch (atributo.Id_Tipo_Dato)
+                                                    {
+                                                        case AtributoTA.TipoBoolean:
+                                                        case AtributoTA.TipoCheck:
+                                                            @Html.Partial("Partial/Checkbox", atributo);
+                                                            break;
+                                                        case AtributoTA.TipoInteger:
+                                                        case AtributoTA.TipoLong:
+                                                        case AtributoTA.TipoFloat:
+                                                        case AtributoTA.TipoDouble:
+                                                        case AtributoTA.TipoNumeracion:
+                                                            @Html.Partial("Partial/Number", atributo);
+                                                            break;
+                                                        case AtributoTA.TipoClob:
+                                                        case AtributoTA.TipoGeometry:
+                                                        case AtributoTA.TipoXml:
+                                                        case AtributoTA.TipoXsd:
+                                                            @Html.Partial("Partial/TextArea", atributo);
+                                                            break;
+                                                        case AtributoTA.TipoDate:
+                                                            @Html.Partial("Partial/Date", atributo);
+                                                            break;
+                                                        default:
+                                                            @Html.Partial("Partial/Input", atributo);
+                                                            break;
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" id="footer-editar">
+                    <div class="col-xs-4 pull-right">
+                        <span aria-hidden="true" aria-controls="button" data-placement="right" title="Guardar" data-original-title="Guardar" id="btnGuardar" class="fa fa-save fa-2x black cursor-pointer" style="margin-right:10px; display:inline-block;"></span>
+                        <span aria-hidden="true" aria-controls="button" data-placement="right" title="Cancelar" data-dismiss="modal" data-original-title="Cancelar" id="btnCerrar" class="fa fa-undo fa-2x black cursor-pointer"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/Scripts/bootstrap-datetimepicker.js" type="text/javascript"></script>
+<script src="~/Scripts/jquery.numeric.min.js" type="text/javascript"></script>
+<script src="~/Scripts/Mantenimiento/editarRow.js"></script>

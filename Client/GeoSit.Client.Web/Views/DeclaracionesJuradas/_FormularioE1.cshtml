@@ -1,0 +1,142 @@
+﻿@model GeoSit.Client.Web.Models.FormularioE1Model
+@{
+    if (Model.DDJJ.IdDeclaracionJurada > 0)
+    {
+        ViewBag.Title = "Edición DDJJ";
+    }
+    else
+    {
+        ViewBag.Title = "Nueva DDJJ";
+    }
+}
+<style>
+    input.form-control.fecha-vigencia {
+        background-color: #fff;
+    }
+</style>
+
+<div class="modal fade theme_new" id="modalFormulario" role="dialog" aria-hidden="true" data-backdrop="false" data-keyboard="false">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="scroll-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">@ViewBag.Title - Formulario E1</h3>
+                    <span id="btnCloseFormDDJJ" aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" aria-label="Cerrar" title="Cerrar"></span>
+                    @if (!Model.ReadOnly)
+                    {
+                        <span id="btnSave" class="fa fa-save fa-2x cursor-pointer white pull-right" title="Guardar"></span>
+                    }
+                </div>
+                <div id="formulario-body" class="modal-body">
+                    <div id="formulario-content" class="body-content">
+                        <div class="stepwizard hide">
+                            <div class="stepwizard-row setup-panel">
+                                <div class="stepwizard-step">
+                                    <a id="step1" href="#step-1" type="button">1</a>
+                                </div>
+
+                                <div class="stepwizard-step">
+                                    <a id="step2" href="#step-2" type="button" disabled="disabled">2</a>
+                                </div>
+
+                                <div class="stepwizard-step">
+                                    <a id="step3" href="#step-3" type="button" disabled="disabled">3</a>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        @if ((bool)ViewData["EsTemporal"])
+                        {
+                            @Html.Hidden("hdnTemporal", ViewData["EsTemporal"])
+                        }
+
+                        @using (Ajax.BeginForm("GuardarFormularioE1", "DeclaracionesJuradas", new AjaxOptions() { }, new { @id = "formFormularioE1" }))
+                        {
+                            @Html.HiddenFor(x => x.ReadOnly)
+                            @Html.HiddenFor(x => x.DDJJ.IdDeclaracionJurada)
+                            @Html.HiddenFor(x => x.DDJJ.IdUnidadTributaria)
+                            @Html.HiddenFor(x => x.DDJJ.IdVersion)
+                            @Html.HiddenFor(x => x.DDJJ.IdOrigen)
+
+                            @Html.HiddenFor(x => x.Mejora.IdMejora)
+                            @Html.HiddenFor(x => x.Mejora.IdDeclaracionJurada)
+
+                            <div class="setup-content" id="step-1">
+                                @{ Html.RenderPartial("FormularioE1/_Cabecera", Model); }
+                            </div>
+
+                            <div class="setup-content" id="step-2">
+                                @{ Html.RenderPartial("FormularioE1/_Rubro1", Model); }
+                            </div>
+
+                            <div class="setup-content" id="step-3">
+                                @{ Html.RenderPartial("FormularioE1/_Rubro2", Model); }
+                            </div>
+
+                        }
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-xs-8 pull-left wizard">
+                        <div id="progress-bar-step" class="bs-wizard">
+                            <div id="stepWiz1" class="col-xs-4 bs-wizard-step active">
+                                <div class="progress"><div class="progress-bar"></div></div>
+                                <a class="bs-wizard-dot"></a>
+                                <div class="bs-wizard-info text-center">Cabecera</div>
+                            </div>
+
+                            <div id="stepWiz2" class="col-xs-4 bs-wizard-step disabled">
+                                <div class="progress"><div class="progress-bar"></div></div>
+                                <a class="bs-wizard-dot"></a>
+                                <div class="bs-wizard-info text-center">Rubro 1</div>
+                            </div>
+
+                            <div id="stepWiz3" class="col-xs-4 bs-wizard-step disabled">
+                                <div class="progress"><div class="progress-bar"></div></div>
+                                <a class="bs-wizard-dot"></a>
+                                <div class="bs-wizard-info text-center">Rubro 2</div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="col-xs-4 pull-right botones">
+                        <span data-placement="right" id="btn-atras" title="Atras" data-original-title="Atras" class="fa fa-arrow-left fa-2x light-blue cursor-pointer disabled"></span>
+                        <span data-placement="right" id="btn-siguiente" title="Siguiente" data-original-title="Siguiente" class="fa fa-arrow-right fa-2x light-blue cursor-pointer"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/jquery.form.js"></script>
+<script src="~/Scripts/bootstrap-multiselect.js"></script>
+
+<script src="~/Scripts/DeclaracionesJuradas/FormularioDDJJController.js"></script>
+<script src="~/Scripts/DeclaracionesJuradas/Validators/Mejoras/CabeceraValidator.js"></script>
+<script src="~/Scripts/DeclaracionesJuradas/Validators/Mejoras/Rubro1Validator.js"></script>
+<script src="~/Scripts/DeclaracionesJuradas/Validators/Mejoras/Rubro2Validator.js"></script>
+
+<script>
+    const modalContainer = "#modalFormulario";
+    const containers = {
+        formularioDDJJ: $("#formulario-content", modalContainer)
+    };
+    const validators = [
+        new CabeceraFormE1E2Validator({ section: $("#step-1", containers.formularioDDJJ), ...containers }),
+        new Rubro1FormE1E2Validator({ section: $("#step-2", containers.formularioDDJJ), ...containers }),
+        new Rubro2FormE1E2Validator({ section: $("#step-3", containers.formularioDDJJ), ...containers })
+    ];
+    var formularioE1 = new FormularioDDJJController(modalContainer, validators, declaracionesJuradas);
+    $(document).ready(function () {
+        $(modalContainer).one("hide.bs.modal", function () {
+            delete CabeceraFormE1E2Validator;
+            delete Rubro1FormE1E2Validator;
+            delete Rubro2FormE1E2Validator;
+            delete FormularioDDJJController;
+            delete formularioE1;
+        });
+        formularioE1.init();
+    });
+</script>

@@ -1,0 +1,15 @@
+﻿<div class='srow documentos'>
+    <div class="controls fa pull-right">
+        <span class="opcion fa-external-link tooltips" data-placement="bottom" title="Ver Documento" ng-click="download()" data-ng-show="allowDocumento"></span>
+    </div>
+    <div class="roundChkBox documentos">
+        <input type="checkbox" id="{{chkboxid}}" data-name="{{documento.id}}" data-componente="{{documento.tipo}}" ng-click="selectedChanged()" ng-model="documento.selected" />
+        <label for="{{chkboxid}}"></label>
+    </div>
+    <div>
+        <p class='text-primary'>
+            <span data-ng-bind-html="documento.nombre | highlight:pattern:true"></span>
+        </p>
+        <p ng-if="tieneDescripcion"><span data-ng-bind-html="documento.descripcion | highlight:pattern:true"></span></p>
+    </div>
+</div>

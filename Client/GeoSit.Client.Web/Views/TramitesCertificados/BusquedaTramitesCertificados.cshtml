@@ -1,0 +1,571 @@
+﻿@using GeoSit.Client.Web.Controllers
+@model ICollection<GeoSit.Data.BusinessEntities.ObrasPublicas.Tramite>
+
+    @{
+    //ViewBag.TramiteId = 1021;
+    }
+
+    <link href="~/Content/dataTables.bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-switch.css" rel="stylesheet" />
+    <link href="~/Content/css/select2.css" rel="stylesheet" />
+    <link href="~/Content/select2-bootstrap.min.css" rel="stylesheet" />
+    <link href="~/Content/formValidation.min.css" rel="stylesheet" />
+    <link href="~/Content/tramitesCertificados.css" rel="stylesheet" />
+
+    <div class="modal fade theme_new" id="generacionCertificadosModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog modal-xlg">
+            <div class="modal-content">
+                <div class="scroll-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title">@Resources.Recursos.GeneracionCertificados</h3>
+                        <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+                    </div>
+                    <div class="modal-body certificados-body">
+                        <div id="message-error" class="alert alert-danger">
+                            <button type="button" class="close"><span aria-hidden="true">&times;</span></button>
+                            <p></p>
+                        </div>
+                        <div class="certificados-content body-content">
+                            <div class="panel-group accordion certificados-datos" id="accordion-certificados">
+                                <div class="section-position">
+                                    <div class='panel-heading bg-primary main-heading' id='heading-busqueda-certificados'>
+                                        <a data-toggle='collapse' data-parent='#accordion-certificados' aria-expanded='true' href='#collapse-busqueda-certificados'
+                                           aria-controls='collapse-busqueda-certificaods' style="pointer-events:none">
+                                            <div class='panel-title'>
+                                                Búsqueda
+                                                <i class="fa"></i>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div class="panel-collapse collapse in main-collapse" id="collapse-busqueda-certificados" aria-labelledby='heading-busqueda-certificados'>
+                                        <div class="panel-body" style="margin-bottom:10px">
+                                            <form>
+                                                <div class="panel-group" style="margin-bottom:0" id="accordionBusquedaCertificados" role="tablist" aria-multiselectable="true">
+                                                    <div>
+                                                        <div role="tab" id="headingUT">
+                                                            <ul class="list-inline">
+                                                                <li>
+                                                                    <div class="circle">
+                                                                        <div class="circle-inside">
+                                                                            <div class="line-vert"></div>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                                <li>
+                                                                    <a role="button" data-toggle="collapse" data-parent="#accordionBusqueda" aria-expanded="true" aria-controls="collapseOne" id="accordionUT" class="collapseBusqueda" href="#">
+                                                                        Unidad Tributaria
+                                                                    </a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                        <div id="collapseUT" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingUT">
+                                                            <div class="panel-body panel-body-line">
+                                                                <div class="form-horizontal">
+                                                                    <div class="form-group form-group-sm">
+                                                                        <div class="col-xs-6">
+                                                                            <div class="input-group">
+                                                                                <input class="form-control" id="UnidadTributaria" name="UnidadTributaria" readonly="readonly" type="text" value="">
+                                                                                <input type="hidden" id="UnidadTributariaId" />
+                                                                                <div class="input-group-addon cursor-pointer" id="ut-search">
+                                                                                    <span data-placement="bottom" title="Buscar Unidad Tributaria" class="fa-lg fa fa-search black cursor-pointer" aria-hidden="true"></span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <div role="tab" id="headingTipo">
+                                                            <ul class="list-inline">
+                                                                <li>
+                                                                    <div class="circle">
+                                                                        <div class="circle-inside">
+                                                                            <div class="line-vert"></div>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                                <li>
+                                                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordionBusquedaCertificados" aria-expanded="false" aria-controls="collapseTipo" id="accordionTipo" href="#">
+                                                                        Tipo de Tr&aacute;mite
+                                                                    </a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                        <div id="collapseTipo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTipo">
+                                                            <div class="panel-body panel-body-line">
+                                                                <div class="form-horizontal">
+                                                                    <div class="form-group form-group-sm">
+                                                                        <div class="col-xs-6">
+                                                                            @Html.DropDownList("CmbTipoTramite", (ViewBag.TipoTramiteList as IEnumerable<SelectListItem>), new { id = "CmbTipoTramite", @class = "form-control" })
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <div role="tab" id="headingNumeroTramite">
+                                                            <ul class="list-inline">
+                                                                <li>
+                                                                    <div class="circle">
+                                                                        <div class="circle-inside">
+                                                                            <div class="line-vert"></div>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                                <li>
+                                                                    <a role="button" data-toggle="collapse" data-parent="#accordionBusquedaCertificados" aria-expanded="true" aria-controls="collapseNumeroTramite" id="accordionNumeroTramite" href="#">
+                                                                        N&uacute;mero de Tr&aacute;mite
+                                                                    </a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                        <div id="collapseNumeroTramite" class="panel-collapse collapse" role="tabpanel" aria-labelledby="accordionNumeroTramite">
+                                                            <div class="panel-body panel-body-line">
+                                                                <div class="form-horizontal">
+                                                                    <div class="form-group form-group-sm">
+                                                                        <label class="control-label col-xs-1">Desde</label>
+                                                                        <div class="col-xs-4">
+                                                                            <input type="number" id="txtNumeroDesde" min="1" value="1" class="form-control" />
+                                                                        </div>
+                                                                        <label class="control-label col-xs-1">Hasta</label>
+                                                                        <div class="col-xs-4">
+                                                                            <input type="number" id="txtNumeroHasta" max="99999999999" value="1" class="form-control" />
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <div role="tab" id="headingFecha">
+                                                            <ul class="list-inline">
+                                                                <li>
+                                                                    <div class="circle">
+                                                                        <div class="circle-inside">
+                                                                            <!--<div class="line-vert"></div>-->
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                                <li>
+                                                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordionBusquedaCertificados" aria-expanded="false" aria-controls="collapseFecha" id="accordionFecha" href="#">
+                                                                        Fecha
+                                                                    </a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                        <div id="collapseFecha" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFecha">
+                                                            <!--<div class="panel-body panel-body-line">-->
+                                                            <div class="form-horizontal">
+                                                                <div class="form-group form-group-sm">
+                                                                    <label class="control-label col-xs-1">Desde</label>
+                                                                    <div class="col-xs-4">
+                                                                        <div class="input-group date fechaPicker">
+                                                                            <input type="text" id="dtFechaDesde" class="form-control" />
+                                                                            <span class="input-group-addon">
+                                                                                <span class="icon-th fa fa-calendar fa-lg light-blue cursor-pointer"></span>
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                    <label class="control-label col-xs-1">Hasta</label>
+                                                                    <div class="col-xs-4">
+                                                                        <div class="input-group date fechaPicker">
+                                                                            <input type="text" id="dtFechaHasta" class="form-control" />
+                                                                            <span class="input-group-addon">
+                                                                                <span class="icon-th fa fa-calendar fa-lg light-blue cursor-pointer"></span>
+                                                                            </span>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <!--</div>-->
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <!--<div role="tab" id="headingEstado">
+                                                            <ul class="list-inline">
+                                                                <li>
+                                                                    <div class="circle">
+                                                                        <div class="circle-inside"></div>
+                                                                    </div>
+                                                                </li>
+                                                                <li>
+                                                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordionBusquedaCertificados" aria-expanded="false" aria-controls="collapseEstado" id="accordionEstado" href="#">
+                                                                        Estado
+                                                                    </a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                        <div id="collapseEstado" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingEstado">
+                                                            <div class="panel-body panel-body-line">
+                                                                <div class="form-horizontal">
+                                                                    <div class="form-group form-group-sm">
+                                                                        <div class="col-xs-6">
+                                                                            @Html.DropDownList("CmbEstadoTramite", (ViewBag.TramiteEstados as IEnumerable<SelectListItem>), new { id = "CmbEstadoTramite", @class = "form-control" })
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>-->
+                                                    </div>
+                                                </div>
+                                                <span class="fa fa-search fa-2x black cursor-pointer pull-right" id="search-all"></span>
+                                                <span class="fa fa-trash fa-2x black cursor-pointer boton-deshabilitado pull-right" id="clear-all"></span>
+                                            </form>
+                                        </div>
+                                        <div class="panel-body">
+                                            <div class="col-xs-11">
+                                                <table id="resultado-busqueda" class="table table-striped table-condensed table-bordered table-responsive" cellspacing="0" style="width:100%">
+                                                    <thead>
+                                                        <tr>
+                                                            <th></th>
+                                                            <th>Tipo</th>
+                                                            <th>Trámite</th>
+                                                            <th>Identificador</th>
+                                                            <th>Fecha</th>
+                                                            <th class="hide">Estado</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>
+                                            </div>
+                                            <div class="col-xs-1" id="certificados-controls">
+                                                <dl>
+                                                    @if (SeguridadController.ExisteFuncion(@Resources.Seguridad.AltaCertificados))
+                                                    {
+                                                    <dt><span id="certificado-insert" class="fa fa-plus-circle fa-2x black cursor-pointer" aria-hidden="true"></span></dt>
+                                                    }
+                                                    @if (SeguridadController.ExisteFuncion(@Resources.Seguridad.BajaCertificados))
+                                                    {
+                                                    <dt><span id="certificado-delete" class="fa fa-minus-circle fa-2x black cursor-pointer boton-deshabilitado" aria-hidden="true"></span></dt>
+                                                    }
+                                                    @if (SeguridadController.ExisteFuncion(@Resources.Seguridad.ModificarCertificados))
+                                                    {
+                                                    <dt><span id="certificado-edit" class="fa fa-pencil fa-2x black cursor-pointer boton-deshabilitado" aria-hidden="true"></span></dt>
+                                                    }
+                                                </dl>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="section-position">
+                                    <div class='panel-heading bg-primary main-heading panel-deshabilitado' role='region' id='heading-datos-generales'>
+                                        <a data-toggle='collapse' data-parent='#accordion-certificados' href='#collapse-datos-generales' aria-expanded='false'
+                                           aria-controls='collapse-datos-generales' class="collapsed">
+                                            <div class='panel-title'>
+                                                Datos Generales
+                                                @Html.Hidden("IdTRamite", "")
+                                                <i class="fa"></i>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div id="collapse-datos-generales" class="panel-collapse collapse main-collapse" aria-labelledby='heading-datos-generales'>
+                                        @using (Ajax.BeginForm(null, "DatosGenerales", null, new AjaxOptions { HttpMethod = "POST" }, new { id = "datos-certificados-form", @class = "form-horizontal" }))
+                                        {
+
+                                        }
+                                    </div>
+                                </div>
+                                <div class="section-position">
+                                    <div class='panel-heading bg-primary main-heading panel-deshabilitado' role='region' id='heading-certificados-uts'>
+                                        <a data-toggle='collapse' data-parent='#accordion-certificados' href='#collapse-certificados-uts' aria-expanded='false'
+                                           aria-controls='collapse-certificados-uts' class="collapsed">
+                                            <div class='panel-title'>
+                                                Unidades Tributarias
+                                                <i class="fa"></i>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div id="collapse-certificados-uts" class="panel-collapse collapse main-collapse" aria-labelledby='heading-certificados-uts'>
+                                        <div id="unidades-tributarias-body">
+                                            <div class="panel-body">
+                                                <div class="col-xs-11">
+                                                    <table id="unidades-tributarias-certificados" class="table table-striped table-bordered table-responsive">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="hide"></th>
+                                                                <th>Unidad Tributaria</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody></tbody>
+                                                    </table>
+                                                    <small id="unidad-tributaria-error" class="help-block hide" style="color: #a94442">Debe adicionar al menos una Unidad Tributaria</small>
+                                                </div>
+                                                <div class="col-xs-1 controls-top">
+                                                    <dl id="uts-controls">
+                                                        <dt><span id="unidades-insert" class="fa fa-plus-circle fa-2x black cursor-pointer" aria-hidden="true"></span></dt>
+                                                        <dt><span id="unidades-delete" class="fa fa-minus-circle fa-2x black cursor-pointer boton-deshabilitado" aria-hidden="true"></span></dt>
+                                                    </dl>
+                                                </div>
+                                            </div>
+                                            <div class="panel-body">
+                                                @using (Ajax.BeginForm(null, null, null, new AjaxOptions { HttpMethod = "POST" }, new { id = "uts-impresion-form", @class = "form-horizontal" }))
+                                                {
+
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="section-position">
+                                    <div class='panel-heading bg-primary main-heading panel-deshabilitado' role='region' id='heading-personas'>
+                                        <a data-toggle='collapse' data-parent='#accordion-certificados' href='#collapse-personas' aria-expanded='false'
+                                           aria-controls='collapse-personas' class="collapsed">
+                                            <div class='panel-title'>
+                                                Personas
+                                                <i class="fa"></i>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div id="collapse-personas" class="panel-collapse collapse main-collapse" aria-labelledby='heading-personas'>
+                                        <div id="personas-panel-body">
+                                            <div class="panel-body">
+                                                <div class="col-xs-11">
+                                                    <table id="personas-certificados" class="table table-striped table-bordered table-responsive">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="hide"></th>
+                                                                <th class="hide"></th>
+                                                                <th>Rol</th>
+                                                                <th>Razón Social</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody></tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="col-xs-1 controls-top">
+                                                    <dl id="personas-controls">
+                                                        <dt><span id="personas-insert" class="fa fa-plus-circle fa-2x black cursor-pointer" aria-hidden="true"></span></dt>
+                                                        <dt><span id="personas-delete" class="fa fa-minus-circle fa-2x black cursor-pointer boton-deshabilitado" aria-hidden="true"></span></dt>
+                                                    </dl>
+                                                </div>
+                                            </div>
+                                            <div class="panel-body">
+                                                @using (Ajax.BeginForm(null, null, null, new AjaxOptions { HttpMethod = "POST" }, new { id = "personas-impresion-form", @class = "form-horizontal" }))
+                                                {
+
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="panel-body" id="persona-panel-body">
+                                            @using (Ajax.BeginForm("SavePersona", "TramitesCertificados", null, new AjaxOptions { HttpMethod = "POST" }, new { id = "personas-certificado-form", @class = "form-horizontal" }))
+                                            {
+
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="section-position">
+                                    <div class='panel-heading bg-primary main-heading panel-deshabilitado' role='region' id='heading-documentos'>
+                                        <a data-toggle='collapse' data-parent='#accordion-certificados' href='#collapse-documentos' aria-expanded='false'
+                                           aria-controls='collapse-documentos' class="collapsed">
+                                            <div class='panel-title'>
+                                                Documentos
+                                                <i class="fa"></i>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div id="collapse-documentos" class="panel-collapse collapse main-collapse" aria-labelledby='heading-documentos'>
+                                        <div id="documentos-panel-body">
+                                            <div class="panel-body">
+                                                <div class="col-xs-11">
+                                                    <table id="documentos-certificados" class="table table-striped table-bordered table-responsive">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="hide"></th>
+                                                                <th>Tipo</th>
+                                                                <th>Descripción</th>
+                                                                <th>Fecha</th>
+                                                                <th>Archivo</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody></tbody>
+                                                    </table>
+                                                </div>
+                                                <div class="col-xs-1 controls-top">
+                                                    <dl id="documentos-controls">
+                                                        <dt><span id="documentos-insert" class="fa fa-plus-circle fa-2x black cursor-pointer" aria-hidden="true"></span></dt>
+                                                        <dt><span id="documentos-display" class="fa fa-pencil fa-2x black cursor-pointer boton-deshabilitado" aria-hidden="true"></span></dt>
+                                                        <dt><span id="documentos-delete" class="fa fa-minus-circle fa-2x black cursor-pointer boton-deshabilitado" aria-hidden="true"></span></dt>
+                                                        <dt><span id="documentos-view" class="fa fa-eye fa-2x black cursor-pointer boton-deshabilitado" aria-hidden="true"></span></dt>
+                                                    </dl>
+                                                </div>
+                                            </div>
+                                            <div class="panel-body">
+                                                @using (Ajax.BeginForm(null, null, null, new AjaxOptions { HttpMethod = "POST" }, new { id = "documentos-impresion-form", @class = "form-horizontal" }))
+                                                {
+
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="section-position">
+                                    <div id="secciones-certificados"></div>
+                                </div>
+                                <div class="section-position">
+                                    <div class='panel-heading bg-primary main-heading panel-deshabilitado' role='region' id='heading-informe-final'>
+                                        <a data-toggle='collapse' data-parent='#accordion-certificados' href='#collapse-informe-final' aria-expanded='false'
+                                           aria-controls='collapse-informe-final' class="collapsed">
+                                            <div class='panel-title'>
+                                                Informe Final
+                                                <i class="fa"></i>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div id="collapse-informe-final" class="panel-collapse collapse main-collapse" aria-labelledby='heading-informe-final'>
+                                        @using (Ajax.BeginForm(null, null, null, new AjaxOptions { HttpMethod = "POST" }, new { id = "informe-final-form", @class = "form-horizontal" }))
+                                        {
+
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="col-xs-4 pull-right">
+                            <span aria-hidden="true" aria-controls='button' data-placement="right" title="Guardar" data-original-title="Guardar" id="save-all" class="fa fa-save fa-2x black cursor-pointer"></span>
+                            <span aria-hidden="true" aria-controls='button' data-placement="right" title="Cancelar" data-original-title="Cancelar" id="cancel-all" class="fa fa-undo fa-2x black cursor-pointer"></span>
+
+                            @if (SeguridadController.ExisteFuncion(@Resources.Seguridad.GeneraciondeCertificados))
+                            {
+                            <span aria-hidden="true" data-placement="right" title="Informe de Trámite" data-original-title="Informe de Trámite" id="print-all" class="fa fa-print fa-2x black cursor-pointer"></span>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <input type="hidden" id="tramiteId" value="@ViewBag.TramiteId" />
+    <input type="hidden" id="buscaId" value="@ViewBag.BuscaId" />
+
+    <div class="modal fade theme_new mensaje" id="confirmModal" tabindex="-2" role="dialog" aria-labelledby="TituloAdvertencia" aria-hidden="true" data-backdrop="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <input type="hidden" id="TipoAdvertencia" value="">
+                    <h3 class="modal-title" id="TituloAdvertencia">Titulo</h3>
+                    <span id="btnCancelarAdvertencia" aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+                </div>
+                <div class="modal-body">
+                    <div id="MensajeAlerta" class="alert alert-warning alert-dismissible" role="alert">
+                        <p id="DescripcionAdvertencia">Está a punto de DESACTIVAR al usuario Perez, Juan <br>Está seguro de continuar?</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-xs-4 pull-right">
+                        <span id="btnAdvertenciaOK" aria-hidden="true" data-dismiss="modal" data-placement="right" title="Aceptar" data-original-title="Aceptar" class="fa fa-check-circle light-blue fa-2x cursor-pointer"></span>
+                        @*<span id="btnCancelarAdvertencia" aria-hidden="true" data-dismiss="modal" data-placement="right" title="Cancelar" data-original-title="Cancelar" class="fa fa-times-circle light-blue fa-2x cursor-pointer"></span>*@
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade theme_new mensaje" id="confirmCierre" tabindex="-2" role="dialog" aria-labelledby="TituloAdvertencia" aria-hidden="true" data-backdrop="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <input type="hidden" id="TipoAdvertenciaCierre" value="">
+                    <h3 class="modal-title" id="TituloAdvertenciaCierre">Titulo</h3>
+                    <span id="btnCancelarAdvertenciaCierre" aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+                </div>
+                <div class="modal-body">
+                    <div id="MensajeAlertaCierre" class="alert alert-warning alert-dismissible" role="alert">
+                        <p id="DescripcionAdvertenciaCierre">Esta seguro que desea cerrar el trámite.<br>Está seguro de continuar?</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-xs-4 pull-right">
+                        <span id="btnAdvertenciaCierreOK" aria-hidden="true" data-dismiss="modal" data-placement="right" title="Aceptar" data-original-title="Aceptar" class="fa fa-check-circle light-blue fa-2x cursor-pointer"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade theme_new mensaje" id="ModalAdvertenciaGuardado" tabindex="-2" role="dialog" aria-labelledby="TituloAdvertenciaGuardado" aria-hidden="true" data-backdrop="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="TituloAdvertencia">Titulo</h3>
+                    <span id="btnCancelarAdvertenciaGuardado" aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+                </div>
+                <div class="modal-body">
+                    <input type="hidden" id="TipoAdvertenciaGuardado" value="">
+                    <div id="MensajeAlertaGuardado" class="alert alert-warning alert-dismissible" role="alert">
+                        <p id="DescripcionAdvertenciaGuardado">El trámite ha sido guardado. ¿Desea continuar con la edición?</p>
+                    </div>
+                </div>
+                @*<div class="modal-footer" style="background-color:#ffffff;" id="Panel_Botones">
+                    <span id="btnAdvertenciaOKGuardado" aria-hidden="true" data-dismiss="modal" data-placement="right" title="Aceptar" data-original-title="Aceptar" class="fa fa-check-circle light-blue fa-2x cursor-pointer"></span>
+                    <span id="btnCancelarAdvertenciaGuardado" aria-hidden="true" data-dismiss="modal" data-placement="right" title="Cancelar" data-original-title="Cancelar" class="fa fa-times-circle light-blue fa-2x cursor-pointer"></span>
+                </div>*@
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade theme_new mensaje" id="ModalVistaResults" tabindex="-2" role="dialog" aria-labelledby="TituloVistaResults" aria-hidden="true" data-backdrop="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="TituloVistaResults">Referencia Kontaktar</h3>
+                </div>
+                <div class="modal-body">
+                    <div id="MensajeAlertaGuardado" class="alert alert-warning alert-dismissible" role="alert">
+                        <input type="hidden" id="TipoVistaResults" value="">
+                        <p id="DescripcionVistaResults">Se han encontrado la siguientes referencias: </p>
+                        <table id="resultado-vista" class="table table-striped table-bordered table-responsive">
+                            <thead>
+                                <tr>
+                                    <th>Nro. Tramite</th>
+                                    <th>Fecha</th>
+                                    <th>Contribuyente</th>
+                                    <th>Doc. Contribuyente</th>
+                                    <th>Imponible</th>
+                                    <th>Observaciones</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <span id="btnVistaResultsOK" aria-hidden="true" data-dismiss="modal" data-placement="right" title="Aceptar" data-original-title="Aceptar" class="fa fa-check-circle light-blue fa-2x cursor-pointer"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade theme_new mensaje" id="confirmPrint" tabindex="-2" role="dialog" aria-labelledby="TituloAdvertencia" aria-hidden="true" data-backdrop="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <input type="hidden" id="TipoAdvertenciaCierre" value="">
+                    <h3 class="modal-title" id="TituloAdvertenciaPrint">Imprimir - Certificado</h3>
+                    <span id="btnCancelarAdvertenciaCierre" aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+                </div>
+                <div class="modal-body">
+                    <div id="MensajeAlertaCierre" class="alert alert-success alert-dismissible" role="alert">
+                        <p id="DescripcionAdvertenciaPrint">El certificado fue guardado con éxito. ¿Desea imprimirlo?</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-xs-4 pull-right">
+                        <span aria-hidden="true" data-placement="right" title="Certificado" data-original-title="Informe de Trámite" id="print-save" class="fa fa-check-circle light-blue fa-2x cursor-pointer"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="buscador-container"></div>
+    <div id="abm-documentos-externo"></div>
+
+    <script src="~/Scripts/jquery.dataTables.min.js"></script>
+    <script src="~/Scripts/dataTables.bootstrap.js"></script>
+    <script src="~/Scripts/jquery.form.js"></script>
+    <script src="~/Scripts/formValidation.min.js"></script>
+    <script src="~/Scripts/bootstrapValidation.min.js"></script>
+    <script src="~/Scripts/Tramites/main.js"></script>

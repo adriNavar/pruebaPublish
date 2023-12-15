@@ -1,0 +1,351 @@
+﻿@model GeoSit.Client.Web.Models.Inspecciones.GestionInspeccionesModel
+
+<link href="~/Content/dataTables.bootstrap.css" rel="stylesheet" />
+<link href="~/Scripts/bootstrap-datepicker/css/bootstrap-datepicker.css" rel="stylesheet">
+<link href="~/Content/bootstrap-datetimepicker.css" rel="stylesheet" />
+<link href="~/Scripts/bootstrap-calendar/css/calendar.min.css" rel="stylesheet">
+<link href="~/Content/ObrasParticulares/GestionInspecciones.css" rel="stylesheet" />
+
+<div class="modal fade theme_new" id="modal-window-inspecciones" tabindex="-1" data-backdrop="static" role="dialog" aria-labelledby="modal-windowLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="scroll-content" id="scroll-content-inspecciones">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="lblModal">@Resources.Recursos.TituloGestionInspecciones</h3>
+                    <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+                </div>
+                @using (Html.BeginForm("Inspeccion_Programar", "ObrasParticulares", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { id = "form-inspecciones", role = "form", novalidate = "" }))
+                {@Html.AntiForgeryToken()
+                if ((bool)ViewData["agregaExpedienteObra"])
+                {
+                    @Html.Hidden("aeo", "1");
+                }
+                <div class="modal-body inspecciones-body">
+                    <input type="hidden" id="editionMode" value="false" />
+                    <input type="hidden" id="puedeProgramar" value="true" />
+                    <input type="hidden" id="enabledResultado" value="false" />
+                    <input type="hidden" id="idPanel" value="1" />
+                    @Html.HiddenFor(model => model.InspeccionId)
+                    @Html.HiddenFor(model => model.Planificador)
+                    <div id="body-content" class="body-content">
+                        <div class="panel-group accordion" id="accordion-inspecciones">
+                            <div class="accordion-section">
+                                <div class='panel-heading bg-primary main-heading' id='headingPlanificacion'>
+                                    <a data-toggle='collapse' data-parent='#accordion-inspecciones' href='#collapsePlanificacion' aria-expanded='true'
+                                       aria-controls='collapsePlanificacion'>
+                                        <div class='panel-title'>
+                                            @Resources.Recursos.PlanificacionInspecciones
+                                            <i class="fa"></i>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div id='collapsePlanificacion' class='panel-collapse collapse in main-collapse' aria-labelledby='headingPlanificacion'>
+                                    <div class="panel-body" style="margin-top: 5px;">
+                                        <div class="form-horizontal">
+                                            <div class="form-group">
+                                                <label class="col-md-4 control-label text-right">
+                                                    @Resources.Recursos.TipoInspeccion
+                                                </label>
+                                                <div class="col-md-7">
+                                                    @Html.DropDownListFor(model => model.SelectedTipoInspeccionCal, Model.CmbTipoInspectores, new { @class = "form-control" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-md-4 control-label text-right">
+                                                    @Resources.Recursos.Inspector
+                                                </label>
+                                                <div class="col-md-7">
+                                                    @Html.DropDownListFor(model => model.SelectedInspectorCal, Model.CmbInspectores, new { @class = "form-control" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                         <div class="form-group">
+                                            <div class="col-xs-7 col-xs-offset-3">
+                                                <div class="input-group">
+                                                    <span class="input-group-btn">
+                                                        <button id="btnNavCalendarPrev" data-calendar-nav="next" class="btn btn-default no-hover" type="button"><i class="fa fa-angle-double-left"></i></button>
+                                                    </span>
+                                                    <input type="text" class="form-control date form_datetime fechaCalendario fechaCalendarioValue">
+                                                    <span class="input-group-btn">
+                                                        <button id="btnNavCalendarNext" data-calendar-nav="next" class="btn btn-default no-hover" type="button"><i class="fa fa-angle-double-right"></i></button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-2 text-right">
+                                                <span id="addPlanificacion" title="Calendario" style="margin-top:-5px;margin-bottom:5px;"
+                                                      class="fa fa-plus-circle fa-3x cursor-pointer"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 center-block" style="border: 1px solid #CCCCCC; padding:2px; border-radius: 4px;background-color: #fff;">
+                                            <div id="calendar"></div>
+                                            <div class="row remove-margin" style="margin-top:10px;">
+                                                <div class="col-xs-3 text-center">
+                                                    <span class="event event-success bullet" style="display:inline-block;"></span>
+                                                    <span>@Resources.Recursos.Planificada</span>
+                                                </div>
+                                                <div class="col-xs-3 text-center">
+                                                    <span class="event event-warning bullet" style="display:inline-block;"></span>
+                                                    <span>@Resources.Recursos.Abierta</span>
+                                                </div>
+                                                <div class="col-xs-3 text-center">
+                                                    <span class="event event-important bullet" style="display:inline-block;"></span>
+                                                    <span>@Resources.Recursos.Vencida</span>
+                                                </div>
+                                                <div class="col-xs-3 text-center">
+                                                    <span class="event event-special bullet" style="display:inline-block;"></span>
+                                                    <span>@Resources.Recursos.Finalizada</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-section">
+                                <div class='panel-heading bg-primary main-heading panel-deshabilitado' role='region' id='headingDatos'>
+                                    <a data-toggle='collapse' data-parent='#accordion-inspecciones' href='#collapseDatos' aria-expanded='false'
+                                       aria-controls='collapseDatos' class='collapsed'>
+                                        <div class='panel-title'>
+                                            @Resources.Recursos.PlanificacionInspeccion
+                                            <i class="fa"></i>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div id="collapseDatos" class='panel-collapse collapse main-collapse' aria-labelledby='headingDatos'>
+                                    <div class="panel-body" style="padding-top: 5px;">
+                                        <div class="col-md-6 center-block">
+                                            @Resources.Recursos.TipoInspeccion<span id="SelectedTipoInspeccion_required" class="oculto required text-danger">&nbsp; Requerido</span>
+                                            <br />
+                                            @Html.DropDownListFor(model => model.SelectedTipoInspeccion, Model.CmbTipoInspectores, new { @class = "form-control" })
+                                            <br />
+                                            @Resources.Recursos.FechaHoraPlanificacion
+                                            <hr />
+
+                                            <input type="hidden" id="fechaHoraPrevia">
+                                            Desde<span id="FechaHoraDesde_required" class="oculto required text-danger">&nbsp; Requerido</span>
+                                            <div class="form-group">
+                                                <div class='input-group date form_datetime fechaCompleta'>
+                                                    <input type='text' class="form-control" id="FechaHoraDesde" name="FechaHoraDesde" />
+                                                    <span class="input-group-addon">
+                                                        <span class="fa fa-calendar"></span>
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                            Hasta<span id="FechaHoraHasta_required" class="oculto required text-danger">&nbsp; Requerido</span>
+                                            <div class="form-group">
+                                                <div class='input-group date form_datetime fechaCompleta'>
+                                                    <input type='text' class="form-control" id="FechaHoraHasta" name="FechaHoraHasta" />
+                                                    <span class="input-group-addon">
+                                                        <span class="fa fa-calendar"></span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 center-block">
+                                            @Resources.Recursos.Inspector<span id="SelectedInspector_required" class="oculto required text-danger">&nbsp; Requerido</span>
+                                            <br />
+                                            @Html.DropDownListFor(model => model.SelectedInspector, Model.CmbInspectores, new { @class = "form-control" })
+
+                                            <br />
+                                            @Resources.Recursos.FechaHoraOriginal
+                                            <hr />
+
+                                            Desde<span id="FechaOrigenDesde_required" class="oculto required text-danger">&nbsp; Requerido</span>
+                                            <div class="form-group">
+                                                <input type='text' class="form-control" readonly="readonly" id="FechaOrigenDesde" name="FechaOrigenDesde" />
+                                            </div>
+
+                                            Hasta<span id="FechaOrigenHasta_required" class="oculto required text-danger">&nbsp; Requerido</span>
+                                            <br />
+                                            <div class="form-group">
+                                                <input type='text' class="form-control" readonly="readonly" id="FechaOrigenHasta" name="FechaOrigenHasta" />
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div class="col-md-12 center-block">
+                                            @Resources.Recursos.UnidadesTributarias
+                                            <span id="UnidadesTributarias_required" class="oculto required text-danger">&nbsp; Requerido</span>
+                                            <hr />
+                                            <div class="col-md-11 center-block">
+                                                <table id="Grilla_UnidadesTributarias" class="table table-striped table-bordered table-responsive" cellspacing="0" style="width:100%">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="no-sort" width="5%"></th>
+                                                            <th width="95%">@Resources.Recursos.UnidadTributaria</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        @{foreach (var item in Model.InspeccionUnidadeTributarias)
+                                                            {
+                                                                string unidadTributaria = item.UnidadTributaria.CodigoMunicipal;
+                                                                <tr>
+                                                                    <td width="5%">@unidadTributaria</td>
+                                                                    <td width="5%">@unidadTributaria</td>
+                                                                    <td width="95%">@unidadTributaria</td>
+                                                                </tr>
+                                                                continue;
+                                                            }}
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                            <div class="col-md-1 center-block" style="margin-top:10px">
+                                                <dl>
+                                                    <dt><span id="btnAddUT" class="fa fa-plus-circle fa-2x cursor-pointer btn_abilitado" aria-hidden="true"></span></dt>
+                                                    <dt><span id="btnRemUT" class="fa fa-minus-circle fa-2x cursor-pointer boton-deshabilitado" aria-hidden="true"></span></dt>
+                                                </dl>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-12 center-block">
+                                            @Resources.Recursos.Observaciones<span id="Observaciones_required" class="oculto required text-danger">&nbsp; Requerido</span>
+                                            <hr />
+                                            @Html.TextAreaFor(m => m.Descripcion, new { @class = "textarea-observaciones", rows = 3 })
+                                        </div>
+                                        @*
+                                        <div class="col-md-12 center-block" style="padding-top:10px">
+                                            @Resources.Recursos.RelacionarCon<hr />
+                                        </div>
+                                        <div class="col-md-4 center-block">
+                                            @Resources.Recursos.Objeto<span id="SelectedObjeto_required" class="oculto required text-danger">&nbsp; Requerido</span>
+                                            <br />
+                                            @* PARA COMARCAL SE QUITA ACTAS
+                                                @Html.DropDownListFor(model => model.SelectedObjeto, Model.CmbObjetos.Where(a=>a.Value != "2"), new { @class = "form-control" })
+                                            /*/@
+                                            @Html.DropDownListFor(model => model.SelectedObjeto, Model.CmbObjetos, new { @class = "form-control" })
+                                        </div>
+                                        <div class="col-md-4 center-block">
+                                            @Resources.Recursos.Tipo<span id="SelectedTipo_required" class="oculto required text-danger">&nbsp; Requerido</span>
+                                            <br />
+                                            @Html.DropDownListFor(model => model.SelectedTipo, Model.CmbTipos, new { @class = "form-control" })
+                                        </div>
+                                        <div class="col-md-4 center-block">
+                                            @Resources.Recursos.Identificador<span id="SelectedTipoInspeccion_required" class="oculto required text-danger">&nbsp; Requerido</span>
+                                            <br />
+                                            @Html.TextBoxFor(m => m.Identificador, new { @class = "form-control" })
+                                        </div>
+                                        *@
+                                    </div>
+                                    <br />
+                                </div>
+                            </div>
+                            <div class="accordion-section">
+                                <div class='panel-heading bg-primary main-heading panel-deshabilitado' role='region' id='headingResultados'>
+                                    <a data-toggle='collapse' data-parent='#accordion-inspecciones' href='#collapseResultados' aria-expanded='false'
+                                       aria-controls='collapseResultados' class='collapsed'>
+                                        <div class='panel-title'>
+                                            @Resources.Recursos.ResultadoInspeccion
+                                            <i class="fa"></i>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div id="collapseResultados" class='panel-collapse collapse main-collapse' aria-labelledby='headingResultados'>
+                                    <div class="panel-body" style="padding-top: 5px;">
+                                        <div class="col-md-6 center-block">
+                                            @Resources.Recursos.FechaHoraDesde<br />
+                                            <div class="input-append date form_datetime fechaCompleta3">
+                                                <div class="input-group date form_datetime fechaCompleta3" style="width:100%">
+                                                    <div class="form-group">
+                                                        <div class='input-group date'>
+                                                            <input type='text' class="form-control" id="FechaHoraDeInspeccion" name="FechaHoraDeInspeccion" />
+                                                            <span class="input-group-addon">
+                                                                <span class="fa-calendar fa"></span>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6 center-block">
+                                            @Resources.Recursos.Estado<br />
+                                            @Html.HiddenFor(model => model.SelectedEstadoHidden)
+                                            @Html.DropDownListFor(model => model.SelectedEstado, Model.CmbEstados, new { @class = "form-control" })
+                                        </div>
+
+                                        <div class="col-md-12 center-block">
+                                            @Resources.Recursos.Documentos<hr />
+                                            <div class="col-md-11 center-block">
+                                                <table id="documentos-inspecciones" class="table table-striped table-bordered table-responsive" cellspacing="0" style="width:100%">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="no-sort" width="5%"></th>
+                                                            <th width="95%">@Resources.Recursos.Tipo</th>
+                                                            <th width="95%">@Resources.Recursos.Nombre</th>
+                                                            <th width="95%">@Resources.Recursos.FechaAlta</th>
+                                                            <th width="95%">@Resources.Recursos.Descripcion</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>
+                                            </div>
+                                            <div class="col-md-1 center-block">
+                                                <dl>
+                                                    <dt><span id="btnAddDoc" class="fa fa-plus-circle fa-2x cursor-pointer btn_abilitado" aria-hidden="true"></span></dt>
+                                                    <dt><span id="btnRemDoc" class="fa fa-minus-circle fa-2x cursor-pointer boton-deshabilitado" aria-hidden="true"></span></dt>
+                                                    <dt><span id="btnEditDoc" class="fa fa-pencil fa-2x cursor-pointer boton-deshabilitado" aria-hidden="true"></span></dt>
+                                                    <dt><span id="btnViewDoc" class="fa fa-eye fa-2x cursor-pointer boton-deshabilitado" aria-hidden="true"></span></dt>
+                                                </dl>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-xs-12">
+                                            <br />
+                                            @Resources.Recursos.ResultadoInspeccion<hr />
+                                            @Html.TextAreaFor(m => m.ResultadoInspeccion, new { @class = "textarea-observaciones", rows = 4 })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" id="Panel_Botones">
+                    <div class="col-xs-4 pull-right">
+                        <span aria-hidden="true" aria-controls="button" data-placement="right" title="Editar" data-original-title="Editar" id="btnEditar" class="fa fa-pencil fa-2x black cursor-pointer"></span>
+                        <span aria-hidden="true" aria-controls="button" data-placement="right" title="Borrar" data-original-title="Borrar" id="btnBorrar" class="fa fa-remove fa-2x black cursor-pointer"></span>
+                        <span aria-hidden="true" aria-controls="button" data-placement="right" title="Guardar" data-original-title="Guardar" id="btnGrabar" class="fa fa-save fa-2x black cursor-pointer"></span>
+                        <span aria-hidden="true" aria-controls="button" data-placement="right" title="Cancelar" data-original-title="Cancelar" id="btnCerrar" class="fa fa-undo fa-2x black cursor-pointer"></span>
+                    </div>
+                </div>
+            }
+            </div>
+        </div>
+    </div>
+</div>
+@Html.HiddenFor(m => m.selectedUT);
+<input type="hidden" id="selectedDocs" />
+<div id="buscador-container"></div>
+<div id="documentos-externo"></div>
+<input type="hidden" id="alert_message_btnSi_result">
+<input type="hidden" id="alert_message_btnNo_result">
+
+<div class="modal fade theme_new mensaje" id="ModalInfoInspeccion" tabindex="-3" role="dialog" aria-labelledby="TituloInfo" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="TituloInfoInspecccion">Titulo</h3>
+                <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+            </div>
+            <div class="modal-body">
+                <div id="MensajeInfoInspecccion" class="alert alert-info alert-dismissible" role="alert">
+                    <p id="DescripcionInfoInspecccion">Descripcion de la informacion</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-xs-4 pull-right">
+                    <span id="btnAceptarAlert" aria-hidden="true" data-dismiss="modal" data-placement="right" title="Aceptar" data-original-title="Aceptar" class="fa fa-check-circle fa-2x cursor-pointer light-blue"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="~/Scripts/jquery.numeric.min.js"></script>
+<script type="text/javascript" src="~/Scripts/bootstrap-calendar/components/underscore/underscore-min.js"></script>
+<script type="text/javascript" src="~/Scripts/bootstrap-calendar/js/language/es-ES.js"></script>
+<script type="text/javascript" src="~/Scripts/bootstrap-calendar/js/calendar.js"></script>
+<script type="text/javascript" src="~/Scripts/jquery.dataTables.js"></script>
+<script type="text/javascript" src="~/Scripts/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+<script type="text/javascript" src="~/Scripts/bootstrap-datepicker/locales/bootstrap-datepicker.es.min.js" charset="UTF-8"></script>
+<script type="text/javascript" src="~/Scripts/moment.js"></script>
+<script type="text/javascript" src="~/Scripts/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript" src="~/Scripts/ObrasParticulares/ObrasParticulares.js"></script>

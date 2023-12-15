@@ -1,0 +1,222 @@
+﻿.scroll-content-TA {
+    color: black;
+    overflow: hidden !important;
+}
+
+    .scroll-content-TA .panel-heading {
+        border-radius: 0;
+    }
+
+    .scroll-content-TA .panel-info {
+        position: relative !important;
+        top: -10px !important;
+    }
+
+    .scroll-content-TA .panel-title {
+        font-size: 14px;
+        padding: 8px 15px;
+        font-weight: bold;
+        background-color: transparent;
+    }
+
+        .scroll-content-TA .panel-title::selection {
+            background-color: transparent;
+        }
+
+        .scroll-content-TA .panel-title:hover {
+        }
+
+    .scroll-content-TA .panel-body {
+        padding: 0;
+        border: none;
+    }
+
+    .scroll-content-TA .panel-default {
+        margin: 0;
+        border: 0;
+        border-radius: 5px 5px 0 0;
+    }
+
+        .scroll-content-TA .panel-default > .panel-heading {
+            font-weight: bold;
+            border-radius: 0;
+            border: 0;
+        }
+
+    .scroll-content-TA p {
+        margin: 0 0 0 30px;
+    }
+
+    .scroll-content-TA .text-muted, .scroll-content-TA p {
+        font-weight: bold;
+        cursor: default;
+        line-height: 2.5em;
+    }
+
+    .scroll-content-TA .text-muted {
+        margin-top: 10px !important;
+    }
+
+    .scroll-content-TA a .panel-title i.fa {
+        float: right;
+        position: relative;
+        margin: 1px -5px 0 5px;
+        font-size: 15px;
+        right: 10px;
+    }
+
+#modal-window-tablas-auxiliares .modal-lg {
+    width: 85%;
+}
+
+.accordion a.collapsed .panel-title i.fa:after {
+    content: '\f078';
+}
+
+.accordion a .panel-title i.fa:after {
+    content: '\f077';
+}
+
+.modal-footer {
+    background-color: #ffffff !important;
+}
+
+.borde-derecho {
+    border-color: #999;
+    border-right-width: 1px;
+    border-right-style: solid;
+}
+
+.borde-izquierdo {
+    border-color: #999;
+    border-left-width: 1px;
+    border-left-style: solid;
+}
+
+.borde-superior {
+    border-color: #999;
+    border-top-width: 1px;
+    border-top-style: solid;
+}
+
+.borde-inferior {
+    border-color: #999;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+}
+
+.centrado {
+    text-align: center;
+}
+
+.subrayado {
+    border: 0;
+    outline: 0;
+    background: transparent;
+    border-bottom: 1px solid black;
+    background: url(images/MapasTematicos/icons/dark/16/editar.png) no-repeat scroll right;
+    text-align: center;
+}
+
+.btnSinBorde {
+    border-color: transparent;
+    background-color: transparent;
+}
+
+.btnConBorde {
+    background-color: transparent;
+    border-color: black;
+}
+
+.panel-desactivado {
+    background-color: #b5b3b3 !important;
+}
+
+.panel-activo {
+    background-color: #FFFFFF !important;
+}
+
+.sin-padding {
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.btn-lg {
+    padding: 0px 0px;
+    font-size: 18px;
+    line-height: 1.33;
+    border-radius: 0px;
+}
+
+.boton-buscar {
+    height: 32px;
+    width: 32px;
+    max-height: 32px;
+    min-height: 32px;
+    max-width: 32px;
+    min-width: 32px;
+    background-repeat: no-repeat;
+    background-image: url("../Content/images/Seguridad/icons/blue/32/buscar.png");
+    border: none;
+    background-color: transparent;
+}
+
+.boton-Seleccionar {
+    height: 32px;
+    width: 32px;
+    max-height: 32px;
+    min-height: 32px;
+    max-width: 32px;
+    min-width: 32px;
+    background-repeat: no-repeat;
+    background-image: url("../Content/images/Seguridad/icons/blue/32/checkbox.png");
+    border: none;
+}
+
+.boton-grabar {
+    height: 32px;
+    width: 32px;
+    max-height: 32px;
+    min-height: 32px;
+    max-width: 32px;
+    min-width: 32px;
+    background-repeat: no-repeat;
+    background-image: url("../Content/images/Seguridad/icons/blue/32/save.png");
+    border: none;
+}
+
+.boton-ok {
+    height: 32px;
+    width: 32px;
+    max-height: 32px;
+    min-height: 32px;
+    max-width: 32px;
+    min-width: 32px;
+    background-repeat: no-repeat;
+    background-image: url("../Content/images/Seguridad/icons/blue/32/checkbox.png");
+    border: none;
+}
+
+.btn_abilitado {
+    color: black;
+    cursor: pointer;
+}
+
+.btn_desabilitado {
+    color: #b5b3b3;
+    cursor: default;
+}
+
+.btn_eliminar_desabilitado {
+    color: #b5b3b3;
+    cursor: default;
+}
+
+.btn_modificar_desabilitado {
+    color: #b5b3b3;
+    cursor: default;
+}
+
+.panel-desactivado {
+    background-color: #b5b3b3 !important;
+}

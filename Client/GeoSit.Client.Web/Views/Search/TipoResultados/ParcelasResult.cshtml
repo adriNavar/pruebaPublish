@@ -1,0 +1,20 @@
+﻿@model GeoSit.Client.Web.Models.Search.SearchResultGroup
+@foreach(dynamic parcela  in Model.Items)
+{
+    <div class='srow parcelas'>
+        <div class="controls">
+            <a target="_blank" href=@Html.Action("GetInformeCatastral", "MantenimientoParcelario", new { id=parcela.id})><span class="glyphicon glyphicon-plus-sign pull-right tooltips" data-placement="right" title="Más información" data-toggle="modal" data-target="#modal-window"></span></a>
+            <span class="glyphicon glyphicon-pushpin  pull-right tooltips" data-placement="right" title="Pin"></span>
+            <span class="glyphicon pull-righ fa fa-map-marker tooltips" data-placement="right" title="Ver en mapa" onclick="GeoSIT.VerEnMapa([['@parcela.id']], [403])"></span>
+        </div>
+        <div class="rcheck parcelas">
+            <input title="Seleccionar" type="checkbox" class="rcheck" />
+        </div>
+        <p class='text-primary'>
+            @Html.Raw(parcela.nomenclatura)
+        </p>
+        <p>Localidad:&nbsp;@Html.Raw(parcela.localidad)</p>
+        <p>Departamento:&nbsp;@Html.Raw(parcela.departamento)</p>
+        <p class='text-muted'>Expediente:&nbsp;@Html.Raw(parcela.expediente)</p>
+    </div>
+}

@@ -1,0 +1,12 @@
+﻿<div class='srow planos'>
+    <div class="controls">
+        <span class="glyphicon glyphicon-open-file pull-right tooltips" data-placement="bottom" title="Ver Documento" data-ng-click="abrir('Documento/DatosDocumento/', plano.id)" data-ng-show="allowDocumento"></span>
+    </div>
+    <div class="rcheck planos">
+        <input title="Seleccionar" type="checkbox" class="rcheck" />
+    </div>
+    <p class='text-primary'>
+        <span data-ng-bind-html="plano.nombre | highlight:pattern"></span>
+    </p>
+    <p>Descripci&oacute;n:&nbsp;<span data-ng-bind-html="plano.descripcion | highlight:pattern"></span></p>
+</div>

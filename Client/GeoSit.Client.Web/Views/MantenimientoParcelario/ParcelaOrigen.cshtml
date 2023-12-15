@@ -1,0 +1,226 @@
+﻿@using GeoSit.Data.BusinessEntities.Inmuebles
+
+@model ParcelaOrigen
+
+<style>
+    #message-error {
+        margin-top: 150px;
+        margin-left: 22%;
+        position: fixed;
+        z-index: 1000;
+        width: 55%;
+        box-shadow: 0px 0px 11px 0px #BBB9B9;
+        display: none;
+    }
+</style>
+<div class="modal fade theme_new" id="modal-window-parcela-origen" data-keyboard="false" tabindex="-1" data-backdrop="static" role="dialog" aria-labelledby="modal-windowLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="scroll-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Parcela Origen</h3>
+                    <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+                </div>
+                <div class="modal-body parcela-origen-body">
+                    <div id="message-error" class="alert alert-danger">
+                        <button type="button" class="close"><span aria-hidden="true">&times;</span></button>
+                        <p></p>
+                    </div>
+
+                    <div class="body-content">
+                        <div class="panel-group">
+                            <div class="panel panel-default remove-shadow">
+                                <div class='panel-body'>
+                                    <div class="col-xs-12">
+                                        <form class="form-horizontal" id="parcela-origen-form">
+                                            @Html.HiddenFor(model => model.IdOperacion)
+                                            <div class="form-group">
+                                                <label class="control-label col-xs-4 text-right">Tipo</label>
+                                                <div class="col-xs-8">
+                                                    @Html.DropDownListFor(model => model.IdTipoOperacion, new SelectList((List<TipoParcelaOperacion>)ViewData["tiposOperacion"], "Id", "Descripcion"), new { @class = "form-control" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-xs-4 text-right">Partida</label>
+                                                <div class="col-xs-8">
+                                                    <div class="input-group">
+                                                        @Html.TextBoxFor(model => model.CodigoProvincial, new { @class = "form-control", @readonly = "readonly" })
+                                                        @Html.HiddenFor(model => model.IdParcela)
+                                                        <span class="input-group-btn">
+                                                            <button id="btnBuscarParcela" class="btn btn-default" type="button"><i class="fa fa-lg fa-search"></i></button>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-xs-4 text-right">Fecha</label>
+                                                <div class="col-xs-8 col-md-4">
+                                                    @Html.TextBoxFor(model => model.FechaAlta, new { @class = "form-control", @Value = Model.FechaAlta.ToShortDateString() })
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="pull-right col-xs-4">
+                        <span aria-hidden="true" data-placement="right" title="Guardar" data-original-title="Guardar" id="btnGrabarParcelaOrigen" class="fa fa-save fa-2x black boton-deshabilitado cursor-pointer"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="buscador-container"></div>
+
+<script src="~/Scripts/formValidation.min.js"></script>
+<script src="~/Scripts/bootstrapValidation.min.js"></script>
+<script>
+    $(document).ready(init);
+    function init() {
+        const buscarParcela = () => {
+            return new Promise(function (resolve) {
+                const data = { tipos: BuscadorTipos.Parcelas, multiSelect: false, verAgregar: false, titulo: 'Buscar Parcela', campos: ['Partida', 'nomenclatura:Nomenclatura'] };
+                $("#buscador-container").load(`${BASE_URL}BuscadorGenerico`, data, function () {
+                    $(".modal", this).one('hidden.bs.modal', function () {
+                        $(window).off('seleccionAceptada');
+                    });
+                    $(window).one("seleccionAceptada", function (evt) {
+                        if (evt.seleccion) {
+                            resolve(evt.seleccion);
+                        } else {
+                            resolve();
+                        }
+                    });
+                });
+            });
+        }
+        const form = $("#parcela-origen-form"),
+            dato_partida = $("#IdParcela", form).val(),
+            tipo_operacion = $("#IdTipoOperacion", form).val(),
+            fecha_operacion = $("#FechaAlta", form).val();
+
+        const habilitarGrabarParcelaOrigen = function () {
+            const partidaIgual = dato_partida && dato_partida === $("#IdParcela", form).val(),
+                operacionIgual = tipo_operacion && tipo_operacion === $("#IdTipoOperacion", form).val(),
+                fechaOperacionIgual = fecha_operacion && fecha_operacion === $("#FechaAlta", form).val();
+
+            $("#btnGrabarParcelaOrigen").addClass("boton-deshabilitado");
+            if (!partidaIgual || !operacionIgual || !fechaOperacionIgual) {
+                if (form.data("bootstrapValidator").isValid()) {
+                    $("#btnGrabarParcelaOrigen").removeClass("boton-deshabilitado");
+                }
+            }
+        };
+        const GrabarParcelaOrigen = function () {
+            const idParcela = Number($("#IdParcela", form).val()),
+                  idOperacion = Number($("#IdOperacion", form).val());
+
+            const parcelaOrigen = {
+                IdOperacion: idOperacion,
+                IdTipoOperacion: Number($("#IdTipoOperacion", form).val()),
+                TipoOperacion: $("#IdTipoOperacion :selected", form).text(),
+                IdParcela: idParcela,
+                CodigoProvincial: $("#CodigoProvincial", form).val(),
+                FechaAlta: $("#FechaAlta", form).val()
+            };
+            $(document).trigger({ type: 'parcelaOrigenGuardada', parcelaOrigen: parcelaOrigen });
+            $("#modal-window-parcela-origen").modal('hide');
+        };
+        const errorAlertInit = function () {
+            var message = $("#message-error", "#modal-window-nomenclatura");
+            $(".close", message).click(function () {
+                message.hide();
+            });
+        };
+        const errorAlert = function (text) {
+            var message = $("#message-error");
+            message.find("p").html(text);
+            $("#message-error").fadeIn("slow").delay(5000).queue(function () {
+                $("#message-error").hide().dequeue();
+            });
+        };
+        const revalidateField = function (field) {
+            form.data("bootstrapValidator")
+                .enableFieldValidators(field, true)
+                .updateStatus(field, 'NOT_VALIDATED')
+                .validateField(field);
+            habilitarGrabarParcelaOrigen();
+        }
+        $("#FechaAlta", form).datepicker(getDatePickerConfig({ forceParse: false, enableOnReadonly: false }));
+        $("#modal-window-parcela-origen").one("shown.bs.modal", () => {
+            const bv = form.data("bootstrapValidator");
+            bv.enableFieldValidators("FechaAlta", false);
+            @if(Model.IdParcela != 0)
+            {
+            <text>
+            bv.enableFieldValidators("CodigoProvincial", false);
+            </text>
+            }
+            hideLoading();
+        });
+        $("#modal-window-parcela-origen").one("hidden.bs.modal", function () {
+            $(document).off("parcelaOrigenGuardada");
+        });
+
+        $("#FechaAlta", form).on("input change", () => revalidateField("FechaAlta"));
+        $("#IdTipoOperacion", form).change(habilitarGrabarParcelaOrigen);
+        $("#btnGrabarParcelaOrigen", "#modal-window-parcela-origen").on("click", GrabarParcelaOrigen);
+        $("#btnBuscarParcela", form).on("click", () => {
+            buscarParcela()
+                .then(function (seleccion) {
+                    $("#CodigoProvincial", form).val("");
+                    $("#IdParcela", form).val("");
+                    if (seleccion) {
+                        $("#CodigoProvincial", form).val(seleccion[1]);
+                        $("#IdParcela", form).val(seleccion[2]);
+                    } else {
+                        errorAlert("No se ha seleccionado ninguna parcela.");
+                    }
+                    revalidateField("CodigoProvincial");
+                }).catch(function (err) {
+                    console.log(err);
+                });
+        });
+        errorAlertInit();
+
+        form.bootstrapValidator({
+            framework: "bootstrap",
+            fields: {
+                CodigoProvincial: {
+                    validators: {
+                        notEmpty: {
+                            message: "Debe seleccionar una partida."
+                        },
+                        callback: {
+                            message: "La partida seleccionada ya existe como origen.",
+                            callback: () => {
+                                const parcelasOrigen = $("#parcelas-origen").dataTable().api().rows().data().toArray(),
+                                      idParcela = Number($("#IdParcela", form).val()),
+                                      idOperacion = Number($("#IdOperacion", form).val());
+                                return !parcelasOrigen.some(po => po.IdParcela === idParcela && po.IdOperacion !== idOperacion);
+                            }
+                        }
+                    }
+                },
+                FechaAlta: {
+                    validators: {
+                        notEmpty: {
+                            message: "La fecha es obligatoria."
+                        },
+                        callback: {
+                            message: 'La fecha no es válida',
+                            callback: (value) => !value || moment(value, "L", true).isValid()
+                        }
+                    }
+                }
+            }
+        });
+        $("#modal-window-parcela-origen").modal("show");
+    }
+</script>
+

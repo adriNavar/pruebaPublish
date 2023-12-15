@@ -1,0 +1,79 @@
+﻿@using GeoSit.Data.BusinessEntities.Inmuebles;
+
+@model Nomenclatura
+<style>
+    #message-error {
+        margin-top: 150px;
+        margin-left: 22%;
+        position: fixed;
+        z-index: 1000;
+        width: 55%;
+        box-shadow: 0px 0px 11px 0px #BBB9B9;
+        display: none;
+    }
+</style>
+<div class="modal fade theme_new" id="modal-window-nomenclatura" tabindex="-1" data-backdrop="static" role="dialog" aria-labelledby="modal-windowLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="scroll-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="lblModalnomenclatura">Nomenclaturas</h3>
+                    <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+                </div>
+                <div class="modal-body nomenclatura-body">
+                    <div id="message-error" class="alert alert-danger">
+                        <button type="button" class="close"><span aria-hidden="true">&times;</span></button>
+                        <p></p>
+                    </div>
+
+                    <div class="body-content">
+                        <div class="panel-group">
+                            <div class="panel panel-default remove-shadow">
+                                <div class='panel-body'>
+                                    <div class="col-xs-12">
+                                        <form class="form-horizontal" id="nomenclatura-form">
+                                            @Html.HiddenFor(model => model.NomenclaturaID, new { @Value = Model.NomenclaturaID })
+                                            @Html.HiddenFor(model => model.UsuarioAltaID, new { @Value = Model.UsuarioAltaID })
+                                            <div class="form-group">
+                                                <label class="control-label col-xs-4 text-right">Tipo</label>
+                                                <div class="col-xs-8">
+                                                    @Html.DropDownListFor(model => model.TipoNomenclaturaID, new SelectList((List<TipoNomenclatura>)ViewData["tiposNomenclaturas"], "TipoNomenclaturaID", "Descripcion"), new { @class = "form-control", @disabled = "disabled" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-xs-4 text-right">Nomenclatura</label>
+                                                <div class="col-xs-8">
+                                                    <div class="input-group">
+                                                        @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control", @readonly = "readonly" })
+                                                        <span class="input-group-btn">
+                                                            <button id="btnGenerar" class="btn btn-default" type="button"><i class="fa fa-lg fa-gears"></i></button>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-xs-4 text-right">Fecha</label>
+                                                <div class="col-xs-8">
+                                                    @Html.TextBoxFor(model => model.FechaModificacion, new { @class = "form-control", @Value = Model.FechaModificacion.Value.ToString("dd/MM/yyyy"), @readonly = "readonly" })
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="pull-right col-xs-4">
+                        <span aria-hidden="true" data-placement="right" title="Guardar" data-original-title="Guardar" id="btnGrabarNomenclatura" class="fa fa-save fa-2x black cursor-pointer"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/formValidation.min.js"></script>
+<script src="~/Scripts/bootstrapValidation.min.js"></script>
+<script src="~/Scripts/nomenclaturas/main.js"></script>

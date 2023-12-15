@@ -1,0 +1,109 @@
+﻿@{
+    ViewBag.Title = "Ayuda";
+    ViewBag.Description = "";
+}
+
+    <link href="~/Content/Seguridad.css" rel="stylesheet" />
+
+<!-- Modal Información-->
+<div class="modal fade" id="ModalInfo" tabindex="-3" role="dialog" aria-labelledby="TituloInfo" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            @*<div class="modal-header">
+                    <h4 class="modal-title col-lg-11 col-xs-11 col-sm-11 col-md-11" id="TituloInfo" style="color:#000000;">AVISO</h4>
+                    <br />
+                </div>*@
+            <div class="modal-body">
+                <div class="media">
+                    <div class="media-left">
+                        <img src="~/Content/images/Seguridad/logoAyuda.jpg" />
+                    </div>
+
+                    <div class="media-body">
+                        <div class="panel panel-default">
+                            <div class="panel-heading"><h4 class="media-heading">Sistema de Informacion Territorial</h4></div>
+                            <div class="panel-body">
+                                <p>Version @typeof(GeoSit.Client.Web.MvcApplication).Assembly.GetName().Version</p>
+                                <p>Componente de seguridad desarrollado por Geosystems S.A.</p>
+                                <p>Configurador interactivo de politicas de seguridad de los sistemas. Resuelve las funciones operativas propias de la seguridad de sistemas (implementación de políticas, administracion de usuarios, roles, acceso a sistemas).</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">Geosystems 2015</div>
+                    <div class="panel-body">
+                        <p>Se autoriza su uso a:</p>
+                        <p>@Resources.Recursos.Cliente</p>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="modal-footer" style="background-color:#ffffff;" id="Panel_Botones">
+                <img id="btnCancelarInfo" data-dismiss="modal" title="Cancelar" src="~/Content/images/Seguridad/icons/blue/32/checkbox.png" style="cursor:pointer;">
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="myModal" tabindex="-100" role="dialog"  aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header centrado">
+                <h4 class="modal-title col-lg-11 col-xs-11 col-sm-11 col-md-11" id="myModalLabel">@ViewBag.Title</h4>
+                <img id="btnCerrar" title="Cerrar" src="~/Content/images/Seguridad/icons/blue/32/cerrar.png" style="cursor:pointer;">
+
+            </div>
+            <div class="modal-body">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <div class="col-md-12 text-center">
+                            <a id="acerca" class="btn btn-primary btn-lg" style="width:90%;">Acerca de</a>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <div class="col-md-12 text-center">
+                            <a id="manual" class="btn btn-primary btn-lg" style="width:90%;">Manual de Usuario</a>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/jquery.form.js"></script>
+    <script>
+
+        $(document).ready(function () {
+
+            $('#myModal').modal('show')
+
+            $("#btnCerrar").click(function () {
+                $("#myModal").modal('hide');
+               // window.location.href = "@Url.Action("Index", "Home")"
+            });
+            $("#acerca").click(function () {
+                $("#myModal").modal('hide');
+                $("#ModalInfo").modal('show');
+
+            });
+            $("#btnCancelarInfo").click(function () {
+                $("#ModalInfo").modal('hide');
+                $("#myModal").modal('show');
+            });
+            $("#manual").click(function () {
+                window.open('~/Content/documents/ManualDeUsuario.pdf');
+            });
+
+
+
+        })
+
+    </script>

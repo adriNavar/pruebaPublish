@@ -1,0 +1,140 @@
+﻿@using GeoSit.Data.BusinessEntities.Common
+@model GeoSit.Client.Web.ViewModels.PersonaViewModel
+
+@Html.Partial("Partials/ObjetoEspecificoBaseView", new GeoSit.Client.Web.ViewModels.ObjetoEspecificoViewModel { Guid = Model.Guid, IdTramiteEntrada = Model.IdTramiteEntrada })
+
+<label style="width: 100%; color: #a3a99b; font-style: italic;">
+    Persona asociada
+</label>
+
+<div class="form-group">
+    @Html.LabelFor(m => m.Persona, new { @class = "col-md-2 control-label text-muted" })
+    <div class="col-xs-10">
+        <div class="input-group">
+            @Html.TextBoxFor(m => m.Persona, new { @class = "form-control visibleArbolObjetos", @readonly = "true" })
+            @Html.HiddenFor(m => m.IdPersona, new { @class = "form-control", Id = "hdnIdPersona", @readonly = "true" })
+            <div class="input-group-addon cursor-pointer" id="persona-entrada-search">
+                <span data-placement="bottom" title="Buscar Unidad Tributaria" class="fa-lg fa fa-search black cursor-pointer @((bool)ViewData["habilitarBuscadorPersona"]?string.Empty: "boton-deshabilitado")"
+                      aria-hidden="true" id="btn_PersonaSearch"></span>
+            </div>
+        </div>
+    </div>
+</div>
+
+@*Los siguientes controles solamente se mostrarán si el objeto “Persona” es hijo de un objeto “Titulo”*@
+@if (Model.MostrarCamposTitularidad)
+{
+    @*<div class="form-group">
+            @Html.LabelFor(m => m.TipoPersona, new { @class = "col-md-4 control-label" })
+            <div class="col-md-7">
+                @Html.DropDownListFor(m => m.TipoPersona, Model.TiposPersona, new { @class = "form-control visibleArbolObjetos" })
+                @Html.ValidationMessageFor(m => m.TipoPersona, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.TipoTitularidad, new { @class = "col-md-4 control-label" })
+        <div class="col-md-7">
+            @Html.DropDownListFor(m => m.TipoTitularidad, Model.TiposTitularidad, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.TipoTitularidad, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Titularidad, new { @class = "col-md-4 control-label" })
+        <div class="col-md-7">
+            @Html.TextBoxFor(m => m.Titularidad, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Titularidad, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    @*<div class="input-group-addon cursor-pointer" id="titular-entrada-search">
+            <span data-placement="bottom" title="Buscar Titular" class="fa-lg fa fa-search black cursor-pointer"
+                  aria-hidden="true"></span>
+        </div>*@
+}
+
+
+
+<script>
+    $(document).ready(function () {
+        $("#divEdicionObjetoContainer").off("ModificarObjeto").on("ModificarObjeto", () => $("#btn_PersonaSearch").removeClass('boton-deshabilitado'));
+
+        $("#btn_PersonaSearch").click(function () {
+            buscarUF()
+                .then(function (seleccion) {
+                    document.querySelector("#divAtributosDeObjeto #Persona").value = seleccion[0] + '-' + seleccion[2];
+                    document.querySelector("#divAtributosDeObjeto #hdnIdPersona").value = seleccion[1];
+                    $("#Persona", "#divAtributosDeObjeto").valid();
+                })
+                .catch(function (err) {
+                    console.log(err);
+                });
+        });
+
+        jQuery.validator.addMethod('positiveNumber', function (value) {
+            return Number(value) > 0;
+        });
+
+        $("#divEdicionObjetoContainer").validate({
+            rules: {
+                Persona: {
+                    required: true
+                },
+                TipoTitularidad: {
+                    required: true
+                },
+                Titularidad: {
+                    required: true,
+                    positiveNumber: true
+                }
+            },
+            messages: {
+                Persona: {
+                    required: "Debe tener cargado un valor alfanumérico (razón social) – Un valor entero(DNI)",
+                },
+                TipoTitularidad: {
+                    required: "Debe tener un valor seleccionado"
+                },
+                Titularidad: {
+                    required: "El campo es requerido",
+                    positiveNumber: "Debe tener cargado un valor numérico"
+                }
+            }
+        });
+
+    });
+
+    function buscarUF() {
+        return new Promise(function (resolve) {
+            var data = { tipos: BuscadorTipos.Personas, multiSelect: false, verAgregar: true, titulo: 'Buscar Persona', campos: ['Nombre', 'dni:DNI'] };
+            $("#buscador-container").load(BASE_URL + "BuscadorGenerico", data, function () {
+                $(".modal", this).one('hidden.bs.modal', function () {
+                    $(window).off('seleccionAceptada');
+                    $(window).off('agregarObjetoBuscado');
+                    $("#buscador-container").empty();
+                });
+                $(window).one("seleccionAceptada", function (evt) {
+                    if (evt.seleccion) {
+                        resolve(evt.seleccion.slice(1));
+                    } else {
+                        resolve();
+                    }
+                });
+                $(window).one("agregarObjetoBuscado", function () {
+                    showLoading();
+                    $("#container-externo").load(BASE_URL + "Persona/BuscadorPersona", function () {
+                        $(".modal.mainwnd", this).one('hidden.bs.modal', function () {
+                            $(window).off('personaAgregada');
+                            $("#container-externo").empty();
+                        });
+                        $(window).one("personaAgregada", function (evt) {
+                            resolve([evt.persona.NombreCompleto, evt.persona.PersonaId, evt.persona.NroDocumento]);
+                        });
+                    });
+                });
+            });
+        });
+    }
+
+</script>

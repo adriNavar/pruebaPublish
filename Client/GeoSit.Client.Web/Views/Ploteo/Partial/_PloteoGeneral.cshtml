@@ -1,0 +1,175 @@
+﻿@model GeoSit.Data.BusinessEntities.ModuloPloteo.Plantilla
+
+<link href="~/Content/bootstrap-switch.css" rel="stylesheet" />
+
+@Html.TextBoxFor(model => model.IdPlantilla, new { @type = "hidden" })
+<input type="hidden" value="@ViewBag.idComponentePrincipal" id="idComponentePrincipal" />
+
+<div class="panel panel-default">
+    <div class='panel-heading bg-primary' style="pointer-events:none">
+        <div class="panel-title">@Model.Nombre</div>
+    </div>
+    <div class="panel-body options-body">
+        @using (Ajax.BeginForm("GenerarPloteo", "Ploteo", new AjaxOptions { HttpMethod = "Get" }, new { id = "general-form", enctype = "multipart/form-data", @class = "form-horizontal" }))
+        {
+            <div class="form-group row">
+                <div class="col-lg-8 col-xs-8 col-sm-8 col-md-8">
+                    <h4>Resúmen</h4>
+                    <div class="margin-top">
+                        <div class="row">
+                            <div class="col-lg-5 col-xs-5 col-sm-5 col-md-5">
+                                <span>Hoja: </span>
+                            </div>
+                            <div class="col-lg-7 col-xs-7 col-sm-7 col-md-7">
+                                <span><b>@Html.Raw(Model.Hoja.Nombre)</b></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-5 col-xs-5 col-sm-5 col-md-5">
+                                <span>Orientación: </span>
+                            </div>
+                            <div class="col-lg-7 col-xs-7 col-sm-7 col-md-7">
+                                <span><b>@Html.Raw((Model.Orientacion == 0 ? "Horizontal" : "Vertical"))</b></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-lg-5 col-xs-5 col-sm-5 col-md-5">
+                                <span>Comp. Principal: </span>
+                            </div>
+                            <div class="col-lg-7 col-xs-7 col-sm-7 col-md-7">
+                                <span><b>@ViewBag.ComponentePrincipal</b></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-4 col-xs-4 col-sm-4 col-md-4">
+                    <h4>Previsualización</h4>
+                    <div class="margin-top">
+                        <input type="hidden" id="file-name" value="@Model.PlantillaFondos.First().ImagenNombre">
+                        <div class="row">
+                            <input class="form-control file" id="pdf-preview" name="pdf-preview" type="file" style="visibility:hidden">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <br>
+
+            <div class="accordion">
+                <div id="divAcordionOpciones" class="section-position-ploteador">
+                    <div class="panel-heading bg-primary main-heading">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOpciones" aria-expanded="false" aria-controls="#collapseOpciones" class="collapsed">
+                            <div class="panel-title">
+                                Opciones
+                                <i class="fa"></i>
+                            </div>
+                        </a>
+
+                    </div>
+                    <div id="collapseOpciones" class="panel-collapse collapse in" aria-expanded="false" style="height: 0px; margin-bottom:40px;">
+                        <div class="panel-body">
+                            <fieldset class="scheduler-border">
+                                <legend class="scheduler-border">Imágen Satelital</legend>
+                                <div class="form-group row">
+                                    <label class="control-label col-lg-2 col-md-2 col-sm-2 col-xs-2">Habilitar</label>
+                                    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                                        <div class="switch">
+                                            @Html.CheckBox("chkHabilitarImagen", false, new { @class = "cmn-toggle cmn-toggle-round-flat" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                        <label class="cursor-pointer">
+                                            Imágen <span class="badge" id="lblImagen"></span>
+                                        </label>
+                                    </div>
+                                    <div class="col-lg-10 col-md-10 col-sm-10 col-xs-10">
+                                        <select class="form-control select2" name="selValue" id="cboImagenSatelitalA4">
+                                            <option value="0">Seleccione una Imágen</option>
+                                            @foreach (var imagenSatelital in ViewBag.ImagenesSatelitales)
+                                            {
+                                                <option value="@imagenSatelital.IdImagenSatelital">@imagenSatelital.Nombre</option>
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row transparencia" style="margin-left: -10px; height: 3em;">
+
+                                    <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                        <label class="cursor-pointer">
+                                            Transparencia <span class="badge" id="lblTransparencia"></span>
+                                        </label>
+                                    </div>
+
+                                    <div class="col-lg-3 col-xs-3 col-sm-3 col-md-3" style="padding-left: 0px; height: 100%;">
+                                        @Html.TextBoxFor(model => model.Transparencia, new { @class = "form-control", style = "margin-top:1px;", @id = "InputSlider", @min = "0", @max = "99" })
+                                    </div>
+
+                                    <div class="col-lg-6 col-xs-6 col-sm-6 col-md-6" style="padding-left: 0px; padding-right: 0px; height: 100%;">
+                                        <input class="subslide" id="slider" name="slider" style="margin-bottom: 5px; margin-top: 9px; margin-left: 0px;" type="range" value="0" min="0" max="99" />
+                                    </div>
+
+                                </div>
+                            </fieldset>
+
+                            <fieldset class="scheduler-border">
+                                <legend class="scheduler-border">Objetos</legend>
+                                <div class="form-group row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <label class="cursor-pointer">
+                                            <input style=" margin-top: 2px" class="rcheck" id="radioVisualizacion" type="radio" name="optradio" checked />
+                                            Visualización Actual
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                                        <label class="cursor-pointer">
+                                            <input style=" margin-top: 2px" class="rcheck" id="radioColeccionGral" type="radio" name="optradio" />
+                                            Por Colección
+                                        </label>
+                                    </div>
+                                </div>
+                                <div id="divColeccionGral" class="form-group row hide">
+                                    <div class="col-lg-6 col-xs-6 col-sm-6 col-md-6">
+                                        <select class="form-control select2" id="cboColeccionesGral">
+                                            <option value="0">Seleccione una Coleccion</option>
+                                            @*Si tiene un solo componente*@
+                                            @if (ViewBag.Colecciones.Count == 1)
+                                            {
+                                                <option value="@ViewBag.Colecciones[0].ColeccionId">@ViewBag.Colecciones[0].Nombre</option>
+                                            }
+                                            else
+                                            {
+                                                foreach (var coleccion in ViewBag.Colecciones)
+                                                {
+                                                    <option value="@coleccion.ColeccionId">@coleccion.Nombre</option>
+                                                }
+                                            }
+                                        </select>
+                                    </div>
+                                    <div class="col-lg-6 col-xs-6 col-sm-6 col-md-6">
+                                        <label class="badge" id="lblColeccionCompuesta"></label>
+                                    </div>
+                                </div>
+                            </fieldset>
+
+                            <fieldset class="scheduler-border">
+                                <legend class="scheduler-border">Textos Variables</legend>
+                                <div class="col-lg-1 col-xs-1 col-sm-1 col-md-1"></div>
+                                <div class="col-lg-11 col-xs-11 col-sm-11 col-md-11">
+                                    <div id="listTextosVariables"></div>
+                                </div>
+                            </fieldset>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
+<script src="~/Scripts/jquery.inputmask.js" type="text/javascript"></script>
+<script src="~/Scripts/jquery.inputmask.regex.extensions.js" type="text/javascript"></script>
+<script src="~/Scripts/jquery.inputmask.numeric.extensions.js" type="text/javascript"></script>
+<script src="~/Scripts/jquery.form.js"></script>

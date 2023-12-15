@@ -1,0 +1,21 @@
+﻿@model GeoSit.Client.Web.Models.Search.SearchResultGroup
+@foreach (dynamic departamento in Model.Items)
+{
+    <div class='srow departamentos'>
+        <div class="controls">
+            <span class="glyphicon glyphicon-plus-sign pull-right tooltips" data-placement="right" 
+                  title="Más información" data-toggle="modal" data-target="#modal-window"></span>
+            <span class="glyphicon glyphicon-pushpin  pull-right tooltips" data-placement="right" 
+                  title="Pin"></span>
+            <span class="glyphicon pull-righ fa fa-map-marker tooltips" data-placement="right" title="Ver en mapa">
+            </span>
+        </div>
+        <div class="rcheck departamentos">
+            <input title="Seleccionar" type="checkbox" class="rcheck" />
+        </div>
+        <p class='text-primary'>
+            @Html.Raw(departamento.nombre)
+        </p>
+    </div>
+}
+

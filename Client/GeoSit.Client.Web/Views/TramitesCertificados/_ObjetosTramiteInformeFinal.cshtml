@@ -1,0 +1,28 @@
+﻿@using GeoSit.Data.BusinessEntities.ObrasPublicas;
+@model GeoSit.Data.BusinessEntities.ObrasPublicas.Tramite
+<div class="panel-body">
+    <div class="col-xs-11">
+        <input type="hidden" id="hdfDefault_Final" />
+        @Html.TextAreaFor(m => m.Informe_Final, new { @id = "txtSeccion_Final", @rows = "4", @class = "form-control col-sm-2 pull-left", @style = "resize:none;height:100px" })
+    </div>
+    <div class="col-xs-1 margin-bottom" id="informe-final-controls">
+        <dl>
+            <dt><span class="fa fa-2x fa-random cursor-pointer black informe-final" title="Cargar Plantilla" data-original-title="Cargar Plantilla" aria-hidden="true" onclick="cargarDefault('Final')"></span></dt>
+        </dl>
+    </div>
+</div>
+<!--<div class="panel-body">-->
+<div class="hide">
+    <label class="control-label col-sm-2">Estado</label>
+    <div class="col-xs-9">
+        @Html.DropDownListFor(m => m.Estado, (ViewBag.TramiteEstados as IEnumerable<SelectListItem>), new { @id = "txtEstadoTramite", @class = "form-control select2" })
+    </div>
+</div>
+<div class="panel-body">
+    <label class="control-label col-xs-2">Imprime</label>
+    <div class="col-xs-2" style="margin-top:5px">
+        <div class="switch informe-final">
+            @Html.CheckBoxFor(m => m.Imprime_Final, new { @class = "cmn-toggle cmn-toggle-round-flat" })
+        </div>
+    </div>
+</div>

@@ -1,0 +1,24 @@
+﻿<div class='srow unidadestributarias'>
+    <div class="controls fa pull-right">
+        <span class="opcion fa-map-marker tooltips" data-placement="bottom" title="Ver en mapa" ng-click="verEnMapa($event,unidadTributaria,true)" data-ng-show="tieneGrafico"></span>
+        <span class="opcion fa-hand-pointer-o tooltips" data-placement="bottom" title="Seleccionar" ng-click="verEnMapa($event,unidadTributaria,false)" data-ng-show="tieneGrafico"></span>
+        <span class="opcion fa-file-excel-o tooltips" data-placement="bottom" title="Exportar a Excel" ng-click="exportarObjetoExcel($event)"></span>
+        <span class="opcion fa-file-pdf-o tooltips" data-placement="bottom" title="Informe Histórico de Titulares" ng-click="generarReporteHistoricoTitulares()" data-ng-show="allowReporteHistoricoTitulares"></span>
+        <span class="opcion fa-file-pdf-o tooltips" data-placement="bottom" title="Informe Catastral"data-ng-if="!esTipoPH" ng-click="generarReportePropiedad()" data-ng-show="allowReportePropiedad"></span>
+        <span class="opcion fa-file-pdf-o tooltips" data-placement="bottom" title="Informe de Situación" data-ng-if="!esTipoPH" ng-click="generarReporteSituacion()" data-ng-show="allowReporteSituacion"></span>
+        <span class="opcion fa-file-pdf-o tooltips" data-placement="bottom" title="Reporte Unidad Tributaria" data-ng-if="!esTipoPH" data-ng-click="getReporteUnidadTributaria()"></span>
+        <span class="opcion fa-file-pdf-o tooltips" data-placement="bottom" title="Certificado Valuatorio" data-ng-if="!esTipoPH" data-ng-click="getCertificadoValuatorio()" data-ng-show="allowCertificadoValuatorio"></span>
+        <span class="opcion fa fa-file-text-o tooltips" data-placement="bottom" title="DDJJ" data-ng-click="getAdministracionDDJJ()" data-ng-show="allowDDJJ"></span>
+        <span class="opcion fa-th tooltips" data-placement="bottom" title="Mantenimiento Parcelario" data-ng-click="abrir('MantenimientoParcelario/Test', unidadTributaria.idpadre)" data-ng-show="allowMantenedor"></span>
+    </div>
+    <div class="roundChkBox parcelas">
+        <input type="checkbox" data-name="{{unidadTributaria.id}}" data-componente="{{unidadTributaria.tipo}}" id="{{chkboxid}}" ng-click="selectedChanged()" ng-model="unidadTributaria.selected" />
+        <label for="{{chkboxid}}"></label>
+    </div>
+    <div ng-click="showAtributos()">
+        <p class='text-primary'>
+            <span data-ng-bind-html="unidadTributaria.nombre | highlight:pattern:true"></span>
+        </p>
+        <p ng-if="tieneDescripcion"><span data-ng-bind-html="unidadTributaria.descripcion | highlight:pattern:true"></span></p>
+    </div>
+</div>

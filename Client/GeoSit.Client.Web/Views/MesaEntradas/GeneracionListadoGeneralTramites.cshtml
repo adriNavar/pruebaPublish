@@ -1,0 +1,220 @@
+﻿<link href="~/Content/dataTables.bootstrap.css" rel="stylesheet" />
+<link href="~/Content/GeneracionListadoGeneralTramites.css" rel="stylesheet" />
+<link href="~/Content/formValidation.min.css" rel="stylesheet" />
+
+<div class="modal fade theme_new" id="modal-GeneracionListadoGeneralTramites" tabindex="-2" data-backdrop="static" role="dialog" aria-labelledby="modal-windowLabel" aria-hidden="true">
+    <div class="modal-dialog modal-md">
+        <div class="modal-content">
+            <div id="scroll-content-generacionListadoGeneralTramites" class="scroll-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="lblGeneracionListadoGeneralTramites">@ViewBag.Title</h3>
+                    <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+                </div>
+                <div class="modal-body generacionListadoGeneralTramites-body">
+                    <div id="generacionListadoGeneralTramites-content" class="body-content">
+
+                        <div class="form-horizontal">
+
+                            <div class="form-group">
+                                <label id="lblFechaDesde" class="col-xs-offset-4 col-xs-4 control-label text-muted text-center">
+                                    Desde
+                                </label>
+                                <label id="lblFechaHasta" class="col-xs-4 control-label text-muted text-center">
+                                    Hasta
+                                </label>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-4 text-right">
+                                    <div class="checkbox">
+                                        <label class="text-muted text-left">
+                                            Fecha ingreso&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <input id="chkFechaIngreso" name="chkFechaIngreso" type="checkbox">
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-xs-4">
+                                    <div class="input-group date input-group-sm">
+                                        @Html.TextBox("txtFechaIngresoDesde", null, new { @class = "form-control desde", @maxlength = "10", @readonly = "readonly" })
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-xs-4">
+                                    <div class="input-group date input-group-sm">
+                                        @Html.TextBox("txtFechaIngresoHasta", null, new { @class = "form-control hasta", @maxlength = "10", @readonly = "readonly" })
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-4 text-right">
+                                    <div class="checkbox">
+                                        <label class="text-muted text-left">
+                                            Fecha Libro&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <input type="checkbox" id="chkFechaLibro" name="chkFechaLibro" />
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-xs-4">
+                                    <div class="input-group date input-group-sm">
+                                        @Html.TextBox("txtFechaLibroDesde", null, new { @class = "form-control desde", @maxlength = "10", @readonly = "readonly" })
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-xs-4">
+                                    <div class="input-group date input-group-sm">
+                                        @Html.TextBox("txtFechaLibroHasta", null, new { @class = "form-control hasta", @maxlength = "10", @readonly = "readonly" })
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-4 text-right">
+                                    <div class="checkbox">
+                                        <label class="text-muted text-left">
+                                            Fecha Vto.&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <input type="checkbox" id="chkFechaVenc" name="chkFechaVenc" />
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-xs-4">
+                                    <div class="input-group date input-group-sm">
+                                        @Html.TextBox("txtFechaVencDesde", null, new { @class = "form-control desde", @maxlength = "10", @readonly = "readonly" })
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="col-xs-4">
+                                    <div class="input-group date input-group-sm">
+                                        @Html.TextBox("txtFechaVencHasta", null, new { @class = "form-control hasta", @maxlength = "10", @readonly = "readonly" })
+                                        <span class="input-group-addon">
+                                            <i class="fa fa-calendar"></i>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-12">
+                                    <hr />
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-4 control-label text-muted text-right">
+                                    Jurisdicci&oacute;n:
+                                </label>
+                                <div class="col-xs-4 selectContainer">
+                                    @Html.DropDownList("cboJurisdiccion", (IEnumerable<SelectListItem>)ViewData["jurisdicciones"], new { @class = "form-control input-sm", onchange = "jurisdiccionChange(this.value)", onselectedindexchanged = "jurisdiccionChange(this.value)" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-4 control-label text-muted text-right">
+                                    Localidad:
+                                </label>
+                                <div class="col-xs-4 selectContainer">
+                                    @Html.DropDownList("cboLocalidad", new SelectListItem[0], new { @class = "form-control input-sm" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-4 control-label text-muted text-right">
+                                    Tipo:
+                                </label>
+                                <div class="col-xs-4 selectContainer">
+                                    @Html.DropDownList("cboTipoTramite", (IEnumerable<SelectListItem>)ViewData["tiposTramites"], new { @class = "form-control input-sm", onchange = "tipoTramiteChange(this.value)", onselectedindexchanged = "tipoTramiteChange(this.value)" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-4 control-label text-muted text-right">
+                                    Objeto:
+                                </label>
+                                <div class="col-xs-4 selectContainer">
+                                    @Html.DropDownList("cboObjetoTramite", new SelectListItem[0], new { @class = "form-control input-sm" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-4 control-label text-muted text-right">
+                                    Prioridad:
+                                </label>
+                                <div class="col-xs-4 selectContainer">
+                                    @Html.DropDownList("cboPrioridad", new SelectListItem[0], new { @class = "form-control input-sm" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="col-xs-4 control-label text-muted text-right">
+                                    Estado:
+                                </label>
+                                <div class="col-xs-4 selectContainer">
+                                    @Html.DropDownList("cboEstado", (IEnumerable<SelectListItem>)ViewData["estadosTramites"], new { @class = "form-control input-sm" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-xs-4 text-right">
+                                    <div class="checkbox">
+                                        <label class="text-muted text-left">
+                                            <input type="checkbox" id="chkIniciador" name="chkIniciador" />
+                                            &nbsp;Iniciador:
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="col-xs-6">
+                                    <div class="input-group">
+                                        @Html.TextBox("txtIniciador", (string)ViewBag.iniciador, new { @class = "form-control", @readonly = "true" })
+                                        @Html.Hidden("hdnIdPersona", (string)ViewBag.idPersona)
+                                        <div class="input-group-addon cursor-pointer boton-deshabilitado" id="persona-search">
+                                            <span data-placement="bottom" title="Buscar Persona" class="fa-lg fa fa-search black" aria-hidden="true"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-xs-4 pull-right">
+                        <button class="btn btn-secondary" id="btnGenerarListadoGralTramites" title="Generar">
+                            <span>Generar</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal theme_new fade mensaje" id="mensajeModalGeneracionListadoGeneralTramites" tabindex="-2" role="dialog" aria-labelledby="TituloAdvertencia" aria-hidden="true" style="z-index:99999999;" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <input type="hidden" id="TipoAdvertencia" value="">
+                <h3 class="modal-title col-xs-10" id="TituloAdvertencia">Titulo</h3>
+                <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+            </div>
+            <div class="modal-body">
+                <div id="MensajeAlerta" class="alert alert-warning alert-dismissible" role="alert">
+                    <p id="DescripcionAdvertencia">Está a punto de DESACTIVAR al usuario Perez, Juan <br>Está seguro de continuar?</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<input type="hidden" id="hfresultadobusqueda" />
+<div class="modal fade theme_new" id="buscador-generico" tabindex="-5" data-backdrop="false" role="dialog" aria-labelledby="modal-windowLabel" aria-hidden="true"></div>
+
+<div id="personas-externo-container"></div>
+
+<script src="~/Scripts/jquery.dataTables.min.js"></script>
+<script src="~/Scripts/dataTables.bootstrap.js"></script>
+<script src="~/Scripts/dataTables.select.min.js"></script>
+<script src="~/Scripts/formValidation.min.js"></script>
+<script src="~/Scripts/bootstrapValidation.min.js"></script>
+<script src="~/Scripts/ObrasParticulares/BuscadorGenerico.js"></script>
+<script src="~/Scripts/MesaEntradas/generacionlistadogeneraltramites.js"></script>

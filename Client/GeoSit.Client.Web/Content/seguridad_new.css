@@ -1,0 +1,14 @@
+﻿#Resultados_length { text-align:left; float:left; }
+#Resultados_filter { text-align:left; float:right; }
+
+@media(min-width:800px) {
+    #Resultados_wrapper { text-align:left; }
+    #Resultados_wrapper .dataTables_scroll { text-align:left; }
+    #Resultados_wrapper .dataTables_info { float:left; }
+    #Resultados_wrapper .dataTables_paginate { float:right; }
+}
+
+@media(min-width:500px) {
+    #Resultados_length { display:inline-block; margin-right:30px; }
+    #Resultados_filter { display:inline-block; }
+}

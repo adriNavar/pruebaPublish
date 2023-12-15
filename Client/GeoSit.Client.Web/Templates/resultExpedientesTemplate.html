@@ -1,0 +1,12 @@
+﻿<div class='srow expedientes'>
+    <div class="controls">
+        <span class="glyphicon glyphicon-folder-open pull-right tooltips" data-placement="bottom" title="Ver Expediente" data-ng-click="abrir('ExpedienteObra/Index/', expediente.id)" data-ng-show="allowExpediente"></span>
+    </div>
+    <div class="rcheck expedientes">
+        <input title="Seleccionar" type="checkbox" class="rcheck" />
+    </div>
+    <p class='text-primary'>
+        <span data-ng-bind-html="expediente.nombre | highlight:pattern:true"></span>
+    </p>
+    <p>Descripci&oacute;n:&nbsp;<span data-ng-bind-html="expediente.descripcion | highlight:pattern:true"></span></p>
+</div>

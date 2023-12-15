@@ -1,0 +1,26 @@
+﻿@model GeoSit.Data.BusinessEntities.ObrasPublicas.TramiteDocumento
+
+@using (Ajax.BeginForm("SaveDocumento", "TramitesCertificados", new AjaxOptions { HttpMethod = "POST", UpdateTargetId = "documento-panel-body" }))
+{
+    <div class="form-group margin-bottom">
+        @Html.TextBoxFor(model => model.Id_Tramite_Documento, new {@type = "hidden"})
+        @Html.TextBoxFor(model => model.Id_Tramite, new {@type = "hidden"})
+        <div class="form-group margin-bottom">
+            <label class="control-label col-sm-3">Tipo</label>
+            <div class="col-sm-7">
+                @Html.DropDownList("Id_Tipo_Documento", Enumerable.Empty<SelectListItem>(), "-- Cargando valores --", new {id = "Id_Tipo_Documento", @class = "form-control select2"})
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-xs-3">Documento</label>
+            <div class="col-sm-7">
+                @Html.DropDownListFor(model => model.Id_Documento, Enumerable.Empty<SelectListItem>(), "-- Cargando valores --", new {@class = "form-control select2"})
+            </div>
+        </div>
+        <div class="col-sm-12">
+            <span class="glyphicon glyphicon-2x glyphicon-remove-sign pull-right" aria-hidden="true" style="font-size: 25px; cursor: pointer;" id="documento-cancel"></span>
+            <span class="glyphicon glyphicon-2x glyphicon-ok-sign pull-right" style="font-size: 25px; cursor: pointer;" id="documento-submit"></span>
+        </div>
+    </div>
+}

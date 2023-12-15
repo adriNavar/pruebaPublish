@@ -1,0 +1,85 @@
+﻿@model GeoSit.Client.Web.Models.DominioTitular.TitularViewModel
+
+@{
+    ViewBag.Title = ((bool)ViewData["EsPrescripcion"]) ? "Poseedores" : "Titulares";
+}
+
+<div class="modal fade theme_new" id="modal-window-titular" tabindex="-1" data-backdrop="true" role="dialog" aria-labelledby="modal-windowLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id="scroll-content-titular" class="scroll-content">
+                <div id="message-error" class="alert alert-danger">
+                    <button type="button" class="close"><span aria-hidden="true">&times;</span></button>
+                    <p></p>
+                </div>
+                <div class="modal-header">
+                    <h3 class="modal-title" id="lblModal-titular">@ViewBag.Title</h3>
+                    <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+                </div>
+                <div class="modal-body titular-body">
+                    <div class="body-content">
+                        <div class="panel-group remove-margin">
+                            <div class="panel panel-default remove-shadow">
+                                <div class="panel-body">
+                                    <div class="col-xs-12">
+                                        <form id="titular-form" class="form-horizontal">
+                                            @Html.HiddenFor(model => model.DominioPersonaId)
+                                            @Html.HiddenFor(model => model.DominioId)
+                                            @Html.HiddenFor(model => model.Operacion)
+                                            @Html.HiddenFor(model => model.PorcientoCopropiedadTotal)
+
+                                            <div class="form-group">
+                                                <label class="control-label col-sm-4 text-right">Tipo</label>
+                                                <div class="col-sm-8">
+                                                    @Html.DropDownListFor(model => model.TipoTitularidadId, ViewData["TiposTitularidad"] as SelectList, new { @class = "form-control" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-sm-4 text-right">Persona</label>
+                                                <div class="col-sm-8">
+                                                    <div class="input-group">
+                                                        @Html.HiddenFor(model => model.PersonaId)
+                                                        @Html.HiddenFor(model => model.TipoNoDocumento)
+                                                        @Html.TextBoxFor(model => model.NombreCompleto, new { @class = "form-control", @readonly = "true" })
+                                                        <div class="input-group-btn">
+                                                            @{ 
+                                                                string disabled = string.Empty;
+                                                                string id = "id=persona-search";
+                                                            }
+                                                            @if(Model.Operacion != GeoSit.Data.BusinessEntities.LogicalTransactionUnits.Operation.Add)
+                                                            {
+                                                                disabled = "disabled=disabled";
+                                                                id = string.Empty;
+                                                            }
+                                                            <button type="button" @disabled class="btn btn-default" @id><span class="fa fa-search cursor-pointer"></span></button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-sm-4 text-right">% de Copropiedad</label>
+                                                <div class="col-sm-8">
+                                                    @Html.TextBoxFor(model => model.PorcientoCopropiedad, new { @class = "form-control" })
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-xs-4 pull-right">
+                        <span aria-hidden="true" data-placement="right" title="Guardar" data-original-title="Guardar" id="btnGrabar-titular" class="fa fa-save fa-2x black cursor-pointer"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="buscador-container"></div>
+<div id="personas-externo-container"></div>
+
+<script src="~/Scripts/Titular/main.js"></script>

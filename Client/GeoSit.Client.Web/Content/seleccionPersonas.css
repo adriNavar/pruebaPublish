@@ -1,0 +1,21 @@
+﻿#modal-window-seleccion-personas {
+    color: #000;
+}
+.target-name {
+    color:#1698c0;
+    font-weight: bold;
+    text-align: center;        
+}
+.btn-deshabilitado {
+    opacity: 0.5;
+}
+#pnlSeleccionPersonas_Status {
+    opacity: 0;
+}
+#pnlSeleccionPersonas_Status > .fa {
+    font-size: 22px;
+}
+#pnlSeleccionPersonas_Status > span {
+    vertical-align: middle;
+    font-weight: bold;
+}

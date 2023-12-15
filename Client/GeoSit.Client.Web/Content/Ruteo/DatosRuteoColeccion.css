@@ -1,0 +1,123 @@
+﻿#modal-window-ruteo {
+    color: black;
+    overflow: hidden !important;
+}
+
+    #modal-window-ruteo .panel-heading {
+        border-radius: 0;
+    }
+
+    #modal-window-ruteo a .panel-title {
+        font-size: 14px;
+        padding: 8px 15px;
+        font-weight: bold;
+    }
+
+        #modal-window-ruteo a .panel-title .glyphicon {
+            margin-top: 2px;
+        }
+
+        #modal-window-ruteo a .panel-title i.fa {
+            float: right;
+            position: relative;
+            margin: 1px -5px 0 5px;
+            font-size: 15px;
+            right: 10px;
+        }
+
+.accordion a.collapsed .panel-title i.fa:after {
+    content: '\f078';
+}
+
+.accordion a .panel-title i.fa:after {
+    content: '\f077';
+}
+
+#modal-window-ruteo a .panel-title:hover {
+}
+
+#modal-window-ruteo .panel-body {
+    padding: 0;
+}
+
+#modal-window-ruteo .panel-default {
+    margin: 38px 0 0;
+    border: 0;
+    border-radius: 5px 5px 0 0;
+}
+
+    #modal-window-ruteo .panel-default > .panel-heading {
+        font-weight: bold;
+        border-radius: 0;
+        border: 0;
+    }
+
+#modal-window-ruteo .text-primary {
+    font-weight: bold;
+    cursor: default;
+}
+
+#modal-window-ruteo p {
+    margin: 0 0 0 30px;
+}
+
+#modal-window-ruteo .text-muted, #modal-window-ruteo p {
+    font-weight: bold;
+    cursor: default;
+}
+
+.section-position {
+    margin-bottom: 3px;
+    margin-top: 0;
+    padding: 0 10px;
+}
+
+.cursor-pointer {
+    cursor: pointer !important;
+}
+
+.tab-pane {
+    padding-bottom: 15px;
+}
+
+.align-right {
+    text-align: right;
+}
+
+li.active > a {
+    border: none !important;
+}
+
+    li.active > a > span, li.active > a:hover > span, .black {
+        color: black !important;
+    }
+
+.inner-accordion {
+    padding-left: 15px !important;
+}
+
+.tooltip.in {
+    filter: alpha(opacity=100);
+    opacity: 1;
+}
+
+.panel-info {
+    position: relative !important;
+    top: -10px !important;
+}
+
+#botones-accion-inicio-fin {
+    display: none;
+}
+
+.botones-ocultos {
+    display: none;
+}
+
+.label-start {
+    background-color: #00CC00;
+}
+
+.label-end {
+    background-color: #ff0000;
+}

@@ -1,0 +1,301 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="keyword" content="">
+    <meta http-equiv="PRAGMA" content="NO-CACHE">
+
+    <title>GeoSIT</title>
+    <!-- Bootstrap core CSS -->
+    <link href="~/Content/bootstrap.css" rel="stylesheet">
+    <!--external css-->
+    <link href="~/Content/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Content/glyphicons/css/glyphicons.css" rel="stylesheet" />
+    <!-- Common styles -->
+    <link href="~/Content/style.css" rel="stylesheet">
+    <link href="~/Content/style-responsive.css" rel="stylesheet">
+    <link href="~/Content/theme.css" rel="stylesheet">
+    <link href="~/Content/site.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    @RenderSection("styles", required: false)
+    <style>
+        .blocking-backdrop {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            z-index: 20000;
+            background-color: rgba(0,0,0,0.4);
+        }
+    </style>
+    <script>
+        var BASE_URL = "@Url.Content("~/")";
+        var API_URL = "@System.Configuration.ConfigurationManager.AppSettings["webApiUrl"]";
+    </script>
+    <script type="text/javascript" id="polyfills">
+        if (window.NodeList && !NodeList.prototype.forEach) {
+            NodeList.prototype.forEach = Array.prototype.forEach;
+        }
+        if (typeof window.CustomEvent !== 'function') {
+            function CustomEvent(event, params) {
+                params = params || { bubbles: false, cancelable: false, detail: undefined };
+                var evt = document.createEvent('CustomEvent');
+                evt.initCustomEvent(event, params.bubbles, params.cancelable, params.detail);
+                return evt;
+            }
+            CustomEvent.prototype = window.Event.prototype;
+            window.CustomEvent = CustomEvent;
+        }
+        if (typeof Object.assign !== 'function') {
+            Object.defineProperty(Object, 'assign', {
+                enumerable: false,
+                configurable: true,
+                writable: true,
+                value: function (target) {
+                    'use strict';
+                    if (target === undefined || target === null) {
+                        throw new TypeError('Cannot convert first argument to object');
+                    }
+
+                    var to = Object(target);
+                    for (var i = 1; i < arguments.length; i++) {
+                        var nextSource = arguments[i];
+                        if (nextSource === undefined || nextSource === null) {
+                            continue;
+                        }
+                        nextSource = Object(nextSource);
+
+                        var keysArray = Object.keys(Object(nextSource));
+                        for (var nextIndex = 0, len = keysArray.length; nextIndex < len; nextIndex++) {
+                            var nextKey = keysArray[nextIndex];
+                            var desc = Object.getOwnPropertyDescriptor(nextSource, nextKey);
+                            if (desc !== undefined && desc.enumerable) {
+                                to[nextKey] = nextSource[nextKey];
+                            }
+                        }
+                    }
+                    return to;
+                }
+            });
+        }
+        if (typeof Object.toXML !== 'function') {
+            Object.defineProperty(Object, 'toXML', {
+                enumerable: false,
+                configurable: true,
+                writable: true,
+                value: function (obj, root) {
+                    'use strict';
+                    if (obj === undefined || obj === null) {
+                        throw new TypeError('Cannot convert first argument to object');
+                    }
+                    root = root || "root";
+                    var xml = "<" + root + ">";
+                    //loop through and add each property as a an xml tag as well as sub properties
+                    for (var prop in obj) {
+                        if (!obj.hasOwnProperty(prop) || obj[prop] == "undefined") {
+                            continue;
+                        }
+                        if (obj[prop] && typeof obj[prop] === "object") {
+                            xml += Object.toXML(obj[prop], prop);
+                        } else {
+                            xml += "<" + prop + ">";
+                            xml += new String(obj[prop] || "").replace(/(&)/g, '&amp;').replace(/(<)/g, '&lt;').replace(/(>)/g, '&gt;').replace(/(')/g, '&apos;');
+                            xml += "</" + prop + ">";
+                        }
+                    }
+                    xml += "</" + root + ">";
+                    // searches the string for numbers surrounded by underscores and removes them; used for multiple properties in the json that are set up an an object instead of an array
+                    return xml.replace(/([_]\d)\w+/g, '');
+                }
+            });
+        }
+        if (typeof Array.prototype.flat !== 'function') {
+            Object.defineProperty(Array.prototype, "flat", {
+                configurable: true,
+                writable: true,
+                value: function () {
+                    return Array.prototype.concat.apply([], this);
+                }
+            });
+            Object.defineProperty(Array.prototype, "flatMap", {
+                configurable: true,
+                writable: true,
+                value: function () {
+                    return Array.prototype.map.apply(this, arguments).flat();
+                }
+            });
+        }
+        if (typeof Array.prototype.distinct !== 'function') {
+            Object.defineProperty(Array.prototype, 'distinct', {
+                configurable: true,
+                writable: true,
+                value: function () {
+                    return this.filter(function (elem, idx, array) { return array.indexOf(elem) === idx; });
+                }
+            });
+        }
+        //# sourceURL=polyfills.js
+    </script>
+
+    <script src="~/Scripts/jquery-2.1.3.min.js"></script>
+    @*<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>*@
+    <script src="~/Scripts/jquery-ui.js"></script>
+
+    @*TODO: Ver si no conviene llevarlos a EdicionTramite.cshtml*@
+    @*<script src="https://ajax.aspnetcdn.com/ajax/jquery.validate/1.13.1/jquery.validate.min.js"></script>
+        <script src="https://ajax.aspnetcdn.com/ajax/mvc/5.2.3/jquery.validate.unobtrusive.min.js"></script>*@
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+
+
+    <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+    <script>$.widget.bridge('uitooltip', $.ui.tooltip);</script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    <script src="~/Scripts/CryptoJS/rollups/md5.js"></script>
+    <script src="~/Scripts/Negocio/utilidades.js"></script>
+    <script src="~/Scripts/detect.min.js"></script>
+    <script src="~/Scripts/bluebird.min.js"></script>
+    @RenderSection("scripts", required: false)
+    @if ((System.Web.HttpContext.Current.User != null) && System.Web.HttpContext.Current.User.Identity.IsAuthenticated && Session["blocked"] != null)
+    {
+        <script type="text/javascript">
+        $(document).ready(function () {
+            var cleanPass,
+                idleTimer,
+                idleState = false,
+                idleWait = parseInt(@Session["timeout"]) || 60000;
+
+            var evalExpiredSession = function () {
+                var original = XMLHttpRequest.prototype.send;
+                XMLHttpRequest.prototype.send = function () {
+                    this.addEventListener('readystatechange', function (evt) {
+                        if (this.responseURL.includes(BASE_URL) && this.readyState === 4) {
+                            if (this.status === 401 && this.responseText === "EXPIRED") {
+                                window.location.assign('@Url.Action("ExpiredSession", "Account")');
+                                this.abort();
+                                evt.preventDefault();
+                                evt.stopPropagation();
+                            }
+                        }
+                    }, false);
+                    original.apply(this, arguments);
+                };
+            };
+            var hideBlockingWindow = function () {
+                $(".blocking-backdrop").css("display", "none");
+                $("#blockScreenModal").modal("hide");
+                idleState = false;
+            };
+            var showBlockingWindow = function () {
+                $("#SumaryPassword").hide();
+                $("#txtPass").val("");
+                $(".blocking-backdrop").css("display", "block");
+                $("#blockScreenModal").modal("show");
+                idleState = true;
+            };
+            var heartbeat = function (tout) {
+                $.post('@Url.Action("Heartbeat","Home")');
+                setTimeout(heartbeat, tout, tout);
+            }
+
+            evalExpiredSession();
+            heartbeat(20000);
+            $('*').bind('mousemove keydown scroll', function () {
+                if (idleState) return;
+                clearTimeout(idleTimer);
+                idleTimer = setTimeout(function () { $.post('@Url.Action("Bloquear", "Seguridad")', showBlockingWindow); }, idleWait);
+            });
+            $("#txtPass").bind("keyup", function (event) {
+                var keyCode = event.which || event.keyCode;
+                if (keyCode === 13) { //enterKeyCode = 13
+                    $("#btnIngresar").click();
+                    event.preventDefault();
+                } else {
+                    clearTimeout(cleanPass);
+                    cleanPass = setTimeout(function () { $("#txtPass").val(""); }, 15000);
+                }
+            });
+            $("#btnIngresar").click(function () {
+                $.ajax({
+                    url: '@Url.Action("Login", "Seguridad")',
+                    data: { pass: $("#txtPass").val() },
+                    type: 'POST',
+                    success: function (data) {
+                        if (data.valido) {
+                            hideBlockingWindow();
+                            $("body").trigger("mousemove");
+                        } else {
+                            $("#SumaryPassword").show();
+                        }
+                    },
+                    error: function () {
+                        hideBlockingWindow();
+                        window.location = "@Url.Action("ExpiredSession", "Account")";
+                    }
+                });
+            });
+            @if (((bool)Session["blocked"]))
+            {
+            <text>
+            showBlockingWindow();
+            </text>
+            }
+            $("body").trigger("mousemove");
+
+            $(document).on('show.bs.modal', '.modal', function () {
+                var zIndex = 1040 + (10 * $('.modal:visible').length);
+                $(this).css('z-index', zIndex);
+                setTimeout(function () {
+                    $('.modal-backdrop').not('.modal-stack').css('z-index', zIndex - 1).addClass('modal-stack');
+                }, 0);
+            });
+        });
+        </script>
+    }
+</head>
+
+<body>
+    @RenderBody()
+    <div class="modal fade theme_new" id="blockScreenModal" tabindex="-100" role="dialog" aria-labelledby="LabelModal" aria-hidden="true" data-backdrop="false" data-keyboard="false">
+        <div class="col-md-4 col-lg-4"></div>
+        <div class="panel col-lg-4 col-md-4" style="height:200px; padding-top:10px">
+            <div class="center-block prompt">
+                <p>La aplicación se ha bloqueado por inactividad. Para desbloquearla, reingrese su contrase&ntilde;a</p>
+            </div>
+            <div class="form-group" style="display:none" data-ng-class="{'has-error': vm.submitAttempted && vm.form.userName.$invalid}">
+                <div class="input-group">
+                    <input id="txtUser" name="userName" class="form-control" type="text" data-ng-model="vm.userName" required />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-user"></span>
+                    </span>
+                </div>
+            </div>
+            <div class="form-group" data-ng-class="{'has-error': vm.submitAttempted && vm.form.password.$invalid}">
+                <br />
+                <label>Contrase&ntilde;a:</label>
+                <div class="input-group">
+                    <input id="txtPass" autocomplete="off" name="password" class="form-control" type="password" data-ng-model="vm.password" required autofocus />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-lock"></span>
+                    </span>
+                </div>
+            </div>
+            <div class="form-group buttons">
+                <div id="SumaryPassword" class="validation-summary-errors text-danger" style="display:none">
+                    <ul>
+                        <li>Contraseña incorrecta.</li>
+                    </ul>
+                </div>
+                <button id="btnIngresar" type="button" class="btn btn-theme btn-block">Ingresar</button>
+            </div>
+        </div>
+        <div class="col-md-4 col-lg-4"></div>
+    </div>
+    <div class="blocking-backdrop"></div>
+</body>
+</html>

@@ -1,0 +1,18 @@
+﻿@model GeoSit.Client.Web.Models.Search.SearchResultGroup
+@foreach (dynamic localidad in Model.Items)
+{
+    <div class='srow localidades'>
+        <div class="controls">
+            <span class="glyphicon glyphicon-plus-sign pull-right tooltips" data-placement="right" title="Más información" data-toggle="modal" data-target="#modal-window"></span>
+            <span class="glyphicon glyphicon-pushpin  pull-right tooltips" data-placement="right" title="Pin"></span>
+        </div>
+        <div class="rcheck localidades">
+            <input title="Seleccionar" type="checkbox" class="rcheck" />
+        </div>
+        <p class='text-primary'>
+            @Html.Raw(localidad.nombre)
+        </p>
+        <p>Departamento:&nbsp;@Html.Raw(localidad.departamento)</p>
+        <p class='text-muted'>Nomenclatura:&nbsp;@Html.Raw(localidad.literal)</p>
+    </div>
+}

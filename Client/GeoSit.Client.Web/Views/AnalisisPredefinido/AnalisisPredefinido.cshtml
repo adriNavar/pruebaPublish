@@ -1,0 +1,243 @@
+﻿<link href="~/Content/dataTables.bootstrap.css" rel="stylesheet" />
+<link href="~/Content/bootstrap-switch.css" rel="stylesheet" />
+<link href="~/Content/pick-a-color-1.2.3.min.css" rel="stylesheet" />
+<link href="~/Content/bootstrap-fileinput/css/fileinput.min.css" rel="stylesheet" />
+<link href="~/Content/css/select2.css" rel="stylesheet" />
+<link href="~/Content/select2-bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/SliderBar/jquery-ui-slider-pips.css" rel="stylesheet" />
+<link href="~/Content/SliderBar/prism.css" rel="stylesheet" />
+<link href="~/Content/formValidation.min.css" rel="stylesheet" />
+<link href="~/Content/SliderBar/jquery.range.css" rel="stylesheet" />
+<link href="~/Content/AnalisisPredefinido.css" rel="stylesheet" />
+<div class="modal fade" id="analisispredefinidoModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+    <input type="hidden" value="" id="idTipoDeCarga" />
+    <input type="hidden" value="" id="idPredefinido" />
+    <div class="modal-dialog modal-lg">
+        <div id="dvAnalisisPreContent" class="modal-content">
+            <div id="scroll-content-analisispredefinidos">
+                <div class="modal-header">
+                    <h3 class="modal-title col-lg-11 col-xs-11 col-sm-11 col-md-11" id="lblModalDomicilio">Generador de Análisis Predefinidos</h3>
+                    <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer" style="padding-top:3px;" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+                </div>
+                <div id="dvAnalisisPredefBody" class="modal-body analisispredefinido-body">
+                    <div class="analisispredefinido-content">
+                        <div id="MenuIzquierdo" class="col-lg-5 col-md-5 col-sm-5 col-xs-5">
+                            <div class="panel-group accordion grupos-analisispredefinidos" id="accordionAnalisisPredefinido">
+                                <div class="section-position-predefinido">
+                                    <div id="dvEstudiosComerciales" class='panel-heading bg-primary main-heading'>
+                                        <a data-toggle="collapse"
+                                           data-parent="#accordionAnalisisPredefinido"
+                                           href="#collapseIdName"
+                                           aria-expanded='false'
+                                           aria-controls='#collapseIdName'
+                                           class="collapsed">
+                                            <div class='panel-title'>
+                                                Estudios Comerciales
+                                                <i class="fa"></i>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div id="collapseIdName" class="accordion-body collapse in">
+                                        <!--Sub Acordion Estudios Comerciales-->
+                                        <div class="accordion" id="accordionEstudios">
+                                            <div class="section-position-predefinido">
+                                                <div class='panel panel-primary panel-heading bg-primary section-subacordion-predefinido'>
+                                                    <a data-toggle="collapse"
+                                                       data-parent="#accordionEstudios"
+                                                       href="#collapseEstudioDeudas"
+                                                       aria-expanded='false'
+                                                       aria-controls='#collapseEstudioDeudas'
+                                                       class="collapsed">
+                                                        <div class='panel-title'>
+                                                            Estudio de Deudas
+                                                            <i class="fa"></i>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                <div id="collapseEstudioDeudas" class="accordion-body collapse in section-subacordion-predefinido">
+                                                    <div class="panel panel-primary panel-tipo-analisispredefinido">
+                                                        <div class="panel-body">
+                                                            <div id="EstudioDeudas">
+                                                                <ul class="list-group">
+                                                                    <li id="idRankingDeuda" class="list-group-item cursor-pointer" onclick="cargaranalisispredefinido('@(Url.Action("GetFiltros", "AnalisisPredefinido") + "/" + 1)', 1 )">Ranking por antigüedad de deuda</li>
+                                                                    <li id="idRankingFactImpagas" class="list-group-item cursor-pointer" onclick="cargaranalisispredefinido('@(Url.Action("GetFiltros", "AnalisisPredefinido") + "/" + 2)', 2 )">Ranking por cantidad de facturas impagas</li>
+                                                                    <li id="idRankingTotalDeuda" class="list-group-item cursor-pointer" onclick="cargaranalisispredefinido('@(Url.Action("GetFiltros", "AnalisisPredefinido") + "/" + 3)', 3 )">Ranking por total de deuda</li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="section-position-predefinido">
+                                                <div class='panel panel-primary panel-heading bg-primary section-subacordion-predefinido'>
+                                                    <a data-toggle="collapse"
+                                                       data-parent="#accordionEstudios"
+                                                       href="#collapseEstudioMedidores"
+                                                       aria-expanded='false'
+                                                       aria-controls='#collapseEstudioMedidores'
+                                                       class="collapsed">
+                                                        <div class='panel-title'>
+                                                            Estudio de Medidores
+                                                            <i class="fa"></i>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                <div id="collapseEstudioMedidores" class="accordion-body collapse section-subacordion-predefinido">
+                                                    <div class="panel panel-primary panel-tipo-analisispredefinido">
+                                                        <div class="panel-body">
+                                                            <div id="EstudioMedidores">
+                                                                <ul class="list-group">
+                                                                    <li id="idTodosMedidores" class="list-group-item cursor-pointer" onclick="cargaranalisispredefinido('@(Url.Action("GetFiltros", "AnalisisPredefinido") + "/" + 4)', 4 )">Todos los medidores</li>
+                                                                    <li id="idMedidoresDifMarca" class="list-group-item cursor-pointer" onclick="cargaranalisispredefinido('@(Url.Action("GetFiltros", "AnalisisPredefinido") + "/" + 5)', 5 )">Medidores diferenciados por marca</li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="section-position-predefinido">
+                                                <div class='panel panel-primary panel-heading bg-primary section-subacordion-predefinido'>
+                                                    <a data-toggle="collapse"
+                                                       data-parent="#accordionEstudios"
+                                                       href="#collapseCortesServicioComercial"
+                                                       aria-expanded='false'
+                                                       aria-controls='#collapseCortesServicioComercial'
+                                                       class="collapsed">
+                                                        <div class='panel-title'>
+                                                            Cortes de Servicio Comercial
+                                                            <i class="fa"></i>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                <div id="collapseCortesServicioComercial" class="accordion-body collapse section-subacordion-predefinido">
+                                                    <div class="panel panel-primary panel-tipo-analisispredefinido">
+                                                        <div class="panel-body">
+                                                            <div id="CortesServicioComercial">
+                                                                <ul class="list-group">
+                                                                    <li id="idTiposCorte" class="list-group-item cursor-pointer" onclick="cargaranalisispredefinido('@(Url.Action("GetFiltros", "AnalisisPredefinido") + "/" + 6)', 6 )">Tipos de corte</li>
+                                                                    <li id="idExistenciaCorteAnterior" class="list-group-item cursor-pointer" onclick="cargaranalisispredefinido('@(Url.Action("GetFiltros", "AnalisisPredefinido") + "/" + 7)', 7 )">Existencia de corte anterior (fecha)</li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="section-position-predefinido">
+                                                <div class='panel panel-primary panel-heading bg-primary section-subacordion-predefinido'>
+                                                    <a data-toggle="collapse"
+                                                       data-parent="#accordionEstudios"
+                                                       href="#collapseEstudioConsumo"
+                                                       aria-expanded='false'
+                                                       aria-controls='#collapseEstudioConsumo'
+                                                       class="collapsed">
+                                                        <div class='panel-title'>
+                                                            Estudio de Consumo
+                                                            <i class="fa"></i>
+                                                        </div>
+                                                    </a>
+                                                </div>
+                                                <div id="collapseEstudioConsumo" class="accordion-body collapse section-subacordion-predefinido">
+                                                    <div class="panel panel-primary panel-tipo-analisispredefinido">
+                                                        <div class="panel-body">
+                                                            <div id="EstudioConsumo">
+                                                                <ul class="list-group">
+                                                                    <li id="idRangosConsumoPromAnual" class="list-group-item cursor-pointer" onclick="cargaranalisispredefinido('@(Url.Action("GetFiltros", "AnalisisPredefinido") + "/" + 8)', 8 )">Rangos de consumo promedio anual</li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--Fin Sub Acordion Estudios Comerciales-->
+                                    </div>
+                                </div>
+                                <div class="section-position-predefinido">
+                                    <div id="dvAnalisisTecnico" class='panel-heading bg-primary main-heading'>
+                                        <a data-toggle="collapse"
+                                           data-parent="#accordionAnalisisPredefinido"
+                                           href="#collapseIdName2"
+                                           aria-expanded='false'
+                                           aria-controls='#collapseIdName2'
+                                           class="collapsed">
+                                            <div class='panel-title'>
+                                                Análisis Técnicos
+                                                <i class="fa"></i>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div id="collapseIdName2" class="panel-collapse collapse">
+                                        <!-- Analisis Tecnicos-->
+                                        <div class="panel panel-primary panel-tipo-analisispredefinido">
+                                            <div class="panel-body">
+                                                <div id="AnalisisTecnicos">
+                                                    <ul class="list-group">
+                                                        <li id="idRastreo" class="list-group-item cursor-pointer" onclick="cargaranalisispredefinido('@(Url.Action("GetCargas", "AnalisisPredefinido") + "/" + 1)', 1 )">Rastreo sistemático</li>
+                                                        <li id="idRANC" class="list-group-item cursor-pointer" onclick="cargaranalisispredefinido('@(Url.Action("GetCargas", "AnalisisPredefinido") + "/" + 2)', 2 )">RANC</li>
+                                                        <li id="idPlanificZonas" class="list-group-item cursor-pointer" onclick="cargaranalisispredefinido('@(Url.Action("GetCargas", "AnalisisPredefinido") + "/" + 3)', 3 )">Zonas de lavado</li>
+                                                        <li id="idRedesAgua" class="list-group-item cursor-pointer" onclick="cargaranalisispredefinido('@(Url.Action("GetCargas", "AnalisisPredefinido") + "/" + 4)', 4 )">Redes de agua</li>
+                                                        <li id="idRedesCloaca" class="list-group-item cursor-pointer" onclick="cargaranalisispredefinido('@(Url.Action("GetCargas", "AnalisisPredefinido") + "/" + 5)', 5 )">Redes de cloaca</li>
+                                                        <li id="idConexAgua" class="list-group-item cursor-pointer" onclick="cargaranalisispredefinido('@(Url.Action("GetCargas", "AnalisisPredefinido") + "/" + 6)', 6 )">Conexiones de agua</li>
+                                                        <li id="idConexCloaca" class="list-group-item cursor-pointer" onclick="cargaranalisispredefinido('@(Url.Action("GetCargas", "AnalisisPredefinido") + "/" + 7)', 7 )">Conexiones de cloaca</li>
+                                                        <li id="idFaltAguaPresion" class="list-group-item cursor-pointer" onclick="cargaranalisispredefinido('@(Url.Action("GetCargas", "AnalisisPredefinido") + "/" + 8)', 8 )">Falta de agua y presión</li>
+                                                        <li id="idAnalisisLibre" class="list-group-item cursor-pointer" onclick="cargaranalisispredefinido('@(Url.Action("GetCargas", "AnalisisPredefinido") + "/" + 9)', 9 )">Análisis libre</li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!--Fin Analisis Tecnicos-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="dvPanelDerecho" class="col-lg-6 col-md-6 col-sm-6 col-xs-6">
+                            <div id="configuracion-analisispredefinido"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="btnUltimaCarga" type="button" class="btn btn-primary">Última Carga</button>
+                    <button id="btnCargar" type="button" class="btn btn-primary">Cargar</button>
+                    <button id="btnProcesarTipoReporte" type="button" class="btn btn-primary hide">Procesar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="confirmModalanalisispredefinido" tabindex="-2" role="dialog" aria-labelledby="TituloAdvertenciaanalisispredefinido" aria-hidden="true" data-backdrop="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <input type="hidden" id="TipoAdvertenciaanalisispredefinido" value="">
+                    <h4 class="modal-title col-lg-11 col-xs-11 col-sm-11 col-md-11" id="TituloAdvertenciaanalisispredefinido" style="color: #000000;">Titulo</h4>
+                    <br>
+                </div>
+                <div class="modal-body">
+                    <div id="MensajeAlertaanalisispredefinido" class="alert alert-warning alert-dismissible" role="alert">
+                        <strong>Atención!</strong><br>
+                        <p id="DescripcionAdvertenciaanalisispredefinido">
+                            Está a punto de DESACTIVAR al usuario Perez, Juan <br>Está seguro de continuar?
+                        </p>
+                    </div>
+                </div>
+                <div class="modal-footer" style="background-color: #ffffff;" id="botones-modal-confirm">
+                    <span id="btnAdvertenciaOKanalisispredefinido" aria-hidden="true" data-dismiss="modal" data-placement="right" title="Aceptar" data-original-title="Aceptar" class="fa fa-check-circle light-blue fa-3x cursor-pointer"></span>
+                </div>
+            </div>
+        </div>
+</div>
+
+<script src="~/Scripts/jquery.dataTables.min.js"></script>
+<script src="~/Scripts/dataTables.bootstrap.js"></script>
+<script src="~/Scripts/bootstrap-colorpicker.js"></script>
+<script src="~/Scripts/tinycolor-0.9.15.min.js"></script>
+<script src="~/Scripts/pick-a-color-1.2.3.min.js"></script>
+<script src="~/Scripts/fileinput.es.js"></script>
+<script src="~/Scripts/select2.min.js"></script>
+<script src="~/Scripts/SliderBar/jquery-ui-slider-pips.js"></script>
+<script src="~/Scripts/SliderBar/prism.js"></script>
+<script src="~/Scripts/SliderBar/jquery.range.js"></script>
+<script src="~/Scripts/jquery.form.js"></script>
+<script src="~/Scripts/AnalisisPredefinido/main.js"></script>
+<script src="~/Scripts/formValidation.min.js"></script>
+<script src="~/Scripts/bootstrapValidation.min.js"></script>

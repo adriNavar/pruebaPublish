@@ -1,0 +1,49 @@
+﻿@model GeoSit.Client.Web.Models.FormularioE1Model
+
+<style>
+    #Rubro2 .radio > input {
+        margin-left: 5px;
+    }
+</style>
+<div id="Rubro2" class="panel remove-margin remove-shadow">
+    <div class="col-xs-12 remove-padding">
+        <div class="panel-title">
+            <h4 class="title-border"><strong>Rubro 2</strong></h4>
+        </div>
+        <div class="panel-body">
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-xs-5 control-label text-right">Estado de conservación gral. del edificio</label>
+                    <div class="col-xs-5">
+                        @for (int idx = 0; idx < Model.EstadosConservacion.Count; idx++)
+                        {
+                            <div class="col-xs-6">
+                                <label class="radio">
+                                    @Model.EstadosConservacion[idx].Descripcion
+                                    @Html.RadioButtonFor(model => model.Mejora.IdEstadoConservacion, Model.EstadosConservacion[idx].EstadoConservacionID, new { @id = "IdEstadoConservacion_" + idx })
+                                </label>
+                            </div>
+                        }
+                    </div>
+                </div>
+                @for (int idx = 0; Model.OtrasCar.Count > idx; idx++)
+                {
+                    <div class="form-group">
+                        @Html.HiddenFor(x => x.OtrasCar[idx].IdOtraCar)
+                        <label class="col-xs-5 control-label text-right">@Model.OtrasCar[idx].Descripcion</label>
+                        <div class="col-xs-4">
+                            @if (Model.OtrasCar[idx].EsReal)
+                            {
+                                <input name="OtrasCar[@idx].Valor" type="text" value="@Model.OtrasCar[idx].Valor" class="form-control @(Model.OtrasCar[idx].Requerido ? "requiredNumeric" : "numeric")" />
+                            }
+                            else
+                            {
+                                <input name="OtrasCar[@idx].Valor" type="text" value="@Convert.ToInt32(Model.OtrasCar[idx].Valor ?? 0)" class="form-control @(Model.OtrasCar[idx].Requerido ? "requiredInteger" : "integer")" />
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

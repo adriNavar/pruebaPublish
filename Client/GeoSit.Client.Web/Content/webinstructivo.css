@@ -1,0 +1,25 @@
+﻿.instructivos table {
+    width: calc(100% - 2px) !important;
+}
+.instructivos table tr > td {
+    border: 1px solid #ddd;
+}
+.instructivos table tr:not(.group):not(:last-child) > td {
+    border-bottom: none;
+}
+.instructivos table tr.group {
+    background-color: rgb(182, 223, 255);
+    text-align: center;
+    font-weight: bold;
+}
+    .instructivos table tr.group > td {
+        background: #4d5055;
+        color: #fff;
+        text-transform: uppercase !important;
+        -webkit-border-top-left-radius: 0px;
+        -webkit-border-top-right-radius: 0px;
+        -moz-border-radius-topleft: 0px;
+        -moz-border-radius-topright: 0px;
+        border-top-left-radius: 0px;
+        border-top-right-radius: 0px;
+    }

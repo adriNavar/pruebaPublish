@@ -1,0 +1,83 @@
+﻿#scroll-content-analisispredefinidos { color: black; overflow: hidden !important; }
+#scroll-content-analisispredefinidos .panel-heading {  border-radius: 0 ; }
+#scroll-content-analisispredefinidos .panel-info { position:relative !important; top: -10px !important; }
+#scroll-content-analisispredefinidos a .panel-title {font-size: 14px;  padding: 8px 15px;  font-weight: bold; background-color:transparent; }
+#scroll-content-analisispredefinidos a .panel-title::selection { background-color:transparent; }
+#scroll-content-analisispredefinidos a .panel-title .glyphicon { margin-top: 2px; }
+#scroll-content-analisispredefinidos a .panel-title:hover { }
+#scroll-content-analisispredefinidos .panel-body {padding: 0; border: none;}
+#scroll-content-analisispredefinidos .panel-default { margin: 0; border: 0; border-radius: 5px 5px 0 0;}
+#scroll-content-analisispredefinidos .panel-default > .panel-heading{ font-weight:bold;border-radius: 0;	border: 0;}
+#scroll-content-analisispredefinidos p { margin: 0 0 0 30px;}
+#scroll-content-analisispredefinidos .text-muted, #analisispredefinidoModal p {  font-weight: bold; cursor: default; line-height: 2.5em; }
+#scroll-content-analisispredefinidos .text-muted  { margin-top: 10px !important; }
+#scroll-content-analisispredefinidos a .panel-title i.fa {
+	float: right;
+	position: relative;
+	margin: 1px -5px 0 5px;
+	font-size: 15px;
+	right: 10px;
+}
+.accordion a.collapsed .panel-title i.fa:after {  content: '\f078';}
+.accordion a .panel-title i.fa:after { content: '\f077';}
+.analisispredefinido-content .search { width: 100%; margin-top: 10px; display:table; vertical-align:central; border-collapse: collapse; }
+.analisispredefinido-body {
+	overflow: hidden !important; 	
+	overflow-y: visible !important; 
+    padding-bottom: 0 !important;
+    top:-5px !important;
+}
+.analisispredefinido-datos {
+    padding: 0px;
+    margin-top: 0px; margin-bottom: 0;
+}
+.analisispredefinido-datos .panel-body { padding: 5px 15px !important }
+
+/*.grupos-analisispredefinidos .panel-group {border-radius: 0px !important;}
+.grupos-analisispredefinidos .panel {border: none;border-radius: 0px !important;}
+.grupos-analisispredefinidos .list-group-item { border-radius: 0px !important; border:none !important; margin-bottom: 0;}*/
+.grupos-analisispredefinidos .list-group-item:hover { background: #47B2D6; }
+
+.cursor-pointer { cursor: pointer; }
+.align-right { text-align: right; }
+.tooltip.in {
+  filter: alpha(opacity=100);
+  opacity: 1;
+}
+
+
+fieldset.scheduler-border {
+    border: 1px groove #ddd !important;
+    padding: 0 1.4em 1.4em 1.4em !important;
+    margin: 0 0 1.5em 0 !important;
+    -webkit-box-shadow:  0px 0px 0px 0px #000;
+            box-shadow:  0px 0px 0px 0px #000;
+}
+
+legend.scheduler-border {
+   width:inherit; /* Or auto */
+    padding:0 10px; /* To give a bit of padding on the left and right */
+    border-bottom:none;
+
+}
+
+.resultados { margin-top: 10px }
+.analisispredefinido-listado { height: auto; max-height: 300px }
+.section-position-predefinido { 
+    margin-top: 3px;
+}
+
+.detalle-body { padding:15px !important; }
+.detalle-body .margin-top { margin-top:15px; }
+
+
+.detalle-body .listCheck {
+        border: 2px solid #ccc;
+        width: 439px;
+        height: 100px;
+        overflow-y: scroll;
+}
+
+.section-subacordion-predefinido { 
+    margin: 0px 6.5px 0px 6.5px;
+}

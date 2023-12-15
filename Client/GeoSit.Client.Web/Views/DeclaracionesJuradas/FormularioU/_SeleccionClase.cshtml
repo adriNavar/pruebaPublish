@@ -1,0 +1,34 @@
+﻿@model GeoSit.Client.Web.Models.FormularioUModel
+
+<div class="modal fade theme_new" id="modalSeleccionClase" role="dialog" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="scroll-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Selecci&oacute;n Clase</h3>
+                    <span id="btnCerrarSeleccionClase" aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" aria-label="Cerrar" title="Cerrar"></span>
+                </div>
+                <div class="modal-body dominio-body">
+                    <div id="dominio-content" class="dominio-content body-content">
+                        <div class="panel remove-shadow remove-margin">
+                            <div class="panel-body titular-datos">
+                                <select id="cboClasesDisponibles" class="form-control">
+                                    <option value>- Seleccione -</option>
+                                    @foreach (var item in Model.ClasesDisponibles)
+                                    {
+                                        <option value="@(item.IdClaseParcela)" class="item-clase item-clase@(item.IdClaseParcela)">@(item.Descripcion)</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-xs-4 pull-right">
+                        <span aria-hidden="true" data-placement="right" title="Seleccionar" data-original-title="Guardar" id="btnSeleccionClase" class="fa fa-save fa-2x black cursor-pointer"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,79 @@
+﻿@model GeoSit.Client.Web.Models.HorariosModel
+
+
+<div class="panel-body">
+    <div class="col-lg-11 col-xs-11 col-sm-11 col-md-11">
+        @*<div class="row">
+                <div class="col-lg-4 col-xs-4 col-sm-4 col-md-4 ">
+
+                </div>
+            </div>*@
+        <div class="form-group">
+        </div>
+        <div>
+            @using (Ajax.BeginForm("GuardarHorario", "Seguridad", new { }, new AjaxOptions(), new { id = "horarioform", role = "form", novalidate = "" }))
+            {
+                <dl class="dl-horizontal">
+                    @Html.HiddenFor(model => model.Id_Horario)
+                    <dt>
+                        @Html.DisplayNameFor(model => model.Descripcion)
+                    </dt>
+
+                    <dd>
+                        @Html.TextBoxFor(model => model.Descripcion, new { @style = "width:100%", @readonly = "readonly", @maxlength = "100" })
+                    </dd>
+                </dl>
+
+                <table id="Grilla_Horarios_Detalle" class="table table-striped table-bordered table-responsive" cellspacing="0" style="width:100%">
+                    <thead>
+                        <tr>
+                            <th class="no-sort"></th>
+                            <th>Dia</th>
+                            <th class="no-sort">Hora Desde</th>
+                            <th class="no-sort">Hora Hasta</th>
+
+                        </tr>
+                    </thead>
+                    <tbody id="tablaH">
+                        @*@foreach (var item in Model.HorariosDetalle)*@
+                        @for (int i = 0; i < Model.HorariosDetalle.Count; i++)
+                        {
+                            <tr id="filaDetalle_@Model.HorariosDetalle[i].Id_Horario_Detalle" class="filaTR">
+                                <td >
+                                    <input type="radio" name="Id_Horario_Detalle" id="Id_Horario_Detalle" class="id_detalle" value="@Model.HorariosDetalle[i].Id_Horario_Detalle" />
+
+                                    @Html.HiddenFor(model => model.HorariosDetalle[i].Dia, new { @class = "hdia" })
+                                    @Html.HiddenFor(model => model.HorariosDetalle[i].Hora_Inicio, new { @class = "hdesde" })
+                                    @Html.HiddenFor(model => model.HorariosDetalle[i].Hora_Fin, new { @class = "hhasta" })
+                                </td>
+                                <td class="dia">
+                                    @Html.DisplayFor(model => model.HorariosDetalle[i].Dia)
+                                </td>
+
+                                <td class="desde">
+                                    @Html.DisplayFor(model => model.HorariosDetalle[i].Hora_Inicio)
+                                </td>
+                                <td class="hasta">
+                                    @Html.DisplayFor(model => model.HorariosDetalle[i].Hora_Fin)
+                                </td>
+
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+            }
+        </div>
+    </div>
+    <div id="plantilla-controls" class="col-lg-1 col-xs-1 col-sm-1 col-md-1 text-right ">
+
+        <dl>
+            <dt><span class="glyphicon glyphicon-2x glyphicon-plus-sign btn_desabilitado " aria-hidden="true" style="font-size:20px;" id="btn_Agregar_Detalle" title="Agregar"></span></dt>
+            <dt><span class="glyphicon glyphicon-2x glyphicon-minus-sign btn_desabilitado" aria-hidden="true" style="font-size:20px;" id="btn_Eliminar_Detalle" title="Eliminar"></span></dt>
+            <dt><span class="glyphicon glyphicon-2x glyphicon-pencil btn_desabilitado" aria-hidden="true" style="font-size:20px;" id="btn_Modificar_Detalle" title="Modificar"></span></dt>
+
+        </dl>
+    </div>
+
+</div>
+

@@ -1,0 +1,77 @@
+﻿@model GeoSit.Client.Web.Models.HorariosDetalleModel
+
+
+
+<div id="accordion">
+    <div class="panel-group panel-primary">
+        <div class="panel-heading panel-desactivado" style="height:40px;">
+            <div class="col-lg-11 col-xs-11 col-sm-11 col-md-11 ">
+                Asignación
+            </div>
+            <div class="col-lg-1 col-xs-1 col-sm-1 col-md-1 text-right ">
+                <span id="Flecha_Detalle_Dia_Horarios" class="glyphicon glyphicon-triangle-bottom  flecha-desactivada flecha"></span>
+
+            </div>
+        </div>
+        <div id="accordion_panel_2" class="panel-collapse collapse" aria-expanded="true" style="border: solid; border-width: 1px; border-color: #a5a5a5; color: #000000">
+            <div class="form-horizontal">
+
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <div class="form-group">
+                    @Html.HiddenFor(model => model.Id_Horario_Detalle, new { @id="HorarioDetalleId"})
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(model => model.Dia, htmlAttributes: new { @class = "control-label col-md-2", @style = "text-align:right" })
+                    <div class="col-md-10">
+                        <div class="btn-group" role="group" aria-label="...">
+                            <button type="button" class="btn btn-default dia" value="DO"><span style="color:red">Dom</span></button>
+                            <button type="button" class="btn btn-default dia" value="LU"><span style="color:green">Lun</span></button>
+                            <button type="button" class="btn btn-default dia" value="MA"><span style="color:green">Mar</span></button>
+                            <button type="button" class="btn btn-default dia" value="MI"><span style="color:green">Mie</span></button>
+                            <button type="button" class="btn btn-default dia" value="JU"><span style="color:green">Jue</span></button>
+                            <button type="button" class="btn btn-default dia" value="VI"><span style="color:green">Vie</span></button>
+                            <button type="button" class="btn btn-default dia" value="SA"><span style="color:red">Sab</span></button>
+                            <button type="button" class="btn btn-default dia" value="FE" onclick="botonferiado()"><span style="color:blue">Fer</span></button>
+                        </div>
+                        @Html.ValidationMessageFor(model => model.Dia, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.Label("Horario", htmlAttributes: new { @class = "control-label col-md-2", @style = "text-align:right" })
+                    <div class="col-md-9">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <div class="col-md-6">
+                                    <h5>Desde</h5>
+                                    <div id="horaDesde"></div>
+                                </div>
+                                <div class="col-md-6">
+                                    <h5>Hasta</h5>
+                                    <div id="horaHasta"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+
+            </div>
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <div class="" style="width:97%">
+                        <div id="alerta" class="alert alert-danger alert-dismissible col-md-offset-1 col-md-8" style="display:none ;" role="alert">
+                        </div>
+                        <div class="col-md-3 pull-right" style="text-align:right">
+                            <img id="btnValidar" title="Validar"  src="~/Content/images/Seguridad/icons/blue/32/checkbox.png" style="cursor:pointer; margin-left:0.3em">
+                            <img id="btnCancelarValidar" title="Cancelar" src="~/Content/images/Seguridad/icons/blue/32/cancelar.png" style="cursor:pointer; margin-left:0.3em">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+    </div>
+</div>
+
+

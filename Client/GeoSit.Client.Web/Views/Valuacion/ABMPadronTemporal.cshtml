@@ -1,0 +1,168 @@
+﻿@model GeoSit.Client.Web.Models.ValuacionModel
+@{
+    ViewBag.Title = "ABM Padrón Temporal";
+    ViewBag.Description = "";
+}
+
+    <link href="~/Content/valuacion.css" rel="stylesheet" />
+    
+
+<div class="modal fade" id="myModal" tabindex="-100" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    @Html.HiddenFor(model => model.BusquedaPadron.IdPadron)
+    @Html.HiddenFor(model => model.BusquedaPadron.VigenciaDesde)
+    @Html.HiddenFor(model => model.BusquedaPadron.VigenciaHasta)
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header centrado">
+                <h4 class="modal-title col-lg-11 col-xs-11 col-sm-11 col-md-11" id="myModalLabel">@ViewBag.Title</h4>
+                <img id="btnCerrar" title="Cerrar" src="~/Content/images/Valuacion/icons/blue/32/cerrar.png" style="cursor:pointer;">
+
+            </div>
+            <div class="modal-body">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        @using (Ajax.BeginForm("MetadatoTierra", "Valuacion", new { }, new AjaxOptions { }, new { id = "formT", role = "form", novalidate = "" }))
+                        { @Html.AntiForgeryToken()
+                            <div class="col-md-12 text-center">
+                                <button class="btn btn-primary" style="width:50%">Valor Básico Tierra</button>
+                            </div>
+                        }
+                    </div>
+
+                    <div class="form-group">
+                        @using (Ajax.BeginForm("MetadatoMejora", "Valuacion", new { }, new AjaxOptions { }, new { id = "formM", role = "form", novalidate = "" }))
+                        { @Html.AntiForgeryToken()
+                            <div class="col-md-12 text-center">
+                                <button class="btn btn-primary" style="width:50%">Valor Básico Mejora</button>
+                            </div>
+                        }
+                    </div>
+                    <div class="form-group">
+                        @using (Ajax.BeginForm("MetadatoCoeficienteTierra", "Valuacion", new { }, new AjaxOptions { }, new { id = "formCT", role = "form", novalidate = "" }))
+                        { @Html.AntiForgeryToken()
+                            <div class="col-md-12 text-center">
+                                <button class="btn btn-primary" style="width:50%">Coeficientes Tierra</button>
+                            </div>
+                        }
+                    </div>
+                    <div class="form-group">
+                        @using (Ajax.BeginForm("MetadatoMejoraCoeficiente", "Valuacion", new { }, new AjaxOptions { }, new { id = "formCM", role = "form", novalidate = "" }))
+                        { @Html.AntiForgeryToken()
+                            <div class="col-md-12 text-center">
+                                <button class="btn btn-primary" style="width:50%">Coeficientes Mejora</button>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/Scripts/jquery.form.js"></script>
+    <script>
+        $(document).ready(function () {
+            hideLoading();
+            $(".modal-backdrop").remove();
+            $('#myModal').modal('show');
+
+            $("#btnCerrar").click(function () {
+                $("#myModal").modal('hide');
+            //    window.location.href = "@Url.Action("ValuacionPadronTemporal", "Valuacion")"
+            });
+
+            $("#formT").ajaxForm({
+                beforeSubmit: function (arr, $form, options) {
+                    showLoading();
+                    $("#myModal").modal('hide');
+                    return true; //it will continue your submission.
+                },
+                success: function (data) {
+                    //levantar modal
+                    $("#contenido").empty();
+                    $("#contenido").html(data);
+                },
+                error: function () {
+                    alert("error");
+                }
+            });
+
+        
+
+            $("#formT").submit(function (evt) {
+                /*evita el doble submit*/
+                evt.preventDefault();
+                evt.stopImmediatePropagation();
+                return false;
+            });
+
+            $("#formM").ajaxForm({
+                beforeSubmit: function (arr, $form, options) {
+                    showLoading();
+                    $("#myModal").modal('hide');
+                    return true; //it will continue your submission.
+                },
+                success: function (data) {
+                    //levantar modal
+                    $("#contenido").empty();
+                    $("#contenido").html(data);
+                },
+                error: function () {
+                    alert("error");
+                }
+            });
+
+            $("#formM").submit(function (evt) {
+                /*evita el doble submit*/
+                evt.preventDefault();
+                evt.stopImmediatePropagation();
+                return false;
+            });
+
+            $("#formCT").ajaxForm({
+                beforeSubmit: function (arr, $form, options) {
+                    showLoading();
+                    $("#myModal").modal('hide');
+                    return true; //it will continue your submission.
+                },
+                success: function (data) {
+                    //levantar modal
+                    $("#contenido").empty();
+                    $("#contenido").html(data);
+                },
+                error: function () {
+                    alert("error");
+                }
+            });
+
+            $("#formCT").submit(function (evt) {
+                /*evita el doble submit*/
+                evt.preventDefault();
+                evt.stopImmediatePropagation();
+                return false;
+            });
+            $("#formCM").ajaxForm({
+                beforeSubmit: function (arr, $form, options) {
+                    showLoading();
+                    $("#myModal").modal('hide');
+                    return true; //it will continue your submission.
+                },
+                success: function (data) {
+                    //levantar modal
+                    $("#contenido").empty();
+                    $("#contenido").html(data);
+                },
+                error: function () {
+                    alert("error");
+                }
+            });
+
+            $("#formCM").submit(function (evt) {
+                /*evita el doble submit*/
+                evt.preventDefault();
+                evt.stopImmediatePropagation();
+                return false;
+            });
+
+
+        })
+    </script>

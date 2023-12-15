@@ -1,0 +1,55 @@
+﻿using GeoSit.Data.BusinessEntities.Valuaciones;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Data.Entity.ModelConfiguration;
+
+namespace GeoSit.Data.Mappers.Oracle
+{
+    public class ValorBasicoMejoraMapper : EntityTypeConfiguration<ValorBasicoMejora>
+    {
+        public ValorBasicoMejoraMapper()
+        {
+
+            this.ToTable("VAL_VBM");
+      
+            this.Property(a => a.IdValorBasicoMejora)
+                .IsRequired()
+                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity)
+                .HasColumnName("ID_VAL_VBM");
+            this.Property(a => a.IdTipoValorBasicoMejora)
+                .IsRequired()
+                .HasColumnName("ID_TIPO_VBM");
+            this.Property(a => a.Desde)
+                .IsRequired()
+                .HasMaxLength(200)
+                .IsUnicode(false)
+                .HasColumnName("DESDE");
+            this.Property(a => a.Hasta)
+                .HasMaxLength(200)
+                .IsUnicode(false)
+                .HasColumnName("HASTA");
+            this.Property(a => a.Coeficiente)
+                .HasColumnName("COEFICIENTE");
+            this.Property(a => a.Semicubierto)
+                .HasColumnName("SEMICUBIERTO");
+
+            this.Property(a => a.Usuario_Alta)
+                .HasColumnName("USUARIO_ALTA");
+            this.Property(a => a.Fecha_Alta)
+                .IsConcurrencyToken()
+                .HasColumnName("FECHA_ALTA");
+            this.Property(a => a.Usuario_Modificacion)
+                .HasColumnName("USUARIO_MOD");
+            this.Property(a => a.Fecha_Modificacion)
+                .IsConcurrencyToken()
+                .HasColumnName("FECHA_MOD");
+            this.Property(a => a.Usuario_Baja)
+                .HasColumnName("USUARIO_BAJA");
+
+            this.Property(a => a.Fecha_Baja)
+                .IsConcurrencyToken()
+                .HasColumnName("FECHA_BAJA");
+
+            this.HasKey(a => a.IdValorBasicoMejora);
+        }
+    }
+}

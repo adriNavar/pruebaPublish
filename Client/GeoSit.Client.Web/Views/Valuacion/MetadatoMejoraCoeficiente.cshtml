@@ -1,0 +1,148 @@
+﻿@model GeoSit.Client.Web.Models.ValuacionModel
+@{
+    ViewBag.Title = "Coeficientes de Mejora";
+    ViewBag.Description = "";
+}
+
+    <link href="~/Content/valuacion.css" rel="stylesheet" />
+    <link href="~/Content/jquery.jscrollpane.css" rel="stylesheet" />
+    <link href="~/Content/progress_bar.css" rel="stylesheet" />
+    <link href="~/Content/dataTables.bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/formValidation.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/select2-bootstrap.css">
+
+@using (Ajax.BeginForm("GetIndexView", "Valuacion", new { }, new AjaxOptions { }, new { id = "formVolver", role = "form", novalidate = "" }))
+{ @Html.AntiForgeryToken()
+}
+
+<div class="modal fade" id="myModal" tabindex="-100" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header centrado">
+                <h4 class="modal-title col-lg-11 col-xs-11 col-sm-11 col-md-11" id="myModalLabel">@ViewBag.Title</h4>
+                <img id="btnCerrar" title="Cerrar" src="~/Content/images/Valuacion/icons/blue/32/cerrar.png" style="cursor:pointer;">
+            </div>
+            <div class="modal-body">
+                @using (Ajax.BeginForm("TipoCoefienteMejora", "Valuacion", new { ReturnUrl = ViewBag.ReturnUrl }, new AjaxOptions { }, new { id = "form", role = "form", novalidate = "" }))
+                {
+                    @Html.AntiForgeryToken()
+
+                    @Html.HiddenFor(model => model.BusquedaPadron.IdPadron)
+                    @Html.HiddenFor(model => model.BusquedaPadron.VigenciaDesde)
+                    @Html.HiddenFor(model => model.BusquedaPadron.VigenciaHasta)
+                    <div id="accordion">
+                        <div class="panel-group panel-primary">
+                            <div class="panel-heading panel-activado" style="height:40px;">
+                                <div class="col-lg-11 col-xs-11 col-sm-11 col-md-11 ">
+                                    Seleccionar Coeficiente de Mejora
+                                </div>
+                                <div class="col-lg-1 col-xs-1 col-sm-1 col-md-1 text-right ">
+                                    <span id="Flecha_Tipo_Valuacion" class="glyphicon glyphicon-triangle-bottom flecha-activada" style="cursor:pointer;"></span>
+                                </div>
+                            </div>
+                            <div id="accordion_panel_0" class="panel-collapse collapse in " aria-expanded="true" style="border: solid; border-width: 1px; border-color: #a5a5a5; color: #000000">
+                                <div class="panel-body" style="padding: 5px 0 5px 0; ">
+                                    @Html.HiddenFor(model => model.MetadatoMejoraCoeficiente.IdMejoraCoeficiente, new { @id = "valorCoeficiente" })
+                                    <div class="form-group">
+                                        <div class="panel-body escala_fuente_11 col-lg-12 col-xs-12 col-sm-12 col-md-12 coeficiente" id="1" style="cursor:pointer;">
+                                            Coeficiente 1
+                                        </div>
+
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="panel-body borde-superior escala_fuente_11 col-lg-12 col-xs-12 col-sm-12 col-md-12 coeficiente" id="2" style="cursor:pointer;">
+                                            Coeficiente 2
+                                        </div>
+
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="panel-body borde-superior escala_fuente_11 col-lg-12 col-xs-12 col-sm-12 col-md-12 coeficiente" id="3" style="cursor:pointer;">
+                                            Coeficiente 3
+                                        </div>
+
+                                    </div>
+                                    <div class="form-group">
+                                        <div class="panel-body borde-superior escala_fuente_11 col-lg-12 col-xs-12 col-sm-12 col-md-12 coeficiente" id="4" style="cursor:pointer;">
+                                            Coeficiente 4
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    <script src="~/Scripts/jquery.dataTables.js"></script>
+    <script src="~/Scripts/formValidation.min.js"></script>
+    <script src="~/Scripts/bootstrapValidation.min.js"></script>
+    <script src="~/Scripts/select2.js"></script>
+    <script src="~/Scripts/jquery.form.js"></script>
+    <script>
+
+
+        $(document).ready(function () {
+
+            $('#myModal').modal('show');
+            // $("#myModal").draggable();
+
+            $("#Flecha_Tipo_Valuacion").click(function () {
+
+                if ($("#accordion_panel_0").hasClass("in") == false) {
+                    $("#accordion_panel_0").addClass("in");
+                    $("#Flecha_Tipo_Valuacion").addClass("glyphicon-triangle-bottom");
+                    $("#Flecha_Tipo_Valuacion").removeClass("glyphicon-triangle-top");
+
+                } else {
+                    $("#accordion_panel_0").removeClass("in");
+                    $("#Flecha_Tipo_Valuacion").removeClass("glyphicon-triangle-bottom");
+                    $("#Flecha_Tipo_Valuacion").addClass("glyphicon-triangle-top");
+                }
+
+            });
+
+            $(".coeficiente").on('click', function () {
+                $("#valorCoeficiente").val($(this).attr('id'));
+                $("#form").attr("Action", "@Url.Action("TipoCoeficienteMejora", "Valuacion")");
+                $("#form").submit();
+            });
+
+            $("#btnCerrar").click(function () {
+                $("#form").attr("Action", "@Url.Action("ABMPadronTemporal", "Valuacion")");
+                $("#form").submit();
+            });
+            $("#form").ajaxForm({
+                beforeSubmit: function (arr, $form, options) {
+                    showLoading();
+                    $("#myModal").modal('hide');
+                    return true; //it will continue your submission.
+                },
+                success: function (data) {
+                    //levantar modal
+
+                    $("#contenido").empty();
+                    $("#contenido").html(data);
+                },
+                error: function () {
+                    alert("error");
+                }
+            });
+
+            hideLoading();
+
+            $("#form").submit(function (evt) {
+                /*evita el doble submit*/
+
+                evt.preventDefault();
+                evt.stopImmediatePropagation();
+                return false;
+            });
+        });
+
+    </script>

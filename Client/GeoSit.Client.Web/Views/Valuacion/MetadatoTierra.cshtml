@@ -1,0 +1,245 @@
+﻿@model GeoSit.Client.Web.Models.ValuacionModel
+@{
+    ViewBag.Title = "Metadato de la Tierra";
+    ViewBag.Description = "";
+}
+
+    <link href="~/Content/valuacion.css" rel="stylesheet" />
+    <link href="~/Content/jquery.jscrollpane.css" rel="stylesheet" />
+    <link href="~/Content/progress_bar.css" rel="stylesheet" />
+    <link href="~/Content/dataTables.bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/formValidation.min.css" rel="stylesheet" />
+    <link href="~/Content/select2-bootstrap.css" rel="stylesheet" />
+
+@using (Ajax.BeginForm("GetIndexView", "Valuacion", new { }, new AjaxOptions { }, new { id = "formVolver", role = "form", novalidate = "" }))
+{ @Html.AntiForgeryToken()
+}
+
+<div class="modal fade" id="myModal" tabindex="-100" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header centrado">
+                <h4 class="modal-title col-lg-11 col-xs-11 col-sm-11 col-md-11" id="myModalLabel">@ViewBag.Title</h4>
+                <img id="btnCerrar" title="Cerrar" src="~/Content/images/Valuacion/icons/blue/32/cerrar.png" style="cursor:pointer;">
+
+            </div>
+
+            <div class="modal-body">
+                @using (Ajax.BeginForm("MetadatoFiltroTierra", "Valuacion", new { ReturnUrl = ViewBag.ReturnUrl }, new AjaxOptions { }, new { id = "form", role = "form", novalidate = "" }))
+                {
+                    @Html.AntiForgeryToken()
+                    @*@Html.HiddenFor(model => model.BusquedaPadron.IdPadron)
+                    @Html.HiddenFor(model => model.BusquedaPadron.VigenciaDesde)
+                    @Html.HiddenFor(model => model.BusquedaPadron.VigenciaHasta)*@
+
+                    <div class="row">
+                        
+                        <div class="col-lg-12 col-xs-12 col-sm-12 col-md-12">
+                            <div class="col-lg-4 col-xs-4 col-sm-4 col-md-4 " style=" text-align: right">
+                                <label class="h4"><u style="white-space:nowrap;">@ViewBag.DescripcionFiltro:</u></label>
+                            </div>
+
+                            <div class="col-lg-7 col-xs-7 col-sm-7 col-md-7">
+                                <div class="container-fluid sin-padding">
+                                    <div class="col-lg-12 col-xs-12 col-sm-12 col-md-12 sin-padding">
+                                        @Html.DropDownList("IdFiltroParcela", (SelectList)ViewBag.FiltroParcela, "", new { @class = "form-control sin-padding centrado", @name = "IdFiltroParcela" })
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        
+                    </div>
+                <img style="cursor: pointer;margin-right: 10px" title="Continuar" id="btnSeleccion" class="pull-right" src="~/Content/images/Valuacion/icons/blue/32/checkbox.png">
+                    <div class="row " style="height:3.5em;"></div>
+                    
+                    @*<div id="accordion">
+                        <div class="panel-group panel-primary">
+                            <div class="panel-heading panel-activado" style="height:40px;">
+                                <div class="col-lg-11 col-xs-11 col-sm-11 col-md-11 ">
+                                    Seleccionar Tipo de Valuación
+                                </div>
+                                <div class="col-lg-1 col-xs-1 col-sm-1 col-md-1 text-right ">
+                                    <span id="Flecha_Tipo_Valuacion" class="glyphicon glyphicon-triangle-bottom flecha-activada" style="cursor:pointer;"></span>
+
+                                </div>
+                            </div>
+                            <div id="accordion_panel_0" class="panel-collapse collapse in " aria-expanded="true" style="border: solid; border-width: 1px; border-color: #a5a5a5; color: #000000">
+                                <div class="panel-body" style="padding: 5px 0 5px 0; ">
+                                    <div class="form-group">
+                                        <div class="panel-body escala_fuente_11 col-lg-12 col-xs-12 col-sm-12 col-md-12" id="superficie" style="cursor:pointer;">
+                                            Superficie
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <div class="panel-body borde-superior escala_fuente_11 col-lg-12 col-xs-12 col-sm-12 col-md-12" id="modulo" style="cursor:pointer;">
+                                            Módulo
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>*@
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Advertencia-->
+<div class="modal fade" id="ModalAdvertencia" tabindex="-2" role="dialog" aria-labelledby="TituloAdvertencia" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header centrado">
+                <h4 class="modal-title col-lg-11 col-xs-11 col-sm-11 col-md-11" id="TituloAdvertencia">@ViewBag.Title</h4>
+                <br />
+            </div>
+            <div class="modal-body">
+                <div id="MensajeAlerta" class="alert alert-warning alert-dismissible" role="alert">
+                    <strong>Atención!</strong><br />
+                    <p id="DescripcionAdvertencia">Confirma que desea valuar bajo el método "elegido" ?</p>
+                </div>
+            </div>
+            <div class="modal-footer" id="Panel_Botones">
+                <img title="Confirmar" id="btnConfirmar" src="~/Content/images/Valuacion/icons/blue/32/checkbox.png" style="cursor: pointer; margin-right: 10px;">
+                <img id="btnCerrarAdvertencia" title="Cerrar" src="~/Content/images/Valuacion/icons/blue/32/cancelar.png" style="cursor:pointer;">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+}
+
+    <script src="~/Scripts/jquery.dataTables.js"></script>
+    <script src="~/Scripts/formValidation.min.js"></script>
+    <script src="~/Scripts/bootstrapValidation.min.js"></script>
+    <script src="~/Scripts/select2.js"></script>
+    <script src="~/Scripts/jquery.form.js"></script>
+    <script>
+
+
+    $(document).ready(function () {
+
+        $('#myModal').modal('show');
+        //$("#myModal").draggable();
+
+        //$("#Flecha_Tipo_Valuacion").click(function () {
+
+        //    if ($("#accordion_panel_0").hasClass("in") == false) {
+        //        $("#accordion_panel_0").addClass("in");
+        //        $("#Flecha_Tipo_Valuacion").addClass("glyphicon-triangle-bottom");
+        //        $("#Flecha_Tipo_Valuacion").removeClass("glyphicon-triangle-top");
+
+        //    } else {
+        //        $("#accordion_panel_0").removeClass("in");
+        //        $("#Flecha_Tipo_Valuacion").removeClass("glyphicon-triangle-bottom");
+        //        $("#Flecha_Tipo_Valuacion").addClass("glyphicon-triangle-top");
+        //    }
+
+        //});
+        $("#btnSeleccion").click(function () {
+            if ($('#IdFiltroParcela').val() == '') {
+                var msj = "Debe seleccionar un valor de @ViewBag.DescripcionFiltro.";
+                $('#DescripcionAdvertencia').html(msj)
+                $('#btnConfirmar').css("display", "none")
+                $('#ModalAdvertencia').modal('show')
+            } else {
+                $('#myModal').modal('hide');
+                var msj = "Cargara los Valores Basicos de Tierra para la @ViewBag.DescripcionFiltro \"" + $("#IdFiltroParcela option:selected").html() + "\"?";
+                $('#DescripcionAdvertencia').html(msj)
+                $('#btnConfirmar').css("display", "")
+                $('#ModalAdvertencia').modal('show');
+                $("#btnConfirmar").click(function () {
+                    $("#form").attr("Action", "@Url.Action("MetadatoFiltroTierra", "Valuacion")");
+                    $("#form").submit();
+                });
+            }
+        });
+
+
+        @*$("#modulo").click(function () {
+                if ($('#Parcela_Tipo_Parcela').val() == '') {
+                    var msj = "Debe seleccionar una zona.";
+                    $('#DescripcionAdvertencia').html(msj)
+                    $('#btnConfirmar').css("display", "none")
+                    $('#ModalAdvertencia').modal('show')
+                } else {
+                    $('#myModal').modal('hide');
+                    var msj = "Confirma que desea valuar Zona " + $("#Parcela_Tipo_Parcela option:selected").html() + " bajo el método Módulo ?";
+                    $('#DescripcionAdvertencia').html(msj)
+                    $('#btnConfirmar').css("display", "")
+                    $('#ModalAdvertencia').modal('show');
+                    $("#btnConfirmar").click(function () {
+                        $("#form").attr("Action", "@Url.Action("TierraPorModulo", "Valuacion")");
+                        $("#form").submit();
+                    });
+                }
+            });
+
+            $("#superficie").click(function () {
+                if ($('#Parcela_Tipo_Parcela').val() == '') {
+                    var msj = "Debe seleccionar una zona.";
+                    $('#DescripcionAdvertencia').html(msj)
+                    $('#btnConfirmar').css("display", "none")
+                    $('#ModalAdvertencia').modal('show')
+                } else {
+                    $('#myModal').modal('hide');
+                    var msj = "Confirma que desea valuar Zona " + $("#Parcela_Tipo_Parcela option:selected").html() + " bajo el método  Superficie ?";
+                    $('#DescripcionAdvertencia').html(msj)
+                    $('#btnConfirmar').css("display", "")
+                    $('#ModalAdvertencia').modal('show');
+                    //$('#ModalAdvertencia').draggable();
+                    $("#btnConfirmar").click(function () {
+
+                        //$("#TipoZona").val($("#TipoZonaElegida").val());
+                        $("#form").attr("Action", "@Url.Action("TierraPorSuperficie", "Valuacion")");
+                        $("#form").submit();
+                    });
+                }
+            });*@
+
+        $("#btnCerrarAdvertencia").click(function () {
+            $('#myModal').modal('show');
+            $('#ModalAdvertencia').modal('hide');
+        });
+
+        $("#btnCerrar").click(function () {
+            $("#myModal").modal('hide');
+            //window.location.href = "@Url.Action("ABMPadronTemporal", "Valuacion")"
+            loadView(BASE_URL + "Valuacion/ABMPadronTemporal")
+            });
+        $("#form").ajaxForm({
+            beforeSubmit: function (arr, $form, options) {
+                showLoading();
+                $("#myModal").modal('hide');
+                return true; //it will continue your submission.
+            },
+                success: function (data) {
+                    //levantar modal
+
+                    $("#contenido").empty();
+                    $("#contenido").html(data);
+
+                },
+                error: function () {
+                    alert("error");
+                }
+            });
+
+            hideLoading();
+
+            $("#form").submit(function (evt) {
+                /*evita el doble submit*/
+                evt.preventDefault();
+                evt.stopImmediatePropagation();
+                return false;
+            });
+        });
+
+    </script>

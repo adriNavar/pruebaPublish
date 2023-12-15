@@ -1,0 +1,17 @@
+﻿<div class='srow manzanas'>
+    <div class="controls fa pull-right">
+        <span class="opcion fa-map-marker tooltips" data-placement="bottom" title="Ver en mapa" ng-click="verEnMapa($event,manzana,true)"></span>
+        <span class="opcion fa-hand-pointer-o tooltips" data-placement="bottom" title="Seleccionar" ng-click="verEnMapa($event,manzana,false)"></span>
+        <span class="opcion fa-file-excel-o tooltips" data-placement="bottom" title="Exportar a Excel" ng-click="exportarObjetoExcel($event)"></span>
+    </div>
+    <div class="roundChkBox manzanas">
+        <input type="checkbox" data-name="{{manzana.id}}" data-componente="manzanas" data-componente-ploteable="true" id="{{chkboxid}}" ng-click="selectedChanged()" ng-model="manzana.selected" />
+        <label for="{{chkboxid}}"></label>
+    </div>
+    <div ng-click="showAtributos()">
+        <p class='text-primary'>
+            <span data-ng-bind-html="manzana.nombre | highlight:pattern:true"></span>
+        </p>
+        <p><span data-ng-bind-html="manzana.descripcion | highlight:pattern:true"></span></p>
+    </div>
+</div>

@@ -1,0 +1,18 @@
+/* CSS Document */
+
+.texto-condiciones { font-size: 11px; }
+
+.login-wrap .btn-block {
+  background: #1c84f9;
+  color: #fff;
+  font-weight: bold;
+}
+
+.login-wrap .btn-block:hover {
+  background: #004889!important;
+  color: #fff;
+  font-weight: bold;
+}
+
+
+	

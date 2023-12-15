@@ -1,0 +1,47 @@
+﻿@model GeoSit.Client.Web.Models.ValuacionModel
+@{
+    ViewBag.Title = "  de la Tierra";
+    ViewBag.Description = "";
+}
+
+
+@section styles
+{
+    <link href="../Content/valuacion.css" rel="stylesheet" />
+    <link href="../Content/dataTables.bootstrap.css" rel="stylesheet" />
+    <link href="../Content/formValidation.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/select2-bootstrap.css">
+}
+
+@using (Html.BeginForm("GetIndexView", "Valuacion", new { }, FormMethod.Post, new { id = "formVolver", role = "form", novalidate = "" }))
+{ @Html.AntiForgeryToken()
+
+    <div class="modal fade" id="myModal" tabindex="-100" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header centrado">
+                    <h4 class="modal-title col-lg-11 col-xs-11 col-sm-11 col-md-11" id="myModalLabel" >@ViewBag.Title</h4>
+                    <img id="btnCerrar" title="Cerrar" src="../Content/images/Valuacion/icons/blue/32/cerrar.png" style="cursor:pointer;">
+
+                </div>
+                <div class="modal-body">
+
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section scripts
+{
+    <script src="../Scripts/jquery.dataTables.js"></script>
+    <script src="../Scripts/formValidation.min.js"></script>
+    <script src="../Scripts/bootstrapValidation.min.js"></script>
+    <script src="../Scripts/select2.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#myModal').modal('show')
+        })
+    </script>
+}

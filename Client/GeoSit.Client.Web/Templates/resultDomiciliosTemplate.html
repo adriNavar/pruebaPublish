@@ -1,0 +1,12 @@
+﻿<div class='srow domicilios'>
+    <div class="controls">
+        <span class="glyphicon glyphicon-home pull-right tooltips" data-placement="bottom" title="Ver Domicilio" data-ng-click="abrir('Domicilio/DatosDomicilio/', domicilio.id)" data-ng-show="allowDomicilio"></span>
+    </div>
+    <div class="rcheck domicilios">
+        <input title="Seleccionar" type="checkbox" class="rcheck" />
+    </div>
+    <p class='text-primary'>
+        <span data-ng-bind-html="domicilio.nombre | highlight:pattern:true"></span>
+    </p>
+    <p>Descripci&oacute;n:&nbsp;<span data-ng-bind-html="domicilio.descripcion | highlight:pattern:true"></span></p>
+</div>

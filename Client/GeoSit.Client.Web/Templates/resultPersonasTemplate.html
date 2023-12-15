@@ -1,0 +1,16 @@
+﻿<div class='srow personas'>
+    <div class="controls fa pull-right">
+        <span class="opcion fa-file-pdf-o tooltips" data-placement="bottom" title="Informe de Persona" ng-click="generarReportePersona()" data-ng-show="allowReportePersona"></span>
+        <span class="opcion fa-file-pdf-o tooltips" data-placement="bottom" title="Informe de Bienes Registrados" ng-click="generarReporteBienesRegistrados()" data-ng-show="allowReporteBienesRegistrados"></span>
+        <span class="opcion fa-user tooltips" data-placement="bottom" title="Ver Persona" data-ng-click="abrir('Persona/LoadDatosPersona/', persona.id)" data-ng-show="allowPersona"></span>
+    </div>
+    <div class="roundChkBox personas">
+        <input type="checkbox" data-name="{{persona.id}}" data-componente="personas" id="{{chkboxid}}" ng-click="selectedChanged()" ng-model="persona.selected" />
+        <label for="{{chkboxid}}"></label>
+    </div>
+    <p class='text-primary'>
+        <span data-ng-bind-html="persona.nombre | highlight:pattern:true"></span>
+    </p>
+    <p>Tipo de Persona:&nbsp;<span data-ng-bind-html="persona.descripcion | highlight:pattern:true"></span></p>
+    <p>Nro de Documento:&nbsp;<span data-ng-bind-html="persona.dato_dni | highlight:pattern:true"></span></p>
+</div>

@@ -1,0 +1,58 @@
+﻿.edicionTramite-panel {
+    box-shadow: none;
+    height: calc(100% - 60px);
+}
+
+.tabDatos {
+    margin: 0 !important;
+}
+
+#mesaEntradas-content {
+    height: 100%;
+}
+
+    #mesaEntradas-content > .panel-group {
+        height: 100%;
+        padding: 0 15px;
+    }
+
+#pnlEdicionTramite {
+    height: 100%;
+}
+
+    #pnlEdicionTramite > .tab-content {
+        height: calc(100% - 40px);
+    }
+
+#modal-edicionTramite .dropup > button > span.caret {
+    margin-left: 15px;
+}
+
+#divTabContent .tab-body {
+    padding: 0 15px;
+    max-height: 100%;
+    overflow: hidden;
+}
+
+    #divTabContent .tab-body > * {
+        margin-top: 15px;
+    }
+
+#divTabContent .tab-pane {
+    height: 100%;
+}
+
+#divDatosGenerales .form-control-feedback {
+    top: 0;
+    left: -15px;
+}
+
+.disabled {
+    cursor: not-allowed !important;
+    color: #808080 !important;
+}
+
+.jstree-clicked {
+    background-color: #0094ff !important;
+    color: #fff;
+}

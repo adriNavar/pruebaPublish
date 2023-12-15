@@ -1,0 +1,21 @@
+﻿@model List<ListadoDeTareas>
+@using GeoSit.Data.BusinessEntities.Seguridad
+<div id="reportFileName" class="hidden">RankingGeneralTareas</div>
+<table id="Resultados" class="table table-bordered table-striped table-responsive">
+    <thead>
+        <tr>
+            <th>Función</th>
+            <th data-order="desc">Cantidad de Uso</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (ListadoDeTareas row in Model)
+        {
+            <tr>
+                <td>@Html.Raw(row.Nombre)</td>
+                <td>@row.Cantidad</td>
+            </tr>
+        }
+    </tbody>
+</table>
+

@@ -1,0 +1,49 @@
+﻿@model GeoSit.Client.Web.Models.UsuariosModel
+@using CaptchaMvc.HtmlHelpers
+@using CaptchaMvc.Models
+@{
+    //ViewBag.Title = "¿No puedes acceder a tu cuenta?";
+    //ViewBag.Description = "";
+}
+
+
+    <link href="~/Content/jquery-ui.css" rel="stylesheet" />
+    <link href="~/Content/Seguridad.css" rel="stylesheet"/>
+    <script></script>
+    <style>
+        body {
+            background: url('~/../../Content/images/MapasTematicos/background.jpg') center center no-repeat;
+        }
+    </style>
+
+
+<div class="modal fade" id="myModal" tabindex="-100" role="dialog"  aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header centrado" style="height:50px">
+                <h4 class="modal-title col-lg-11 col-xs-11 col-sm-11 col-md-11" id="myModalLabel">@ViewBag.Title</h4>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-success" role="alert">@ViewBag.Description</div>
+            </div>
+            <div class="modal-footer">
+                <img id="btnCerrar" class="" title="Aceptar" src="~/Content/images/Seguridad/icons/blue/32/checkbox.png" style="cursor:pointer;">
+            </div>
+        </div>
+    </div>
+</div>
+
+    <script type="text/javascript" src="~/Scripts/Negocio/app.js"></script>
+    <script>
+        $(document).ready(function() {
+            hideLoading();
+            $('#myModal').modal('show');
+
+            $("#btnCerrar").click(function () {
+                $("#myModal").modal('hide');
+                window.location.href = "@ViewBag.ReturnUrl";
+            });
+            hideLoading();
+        });
+    </script>

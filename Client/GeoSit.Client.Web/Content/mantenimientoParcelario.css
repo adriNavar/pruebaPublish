@@ -1,0 +1,198 @@
+﻿.body-header h2 {
+    margin: 10px 0;
+    text-align: center;
+}
+
+.body-header h3 {
+    margin-top: 0;
+    text-align: center;
+}
+
+    .body-header h3:only-child {
+        margin-top: 10px;
+    }
+
+.mantenedor-body > .body-content {
+    padding-top: 0;
+    padding-bottom: 0;
+}
+
+.mantenedor-body .panel-unidades-tributarias {
+    margin: 7px 7px 0;
+}
+
+.mantenedor-body .nav-tabs {
+    margin: 7px;
+}
+
+    .mantenedor-body .nav-tabs > li > a {
+        color: #333;
+        cursor: pointer;
+        border: 0;
+    }
+
+        .mantenedor-body .nav-tabs > li > a:hover {
+            cursor: pointer;
+        }
+
+    .mantenedor-body .nav-tabs > li.active > a {
+        color: #e3e3e3;
+        background-color: #4a4f54;
+    }
+
+.mantenedor-body .tab-content > .tab-pane > .panel-group {
+    margin: 0 !important;
+}
+
+.mantenedor-body .tab-content {
+    margin: 0 7px 7px;
+}
+
+    .mantenedor-body .tab-content .panel-default {
+        color: #000;
+        margin: 3px 0;
+    }
+
+        .mantenedor-body .tab-content .panel-default > .panel-title {
+            color: #000;
+            padding: 3px;
+            background-color: #c3c3c3;
+            border-top-left-radius: 7px !important;
+            border-top-right-radius: 7px !important;
+            font-size: 16px;
+        }
+
+    .mantenedor-body .tab-content .panel-group > .panel > .panel-body > div {
+        padding: 5px 5px 0;
+    }
+
+        .mantenedor-body .tab-content .panel-group > .panel > .panel-body > div:last-of-type {
+            padding-bottom: 15px;
+        }
+
+.mantenedor-body #parcela-superficies h4 {
+    margin: 0;
+}
+
+.mantenedor-body .tabla-con-botones,
+.mantenedor-body .tabla-sin-botones {
+    display: flex;
+    padding: 0;
+    margin-bottom: 0;
+}
+
+.mantenedor-body #parcela-superficies .tabla-sin-botones {
+    min-height: 0 !important;
+}
+
+.mantenedor-body .tabla-con-botones dl {
+    margin-left: 10px;
+    position: relative;
+    right: 0;
+}
+
+    .mantenedor-body .tabla-con-botones dl:not(.editing) span[data-editable] {
+        display: none;
+    }
+
+.mantenedor-body .tabla-sin-botones dl span[data-editable] {
+    display: none;
+}
+
+.mantenedor-body .form-horizontal > div:not(:last-of-type) {
+    margin-bottom: 5px;
+}
+
+.mantenedor-body textarea.form-control {
+    height: auto;
+}
+
+.custom-toggle {
+    width: 0;
+}
+
+    .custom-toggle > a[data-checked].disabled {
+        pointer-events: none;
+    }
+
+    .custom-toggle > a[data-checked] {
+        display: block;
+        width: auto;
+        cursor: pointer;
+    }
+
+        .custom-toggle > a[data-checked] i.fa {
+            color: rgb(75,175,255);
+            cursor: pointer !important;
+            font-size: 2em;
+            margin: 6px 0;
+        }
+
+            .custom-toggle > a[data-checked] i.fa:after {
+                content: '\f205';
+            }
+
+    .custom-toggle > a[data-checked="0"] i.fa {
+        color: rgba(127,127,127,.75);
+    }
+
+        .custom-toggle > a[data-checked="0"] i.fa:after {
+            content: '\f204';
+        }
+
+span.subtitle {
+    text-align: center;
+    font-style: italic;
+    width: 100%;
+    border-bottom: 1px solid;
+    display: block;
+}
+
+.mantenedor-body tbody > tr {
+    cursor: pointer;
+}
+
+.mantenedor-body #parcela-superficies table {
+    margin: 0;
+}
+
+    .mantenedor-body #parcela-superficies table tr {
+        cursor: default !important;
+    }
+
+    .mantenedor-body #parcela-superficies table td {
+        background: #ffffff !important;
+        border: none;
+        padding: 3px 8px;
+    }
+
+        .mantenedor-body #parcela-superficies table td.number {
+            text-align: right !important;
+        }
+
+.mantenedor-body #parcela-superficies .tabla-sin-botones {
+    min-height: 0 !important;
+}
+
+.mantenedor-body table.totalizador {
+    border-top: 1px solid;
+}
+
+    .mantenedor-body table.totalizador td {
+        color: #000000;
+        font-weight: 900;
+    }
+
+.mantenedor-body tbody > tr > td.dataTables_empty {
+    cursor: default;
+    text-align: center;
+}
+
+.mantenedor-body #tablaVIR > tbody > tr {
+    background-color: #fff;
+}
+
+.mantenedor-body #tablaVIR > tbody > tr.valuacion-vir-vigente {
+    font-weight: bolder !important;
+    background-color: whitesmoke !important;
+}

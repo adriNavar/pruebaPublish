@@ -1,0 +1,118 @@
+﻿@model GeoSit.Client.Web.Models.AnalisisPredefinido.SearchViewModel
+<div id="pnlCargas" class="panel-body detalle-body">
+    <div class="panel-group accordion grupos-analisispredefinidos" id="accordionCargas">
+        <div class="section-position-predefinido">
+            <div id="titleCargaDdeSistema" class='panel panel-primary panel-heading bg-primary'>
+                <a data-toggle="collapse"
+                   data-parent="#accordionCargas"
+                   href="#collapseIdCargaSistema"
+                   aria-expanded='false'
+                   aria-controls='#collapseIdCargaSistema'
+                   class="collapsed">
+                    <div class='panel-title'>
+                        Carga desde el Sistema
+                        <i class="fa"></i>
+                    </div>
+                </a>
+            </div>
+            <div id="collapseIdCargaSistema" class="panel-collapse collapse in">
+                <div class="panel-body detalle-body">
+                    <div class="form-group row">
+                        <label class="control-label col-xs-3">
+                            Distrito :
+                        </label>
+                        <div class="col-xs-9">
+                            <select class="form-control select2" id="cboCargasDistritos">
+                                @*Si tiene un solo componente*@
+                                <option value="0">Seleccione Distrito</option>
+                                @if (ViewBag.Colecciones.Count == 1)
+                            {
+                                    <option value="@ViewBag.Colecciones[0].Id_Distrito">@ViewBag.Colecciones[0].Nombre</option>
+                            }
+                            else
+                            {
+                                foreach (var coleccion in ViewBag.Colecciones)
+                                {
+                                    <option value="@coleccion.Id_Distrito">@coleccion.Nombre</option>
+                                }
+                            }
+                            </select>
+                        </div>
+                    </div>
+                    <div id="divFechas">
+                        <div class="form-group row">
+                            <label class="control-label col-xs-3">
+                                Desde :
+                            </label>
+                            <div class="col-xs-9">
+                                <div class="input-group date">
+                                    @Html.TextBoxFor(model => model.FechaDesde, new { @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="control-label col-xs-3">
+                                Hasta :
+                            </label>
+                            <div class="col-xs-9">
+                                <div class="input-group date">
+                                    @Html.TextBoxFor(model => model.FechaHasta, new { @class = "form-control" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="section-position-predefinido">
+            <div id="titleCargaDdeArchivoUsuario" class='panel panel-primary panel-heading bg-primary'>
+                <a data-toggle="collapse" data-parent="#accordionCargas" href="#collapseIdCargaDdeArchivo" aria-expanded='false'
+                   aria-controls='#collapseIdCargaDdeArchivo' class="collapsed">
+                    <div class='panel-title'>
+                        Carga desde Archivo
+                        <i class="fa"></i>
+                    </div>
+                </a>
+            </div>
+            <div id="collapseIdCargaDdeArchivo" class="panel-collapse collapse">
+                <div class="panel-body detalle-body">
+                    <div class="form-group row">
+                        <div class="col-xs-12">
+                            <input class="form-control file" id="listCargaTecnica" accept=".csv, .txt" type="file">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="section-position-predefinido">
+            <div id="tituloUltimaCarga" class='panel panel-primary' style="background-color:#1698C0">
+                <a>
+                    <div class='panel-title'>
+                        Última Carga
+                    </div>
+                </a>
+            </div>
+            <div id="collapseIdUltimaCarga">
+                <div class="panel-body  detalle-body">
+                    <div class="form-group row">
+                        <label id="lblUltDistritoCarga" class="control-label col-xs-9">
+                            @*Distrito : La Matanza*@
+                            No posee última carga.
+                        </label>
+                    </div>
+                    <div class="form-group row">
+                        <label id="lblUltConsultaCarga" class="control-label col-xs-9">
+                            @*Consulta: 24/04/2014 al 26/04/2014*@
+                        </label>
+                    </div>
+                    <div class="form-group row">
+                        <label id="lblUltFechaCarga" class="control-label col-xs-9">
+                            @*Fecha de carga: 30/05/2014*@
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

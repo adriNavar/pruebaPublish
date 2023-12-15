@@ -1,0 +1,577 @@
+﻿@model IEnumerable<GeoSit.Client.Web.Models.HorariosModel>
+@using GeoSit.Client.Web.Controllers;
+
+<link href="~/Content/bootstrap-datetimepicker.css" rel="stylesheet" />
+<link href="~/Content/dataTables.bootstrap.css" rel="stylesheet" />
+<link href="~/Scripts/jstree/dist/themes/default/style.css" rel="stylesheet" />
+<link href="~/Content/seguridad_new.css" rel="stylesheet" />
+<link href="~/Content/horarios.css" rel="stylesheet" />
+
+@*Modal Contenido*@
+<div class="modal fade theme_new seguridad" id="myModalHorarios" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id="scroll-content-horario" class="scroll-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">@Resources.Recursos.TituloHorarios</h3>
+                    <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+                </div>
+                <div class="modal-body abm-horarios-body">
+                    <div id="abm-horarios-content" class="body-content">
+                        <div class="panel-group remove-margin">
+                            <div class='panel-body'>
+                                <div class="form-group clearfix remove-margin">
+                                    <div class="col-xs-12 remove-padding">
+                                        <div class="tabla-con-botones" id="maingrid">
+                                            <table id="Grilla_Horarios" class="table table-striped table-condensed table-bordered table-responsive"></table>
+                                            <dl>
+                                                @if (SeguridadController.ExisteFuncion(@Resources.Seguridad.AltaHorario))
+                                                {
+                                                    <dt><span data-edita="nuevo" id="btnAgregar" class="fa fa-plus-circle fa-2x"></span></dt>
+                                                }
+                                                @if (SeguridadController.ExisteFuncion(@Resources.Seguridad.EliminarHorario))
+                                                {
+                                                    <dt><span id="btnEliminar" class="fa fa-minus-circle fa-2x disabled"></span></dt>
+                                                }
+                                                @if (SeguridadController.ExisteFuncion(@Resources.Seguridad.ModificarHorarios))
+                                                {
+                                                    <dt><span data-edita="existente" id="btnEditar" class="fa fa-pencil fa-2x disabled"></span></dt>
+                                                }
+                                            </dl>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-group accordion" id="accordion-abm-horarios" style="margin-bottom:0;">
+                            <div class="accordion-section">
+                                <div class='panel-heading bg-primary main-heading panel-deshabilitado' role='region' id='headingAsignacion'>
+                                    <a data-toggle='collapse' data-parent='#accordion-abm-horarios' href='#collapseAsignacion' aria-expanded='false'
+                                       aria-controls='collapseAsignacion' class="collapsed">
+                                        <div class='panel-title'>
+                                            Asignaci&oacute;n
+                                            <i class="fa"></i>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div id='collapseAsignacion' class='panel-collapse collapse main-collapse' aria-expanded='false' aria-labelledby='headingAsignacion'>
+                                    <div class="panel-body">
+                                        <div id="">
+                                            @using (Ajax.BeginForm("GuardarHorario", "Seguridad", new { }, new AjaxOptions { }, new { id = "Horarioform", role = "form" }))
+                                            {
+                                                <div class="col-xs-12 remove-padding" style="margin:10px 0">
+                                                    <input type="hidden" id="idHorario" name="Id_Horario" />
+                                                    <div class="form-group" style="margin:5px 0 0;">
+                                                        <label class="col-xs-3 text-right" style="padding-top:7px">
+                                                            Nombre
+                                                        </label>
+                                                        <div class="col-xs-7">
+                                                            <input type="text" name="Descripcion" class="form-control" readonly="readonly" style="width:100%" id="Nombre"/>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-12 remove-padding" style="display:block;">
+                                                    <div class="tabla-con-botones" id="detallegrid" style="padding-bottom:0;">
+                                                        <table id="Grilla_Detalle_Horarios" class="table table-striped table-condensed table-bordered table-responsive"></table>
+                                                        <dl class="hidden">
+                                                            @if (SeguridadController.ExisteFuncion(@Resources.Seguridad.AltaHorario) || SeguridadController.ExisteFuncion(@Resources.Seguridad.EliminarHorario))
+                                                            {
+                                                                <dt><span data-edita="nuevo" id="btnAgregarDetalle" class="fa fa-plus-circle fa-2x"></span></dt>
+                                                                <dt><span id="btnEliminarDetalle" class="fa fa-minus-circle fa-2x disabled"></span></dt>
+                                                                <dt><span data-edita="existente" id="btnEditarDetalle" class="fa fa-pencil fa-2x disabled"></span></dt>
+                                                            }
+                                                        </dl>
+                                                    </div>
+                                                </div>
+                                            }
+                                        </div>
+                                        <div id="edicion-horario" class="col-xs-12 remove-padding" style="display:none;margin-top:10px;">
+                                            <div class="form-horizontal">
+                                                <div class="form-group remove-margin">
+                                                    <input type="hidden" id="idDetalle" name="Id_Horario_Detalle" />
+                                                    <label class="control-label col-md-2 text-right">D&iacute;a</label>
+                                                    <div class="col-md-9 remove-padding">
+                                                        <div class="btn-group" role="group" aria-label="...">
+                                                            <button type="button" class="btn btn-default dia" value="DO"><span style="color:red">Dom</span></button>
+                                                            <button type="button" class="btn btn-default dia" value="LU"><span style="color:green">Lun</span></button>
+                                                            <button type="button" class="btn btn-default dia" value="MA"><span style="color:green">Mar</span></button>
+                                                            <button type="button" class="btn btn-default dia" value="MI"><span style="color:green">Mie</span></button>
+                                                            <button type="button" class="btn btn-default dia" value="JU"><span style="color:green">Jue</span></button>
+                                                            <button type="button" class="btn btn-default dia" value="VI"><span style="color:green">Vie</span></button>
+                                                            <button type="button" class="btn btn-default dia" value="SA"><span style="color:red">Sab</span></button>
+                                                            <button type="button" class="btn btn-default dia" value="FE" onclick="botonferiado()"><span style="color:blue">Fer</span></button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group remove-margin" style="margin-top:10px;">
+                                                    <label class="control-label col-md-2 text-right">Horario</label>
+                                                    <div class="col-md-9 remove-padding">
+                                                        <div class="panel" style="box-shadow:none;">
+                                                            <div class="panel-body" style="background-color: #fff!important;border:solid 1px #ccc;border-radius:4px;">
+                                                                <div class="col-md-6 text-center">
+                                                                    <h5>Desde</h5>
+                                                                    <div id="horaDesde"></div>
+                                                                </div>
+                                                                <div class="col-md-6 text-center">
+                                                                    <h5>Hasta</h5>
+                                                                    <div id="horaHasta"></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <dl>
+                                                        <dt><span id="btnAplicar" aria-hidden="true" data-placement="right" title="Aplicar" class="fa fa-check-circle fa-2x"></span></dt>
+                                                        <dt><span id="btnDeshacer" aria-hidden="true" data-placement="right" title="Deshacer" class="fa fa-times-circle fa-2x"></span></dt>
+                                                    </dl>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-lg-4 pull-right">
+                        <span id="btnGuardar" aria-hidden="true" data-placement="right" title="Guardar" class="fa fa-floppy-o fa-2x black cursor-pointer disabled"></span>
+                        <span id="btnCancelar" aria-hidden="true" data-placement="right" title="Cancelar" class="fa fa-undo fa-2x black cursor-pointer disabled"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Advertencia-->
+<div class="modal fade theme_new mensaje" id="ModalInfoHorario" tabindex="-2" role="dialog" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="TituloInfoHorario">Titulo Modal</h3>
+                <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+            </div>
+            <div class="modal-body" style="word-wrap:break-word;">
+                <div class="alert alert-dismissible" role="alert">
+                    <p id="DescripcionInfoHorario">Mensaje</p>
+                </div>
+            </div>
+            <div class="modal-footer" style="display:none;">
+                <div class="col-lg-2 pull-right">
+                    <span id="btnInfoOk" aria-hidden="true" data-dismiss="modal" data-placement="right" title="Aceptar" data-original-title="Aceptar" class="fa fa-check-circle fa-3x light-blue cursor-pointer"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/jquery.dataTables.min.js"></script>
+<script src="~/Scripts/dataTables.bootstrap.js"></script>
+<script src="~/Scripts/bootstrap-datetimepicker.js" type="text/javascript"></script>
+<script src="~/Scripts/jquery.form.js"></script>
+
+<script>
+    var duplicado = 0, nextId = 0;
+    $(window).resize(ajustamodal);
+    $(document).ready(function () {
+        $("#abm-horarios-content").niceScroll({
+            styler: "fb",
+            cursorcolor: "rgba(0,0,0,0.5)",
+            cursorwidth: '8',
+            autohidemode: false,
+            cursorborderradius: '10px',
+            background: '',
+            spacebarenabled: false,
+            cursorborder: '',
+            horizrailenabled: false,
+            railpadding: { top: 0, right: 0, left: 0, bottom: 0 }
+        });
+        $('#scroll-content-horario .panel-body').resize(ajustarScrollBarsHorarios);
+        $('#abm-horarios-content .panel-heading a').click(function () {
+            setTimeout(ajustarScrollBarsHorarios, 10);
+        });
+        $('#horaDesde').datetimepicker({
+            inline: true,
+            sideBySide: true,
+            format: 'LT',
+            useCurrent: false
+        });
+
+        $('#horaHasta').datetimepicker({
+            inline: true,
+            sideBySide: true,
+            format: 'LT',
+            useCurrent: false
+        });
+        cargarHorarios();
+        $("dl [data-edita]", "#maingrid").on("click", function () {
+            iniciarEdicion($(this).data("edita"));
+        });
+        $("#btnEliminar", "#maingrid").on("click", function () {
+            mostrarMensajeGeneral(["Está a punto de ELIMINAR el horario.", "¿Desea continuar?"], 'Advertencia', true);
+            $("#btnInfoOk").one("click", borrarHorario);
+        });
+        $("dl [data-edita]", "#detallegrid").on("click", function () {
+            iniciarEdicionDetalle($(this).data("edita"));
+        });
+        $("#btnEliminarDetalle", "#detallegrid").on("click", function () {
+            mostrarMensajeGeneral(["Está a punto de ELIMINAR la asignación.", "¿Desea continuar?"], "Advertencia");
+            $("#btnInfoOk").one("click", borrarAsignacion);
+        });
+        $("#btnCancelar").on("click", function () {
+            mostrarMensajeGeneral(["Está a punto de DESCARTAR los cambios.", "¿Desea continuar?"], "Advertencia");
+            $("#btnInfoOk").one("click", finalizarEdicion);
+        });
+        $("#btnGuardar").on("click", function () {
+            $("#Horarioform").submit();
+        });
+        $('#btnAplicar').click(botonvalidar);
+        $('#btnDeshacer').click(finalizarEdicionDetalle);
+        $("button.dia").click(function () {
+            $("button.dia").removeClass("active");
+            $(this).toggleClass("active");
+        });
+
+        $("#Horarioform").ajaxForm({
+            beforeSubmit: function () {
+                //showLoading();
+                //return true;
+                var errores = [];
+                if (!$("#Nombre").val()) {
+                    errores.push("Debe cargar un Nombre al horario.");
+                }
+                if (errores.length) {
+                    mostrarMensajeError(errores, "Validación");
+                }
+                 else {
+                    showLoading();
+                }
+                return !errores.length;
+            },
+            success: function () {
+                finalizarEdicion();
+                activarSeccion();
+                cargarHorarios();
+                hideLoading();
+                mostrarMensajeOk(["Los datos del perfil han sido guardados satisfactoriamente."], "Horario", true);
+            },
+            error: function (error) {
+                hideLoading();
+                mostrarMensajeError(["Ha ocurrido un error al guardar.", error.statusText], "Error al guardar", true);
+            }
+        });
+        $("#Horarioform").submit(function (evt) {
+            /*evita el doble submit*/
+            evt.preventDefault();
+            evt.stopImmediatePropagation();
+            return false;
+        });
+        ajustamodal();
+        $("#myModalHorarios").modal("show");
+        hideLoading();
+    });
+
+    function cargarHorarios() {
+        $.ajax({
+            url: '@Url.Action("GetHorariosJson", "Seguridad")',
+            dataType: 'json',
+            type: 'GET',
+            success: function (horarios) {
+                $("#Grilla_Horarios").DataTable({
+                    dom: "ftr<'row'<'col-sm-5'i><'col-sm-7'p>>",
+                    destroy: true,
+                    language: {
+                        url: BASE_URL + "Scripts/dataTables.spanish.txt"
+                    },
+                    order: [0, 'asc'],
+                    data: horarios,
+                    columns: [{ title: "Nombre", data: "Descripcion", orderable: true, visible: true }],
+                    createdRow: function (row, data) {
+                        $(row).data('id', data.Id_Horario);
+                        $(row).addClass('cursor-pointer');
+                    },
+                    initComplete: function (options) {
+                        $(options.nTBody).off("click", "tr");
+                        $(options.nTBody).on("click", "tr", function (e) {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            $(this).siblings().removeClass('selected');
+                            $(this).toggleClass('selected');
+                            activarSeccion($(this));
+                        });
+                    }
+                });
+            },
+            error: function (error) {
+                mostrarMensajeError([error.responseText], "Recuperar Horarios", true);
+            }
+        });
+    }
+    function activarSeccion(row, forzar) {
+        if (forzar || (row && row.hasClass('selected'))) {
+            $("#headingAsignacion").removeClass("panel-deshabilitado");
+            $("a[data-toggle]", "#headingAsignacion").removeClass("collapsed");
+            $("[aria-labelledby='headingAsignacion']").addClass("in").attr("aria-expanded", true);
+            $("dl .fa:not(:first)", "#maingrid").removeClass("disabled");
+            fillData(row);
+        } else {
+            $("#headingAsignacion").addClass("panel-deshabilitado");
+            $("a[data-toggle]", "#headingAsignacion").addClass("collapsed");
+            $("[aria-labelledby='headingAsignacion']").removeClass("in").attr("aria-expanded", true);
+            $("dl .fa:not(:first)", "#maingrid").addClass("disabled");
+        }
+    }
+    function toggleSeccionDetalle(reset) {
+        var row = $("#Grilla_Detalle_Horarios > tbody > tr.selected"),
+            visible = "Horarioform",
+            oculto = "edicion-horario";
+
+        if ($("#Horarioform").is(":visible") && !reset) {
+            var aux = oculto;
+            oculto = visible;
+            visible = aux;
+            fillEditData(row);
+        }
+        $("#" + oculto).hide();
+        $("#" + oculto).css("pointer-events", "none");
+        $("#" + visible).show();
+        $("#" + visible).css("pointer-events", "auto");
+        ajustarScrollBarsHorarios();
+    }
+    function iniciarEdicion(tipo) {
+        if (tipo === "nuevo") {
+            $("#Grilla_Horarios > tbody > tr").removeClass("selected");
+            activarSeccion(null, true);
+        }
+        $("table", "#maingrid").attr("disabled", "disabled");
+        $("#myModalHorarios form .form-control").removeAttr("readonly");
+        $("dl .fa", "#maingrid").addClass("disabled");
+        $("dl", "#detallegrid").removeClass("hidden");
+        $(".fa", ".modal-footer").removeClass("disabled");
+    }
+    function finalizarEdicion() {
+        finalizarEdicionDetalle();
+        activarSeccion($("#Grilla_Horarios > tbody > tr.selected"));
+        $("table", "#maingrid").removeAttr("disabled");
+        $("#myModalHorarios form .form-control").attr("readonly", "readonly");
+        if ($("#Grilla_Horarios > tbody > tr.selected").length === 1) {
+            $("dl .fa", "#maingrid").removeClass("disabled");
+        } else {
+            $("dl .fa:first", "#maingrid").removeClass("disabled");
+        }
+        $("#Grilla_Detalle_Horarios > tbody > tr").removeClass("selected");
+        $("dl .fa:not(:first)", "#detallegrid").addClass("disabled");
+        $("dl", "#detallegrid").addClass("hidden");
+        $(".fa", ".modal-footer").addClass("disabled");
+    }
+    function iniciarEdicionDetalle(tipo) {
+        if (tipo === "nuevo") {
+            $("#Grilla_Detalle_Horarios > tbody > tr").removeClass("selected");
+        }
+        toggleSeccionDetalle();
+    }
+    function finalizarEdicionDetalle() {
+        toggleSeccionDetalle(true);
+    }
+    function fillData(row) {
+        var form = '#Horarioform', id = '', descrip = '', fecha = '';
+        if (row) {
+            id = $(row).data('id');
+            descrip = $("td", row).html();
+            $.ajax({
+                url: '@Url.Action("GetHorariosDetalleJson", "Seguridad")',
+                data: { id: id },
+                dataType: 'json',
+                type: 'GET',
+                success: function (horarios) {
+                    initTablaDetalle(horarios);
+                },
+                error: function (error) {
+                    mostrarMensajeError([error.responseText], "Recuperar Días y Horas", true);
+                }
+            });
+        } else {
+            id = ($("tr", "#Grilla_Horarios tbody").length + 1) * -1;
+            initTablaDetalle([]);
+            ajustarScrollBarsHorarios();
+        }
+        $("#idHorario", form).val(id);
+        $("[name=Descripcion]", form).val(descrip);
+    }
+    function initTablaDetalle(horarios) {
+        $("#Grilla_Detalle_Horarios").DataTable({
+            dom: "tr",
+            destroy: true,
+            language: { url: BASE_URL + "Scripts/dataTables.spanish.txt" },
+            order: [0, 'asc'],
+            data: horarios,
+            columns: [{ title: "Día", data: "Dia", orderable: true, visible: true },
+            {
+                title: "Desde Hora", data: "Hora_Inicio", orderable: true, visible: true,
+                render: function (data, type) {
+                    var d = moment(parseJsonDate(data)).utcOffset("-0300");
+                    return (type === 'display' || type === 'filter') ? d.format("HH:mm") : d;
+                }
+            },{
+                title: "Hasta Hora", data: "Hora_Fin", orderable: true, visible: true,
+                render: function (data, type) {
+                    var d = moment(parseJsonDate(data)).utcOffset("-0300");
+                    return (type === 'display' || type === 'filter') ? d.format("HH:mm") : d;
+                }
+            }],
+            createdRow: function (row, data) {
+                $(row).addClass('cursor-pointer');
+                $(row).append("<input type='hidden' class='hid' value='" + data.Id_Horario_Detalle + "'>");
+                $(row).append("<input type='hidden' class='hdia' value='" + data.Dia + "'>");
+                $(row).append("<input type='hidden' class='hdesde' value='" + new Date(parseJsonDate(data.Hora_Inicio)).toJSON() + "'>");
+                $(row).append("<input type='hidden' class='hhasta' value='" + new Date(parseJsonDate(data.Hora_Fin)).toJSON() + "'>");
+            },
+            rowCallback: function (row, _,_, tableIdx) {
+                $(".hid", row).attr('name', 'HorariosDetalle[' + tableIdx + '].Id_Horario_Detalle');
+                $(".hdia", row).attr('name', 'HorariosDetalle[' + tableIdx + '].Dia');
+                $(".hdesde", row).attr('name', 'HorariosDetalle[' + tableIdx + '].Hora_Inicio');
+                $(".hhasta", row).attr('name', 'HorariosDetalle[' + tableIdx + '].Hora_Fin');
+            },
+            initComplete: function (options) {
+                ajustarScrollBarsHorarios();
+                $(options.nTBody).off("click", "tr");
+                $(options.nTBody).on("click", "tr", function (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    $(this).siblings().removeClass('selected');
+                    $(this).toggleClass('selected');
+                    if ($(this).hasClass('selected')) {
+                        $("dl .fa", "#detallegrid").removeClass("disabled");
+                    } else {
+                        $("dl .fa:not(:first)", "#detallegrid").addClass("disabled");
+                    }
+                });
+            }
+        });
+    }
+    function borrarHorario() {
+        showLoading();
+        $.ajax({
+            url: '@Url.Action("BajaHorario", "Seguridad")',
+            data: { id: parseInt($("#Grilla_Horarios > tbody > tr.selected").data("id")) },
+            dataType: 'html',
+            type: 'POST',
+            success: function () {
+                $("#Grilla_Horarios > tbody > tr").removeClass("selected");
+                activarSeccion();
+                cargarHorarios();
+                hideLoading();
+            },
+            error: function (error) {
+                mostrarMensajeError([error.responseText], "Eliminar Horario", true);
+                hideLoading();
+            }
+        });
+    }
+    function borrarAsignacion() {
+        $("#Grilla_Detalle_Horarios").dataTable().api().row($("#Grilla_Detalle_Horarios tbody tr.selected")).remove();
+        $("#Grilla_Detalle_Horarios").dataTable().api().draw();
+        $("#Grilla_Detalle_Horarios tbody tr").removeClass("selected");
+    }
+    function fillEditData(row) {
+        $('button.dia').removeClass('active');
+        if (row.length) {
+            $('button.dia[value=' + $(".hdia", row).val() + ']').addClass('active');
+            $('#idDetalle').val($(".hid", row).val());
+            $('#horaDesde').data("DateTimePicker").date(moment($(".hdesde", row).val()));
+            $('#horaHasta').data("DateTimePicker").date(moment($(".hhasta", row).val()));
+        } else {
+            $('#idDetalle').val(($("tr", "#Grilla_Detalle_Horarios tbody").length + 1) * -1);
+            $('#horaDesde').data("DateTimePicker").date(moment("01/01/2000 09:00"));
+            $('#horaHasta').data("DateTimePicker").date(moment("01/01/2000 18:00"));
+        }
+    }
+    function getHora(value, isUTC) {
+        var date = moment(value);
+        if (isUTC) {
+            date = date.utcOffset("-0300", true);
+        }
+        return date;
+    }
+    function botonvalidar() {
+        if ($('button.dia.active').length) {
+            var id = $('#idDetalle').val(),
+                d = getHora($('#horaDesde').data("DateTimePicker").date().format()),
+                h = getHora($('#horaHasta').data("DateTimePicker").date().format());
+
+            if (d.isAfter(h)) {
+                mostrarMensajeError(["La hora <b>Desde</b> debe ser anterior a hora <b>Hasta</b>."], "Horario - Horas");
+                return;
+            }
+            var registrosDiaSeleccionado = $('input[value=' + $('button.dia.active').val() + '].hdia');
+            if (registrosDiaSeleccionado.length) { //chequeo solapamiento de horarios en registros con mismo DIA
+                var solapado = $.makeArray(registrosDiaSeleccionado).some(function (elem) {
+                    var otroid = $(elem).siblings(".hid").val(),
+                        otrodesde = getHora($(elem).siblings(".hdesde").val(), true),
+                        otrohasta = getHora($(elem).siblings(".hhasta").val(), true);
+
+                    return otroid != id && (d.isBetween(otrodesde, otrohasta) || h.isBetween(otrodesde, otrohasta) ||
+                                            otrodesde.isBetween(d, h) || otrohasta.isBetween(d, h) ||
+                                            otrodesde.isSame(d) || otrohasta.isSame(h))
+                });
+
+                if (solapado) {
+                    mostrarMensajeError(["El horario y día elegido ya se encuentra cubierto."], "Horario - Solapamiento");
+                    return;
+                }
+            }
+            var dia = $('button.dia.active').val(),
+                inicio = "/Date(" + Date.parse(d) + ")/",
+                fin = "/Date(" + Date.parse(h) + ")/",
+                tabla = $('#Grilla_Detalle_Horarios').dataTable();
+
+            var htmlRow = $('.hid[value=' + $('#idDetalle').val() + ']', '#detallegrid tr').parent();
+            if (htmlRow.length) {
+                var dataRow = tabla.api().rows(htmlRow);
+                var data = dataRow.data()[0];
+                data.Dia = dia;
+                data.Hora_Inicio = inicio;
+                data.Hora_Fin = fin;
+                $('.hdia', htmlRow).val(data.Dia);
+                $('.hdesde', htmlRow).val(d.toJSON());
+                $('.hhasta', htmlRow).val(h.toJSON());
+                dataRow.invalidate().draw();
+            } else {
+                tabla.fnAddData([{ Id_Horario_Detalle: $("#idDetalle"), Id_horario: $("#idHorario"), Dia: dia, Hora_Inicio: inicio, Hora_Fin: fin }]);
+            }
+            tabla.api().columns.adjust().draw();
+            finalizarEdicionDetalle();
+        } else {
+            mostrarMensajeError(["Debe seleccionar el <b>Día</b> de la semana."], "Horario - Día Incorrecto");
+        }
+    }
+    function ajustamodal() {
+        var altura = $(window).height() - 150; //value corresponding to the modal heading + footer
+        $(".abm-horarios-body").css({ "height": altura });
+        ajustarScrollBarsHorarios()
+    }
+    function ajustarScrollBarsHorarios() {
+        $('#abm-horarios-content').css({ "max-height": $(".abm-horarios-body").height() + "px", "height": "100%" });
+        $('#abm-horarios-content').getNiceScroll().resize();
+    }
+    function mostrarMensajeError(mensajes, titulo, error) {
+        mostrarMensaje(mensajes, titulo, (error || false ? "alert-danger" : "alert-warning"));
+    }
+    function mostrarMensajeGeneral(mensajes, titulo, confirmacion) {
+        mostrarMensaje(mensajes, titulo, (confirmacion || true ? "alert-info" : "alert-success"));
+    }
+    function mostrarMensajeOk(mensajes, titulo, confirmacion) {
+        mostrarMensaje(mensajes, titulo, (confirmacion || true ? "alert-success" : "alert-info"));
+    }
+    function mostrarMensaje(mensajes, titulo, tipo) {
+        var mdl = "#ModalInfoHorario";
+        $('#TituloInfoHorario').html(titulo);
+        $('#DescripcionInfoHorario').html(mensajes.join("<br />"));
+        $("[role='alert']", mdl).removeClass("alert-danger alert-success alert-info alert-warning").addClass(tipo);
+        $(".modal-footer", mdl).hide();
+        if (tipo === "alert-info") {
+            $(".modal-footer", mdl).show();
+        }
+        $(mdl).modal('show').one('hidden.bs.modal', function () { $("#btnInfoOk").off(); });
+    }
+</script>

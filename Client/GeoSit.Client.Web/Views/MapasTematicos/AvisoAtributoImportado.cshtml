@@ -1,0 +1,56 @@
+﻿@model GeoSit.Client.Web.Models.MapaTematicoModel
+
+@{
+    ViewBag.Title = "";
+    ViewBag.Description = "La Biblioteca seleccionada contiene un atributo importado, debera ingresar uno nuevo.";
+
+}
+
+<link href="~/Content/mapastematicos.css" rel="stylesheet" />
+<link href="~/Content/jquery.jscrollpane.css" rel="stylesheet" />
+<link href="~/Content/progress_bar.css" rel="stylesheet" />
+
+@using (Ajax.BeginForm("Index", "Home", new { ReturnUrl = ViewBag.ReturnUrl }, new AjaxOptions { }, new { id = "formVolver", role = "form", novalidate = "", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <input id="volverbtn" type="submit" style="display:none" />
+}
+@using (Ajax.BeginForm("GetAtributosView", "MapasTematicos", new { ReturnUrl = ViewBag.ReturnUrl }, new AjaxOptions { }, new { id = "formAtributos", role = "form", novalidate = "", enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <!-- Modal Advertencia-->
+    <div class="modal fade theme_new" id="ModalAdvertencia" tabindex="-2" role="dialog" aria-labelledby="TituloAdvertencia" aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title col-lg-11 col-xs-11 col-sm-11 col-md-11" id="TituloAdvertencia" style="color:#000000;">@ViewBag.Title</h4>
+                    <br />
+                </div>
+                <div class="modal-body">
+                    <div id="MensajeAlerta" class="alert alert-warning alert-dismissible" role="alert">
+                        <strong>Atención!</strong><br />
+                        <p id="DescripcionAdvertencia">@ViewBag.Description<br />Desea continuar?</p>
+                    </div>
+                </div>
+                <div class="modal-footer" style="background-color:#ffffff;" id="Panel_Botones">
+                    <img id="btnGrabarAdvertencia" class="" title="Aceptar" src="../Content/images/Seguridad/icons/blue/32/checkbox.png" style="cursor:pointer;">&ensp;&ensp;
+                    <img id="btnCancelarAdvertencia" data-dismiss="modal" title="Cancelar" src="../Content/images/Seguridad/icons/blue/32/cancelar.png" style="cursor:pointer;">
+                </div>
+
+            </div>
+        </div>
+    </div>
+    @Html.HiddenFor(model => model.ComponenteAtributo.Atributo.Agrupacion.AgrupacionId)
+    @Html.HiddenFor(model => model.ComponenteAtributo.ComponenteId)
+    @Html.HiddenFor(model => model.ComponenteAtributo.Atributo.AtributoId)
+    @Html.HiddenFor(model => model.ComponenteAtributo.Atributo.EsImportado)
+    @Html.HiddenFor(model => model.Componente.ComponenteId)
+
+}
+
+<script src="~/Scripts/jquery-ui.js"></script>
+<script src="~/Scripts/Negocio/mapastematicos.js"></script>
+
+<script src="~/Scripts/jquery.form.js"></script>
+<script src="~/Scripts/MapasTematicos/avisoatributoimportado.js"></script>
+

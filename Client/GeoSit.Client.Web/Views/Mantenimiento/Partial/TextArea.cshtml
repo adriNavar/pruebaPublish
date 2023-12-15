@@ -1,0 +1,7 @@
+﻿@model GeoSit.Data.BusinessEntities.Mantenimiento.AtributoTA
+<div class="form-group clearfix">
+    <label class="control-label col-xs-4 text-right">@Model.Nombre @((Model.Es_Obligatorio) ? "*" : "")</label>
+    <div class="col-xs-8">
+        <textarea name="Parametros[@Model.Campo]" maxlength="@Model.Precision.ToString()" class="form-control margin-bottom" @((Model.Es_Obligatorio) ? "required=\"required\"" : "") style="resize:vertical;">@Model.Valor</textarea>
+    </div>
+</div>

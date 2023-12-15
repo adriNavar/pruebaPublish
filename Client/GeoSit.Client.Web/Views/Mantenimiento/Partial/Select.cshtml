@@ -1,0 +1,12 @@
+﻿@model GeoSit.Data.BusinessEntities.Mantenimiento.AtributoTA
+<div class="form-group clearfix">
+    <label class="control-label col-xs-4 text-right">@Model.Nombre @(Model.Es_Obligatorio ? "*" : "")</label>
+    <div class="col-xs-8">
+        <select name="Parametros[@Model.Campo]" class="form-control margin-bottom" @(Model.Es_Obligatorio ? "required=\"required\"" : "")>
+            @foreach(var e in Model.Opciones)
+            {
+                <option value="@e.Id_Atributo" @(Model.Valor != null && Model.Valor.Equals(e.Id_Atributo.ToString()) ? "selected=\"selected\"" : "")>@e.Descripcion</option>
+            }
+        </select>
+    </div>
+</div>

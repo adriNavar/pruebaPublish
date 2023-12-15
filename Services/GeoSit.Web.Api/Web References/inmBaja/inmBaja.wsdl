@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="urn:inmBaja" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns="http://schemas.xmlsoap.org/wsdl/" targetNamespace="urn:inmBaja" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="urn:inmBaja">
+      <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <xsd:import namespace="http://schemas.xmlsoap.org/wsdl/" />
+      <xsd:complexType name="datos_entrada">
+        <xsd:all>
+          <xsd:element name="objeto" type="xsd:int" />
+          <xsd:element name="motivo" type="xsd:string" />
+          <xsd:element name="fchbaja" type="xsd:date" />
+        </xsd:all>
+      </xsd:complexType>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="bajaRequest">
+    <wsdl:part name="datos_entrada" type="tns:datos_entrada" />
+  </wsdl:message>
+  <wsdl:message name="bajaResponse">
+    <wsdl:part name="return" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:portType name="Baja de InmueblePortType">
+    <wsdl:operation name="baja">
+      <documentation>Realiza la baja de un inmueble. Devuelve "OK" o un mensaje de tipo "Error:..."</documentation>
+      <wsdl:input message="tns:bajaRequest" />
+      <wsdl:output message="tns:bajaResponse" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="Baja de InmuebleBinding" type="tns:Baja de InmueblePortType">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc" />
+    <wsdl:operation name="baja">
+      <soap:operation soapAction="urn:inmuebles#baja" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="urn:inmBaja" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="urn:inmBaja" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Baja de Inmueble">
+    <wsdl:port name="Baja de InmueblePort" binding="tns:Baja de InmuebleBinding">
+      <soap:address location="http://emaw70512.hopto.org/samws/inmBaja.php" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

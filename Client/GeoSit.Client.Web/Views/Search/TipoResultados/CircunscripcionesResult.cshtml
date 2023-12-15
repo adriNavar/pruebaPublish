@@ -1,0 +1,18 @@
+﻿@model GeoSit.Client.Web.Models.Search.SearchResultGroup
+@foreach (dynamic circunscripcion in Model.Items)
+{
+    <div class='srow circunscripciones'>
+        <div class="controls">
+            <span class="glyphicon glyphicon-plus-sign pull-right tooltips" data-placement="right" title="Más información" data-toggle="modal" data-target="#modal-window"></span>
+            <span class="glyphicon glyphicon-pushpin  pull-right tooltips" data-placement="right" title="Pin"></span>
+        </div>
+        <div class="rcheck circunscripciones">
+            <input title="Seleccionar" type="checkbox" class="rcheck" />
+        </div>
+        <p class='text-primary'>
+            @Html.Raw(circunscripcion.nombre)
+        </p>
+        <p>Localidad:&nbsp;@Html.Raw(circunscripcion.localidad)</p>
+        <p class='text-muted'>Departamento:&nbsp;@Html.Raw(circunscripcion.departamento)</p>
+    </div>
+}

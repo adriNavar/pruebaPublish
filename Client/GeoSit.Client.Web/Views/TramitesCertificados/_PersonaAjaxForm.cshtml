@@ -1,0 +1,23 @@
+﻿@model GeoSit.Data.BusinessEntities.ObrasPublicas.TramitePersona
+
+<div class="form-group">
+    <label class="control-label col-xs-3">Rol</label>
+    <div class="col-xs-9">
+        @Html.DropDownListFor(model => model.Id_Rol, ViewBag.RolList as IEnumerable<SelectListItem>, new { @class = "form-control" })
+    </div>
+</div>
+
+<div class="form-group">
+    <label class="control-label col-xs-3">Persona</label>
+    <div class="col-xs-9">
+        <div class="input-group">
+            @Html.HiddenFor(model => model.Id_Persona)
+            @Html.TextBox("Persona_NombreCompleto", "", new { id = "Persona_NombreCompleto", @class = "form-control", @readonly = "true" })
+            <div class="input-group-btn">
+                <button type="button" class="btn btn-default" onclick="javascript:personaSearch();" id="btn-persona-search"><span class="fa fa-search cursor-pointer"></span></button>
+            </div>
+        </div>
+    </div>
+</div>
+<span class="fa fa-2x fa-times-circle pull-right black cursor-pointer pull-right" aria-hidden="true" id="persona-cancel"></span>
+<span class="fa fa-2x fa-check-circle pull-right black cursor-pointer pull-right" id="persona-submit"></span>

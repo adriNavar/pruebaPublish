@@ -1,0 +1,19 @@
+﻿@model GeoSit.Client.Web.Models.Search.SearchResultGroup
+@foreach (dynamic manzana in Model.Items)
+{
+    <div class='srow manzanas'>
+        <div class="controls">
+            <span class="glyphicon glyphicon-plus-sign pull-right tooltips" data-placement="right" title="Más información" data-toggle="modal" data-target="#modal-window"></span>
+            <span class="glyphicon glyphicon-pushpin  pull-right tooltips" data-placement="right" title="Pin"></span>
+            <span class="glyphicon pull-righ fa fa-map-marker tooltips" data-placement="right" title="Ver en mapa" onclick="GeoSIT.VerEnMapa([['@manzana.id']], [402])"></span>
+        </div>
+        <div class="rcheck manzanas">
+            <input title="Seleccionar" type="checkbox" class="rcheck" />
+        </div>
+        <p class='text-primary'>
+            @Html.Raw(manzana.nomenclatura)
+        </p>
+        <p>Localidad:&nbsp;@Html.Raw(manzana.localidad)</p>
+        <p class='text-muted'>Departamento:&nbsp;@Html.Raw(manzana.departamento)</p>
+    </div>
+}

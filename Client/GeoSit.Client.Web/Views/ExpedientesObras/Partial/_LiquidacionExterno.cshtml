@@ -1,0 +1,26 @@
+﻿@model GeoSit.Client.Web.Models.ExpedientesObras.LiquidacionViewModel
+
+@Html.HiddenFor(model => model.LiquidacionId)
+@Html.HiddenFor(model => model.Numero)
+@Html.HiddenFor(model => model.Observaciones)
+
+<div class="form-group">
+    <label class="control-label col-xs-3">Fecha</label>
+    <div class="col-xs-9">        
+        <div class="input-group date">
+            @Html.TextBoxFor(model => model.Fecha, new { @class = "form-control date" })
+            <span class="input-group-addon">
+                <span class="fa fa-calendar"></span>
+            </span>
+        </div>
+    </div>
+</div>
+
+<div class="form-group">
+    <label class="control-label col-xs-3">Importe</label>
+    <div class="col-xs-9">
+        @Html.TextBoxFor(model => model.Importe, new {@class = "form-control"})
+    </div>
+</div>
+<span class="fa fa-2x fa-times-circle pull-right black cursor-pointer pull-right" aria-hidden="true" id="liquidacion-cancel"></span>
+<span class="fa fa-2x fa-check-circle pull-right black cursor-pointer pull-right" id="liquidacion-submit"></span>

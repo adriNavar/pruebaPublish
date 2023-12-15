@@ -1,0 +1,58 @@
+﻿<link href="~/Content/theme_new.css" rel="stylesheet" />
+<link href="~/Content/ReimpresionRemito.css" rel="stylesheet" />
+<link href="~/Content/formValidation.min.css" rel="stylesheet" />
+
+<div class="modal fade theme_new" id="modal-ReimpresionRemito" tabindex="-2" data-backdrop="static" role="dialog" aria-labelledby="modal-windowLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div id="scroll-content-reimpresionRemito" class="scroll-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="lblReimpresionRemito">@ViewBag.Title</h3>
+                    <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+                </div>
+                <div class="modal-body reimpresionRemito-body">
+                    <div id="reimpresionRemito-content" class="body-content">
+
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                                <label id="lblNumero" class="col-xs-3 control-label text-muted text-right">
+                                    N&uacute;mero:
+                                </label>
+                                <div class="col-xs-6">
+                                    @Html.TextBox("txtNumero", null, new { @class = "form-control", @maxlength = "15" })
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-xs-5 pull-right">
+                        <button class="btn btn-secondary" id="btnReimprimirRemito" title="Generar">
+                            <span>Reimprimir</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal theme_new fade mensaje" id="mensajeModalReimpresionRemito" tabindex="-2" role="dialog" aria-labelledby="TituloAdvertencia" aria-hidden="true" style="z-index:99999999;" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <input type="hidden" id="TipoAdvertencia" value="">
+                <h3 class="modal-title" id="TituloAdvertencia">Titulo</h3>
+                <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+            </div>
+            <div class="modal-body">
+                <div id="MensajeAlerta" class="alert alert-warning alert-dismissible" role="alert">
+                    <p id="DescripcionAdvertencia">Está a punto de DESACTIVAR al usuario Perez, Juan <br>Está seguro de continuar?</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/formValidation.min.js"></script>
+<script src="~/Scripts/MesaEntradas/reimpresionremito.js"></script>

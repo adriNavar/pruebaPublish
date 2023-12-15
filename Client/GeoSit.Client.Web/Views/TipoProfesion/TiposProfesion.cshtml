@@ -1,0 +1,42 @@
+﻿@model GeoSit.Client.Web.Models.TipoProfesionModels
+@{
+    ViewBag.Title = "TiposProfesion";
+}
+
+@section styles
+{
+    <link href="../Content/mapastematicos.css" rel="stylesheet" />
+    <link href="../Content/jquery.jscrollpane.css" rel="stylesheet" />
+    <link href="../Content/progress_bar.css" rel="stylesheet" />
+    <link href="../Content/jquery-ui.css" rel="stylesheet" />
+    <link href="../Content/Seguridad.css" rel="stylesheet" />
+}
+
+{
+    <!--Se cargan los valores de la base-->
+    ViewBag.TipoProfesionId = 0;
+    ViewBag.Descripcion = "";
+    foreach (var item in ViewBag.listaTiposProfesion)
+    {
+        ViewBag.Descripcion = item.Descripcion;
+        ViewBag.TipoProfesionId = item.TipoProfesionId;
+    }
+    
+}
+
+<h2>TiposProfesion</h2>
+<div id="accordion_panel_0" class="panel-collapse collapse" aria-expanded="true">
+    <div class="panel-body">
+
+        <div style="text-align:left">Tipo de Profesión</div>
+        <div>&ensp;</div>
+        <div>
+            <div class="col-lg-12" style="padding:0 0 0 0; height:23px;">
+                <input type="text" id="IdTipoProfesion" size="5" readonly style="border:0; color:#f6931f; font-weight:bold;" value=@ViewBag.TipoProfesionId>
+                <input type="text" id="DescripcionTipoProfesion" size="40" readonly style="border:0; color:#f6931f; font-weight:bold; text-align:right" value=@ViewBag.Descripcion>
+            </div>
+        </div>
+    </div>
+</div>
+
+

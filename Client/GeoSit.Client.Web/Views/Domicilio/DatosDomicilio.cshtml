@@ -1,0 +1,207 @@
+﻿@model GeoSit.Client.Web.Models.DomicilioModels
+@{
+    ViewBag.Title = "Domicilios";
+    ViewBag.MensajeSalida = "";
+    ViewBag.DomicilioId = "";
+    ViewBag.UsuarioAltaId = 0;
+    ViewBag.FechaAlta = "";
+    ViewBag.UsuarioModifId = 0;
+    ViewBag.FechaModif = "";
+    ViewBag.UsuarioBajaId = 0;
+    ViewBag.FechaBaja = "";
+}
+
+<link href="~/Content/abmDomicilios.css" rel="stylesheet" />
+
+<div class="modal fade theme_new" id="modal-window-domicilio" tabindex="-1" data-backdrop="static" role="dialog" aria-labelledby="modal-windowLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            @Html.AntiForgeryToken()
+            @if (ViewBag.DatosDomicilio.DomicilioId != null) { ViewBag.DomicilioId = ViewBag.DatosDomicilio.DomicilioId; } else { ViewBag.ViaNombre = ""; }
+            @if (ViewBag.DatosDomicilio.ViaNombre != null) { ViewBag.ViaNombre = ViewBag.DatosDomicilio.ViaNombre; } else { ViewBag.ViaNombre = ""; }
+            @if (ViewBag.DatosDomicilio.numero_puerta != null) { ViewBag.numero_puerta = ViewBag.DatosDomicilio.numero_puerta; } else { ViewBag.numero_puerta = ""; }
+            @if (ViewBag.DatosDomicilio.piso != null) { ViewBag.piso = ViewBag.DatosDomicilio.piso; } else { ViewBag.piso = ""; }
+            @if (ViewBag.DatosDomicilio.unidad != null) { ViewBag.unidad = ViewBag.DatosDomicilio.unidad; } else { ViewBag.unidad = ""; }
+            @if (ViewBag.DatosDomicilio.barrio != null) { ViewBag.barrio = ViewBag.DatosDomicilio.barrio; } else { ViewBag.barrio = ""; }
+            @if (ViewBag.DatosDomicilio.localidad != null) { ViewBag.localidad = ViewBag.DatosDomicilio.localidad; } else { ViewBag.localidad = ""; }
+            @if (ViewBag.DatosDomicilio.municipio != null) { ViewBag.municipio = ViewBag.DatosDomicilio.municipio; } else { ViewBag.municipio = ""; }
+            @if (ViewBag.DatosDomicilio.provincia != null) { ViewBag.provincia = ViewBag.DatosDomicilio.provincia; } else { ViewBag.provincia = ""; }
+            @if (ViewBag.DatosDomicilio.ubicacion != null) { ViewBag.ubicacion = ViewBag.DatosDomicilio.ubicacion; } else { ViewBag.ubicacion = ""; }
+            @if (ViewBag.DatosDomicilio.codigo_postal != null) { ViewBag.codigo_postal = ViewBag.DatosDomicilio.codigo_postal; } else { ViewBag.codigo_postal = ""; }
+            @if (ViewBag.DatosDomicilio.ViaId != null) { ViewBag.ViaId = ViewBag.DatosDomicilio.ViaId; } else { ViewBag.ViaId = "0"; }
+            @if (ViewBag.DatosDomicilio.TipoDomicilioId != null) { ViewBag.TipoDomicilioId = ViewBag.DatosDomicilio.TipoDomicilioId; } else { ViewBag.TipoDomicilioId = ""; }
+            @if (ViewBag.DatosDomicilio.UsuarioAltaId != null) { ViewBag.UsuarioAltaId = ViewBag.DatosDomicilio.UsuarioAltaId; } else { ViewBag.UsuarioAltaId = ""; }
+            @if (ViewBag.DatosDomicilio.FechaAlta != null) { ViewBag.FechaAlta = ViewBag.DatosDomicilio.FechaAlta; } else { ViewBag.FechaAlta = DateTime.Now; }
+            @if (ViewBag.DatosDomicilio.UsuarioModifId != null) { ViewBag.UsuarioModifId = ViewBag.DatosDomicilio.UsuarioModifId; } else { ViewBag.UsuarioModifId = ""; }
+            @if (ViewBag.DatosDomicilio.FechaModif != null) { ViewBag.FechaModif = ViewBag.DatosDomicilio.FechaModif; } else { ViewBag.FechaModif = DateTime.Now; }
+            @if (ViewBag.DatosDomicilio.UsuarioBajaId != null) { ViewBag.UsuarioBajaId = ViewBag.DatosDomicilio.UsuarioBajaId; } else { ViewBag.UsuarioBajaId = ""; }
+            @if (ViewBag.DatosDomicilio.FechaBaja != null) { ViewBag.FechaBaja = ViewBag.DatosDomicilio.FechaBaja; } else { ViewBag.FechaBaja = ""; }
+
+            <input type="hidden" id="hdfIdentificadorConfigurado" name="hdfIdentificadorConfigurado" value="@ViewBag.IdentificadorConfigurado" />
+            <input type="hidden" id="hdfItemProvincia" name="hdfItemProvincia" value="@ViewBag.ItemProvincia" />
+            <input type="hidden" id="hdfItemPartido" name="hdfItemPartido" value="@ViewBag.ItemPartido" />
+            <input type="hidden" id="hdfItemLocalidad" name="hdfItemLocalidad" value="@ViewBag.ItemLocalidad" />
+            <input type="hidden" id="hdfItemPais" name="hdfItemPais" value="@ViewBag.ItemPais" />
+            <input type="hidden" id="hdfViaId" name="hdfViaId" value="@ViewBag.ViaId" />
+
+            <input type="hidden" id="hdfTxtProvincia" name="hdfItemProvincia" value="@ViewBag.provincia" />
+            <input type="hidden" id="hdfTxtPartido" name="hdfItemPartido" value="@ViewBag.municipio" />
+            <input type="hidden" id="hdfTxtLocalidad" name="hdfItemLocalidad" value="@ViewBag.localidad" />
+
+            <div id="scroll-content-domicilio" class="scroll-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">@ViewBag.Title</h3>
+                    <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+                </div>
+                <div class="modal-body domicilio-body">
+                    <div id="body-content-domicilio" class="domicilio-content body-content">
+                        <div class="panel-group" id="accordion-domicilio">
+                            @*Inicio Datos Domicilio*@
+                            <div class='panel-heading bg-primary main-heading' role='tab' id='headingDomicilio'>
+                                <a data-toggle='collapse' data-parent='#accordion-domicilio' href='#' aria-expanded='true'>
+                                    <div class='panel-title'>
+                                        Datos del Domicilio
+                                    </div>
+                                </a>
+                            </div>
+                            <div id="collapseDomicilio" class='panel-collapse collapse in main-collapse'>
+                                <div class="panel-body domicilio-datos">
+                                    @Html.HiddenFor(model => model.DatosDomicilio.DomicilioId, new { @Value = ViewBag.DomicilioId })
+                                    @Html.HiddenFor(model => model.DatosDomicilio.FechaBaja, new { @Value = ViewBag.FechaBaja })
+                                    @Html.HiddenFor(model => model.DatosDomicilio.UsuarioBajaId, new { @Value = ViewBag.UsuarioBajaId })
+                                    @Html.HiddenFor(model => model.DatosDomicilio.FechaAlta, new { @Value = ViewBag.FechaAlta })
+                                    @Html.HiddenFor(model => model.DatosDomicilio.UsuarioAltaId, new { @Value = ViewBag.UsuarioAltaId })
+                                    @Html.HiddenFor(model => model.DatosDomicilio.FechaModif, new { @Value = ViewBag.FechaModif })
+                                    @Html.HiddenFor(model => model.DatosDomicilio.UsuarioModifId, new { @Value = ViewBag.UsuarioModifId })
+
+                                    <div class="form-group">
+                                        <label class="control-label col-xs-4">Tipo Domicilio</label>
+                                        <div class="col-xs-8">
+                                            @Html.DropDownListFor(model => model.DatosDomicilio.TipoDomicilioId, (IEnumerable<SelectListItem>)ViewData["tiposdomicilio"], new { @class = "form-control", @Value = ViewBag.TipoDomicilioId })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-xs-4">Pa&iacute;s</label>
+                                        <div class="col-xs-8">
+                                            @Html.DropDownListFor(model => model.DatosDomicilio.pais, ((IEnumerable<SelectListItem>)ViewData["paises"]).OrderBy(x => x.Text), new { @class = "form-control", @Value = ViewBag.ItemPais, onchange = "paisesListChangeDomicilio(this.value)", onselectedindexchanged = "paisesListChangeDomicilio(this.value)" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-xs-4">Provincia</label>
+                                        <div class="col-xs-8">
+                                            @Html.DropDownListFor(model => model.DatosDomicilio.provincia, ((IEnumerable<SelectListItem>)ViewData["provincias"]).OrderBy(x => x.Text), new { @class = "form-control", @Value = ViewBag.ItemProv, onchange = "provinciaListChangeDomicilio(this.value)", onselectedindexchanged = "provinciaListChangeDomicilio(this.value)" })
+                                            @Html.TextBox("txtDatosDomicilio_provincia", "", new { @class = "form-control", @maxlength = "50", @style = "display: none" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-xs-4">Departamento</label>
+                                        <div class="col-xs-8">
+                                            @Html.DropDownListFor(model => model.DatosDomicilio.municipio, ((IEnumerable<SelectListItem>)ViewData["partidos"]).OrderBy(x => x.Text), "- Seleccione -", new { @class = "form-control", @Value = ViewBag.ItemPartido, onchange = "municipioListChangeDomicilio(this.value)", onselectedindexchanged = "municipioListChangeDomicilio(this.value)" })
+                                            @Html.TextBox("txtDatosDomicilio_municipio", "", new { @class = "form-control", @maxlength = "50", @style = "display: none" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-xs-4">Localidad</label>
+                                        <div class="col-xs-8">
+                                            @Html.DropDownListFor(model => model.DatosDomicilio.localidad, ((IEnumerable<SelectListItem>)ViewData["localidades"]).OrderBy(x => x.Text), "- Seleccione -", new { @class = "form-control", @Value = ViewBag.localidad, onchange = "localidadListChangeDomicilio(this.value)", onselectedindexchanged = "localidadListChangeDomicilio(this.value)" })
+                                            @Html.TextBox("txtDatosDomicilio_localidad", "", new { @class = "form-control", @maxlength = "50", @style = "display: none" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-xs-4">Calle</label>
+                                        <div class="col-xs-8">
+                                            @Html.TextBoxFor(model => model.DatosDomicilio.ViaNombre, new { @class = "form-control", @Value = ViewBag.ViaNombre, @maxlength = "50", onChange = "mostarlistaviaDomicilio(this.value)", @style= "margin-bottom:3px;" })
+                                            @Html.DropDownList("lstViaNombre", (IEnumerable<SelectListItem>)ViewData["viaslista"], new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-xs-4">Nº de Puerta</label>
+                                        <div class="col-xs-8">
+                                            @Html.TextBoxFor(model => model.DatosDomicilio.numero_puerta, new { @class = "form-control", @Value = ViewBag.numero_puerta, @maxlength = "10", @onkeypress = "runValidaAltura(event)" })
+                                            <label><input id="SinNumeroCheck" type="checkbox" value="">&nbsp;Sin numero de puerta</label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-xs-4">Piso</label>
+                                        <div class="col-xs-8">
+                                            @Html.TextBoxFor(model => model.DatosDomicilio.piso, new { @class = "form-control", @Value = ViewBag.piso, @maxlength = "10" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-xs-4">Departamento</label>
+                                        <div class="col-xs-8">
+                                            @Html.TextBoxFor(model => model.DatosDomicilio.unidad, new { @class = "form-control", @Value = ViewBag.unidad, @maxlength = "10" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-xs-4">C&oacute;digo Postal</label>
+                                        <div class="col-xs-8">
+                                            @Html.TextBoxFor(model => model.DatosDomicilio.codigo_postal, new { @class = "form-control", @Value = ViewBag.codigo_postal, @maxlength = "20" })
+                                            @Html.TextBox("txtcodigo_postal", "", new { @class = "form-control", @Value = ViewBag.codigo_postal, @maxlength = "20", @disabled = "disabled", @style = "display: none;" })
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-xs-4">Ubicaci&oacute;n</label>
+                                        <div class="col-xs-8">
+                                            @Html.TextBoxFor(model => model.DatosDomicilio.ubicacion, new { @class = "form-control", @Value = ViewBag.ubicacion, @maxlength = "50" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            @*Fin Datos Dimicilio*@
+                        </div>
+                    </div>
+                </div>
+                @*Fin de modal-body*@
+                @*Botones Grabar y Cancelar*@
+                <div class="modal-footer">
+                    <div class="col-xs-4 pull-right">
+                        <span aria-hidden="true" data-placement="right" title="Guardar" data-original-title="Guardar" id="btnGrabarDomicilio" class="fa fa-save fa-2x black cursor-pointer"></span>
+                        <span aria-hidden="true" data-placement="right" title="Cancelar" data-original-title="Cancelar" id="btnCancelarDomicilio" class="fa fa-undo fa-2x black cursor-pointer"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Advertencia-->
+<div class="modal fade theme_new mensaje fade" id="ModalAdvertenciaDomicilio" tabindex="-2" role="dialog" aria-labelledby="TituloAdvertencia" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="TituloAdvertenciaDomicilio">Titulo</h3> 
+                <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+            </div>
+            <div class="modal-body">
+                <div id="MensajeAlertaDomicilio" class="alert alert-warning alert-dismissible" role="alert">
+                    <p id="DescripcionAdvertenciaDomicilio">Está a punto ...<br />Está seguro de continuar?</p>
+                </div>
+            </div>
+            <div class="modal-footer" id="Panel_BotonesDomicilio">
+                <div class="col-xs-4 pull-right">
+                    <img id="btnGrabarAdvertenciaDomicilio" class="" title="Aceptar" src="~/Content/images/Seguridad/icons/blue/32/checkbox.png" style="cursor:pointer;">&ensp;&ensp;
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Información-->
+<div class="modal fade theme_new mensaje" id="ModalInfoDomicilio" tabindex="-3" role="dialog" aria-labelledby="TituloInfo" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="TituloInfoDomicilio">Titulo</h3>
+                <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+            </div>
+            <div class="modal-body">
+                <div id="MensajeInfoDomicilio" class="alert alert-danger alert-dismissible" role="alert">
+                    <p id="DescripcionInfoDomicilio">Descripcion de la informacion</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/Scripts/jquery.form.js"></script>
+<script src="~/Scripts/Domicilios/main.js"></script>

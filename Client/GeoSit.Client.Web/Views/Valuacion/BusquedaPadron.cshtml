@@ -1,0 +1,422 @@
+@model GeoSit.Client.Web.Models.ValuacionModel
+@{
+    ViewBag.Title = "Búsqueda de Padrón";
+    ViewBag.Description = "";
+}
+
+    <link href="~/Content/valuacion.css" rel="stylesheet" />
+    <link href="~/Content/dataTables.bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/Seguridad.css" rel="stylesheet" />
+    <link href="~/Content/formValidation.min.css" rel="stylesheet" />
+    <link href="~/Content/select2-bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/select2.css" rel="stylesheet" />
+    
+
+<div class="modal fade" id="myModal" tabindex="-100" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    @using (Ajax.BeginForm("PadronSearch", "Valuacion", new { }, new AjaxOptions { }, new { @id = "formBuscar", role = "form", novalidate = "" }))
+    { @Html.AntiForgeryToken()
+        @Html.HiddenFor(x => x.BusquedaPadron.IdPadron)
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header centrado">
+                    <h4 class="modal-title col-lg-11 col-xs-11 col-sm-11 col-md-11" id="myModalLabel">@ViewBag.Title</h4>
+                    <img id="btnCerrar" title="Cerrar" src="~/Content/images/Valuacion/icons/blue/32/cerrar.png" style="cursor:pointer;">
+
+                </div>
+                <div class="modal-body">
+                    <div class="form-horizontal">
+
+                        <div class="row">
+                            <div class="col-lg-1 col-xs-1 col-sm-1 col-md-1"> </div>
+                            <div class="col-lg-10 col-xs-10 col-sm-10 col-md-10">
+                                <div class="col-lg-5 col-xs-5 col-sm-5 col-md-5">
+                                    <label class="h4"><u>Vigencia:</u></label>
+                                </div>
+                                <div class="col-lg-7 col-xs-7 col-sm-7 col-md-7">
+                                    <div class="container-fluid sin-padding">
+                                        <div class="col-lg-12 col-xs-12 col-sm-12 col-md-12 sin-padding">
+
+                                            @Html.DropDownList("Vigencia", (SelectList)ViewBag.vigencias, "", new { @class = "form-control sin-padding centrado" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-1 col-xs-1 col-sm-1 col-md-1"> </div>
+                        </div>
+
+                        <div class="row" style="height:1em;"> </div>
+
+                        <div class="row">
+                            <div class="col-lg-1 col-xs-1 col-sm-1 col-md-1"> </div>
+                            <div class="col-lg-10 col-xs-10 col-sm-10 col-md-10">
+                                <div class="col-lg-5 col-xs-5 col-sm-5 col-md-5">
+                                    <label class="h4"><u>Fecha de Cálculo:</u></label>
+                                </div>
+                                <div class="col-lg-7 col-xs-7 col-sm-7 col-md-7">
+                                    <div class="container-fluid sin-padding">
+                                        <div class="col-lg-12 col-xs-12 col-sm-12 col-md-12 sin-padding">
+                                            @Html.DropDownList("FechaCalculo", (SelectList)ViewBag.calculos, "", new { @class = "form-control sin-padding centrado" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-1 col-xs-1 col-sm-1 col-md-1"> </div>
+                        </div>
+
+                        <div class="row" style="height:1em;"> </div>
+
+                        <div class="row">
+                            <div class="col-lg-1 col-xs-1 col-sm-1 col-md-1"> </div>
+                            <div class="col-lg-10 col-xs-10 col-sm-10 col-md-10">
+                                <div class="col-lg-5 col-xs-5 col-sm-5 col-md-5">
+                                    <label class="h4"><u>Fecha Consolidado:</u></label>
+                                </div>
+                                <div class="col-lg-7 col-xs-7 col-sm-7 col-md-7">
+                                    <div class="container-fluid sin-padding">
+                                        <div class="col-lg-12 col-xs-12 col-sm-12 col-md-12 sin-padding">
+                                            @Html.DropDownList("FechaConsolidado", (SelectList)ViewBag.consolidados, "", new { @class = "form-control sin-padding centrado" })
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-1 col-xs-1 col-sm-1 col-md-1"> </div>
+                        </div>
+
+                        <div class="row" style="height:1em;"> </div>
+
+                        <div class="form-horizontal panel panel-default">
+                            <div class="form-group" style="">
+
+                                <div class="col-md-10" style="margin-left: 5% ; margin-top: 2%">
+                                    @Html.Label("Cantidad de Inmuebles: ", new { @style = "text-wrap:none; white-space:nowrap" })
+                                    @Html.TextBox("cantidad", Model.BusquedaPadron.CantInmuebles, new { @readonly = "readonly", @style = "width:10%; text-align: center" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-md-11 text-center" style="margin-left: 4%; overflow:auto">
+                                    <table class="table table-striped table-bordered" style="margin: 0 auto;">
+                                        <thead>
+                                            <tr>
+                                                <th>
+
+                                                </th>
+                                                <th>
+                                                    Val. Total
+                                                </th>
+                                                <th>
+                                                    Val. Tierra
+                                                </th>
+                                                <th>
+                                                    Val. Mejora
+                                                </th>
+                                                <th>
+                                                    Sup. Tierra
+                                                </th>
+                                                <th>
+                                                    Sup. Mejora
+                                                </th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>Sumatoria</td>
+                                                <td>@Model.BusquedaPadron.SumaValorTotal.ToString("0.00")</td>
+                                                <td>@Model.BusquedaPadron.SumaValorTierra.ToString("0.00")</td>
+                                                <td>@Model.BusquedaPadron.SumaValorMejora.ToString("0.00")</td>
+                                                <td>@Model.BusquedaPadron.SumaSuperficieTierra.ToString("0.00")</td>
+                                                @{var sumaMejora = (Model.BusquedaPadron.SumaSuperficieSemiCubierta + Model.BusquedaPadron.SumaSuperificeCubierta).ToString("0.00");}
+                                                <td>@sumaMejora</td>
+
+                                            </tr>
+                                            <tr>
+                                                <td>Máximo</td>
+                                                <td>@Model.BusquedaPadron.MaxValorTotal.ToString("0.00")</td>
+                                                <td>@Model.BusquedaPadron.MaxValorTierra.ToString("0.00")</td>
+                                                <td>@Model.BusquedaPadron.MaxValorMejora.ToString("0.00")</td>
+                                                <td>@Model.BusquedaPadron.MaxSuperficieTierra.ToString("0.00")</td>
+                                                @{var maxMejora = (Model.BusquedaPadron.MaxSuperficieSemiCubierta + Model.BusquedaPadron.MaxSuperificeCubierta).ToString("0.00");}
+                                                <td>@maxMejora</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Mínimo</td>
+                                                <td>@Model.BusquedaPadron.MinValorTotal.ToString("0.00")</td>
+                                                <td>@Model.BusquedaPadron.MinValorTierra.ToString("0.00")</td>
+                                                <td>@Model.BusquedaPadron.MinValorMejora.ToString("0.00")</td>
+                                                <td>@Model.BusquedaPadron.MinSuperficieTierra.ToString("0.00")</td>
+                                                @{var MinMejora = (Model.BusquedaPadron.MinSuperficieSemiCubierta + Model.BusquedaPadron.MinSuperificeCubierta).ToString("0.00");}
+                                                <td>@MinMejora</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Promedio</td>
+                                                <td>@Model.BusquedaPadron.PromValorTotal.ToString("0.00")</td>
+                                                <td>@Model.BusquedaPadron.PromValorTierra.ToString("0.00")</td>
+                                                <td>@Model.BusquedaPadron.PromValorMejora.ToString("0.00")</td>
+                                                <td>@Model.BusquedaPadron.PromSuperficieTierra.ToString("0.00")</td>
+                                                @{var PromMejora = (Model.BusquedaPadron.PromSuperficieSemiCubierta + Model.BusquedaPadron.PromSuperificeCubierta).ToString("0.00");}
+                                                <td>@PromMejora</td>
+                                            </tr>
+                                            <tr>
+                                                <td>Cant. Nulos</td>
+                                                <td>@Model.BusquedaPadron.NulosValorTotal</td>
+                                                <td>@Model.BusquedaPadron.NulosValorTierra</td>
+                                                <td>@Model.BusquedaPadron.NulosValorMejora</td>
+                                                <td>@Model.BusquedaPadron.NulosSuperficieTierra</td>
+                                                @{var NulosMejora = (Model.BusquedaPadron.NulosSuperificeCubierta);}
+                                                <td>@NulosMejora</td>
+                                            </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @if (Model.BusquedaPadron.IdPadron > 0)
+                {
+                <div class="modal-footer" id="Panel_Botones">
+
+                    <div class="col-lg-10 col-xs-10 col-sm-10 col-md-10">
+                        @{
+                    using (Ajax.BeginForm("PadronConsolidarPP", "Valuacion", new { }, new AjaxOptions { }, new { @id = "formConsolidarPP", role = "form", novalidate = "" }))
+                    { @Html.AntiForgeryToken()
+                    }
+
+                    using (Html.BeginForm("PadronImprimir", "Valuacion", new { }, FormMethod.Post, new { @id = "formImprimir", role = "form", novalidate = "", target = "_blank" }))
+                    { @Html.AntiForgeryToken()
+                            @Html.HiddenFor(x => x.BusquedaPadron.IdPadron)
+                    }
+                        }
+                        <img style="cursor: pointer; " id="btnExportar" title="Exportar" class="pull-right" src="~/Content/images/Valuacion/icons/blue/32/subir.png">
+                    </div>
+                    @if (!Model.BusquedaPadron.esConsolidado)
+                        {
+
+                            using (Ajax.BeginForm("PadronConsolidar", "Valuacion", new { }, new AjaxOptions { }, new { @id = "formConsolidar", role = "form", novalidate = "" }))
+                            { @Html.AntiForgeryToken()
+                            @Html.HiddenFor(x => x.BusquedaPadron.IdPadron)
+                            <div class="col-lg-1 col-xs-1 col-sm-1 col-md-1 ">
+                                <img style="cursor: pointer;" title="Pasar a estado Consolidado" id="btnConsolidado" class="pull-right" src="~/Content/images/Valuacion/icons/blue/32/checkbox.png">
+                            </div>
+                            }
+                            using (Ajax.BeginForm("PadronEliminar", "Valuacion", new { }, new AjaxOptions { }, new { @id = "formEliminar", role = "form", novalidate = "" }))
+                            { @Html.AntiForgeryToken()
+                            @Html.HiddenFor(x => x.BusquedaPadron.IdPadron)
+                            <div class="col-lg-1 col-xs-1 col-sm-1 col-md-1">
+                                <span id="clearSearch" title="Eliminar" class="glyphicon glyphicon-trash pull-right" aria-hidden="true" style="color: #47B2D6; font-size:32px; cursor:pointer;"></span>
+                            </div>
+                            }
+                        }
+                </div>
+                }
+            </div>
+        </div>
+    }
+</div>
+<!-- Modal Advertencia-->
+<div class="modal fade" id="ModalAdvertencia" tabindex="-2" role="dialog" aria-labelledby="TituloAdvertencia" aria-hidden="true" data-backdrop="static" data-board="false" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <input type="hidden" id="TipoAdvertencia" value="" />
+                <h4 class="modal-title col-lg-11 col-xs-11 col-sm-11 col-md-11" id="TituloAdvertencia" style="color:#000000;">Titulo</h4>
+                <br />
+            </div>
+            <div class="modal-body">
+                <div id="MensajeAlerta" class="alert alert-warning alert-dismissible" role="alert">
+                    <strong>Atención!</strong><br />
+                    <p id="DescripcionAdvertencia">an <br />Está seguro de continuar?</p>
+                </div>
+            </div>
+            <div class="modal-footer" style="background-color:#ffffff;" id="Panel_Botones">
+                <img id="btnAdvertenciaOK" data-dismiss="modal" class="" title="Aceptar" src="~/Content/images/Seguridad/icons/blue/32/checkbox.png" style="cursor:pointer;">&ensp;&ensp;
+                <img id="btnCancelarAdvertencia" data-dismiss="modal" title="Cancelar" src="~/Content/images/Seguridad/icons/blue/32/cancelar.png" style="cursor:pointer;">
+            </div>
+        </div>
+    </div>
+</div>
+    <script src="~/Scripts/jquery.dataTables.js"></script>
+    <script src="~/Scripts/formValidation.min.js"></script>
+    <script src="~/Scripts/bootstrapValidation.min.js"></script>
+    <script src="~/Scripts/select2.js"></script>
+<script src="~/Scripts/jquery.form.js"></script>
+
+    <script>
+    $(document).ready(function () {
+        hideLoading();
+        $(".modal-backdrop").remove();
+        $('#myModal').modal('show');
+        $("#btnCerrar").click(function () {
+            $("#myModal").modal('hide');
+            // window.location.href = "@Url.Action("index", "Home")"
+        });
+        $("#Vigencia").change(function () {
+            $("#BusquedaPadron_IdPadron").val($(this).val());
+            showLoading();
+            $("#formBuscar").submit();
+        });
+        $("#FechaCalculo").change(function () {
+            $("#BusquedaPadron_IdPadron").val($(this).val());
+            showLoading();
+            $("#formBuscar").submit();
+        });
+        $("#FechaConsolidado").change(function () {
+            $("#BusquedaPadron_IdPadron").val($(this).val());
+            showLoading();
+            $("#formBuscar").submit();
+        });
+        $("#btnConsolidado").click(function () {
+
+            var msj = "Está a punto de CONSOLIDAR el padron.<br>¿Está seguro de continuar?";
+            $('#TituloAdvertencia').html("Advertencia - Consolidar");
+            $('#DescripcionAdvertencia').html(msj);
+            $("#btnAdvertenciaOK").click(function () {
+                showLoading();
+                $("#formConsolidar").submit();
+                $("#btnConsolidado").parent().html('<span id="btnConsolidado" class="glyphicon glyphicon-refresh glyphicon-refresh-animate centrado" aria-hidden="true" style="color: #47B2D6; font-size:32px; cursor:pointer;"></span>');
+                //$("#btnConsolidado").addClass('glyphicon-refresh-animate');
+                $("#btnConsolidado").attr('disabled', disabled);
+
+
+            });
+            $('#ModalAdvertencia').modal('show');
+
+
+        });
+        $("#formEliminar").click(function () {
+
+            var msj = "Está a punto de ELIMINAR el padron.<br>¿Está seguro de continuar?";
+            $('#TituloAdvertencia').html("Advertencia - Eliminar");
+            $('#DescripcionAdvertencia').html(msj);
+            $("#btnAdvertenciaOK").click(function () {
+                showLoading();
+                $("#formEliminar").submit();
+            });
+            $('#ModalAdvertencia').modal('show');
+        });
+
+        $("#btnExportar").click(function () {
+            //window.open('ImprimeBusquedaPadron?IdPadron=@Model.BusquedaPadron.IdPadron', '_blank', 'left=0,top=0,width=1200,height=600,toolbar=0,resizable=0');
+                showLoading();
+            //$("#formImprimir").submit();
+                
+            window.open('Valuacion/PadronImprimir?IdPadron=@Model.BusquedaPadron.IdPadron', '_blank');
+            //Imprimir()
+            hideLoading();
+            });
+
+            $("#formBuscar").ajaxForm({
+                beforeSubmit: function (arr, $form, options) {
+                    showLoading();
+                    $("#myModal").modal('hide');
+                    return true; //it will continue your submission.
+                },
+                success: function (data) {
+                    //levantar modal
+                    $("#contenido").empty();
+                    $("#contenido").html(data);
+
+                },
+                error: function () {
+                    alert("error");
+                }
+            });
+
+            $("#formBuscar").submit(function (evt) {
+                /*evita el doble submit*/
+                evt.preventDefault();
+                evt.stopImmediatePropagation();
+                return false;
+            });
+            $("#formConsolidarPP").ajaxForm({
+                beforeSubmit: function (arr, $form, options) {
+                    showLoading();
+                    $("#myModal").modal('hide');
+                    return true; //it will continue your submission.
+                },
+                success: function (data) {
+                    //levantar modal
+                    $("#contenido").empty();
+                    $("#contenido").html(data);
+
+                },
+                error: function () {
+                    alert("error");
+                }
+            });
+
+            $("#formConsolidarPP").submit(function (evt) {
+                /*evita el doble submit*/
+                evt.preventDefault();
+                evt.stopImmediatePropagation();
+                return false;
+            });
+            $("#formConsolidar").ajaxForm({
+                beforeSubmit: function (arr, $form, options) {
+                    showLoading();
+                    $("#myModal").modal('hide');
+                    return true; //it will continue your submission.
+                },
+                success: function (data) {
+                    //levantar modal
+                    $("#contenido").empty();
+                    $("#contenido").html(data);
+
+                },
+                error: function () {
+                    alert("error");
+                }
+            });
+
+            $("#formConsolidar").submit(function (evt) {
+                /*evita el doble submit*/
+                evt.preventDefault();
+                evt.stopImmediatePropagation();
+                return false;
+            });
+            //$("#formImprimir").ajaxForm({
+            //    success: function (data) {
+            //        //levantar modal
+            //        $("#contenido").empty();
+            //        $("#contenido").html(data);
+
+            //    },
+            //    error: function () {
+            //        alert("error");
+            //    }
+            //});
+
+            //$("#formImprimir").submit(function (evt) {
+            //    /*evita el doble submit*/
+            //    evt.preventDefault();
+            //    evt.stopImmediatePropagation();
+            //    return false;
+            //});
+            $("#formEliminar").ajaxForm({
+                beforeSubmit: function (arr, $form, options) {
+                    showLoading();
+                    $("#myModal").modal('hide');
+                    return true; //it will continue your submission.
+                },
+                success: function (data) {
+                    //levantar modal
+                    $("#contenido").empty();
+                    $("#contenido").html(data);
+
+                },
+                error: function () {
+                    alert("error");
+                }
+            });
+
+            $("#formEliminar").submit(function (evt) {
+                /*evita el doble submit*/
+                evt.preventDefault();
+                evt.stopImmediatePropagation();
+                return false;
+            });
+
+        });
+    </script>
+}

@@ -1,0 +1,49 @@
+﻿@using GeoSit.Data.BusinessEntities.Common
+@model GeoSit.Client.Web.ViewModels.EspacioPublico
+
+@Html.Partial("Partials/ObjetoEspecificoBaseView", new GeoSit.Client.Web.ViewModels.ObjetoEspecificoViewModel { Guid = Model.Guid, IdTramiteEntrada = Model.IdTramiteEntrada })
+
+<label style="width: 100%; color: #a3a99b; font-style: italic;">
+    Espacio Público
+</label>
+
+@Html.HiddenFor(m => m.IdEspacioPublico, new { @class = "form-control", Id = "IdEspacioPublico", @readonly = "true" })
+
+<div class="form-group">
+    @Html.LabelFor(m => m.Superficie, new { @class = "col-md-3 control-label" })
+    <div class="col-md-9">
+        @Html.TextBoxFor(m => m.Superficie, new { @class = "form-control visibleArbolObjetos" })
+        <label>La superficie se interpretará como ha cuando las parcelas destino sean rurales o suburbanas, caso contrario será interpretada como m².</label>
+        @Html.ValidationMessageFor(m => m.Superficie, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function () {
+
+        @* TODO: Esta funcion debe eliminarse cuando funcione jquery.validation.unobtrusive *@
+
+        jQuery.validator.addMethod('positiveNumber', function (value) {
+            return Number(value) >= 0;
+        });
+
+        $("#divEdicionObjetoContainer").validate({
+            rules: {
+                Superficie: {
+                    required: true,
+                    positiveNumber: true
+                },
+            },
+            messages: {
+
+                Superficie: {
+                    required: "El campo es requerido",
+                    positiveNumber: "Debe tener cargado un valor numérico positivo"
+                },
+            }
+        });
+
+    });
+
+</script>

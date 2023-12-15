@@ -1,0 +1,40 @@
+﻿.bs-wizard {
+
+width:65%; 
+height:20px;
+margin:30px auto;
+
+}
+
+/*Form Wizard*/
+.bs-wizard {border-bottom: solid 1px #e0e0e0; padding: 0 0 0 0;}
+.bs-wizard > .bs-wizard-step {padding: 0; position: relative;}
+.bs-wizard > .bs-wizard-step + .bs-wizard-step {}
+.bs-wizard > .bs-wizard-step .bs-wizard-stepnum {color: #595959; font-size: 0px; margin-bottom: 0px;}
+.bs-wizard > .bs-wizard-step .bs-wizard-info {color: #999; font-size: 0px;}
+.bs-wizard > .bs-wizard-step > .bs-wizard-dot {position: absolute; width: 10px; height: 10px; display: block; background: #5C5C5C; top: 3px; left: 0%; margin-top: -6px; margin-left: -6px; border-radius: 50%;} 
+.bs-wizard > .bs-wizard-step > .bs-wizard-dot:after {content: ' '; width: 0px; height: 0px; background: #5C5C5C; border-radius: 50px; position: absolute; top: 4px; left: 4px; } 
+.bs-wizard > .bs-wizard-step > .progress {position: relative; border-radius: 0px; height: 2px; box-shadow: none; margin: 1px 0;}
+.bs-wizard > .bs-wizard-step > .progress > .progress-bar {width:0px; box-shadow: none; background: #45B1D5;}
+
+/*complete*/
+.bs-wizard > .bs-wizard-step.complete > .progress > .progress-bar {width:100%;}
+.bs-wizard > .bs-wizard-step.complete > .bs-wizard-dot {background: darkgrey;} 
+.bs-wizard > .bs-wizard-step.complete > .bs-wizard-dot:after {background: darkgrey;} 
+.bs-wizard > .bs-wizard-step > .progress > .progress-bar {background: darkgrey;}
+
+.bs-wizard > .bs-wizard-step.active > .progress > .progress-bar {width:0%;}
+.bs-wizard > .bs-wizard-step.active > .progress > .progress-bar {background:#45B1D5;}
+.bs-wizard > .bs-wizard-step.active > .progress {background: #45B1D5;}
+
+/*.bs-wizard > .bs-wizard-step:first-child.active > .progress > .progress-bar {width:0%;}
+.bs-wizard > .bs-wizard-step:last-child.active > .progress > .progress-bar {width: 100%;}*/
+
+.bs-wizard > .bs-wizard-step.disabled > .bs-wizard-dot {background-color: #45B1D5;}
+.bs-wizard > .bs-wizard-step.disabled > .bs-wizard-dot:after {opacity: 0;}
+.bs-wizard > .bs-wizard-step.disabled > .progress {background: #45B1D5;}
+
+.bs-wizard > .bs-wizard-step:first-child  > .progress {left: 0%; width: 100%;}
+.bs-wizard > .bs-wizard-step:last-child  > .progress {width: 0%;}
+.bs-wizard > .bs-wizard-step.disabled a.bs-wizard-dot{ pointer-events: none; }
+/*END Form Wizard*/

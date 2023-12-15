@@ -1,0 +1,695 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{F5DCF2CF-4862-4E55-B288-AC2E990FF6EE}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>GeoSit.Web.Api</RootNamespace>
+    <AssemblyName>GeoSit.Web.Api</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort>44301</IISExpressSSLPort>
+    <IISExpressAnonymousAuthentication>enabled</IISExpressAnonymousAuthentication>
+    <IISExpressWindowsAuthentication>disabled</IISExpressWindowsAuthentication>
+    <IISExpressUseClassicPipelineMode>false</IISExpressUseClassicPipelineMode>
+    <TargetFrameworkProfile />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+    <Use64BitIISExpress />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <RunCodeAnalysis>false</RunCodeAnalysis>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <ExcludeGeneratedDebugSymbol>true</ExcludeGeneratedDebugSymbol>
+    <FilesToIncludeForPublish>AllFilesInTheProject</FilesToIncludeForPublish>
+    <IncludeIisSettings>true</IncludeIisSettings>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AttributeRouting, Version=3.5.6.0, Culture=neutral, PublicKeyToken=c10f85d521a011a9, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\AttributeRouting.Core.3.5.6\lib\net40\AttributeRouting.dll</HintPath>
+    </Reference>
+    <Reference Include="AttributeRouting.Web, Version=3.5.6.0, Culture=neutral, PublicKeyToken=c10f85d521a011a9, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\AttributeRouting.Core.Web.3.5.6\lib\net40\AttributeRouting.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="BouncyCastle.Crypto, Version=1.8.5.0, Culture=neutral, PublicKeyToken=0e99375e54769942, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Portable.BouncyCastle.1.8.5\lib\net40\BouncyCastle.Crypto.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.Logging, Version=3.4.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Common.Logging.3.4.1\lib\net40\Common.Logging.dll</HintPath>
+    </Reference>
+    <Reference Include="Common.Logging.Core, Version=3.4.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Common.Logging.Core.3.4.1\lib\net40\Common.Logging.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Elmah, Version=1.2.14706.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\elmah.corelibrary.1.2.2\lib\Elmah.dll</HintPath>
+    </Reference>
+    <Reference Include="Elmah.Contrib.WebApi, Version=1.0.10.25, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Elmah.Contrib.WebApi.1.0.10.25\lib\net45\Elmah.Contrib.WebApi.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework6.Npgsql, Version=6.4.1.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EntityFramework6.Npgsql.6.4.1\lib\net461\EntityFramework6.Npgsql.dll</HintPath>
+    </Reference>
+    <Reference Include="EPPlus, Version=5.2.1.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\EPPlus.5.2.1\lib\net45\EPPlus.dll</HintPath>
+    </Reference>
+    <Reference Include="Fare, Version=2.1.0.0, Culture=neutral, PublicKeyToken=ea68d375bf33a7c8, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Fare.2.1.2\lib\net35\Fare.dll</HintPath>
+    </Reference>
+    <Reference Include="FluentValidation, Version=9.0.0.0, Culture=neutral, PublicKeyToken=7de548da2fbae0f0, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\FluentValidation.9.1.1\lib\net461\FluentValidation.dll</HintPath>
+    </Reference>
+    <Reference Include="Ghostscript.NET, Version=1.2.1.0, Culture=neutral, PublicKeyToken=f85051de34525b59, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Ghostscript.NET.1.2.1\lib\net40\Ghostscript.NET.dll</HintPath>
+    </Reference>
+    <Reference Include="itextsharp, Version=5.5.13.1, Culture=neutral, PublicKeyToken=8354ae6d2174ddca, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\iTextSharp.5.5.13.1\lib\itextsharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.Identity.Core.2.2.3\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Bcl.AsyncInterfaces.1.0.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Web.Infrastructure, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.Web.Infrastructure.1.0.0.0\lib\net40\Microsoft.Web.Infrastructure.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject, Version=3.3.4.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Ninject.3.3.4\lib\net45\Ninject.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject.Web.Common, Version=3.3.1.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Ninject.Web.Common.3.3.1\lib\net45\Ninject.Web.Common.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject.Web.Common.WebHost, Version=3.3.1.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Ninject.Web.Common.WebHost.3.3.1\lib\net45\Ninject.Web.Common.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject.Web.WebApi, Version=3.3.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Ninject.Web.WebApi.3.3.0\lib\net45\Ninject.Web.WebApi.dll</HintPath>
+    </Reference>
+    <Reference Include="Ninject.Web.WebApi.WebHost, Version=3.3.0.0, Culture=neutral, PublicKeyToken=c7192dc5380945e7, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Ninject.Web.WebApi.WebHost.3.3.0\lib\net45\Ninject.Web.WebApi.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="Npgsql, Version=4.1.3.0, Culture=neutral, PublicKeyToken=5d8b90d52f46fda7, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Npgsql.4.1.3\lib\net461\Npgsql.dll</HintPath>
+    </Reference>
+    <Reference Include="Oracle.ManagedDataAccess, Version=4.122.19.1, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Oracle.ManagedDataAccess.19.8.0\lib\net40\Oracle.ManagedDataAccess.dll</HintPath>
+    </Reference>
+    <Reference Include="Oracle.ManagedDataAccess.EntityFramework, Version=6.122.19.1, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Oracle.ManagedDataAccess.EntityFramework.19.7.0\lib\net45\Oracle.ManagedDataAccess.EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Buffers.4.5.0\lib\netstandard2.0\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.ComponentModel.Annotations, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.ComponentModel.Annotations.4.7.0\lib\net461\System.ComponentModel.Annotations.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Data.OracleClient" />
+    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Memory.4.5.3\lib\netstandard2.0\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Numerics" />
+    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.6.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Runtime.CompilerServices.Unsafe.4.7.0\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Text.Encodings.Web, Version=4.0.4.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Text.Encodings.Web.4.6.0\lib\netstandard2.0\System.Text.Encodings.Web.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Text.Json, Version=4.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Text.Json.4.6.0\lib\net461\System.Text.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Threading.Tasks" />
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.Threading.Tasks.Extensions.4.5.3\lib\netstandard2.0\System.Threading.Tasks.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Transactions" />
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Cors, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.Cors.5.2.7\lib\net45\System.Web.Cors.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Http, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebApi.Core.5.2.7\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.7\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="WebActivatorEx, Version=2.0.0.0, Culture=neutral, PublicKeyToken=7b26dc2a43f6a0d4, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\WebActivatorEx.2.2.0\lib\net40\WebActivatorEx.dll</HintPath>
+    </Reference>
+    <Reference Include="Z.EntityFramework.Extensions, Version=4.0.57.0, Culture=neutral, PublicKeyToken=59b66d028979105b, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Z.EntityFramework.Extensions.4.0.57\lib\net45\Z.EntityFramework.Extensions.dll</HintPath>
+    </Reference>
+    <Reference Include="Z.EntityFramework.Plus.EF6, Version=1.12.17.0, Culture=neutral, PublicKeyToken=59b66d028979105b, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Z.EntityFramework.Plus.EF6.1.12.17\lib\net45\Z.EntityFramework.Plus.EF6.dll</HintPath>
+    </Reference>
+    <Reference Include="Z.Expressions.Eval, Version=3.1.8.0, Culture=neutral, PublicKeyToken=59b66d028979105b, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Z.Expressions.Eval.3.1.8\lib\net45\Z.Expressions.Eval.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="App_Readme\Elmah.txt" />
+    <Content Include="Croquis_Clase_Parcela\1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Croquis_Clase_Parcela\10.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Croquis_Clase_Parcela\11.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Croquis_Clase_Parcela\12.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Croquis_Clase_Parcela\13.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Croquis_Clase_Parcela\14.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Croquis_Clase_Parcela\15.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Croquis_Clase_Parcela\16.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Croquis_Clase_Parcela\17.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Croquis_Clase_Parcela\18.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Croquis_Clase_Parcela\19.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Croquis_Clase_Parcela\2.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Croquis_Clase_Parcela\20.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Croquis_Clase_Parcela\21.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Croquis_Clase_Parcela\22.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Croquis_Clase_Parcela\23.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Croquis_Clase_Parcela\24.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Croquis_Clase_Parcela\25.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Croquis_Clase_Parcela\26.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Croquis_Clase_Parcela\27.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Croquis_Clase_Parcela\28.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Croquis_Clase_Parcela\3.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Croquis_Clase_Parcela\4.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Croquis_Clase_Parcela\5.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Croquis_Clase_Parcela\6.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Croquis_Clase_Parcela\7.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Croquis_Clase_Parcela\8.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Croquis_Clase_Parcela\9.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Global.asax" />
+    <Content Include="log4net.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Manuales\ayuda_ba.pdf" />
+    <Content Include="Manuales\ayuda_mt.pdf" />
+    <None Include="packages.config" />
+    <None Include="Web References\DGCeITServices\DGCeITService.disco" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Controllers\AnalisisPredefinidoServiceController.cs" />
+    <Compile Include="App_Start\Ninject.Web.Common.cs" />
+    <Compile Include="App_Start\NinjectConfigurator.cs" />
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Common\AuditoriaUtils.cs" />
+    <Compile Include="Controllers\AlfanumericoParcelaController.cs" />
+    <Compile Include="Controllers\AtributoController.cs" />
+    <Compile Include="Controllers\AuditoriaController.cs" />
+    <Compile Include="Controllers\BusquedaAvanzadaController.cs" />
+    <Compile Include="Controllers\ColeccionController.cs" />
+    <Compile Include="Controllers\ComponenteController.cs" />
+    <Compile Include="Controllers\ComprobantePagoServiceController.cs" />
+    <Compile Include="Controllers\DesignacionController.cs" />
+    <Compile Include="Controllers\DetalleObjetoController.cs" />
+    <Compile Include="Controllers\DominioController.cs" />
+    <Compile Include="Controllers\DominioTitularController.cs" />
+    <Compile Include="Controllers\EditorGrafico\EditorGraficoController.cs" />
+    <Compile Include="Controllers\EstadoDeudaController.cs" />
+    <Compile Include="Controllers\EstadoMensuraServiceController.cs" />
+    <Compile Include="Controllers\FuncionAdicionalController.cs" />
+    <Compile Include="Controllers\HojaController.cs" />
+    <Compile Include="Controllers\InterfaseDGCeIT\InterfaseDGCeITController.cs" />
+    <Compile Include="Controllers\InterfaseProvincial\InterfaseProvincialController.cs" />
+    <Compile Include="Controllers\InterfaseRentas\InterfaseRentasController.cs" />
+    <Compile Include="Controllers\InterfaseRentas\InterfaseRentasHelper.cs" />
+    <Compile Include="Controllers\InterfaseRPI\InterfaseRPIController.cs" />
+    <Compile Include="Controllers\LayerController.cs" />
+    <Compile Include="Controllers\MensuraServiceController.cs" />
+    <Compile Include="Controllers\MesaEntradas\MesaEntradasController.cs" />
+    <Compile Include="Controllers\ParametroController.cs" />
+    <Compile Include="Controllers\ParcelaValuacionController.cs" />
+    <Compile Include="Controllers\DeclaracionJuradaController.cs" />
+    <Compile Include="Controllers\PloteoServiceController.cs" />
+    <Compile Include="Controllers\ModuloPloteoController.cs" />
+    <Compile Include="Controllers\NorteController.cs" />
+    <Compile Include="Controllers\PlantillaCategoriaController.cs" />
+    <Compile Include="Controllers\PlantillaController.cs" />
+    <Compile Include="Controllers\PlantillaEscalaController.cs" />
+    <Compile Include="Controllers\PlantillaTextoController.cs" />
+    <Compile Include="Controllers\ActaServiceController.cs" />
+    <Compile Include="Controllers\ObrasParticularesServiceController.cs" />
+    <Compile Include="Controllers\ClaseParcelaController.cs" />
+    <Compile Include="Controllers\DivisionServiceController.cs" />
+    <Compile Include="Controllers\DocumentoServiceController.cs" />
+    <Compile Include="Controllers\DomicilioServiceController.cs" />
+    <Compile Include="Controllers\EstadoParcelaController.cs" />
+    <Compile Include="Controllers\LocalidadServiceController.cs" />
+    <Compile Include="Controllers\NacionalidadServiceController.cs" />
+    <Compile Include="Controllers\NomenclaturaServiceController.cs" />
+    <Compile Include="Controllers\NomenclaturaController.cs" />
+    <Compile Include="Controllers\ObjetoAdministrativoServiceController.cs" />
+    <Compile Include="Controllers\PaisServiceController.cs" />
+    <Compile Include="Controllers\ParcelaGraficaServiceController.cs" />
+    <Compile Include="Controllers\PersonaDomicilioServiceController.cs" />
+    <Compile Include="Controllers\PersonaServiceController.cs" />
+    <Compile Include="Controllers\ProfesionServiceController.cs" />
+    <Compile Include="Controllers\ProvinciaServiceController.cs" />
+    <Compile Include="Controllers\ParcelaController.cs" />
+    <Compile Include="Common\TextResult.cs" />
+    <Compile Include="Controllers\ActaController.cs" />
+    <Compile Include="Controllers\ControlTecnicoExpedienteObraController.cs" />
+    <Compile Include="Controllers\DestinoController.cs" />
+    <Compile Include="Controllers\DocumentoController.cs" />
+    <Compile Include="Controllers\DomicilioController.cs" />
+    <Compile Include="Controllers\DomicilioExpedienteObraController.cs" />
+    <Compile Include="Controllers\EstadoExpedienteController.cs" />
+    <Compile Include="Controllers\EstadoExpedienteObraController.cs" />
+    <Compile Include="Controllers\ExpedienteObraController.cs" />
+    <Compile Include="Controllers\ExpedienteObraDocumentoController.cs" />
+    <Compile Include="Controllers\InspeccionController.cs" />
+    <Compile Include="Controllers\LiquidacionController.cs" />
+    <Compile Include="Controllers\ObservacionController.cs" />
+    <Compile Include="Controllers\PersonaController.cs" />
+    <Compile Include="Controllers\PersonaExpedienteObraController.cs" />
+    <Compile Include="Controllers\PlanController.cs" />
+    <Compile Include="Controllers\ReclamosDiarios\ActualizacionController.cs" />
+    <Compile Include="Controllers\ReclamosDiarios\ReclamosDiariosController.cs" />
+    <Compile Include="Controllers\RolController.cs" />
+    <Compile Include="Controllers\ObrasPublicas\InfraestructuraServiceController.cs" />
+    <Compile Include="Controllers\ObrasPublicas\TramitesCertificadosServiceController.cs" />
+    <Compile Include="Controllers\ObrasPublicas\ZonaAtributoServiceController.cs" />
+    <Compile Include="Controllers\MantenimientoServiceController.cs" />
+    <Compile Include="Controllers\InterfacesServiceController.cs" />
+    <Compile Include="Controllers\RuteoController.cs" />
+    <Compile Include="Controllers\Temporal\CertificadoCatastralTemporalController.cs" />
+    <Compile Include="Controllers\Temporal\DominioTemporalController.cs" />
+    <Compile Include="Controllers\Temporal\LibreDeDeudaTemporalController.cs" />
+    <Compile Include="Controllers\Temporal\DivisionTemporalController.cs" />
+    <Compile Include="Controllers\Temporal\MensuraTemporalController.cs" />
+    <Compile Include="Controllers\Temporal\DeclaracionJuradaTemporalController.cs" />
+    <Compile Include="Controllers\Temporal\EspacioPublicoTemporalController.cs" />
+    <Compile Include="Controllers\Temporal\ParcelaTemporalController.cs" />
+    <Compile Include="Controllers\TestController.cs" />
+    <Compile Include="Controllers\TipoMensuraServiceController.cs" />
+    <Compile Include="Controllers\TipoUnidadTributariaController.cs" />
+    <Compile Include="Controllers\Temporal\UnidadTributariaTemporalController.cs" />
+    <Compile Include="Controllers\ValidacionController.cs" />
+    <Compile Include="Controllers\ValuacionServiceController.cs" />
+    <Compile Include="Controllers\SeguridadServiceController.cs" />
+    <Compile Include="Controllers\LayersController.cs" />
+    <Compile Include="Controllers\MapasTematicosServiceController.cs" />
+    <Compile Include="Controllers\GenericoServiceController.cs" />
+    <Compile Include="Controllers\ControlTecnicoController.cs" />
+    <Compile Include="Controllers\ServicioController.cs" />
+    <Compile Include="Controllers\ServicioExpedienteObraController.cs" />
+    <Compile Include="Controllers\SuperficieExpedienteObraController.cs" />
+    <Compile Include="Controllers\TipoExpedienteController.cs" />
+    <Compile Include="Controllers\TipoExpedienteObraController.cs" />
+    <Compile Include="Controllers\TipoDocumentoServiceController.cs" />
+    <Compile Include="Controllers\TipoDomicilioServiceController.cs" />
+    <Compile Include="Controllers\TipoInscripcionController.cs" />
+    <Compile Include="Controllers\TipoNomenclaturaController.cs" />
+    <Compile Include="Controllers\TipoParcelaController.cs" />
+    <Compile Include="Controllers\TipoParcelaOperacionController.cs" />
+    <Compile Include="Controllers\TipoPersonaController.cs" />
+    <Compile Include="Controllers\TipoProfesionServiceController.cs" />
+    <Compile Include="Controllers\TiposDivisionesAdministrativasController.cs" />
+    <Compile Include="Controllers\TipoSeccionServiceController.cs" />
+    <Compile Include="Controllers\TiposObjetosAdministrativosController.cs" />
+    <Compile Include="Controllers\TipoTramiteServiceController.cs" />
+    <Compile Include="Controllers\TipoSuperficieController.cs" />
+    <Compile Include="Controllers\UnidadTributariaController.cs" />
+    <Compile Include="Controllers\UnidadTributariaExpedienteObraController.cs" />
+    <Compile Include="Controllers\TramoViaServiceController.cs" />
+    <Compile Include="Controllers\UnidadTributariaDocumentoController.cs" />
+    <Compile Include="Controllers\UnidadTributariaDomicilioController.cs" />
+    <Compile Include="Controllers\UnidadTributariaPersonaController.cs" />
+    <Compile Include="Controllers\ViaServiceController.cs" />
+    <Compile Include="Controllers\AyudaLineaServiceController.cs" />
+    <Compile Include="Controllers\VirController.cs" />
+    <Compile Include="Controllers\WebInstructivoServiceController.cs" />
+    <Compile Include="Controllers\WebLinksServiceController.cs" />
+    <Compile Include="Ghostscript\Ghostscript.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BusquedaAvanzadaModel.cs" />
+    <Compile Include="Models\ColeccionModels.cs" />
+    <Compile Include="Models\Models.cs" />
+    <Compile Include="Models\RelacionJerarquiaIntermedia.cs" />
+    <Compile Include="Models\RuteoModels.cs" />
+    <Compile Include="Ploteo\ModPlot.cs" />
+    <Compile Include="Ploteo\ModPlotGraphics.cs" />
+    <Compile Include="Ploteo\ObjetoPloteableHelper.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="Services\Interfaces\IStandaloneService.cs" />
+    <Compile Include="Services\SessionsCleanup.cs" />
+    <Compile Include="Services\FullDeltaIndexer.cs" />
+    <Compile Include="Services\TramitesIndexer.cs" />
+    <Compile Include="Solr\SolrHelper.cs" />
+    <Compile Include="Web References\DGCeITServices\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\inmAvaluoMasivo\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\inmAvaluo\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\inmBajaPedido\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\inmBaja\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+    <Compile Include="Web References\inmEdita\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.map</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Properties\PublishProfiles\WebApi.pubxml" />
+    <None Include="Properties\Settings.settings">
+      <Generator>PublicSettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\DGCeITServices\DGCeITService.wsdl" />
+    <Content Include="Web References\DGCeITServices\Parcela.datasource">
+      <DependentUpon>Reference.map</DependentUpon>
+    </Content>
+    <None Include="Web References\DGCeITServices\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\inmAvaluoMasivo\inmAvaluoMasivo.wsdl" />
+    <None Include="Web References\inmAvaluoMasivo\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\inmAvaluo\inmAvaluo.wsdl" />
+    <None Include="Web References\inmAvaluo\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\inmBajaPedido\inmBajaPedido.wsdl" />
+    <None Include="Web References\inmBajaPedido\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\inmBaja\inmBaja.wsdl" />
+    <None Include="Web References\inmBaja\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web References\inmEdita\inmEdita.wsdl" />
+    <None Include="Web References\inmEdita\Reference.map">
+      <Generator>MSDiscoCodeGenerator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\GeoSit.Core.Logging\GeoSit.Core.Logging.csproj">
+      <Project>{bce195ba-8854-4fc7-a829-9a2ddb3d9560}</Project>
+      <Name>GeoSit.Core.Logging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Core\Geosit.Core.Utils\Geosit.Core.Utils.csproj">
+      <Project>{f46236ff-0a2a-45a2-875d-a929b61a75cf}</Project>
+      <Name>Geosit.Core.Utils</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Core\Libraries\MPFuncionesEspeciales\MPFuncionesEspeciales.csproj">
+      <Project>{9c789ead-0393-4139-a990-1852207764fc}</Project>
+      <Name>MPFuncionesEspeciales</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Core\Libraries\PDFUtilities\PDFUtilities.csproj">
+      <Project>{8b12c451-3a80-407b-85d6-0122022e1b47}</Project>
+      <Name>PDFUtilities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Data\BusinessEntities\GeoSit.Data.BusinessEntities.csproj">
+      <Project>{ad3c9f66-1110-4666-9dc4-0960018c3066}</Project>
+      <Name>GeoSit.Data.BusinessEntities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Data\DAL\GeoSit.Data.DAL.csproj">
+      <Project>{f079c0db-d934-4f33-bc5f-28c071a46f2d}</Project>
+      <Name>GeoSit.Data.DAL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\GeoSit.Data.Intercambio.BusinessEntities\GeoSit.Data.Intercambio.BusinessEntities.csproj">
+      <Project>{308F416D-D742-4D08-B078-240C68989A24}</Project>
+      <Name>GeoSit.Data.Intercambio.BusinessEntities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\GeoSit.Data.Intercambio.DAL\GeoSit.Data.Intercambio.DAL.csproj">
+      <Project>{5DFBD4F5-8A0F-4FD5-B1BA-8BC1B67EBB95}</Project>
+      <Name>GeoSit.Data.Intercambio.DAL</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferences Include="Web References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WebReferenceUrl Include="http://emaw70512.hopto.org/samws/inmAvaluo.php%3fwsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\inmAvaluo\</RelPath>
+      <UpdateFromURL>http://emaw70512.hopto.org/samws/inmAvaluo.php%3fwsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>GeoSit_Web_Api_inmAvaluo_Avaluo_de_Inmueble</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="http://emaw70512.hopto.org/samws/inmAvaluoMasivo.php%3fwsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\inmAvaluoMasivo\</RelPath>
+      <UpdateFromURL>http://emaw70512.hopto.org/samws/inmAvaluoMasivo.php%3fwsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>GeoSit_Web_Api_inmAvaluoMasivo_Avaluo_Masivo_de_Inmueble</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="http://emaw70512.hopto.org/samws/inmBaja.php%3fwsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\inmBaja\</RelPath>
+      <UpdateFromURL>http://emaw70512.hopto.org/samws/inmBaja.php%3fwsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>GeoSit_Web_Api_inmBaja_Baja_de_Inmueble</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="http://emaw70512.hopto.org/samws/inmBajaPedido.php%3fwsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\inmBajaPedido\</RelPath>
+      <UpdateFromURL>http://emaw70512.hopto.org/samws/inmBajaPedido.php%3fwsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>GeoSit_Web_Api_inmBajaPedido_Baja_de_Inmueble</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="http://emaw70512.hopto.org/samws/inmEdita.php%3fwsdl">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\inmEdita\</RelPath>
+      <UpdateFromURL>http://emaw70512.hopto.org/samws/inmEdita.php%3fwsdl</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>GeoSit_Web_Api_inmEdita_Alta_y_Modificación_de_Inmueble</CachedSettingsPropName>
+    </WebReferenceUrl>
+    <WebReferenceUrl Include="http://localhost:3171/DGCeITService.asmx">
+      <UrlBehavior>Dynamic</UrlBehavior>
+      <RelPath>Web References\DGCeITServices\</RelPath>
+      <UpdateFromURL>http://localhost:3171/DGCeITService.asmx</UpdateFromURL>
+      <ServiceLocationURL>
+      </ServiceLocationURL>
+      <CachedDynamicPropName>
+      </CachedDynamicPropName>
+      <CachedAppSettingsObjectName>Settings</CachedAppSettingsObjectName>
+      <CachedSettingsPropName>GeoSit_Web_Api_DGCeITServices_DGCeITService</CachedSettingsPropName>
+    </WebReferenceUrl>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>42671</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:42671/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>http://aims15/GeoSITv3</CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('$(SolutionDir)\.nuget\NuGet.targets')" Text="$([System.String]::Format('$(ErrorText)', '$(SolutionDir)\.nuget\NuGet.targets'))" />
+    <Error Condition="!Exists('..\..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
+  </Target>
+  <Import Project="..\..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,49 @@
+﻿@using GeoSit.Data.BusinessEntities.ObrasPublicas;
+@model IEnumerable<ObjetoInfraestructura>
+
+@*@section styles
+{
+    <link href="../Content/mapastematicos.css" rel="stylesheet" />
+    <link href="../Content/jquery.jscrollpane.css" rel="stylesheet" />
+    <link href="../Content/progress_bar.css" rel="stylesheet" />
+    <link href="../Content/jquery-ui.css" rel="stylesheet" />
+
+    <link href="../Content/dataTables.bootstrap.css" rel="stylesheet" />
+    <link href="../Content/ObrasPublicas.css" rel="stylesheet" />
+
+}*@
+
+<tr>
+    <th class="hide"></th>
+    <th>Nombre</th>
+    <th>Descripci&oacute;n</th>
+    @if (Model != null)
+    {
+        var infObjetos = Model;
+        if (infObjetos != null)
+        {
+            int cont = 0;
+            foreach (var item in infObjetos)
+            {
+                if (item.Atributos != null)
+                {
+                    System.Data.DataSet dataSet = new System.Data.DataSet("Atributos");
+
+                    dataSet.ReadXml(new StringReader(item.Atributos));
+
+                    if (dataSet.Tables.Count > 0 && dataSet.Tables[0].Columns.Count > 0)
+                    {
+                        foreach (System.Data.DataColumn mColumn in dataSet.Tables[0].Columns)
+                        {
+                            <th>@mColumn.ColumnName</th>
+                            cont++;
+                            System.Diagnostics.Debug.WriteLine("ROW: " + cont);
+                        }
+                    }
+                }
+                break;
+            }
+        }
+    }
+
+</tr>

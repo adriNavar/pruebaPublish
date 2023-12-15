@@ -1,0 +1,536 @@
+﻿@using GeoSit.Client.Web.Models;
+@model IEnumerable<TipoReporte>
+
+@{
+    ViewBag.Title = "Generación de Reportes";
+    List<UsuariosModel> usuarios = ViewBag.listaUsuarios;
+    List<FuncionesModel> funciones = ViewBag.listaFunciones;
+}
+
+<link href="~/Content/dataTables.bootstrap.css" rel="stylesheet" />
+<link href="~/Scripts/jstree/dist/themes/default/style.css" rel="stylesheet" />
+<link href="~/Content/seguridad_new.css" rel="stylesheet" />
+
+<div class="modal fade theme_new seguridad" id="myModalReporte" tabindex="-1" data-backdrop="static" role="dialog" aria-labelledby="modal-windowLabel" aria-hidden="true" data-keyboard="false">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div id="scroll-content-reportes" class="scroll-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">@ViewBag.Title</h3>
+                    <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+                </div>
+                <div class="modal-body reportes-body">
+                    <div id="reportes-content" class="body-content">
+                        <div class="panel panel-group reportes-listado">
+                            <div class='panel-heading bg-primary main-heading' role='tab' id='headingListado'>
+                                <a data-toggle='collapse' aria-expanded='true'>
+                                    <div class='panel-title'>
+                                        Seleccionar el tipo de reporte a generar
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="panel-body">
+                                <div class="col-xs-12">
+                                    <table id="Reportes" class="table table-bordered table-striped table-responsive">
+                                        <thead>
+                                            <tr class="cursor-pointer">
+                                                <th></th>
+                                                <th></th>
+                                                <th></th>
+                                                <th>Reporte</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var row in Model)
+                                            {
+                                                <tr class="cursor-pointer">
+                                                    <td>@row.IdReporte</td>
+                                                    <td>@(row.UtilizaTareas ? "1" : "0")</td>
+                                                    <td>@(row.UtilizaUsuarios ? "1" : "0")</td>
+                                                    <td>@row.Nombre</td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-group accordion" id="accordion-reportes">
+                            <div class="accordion-section">
+                                <div class='panel-heading bg-primary main-heading panel-deshabilitado' role='region' id='headingFunciones'>
+                                    <a data-toggle='collapse' data-parent='#accordion-reportes' href='#collapseFunciones' aria-expanded='false'
+                                       aria-controls='collapseFunciones' class="collapsed">
+                                        <div class='panel-title'>
+                                            Funciones
+                                            <i class="fa"></i>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div id='collapseFunciones' class='panel-collapse collapse main-collapse' aria-expanded='false' aria-labelledby='headingFunciones'>
+                                    <div class="container-fluid" style="margin-top: 10px; overflow: hidden !important;">
+                                        <div class="col-xs-12">
+                                            <div class="form-group">
+                                                <div class="row remove-margin">
+                                                    <div class="col-xs-4 remove-padding">
+                                                        <label>Filtrar</label>
+                                                    </div>
+                                                </div>
+                                                <div class="row remove-margin">
+                                                    <div class="col-xs-4 remove-padding">
+                                                        <div class="input-group">
+                                                            <input type="text" value="" class="form-control" id="Filtrar_Funciones" name="Filtrar_Funciones">
+                                                            <span class="input-group-btn">
+                                                                <button id="clearSearchFunciones" class="btn btn-default">
+                                                                    <i class="fa fa-trash"></i>
+                                                                </button>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-control jstree-border">
+                                                <div id="js_funciones"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-section">
+                                <div class='panel-heading bg-primary main-heading panel-deshabilitado' role='region' id='headingUsuarios'>
+                                    <a data-toggle='collapse' data-parent='#accordion-reportes' href='#collapseUsuarios' aria-expanded='false'
+                                       aria-controls='collapseUsuarios' class="collapsed">
+                                        <div class='panel-title'>
+                                            Usuarios
+                                            <i class="fa"></i>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div id='collapseUsuarios' class='panel-collapse collapse main-collapse' aria-expanded='false' aria-labelledby='headingUsuarios'>
+                                    <div class="container-fluid" style="margin-top: 10px; overflow: hidden !important;">
+                                        <div class="col-xs-12">
+                                            <div class="form-group">
+                                                <div class="row remove-margin">
+                                                    <div class="col-xs-4 remove-padding">
+                                                        <label>Filtrar</label>
+                                                    </div>
+                                                </div>
+                                                <div class="row remove-margin">
+                                                    <div class="col-xs-4 remove-padding">
+                                                        <div class="input-group">
+                                                            <input type="text" value="" class="form-control" id="Filtrar_Usuarios" name="Filtrar_Usuarios">
+                                                            <span class="input-group-btn">
+                                                                <button id="clearSearchUsuarios" class="btn btn-default">
+                                                                    <i class="fa fa-trash"></i>
+                                                                </button>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <hr />
+                                            <div class="form-control jstree-border">
+                                                <div id="js_usuarios"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-section">
+                                <div class='panel-heading bg-primary main-heading panel-deshabilitado' role='region' id='headingFechas'>
+                                    <a data-toggle='collapse' data-parent='#accordion-reportes' href='#collapseFechas' aria-expanded='false'
+                                       aria-controls='collapseFechas' class="collapsed">
+                                        <div class='panel-title'>
+                                            Fechas
+                                            <i class="fa"></i>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div id='collapseFechas' class='panel-collapse collapse main-collapse' aria-expanded='false' aria-labelledby='headingFechas'>
+                                    <div class="panel-body">
+                                        <div class="form-group clearfix" style="margin-top:10px;">
+                                            <label class="col-xs-3 text-info" style="margin-top:7px;">
+                                                Fecha Desde
+                                            </label>
+                                            <div class="col-xs-3">
+                                                <div class="input-group date">
+                                                    <input type="text" id="FechaDesde" name="FechaDesde" class="form-control" />
+                                                    <span class="input-group-addon">
+                                                        <span class="fa fa-calendar">
+                                                        </span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group clearfix">
+                                            <label class="col-xs-3 text-info" style="margin-top:7px;">
+                                                Fecha Hasta
+                                            </label>
+                                            <div class="col-xs-3">
+                                                <div class="input-group date">
+                                                    <input type="text" id="FechaHasta" name="FechaHasta" class="form-control" />
+                                                    <span class="input-group-addon">
+                                                        <span class="fa fa-calendar">
+                                                        </span>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <span id="searchInforme" title="Buscar" data-original-title="Buscar" class="fa fa-search fa-2x black pull-right cursor-pointer" style="transform: rotate(90deg);margin-right: 10px;"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-section">
+                                <div class='panel-heading bg-primary main-heading panel-deshabilitado' role='region' id='headingInforme'>
+                                    <a data-toggle='collapse' data-parent='#accordion-reportes' href='#collapseInforme' aria-expanded='false'
+                                       aria-controls='collapseInforme' class="collapsed">
+                                        <div class='panel-title'>
+                                            Informe
+                                            <i class="fa"></i>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div id='collapseInforme' class='panel-collapse collapse main-collapse' aria-expanded='false' aria-labelledby='headingInforme'>
+                                    <div class="panel-body">
+                                        <div class="col-xs-12" style="margin-top:10px;">
+                                            <div id="informeResultado" style="overflow:hidden"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-lg-4 pull-right">
+                        <span id="btnExportarPDF" title="Exportar PDF" onclick="javascript:$('.dt-buttons a.buttons-pdf').click();" class="fa fa-file-pdf-o fa-2x cursor-pointer" style="color:red"></span>
+                        <span id="btnExportarXLS" title="Exportar Excel" onclick="javascript:$('.dt-buttons a.buttons-excel').click();" class="fa fa-file-excel-o fa-2x cursor-pointer" style="color:green"></span>
+                        <span id="btnCancelarInforme" aria-hidden="true" data-placement="right" title="Cancelar" data-original-title="Cancelar" class="fa fa-undo fa-2x black cursor-pointer"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Información-->
+<div class="modal fade theme_new mensaje" id="ModalInfoReportes" tabindex="-1" role="dialog" aria-labelledby="TituloInfoReportes" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="TituloInfoReportes">Titulo</h3>
+                <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+            </div>
+            <div class="modal-body">
+                <div id="MensajeInfoReportes" class="alert alert-warning alert-dismissible" role="alert">
+                    <strong>Atención!</strong><br />
+                    <p id="DescripcionInfoReportes">Descripcion de la informacion</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/jquery.dataTables.min.js"></script>
+<script src="~/Scripts/dataTables.bootstrap.js"></script>
+<script src="~/Scripts/dataTables.buttons.min.js"></script>
+<script src="~/Scripts/jszip.min.js"></script>
+<script src="~/Scripts/buttons.flash.min.js"></script>
+<script src="~/Scripts/buttons.html5.min.js"></script>
+<script src="~/Scripts/pdfmake.min.js"></script>
+<script src="~/Scripts/vfs_fonts.js"></script>
+<script src="~/Scripts/jstree/dist/jstree.min.js"></script>
+<script>
+    var funcionesData = [];
+    funcionesData.push({ "id": "_todos", "parent": "#", "text": "Todos", "state": { "selected": false, "opened": true } });
+    @foreach (var funcion in funciones)
+    {
+        <text>funcionesData.push({ "id": "@funcion.Id_Funcion", "parent": "@(funcion.Id_Funcion_Padre != funcion.Id_Funcion ? funcion.Id_Funcion_Padre.ToString() : "_todos")", "text": "@funcion.Nombre", "state": { "selected": false, "opened": false } });</text>
+    }
+
+    var usuariosData = [];
+    usuariosData.push({ "id": "_todos", "parent": "#", "text": "Todos", "state": { "selected": false, "opened": true } });
+    @foreach (var usuario in usuarios)
+    {
+        <text>usuariosData.push({ "id": "@usuario.Id_Usuario", "parent": "_todos", "text": "<span@(!usuario.Habilitado || usuario.Fecha_baja.HasValue ? " style=color:#F00" : "")>@usuario.Login</span>", "state": { "selected": false, "opened": false } });</text>
+    }
+
+</script>
+<script>
+    $(window).resize(ajustamodal);
+    $(document).ready(function () {
+        $("#reportes-content").niceScroll(getNiceScrollConfig());
+        $('#scroll-content-reportes .panel-body').resize(ajustarScrollBarsConsultas);
+        $('#reportes-content .panel-heading a').click(function () {
+            setTimeout(ajustarScrollBarsConsultas, 10);
+        });
+        $("[name='tareas']").on("click", function (evt) {
+            var secciones = ['#headingFechas'];
+            var reporte = Number($(evt.target).val());
+            if (reporte === 5) {
+                secciones.push('#headingFunciones');
+            } else if (reporte !== 6) {
+                secciones = secciones.concat(['#headingFunciones', '#headingUsuarios']);
+            }
+            activarSecciones(secciones.join(','));
+            if (reporte !== 6) {
+                arbolFunciones();
+            }
+            if (reporte < 5) {
+                arbolUsuarios();
+            }
+        });
+        $("#searchInforme").on("click", buscar);
+
+        $("#btnCancelarInforme").on("click", function () {
+            resetTree('js_funciones');
+            resetTree('js_usuarios');
+            setDefaultDates();
+            $("#informeResultado").html("");
+            $("#Reportes tbody tr.selected").click();
+            setTimeout(ajustarScrollBarsConsultas,10);
+        });
+
+        $("#myModalReporte .date .form-control").datepicker(getDatePickerConfig());
+
+        $("#FechaDesde").datepicker().on("changeDate", function () {
+            $("#FechaHasta").datepicker("setStartDate", $(this).datepicker("getDate"));
+        });
+        $("#FechaHasta").datepicker().on("changeDate", function () {
+            $("#FechaDesde").datepicker("setEndDate", $(this).datepicker("getDate"));
+        });
+
+        setDefaultDates();
+
+        createDataTable("Reportes", {
+            ordering: false,
+            dom: 't',
+            columnDefs: [{
+                targets: [0, 1, 2],
+                visible: false
+            }],
+        });
+
+        $("#Reportes tbody").on("click", "tr", function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            $("#Reportes tr").not(this).removeClass('selected');
+            $(this).toggleClass('selected');
+
+            var haySeleccion = $(this).hasClass('selected');
+            var row = $('#Reportes').DataTable().row($("#Reportes tbody tr.selected")).data();
+
+            var secciones = [];
+            if (haySeleccion) {
+                if (Number(row[1]) === 1) { //tiene filtro funciones
+                    secciones.push('#headingFunciones');
+                }
+                if (Number(row[2]) === 1) { //tiene filtro usuarios
+                    secciones.push('#headingUsuarios');
+                }
+                secciones.push('#headingFechas');
+            }
+            activarSecciones(secciones.join(','));
+        });
+
+        $('#Filtrar_Usuarios').on('keyup click', function () {
+            filtrar('Filtrar_Usuarios', 'js_usuarios');
+        });
+        $('#Filtrar_Funciones').on('keyup click', function () {
+            filtrar('Filtrar_Funciones', 'js_funciones');
+        });
+        $("#clearSearchUsuarios").click(function () {
+            $("#Filtrar_Usuarios").val("");
+            filtrar('Filtrar_Usuarios', 'js_usuarios');
+        });
+        $("#clearSearchFunciones").click(function () {
+            $("#Filtrar_Funciones").val("");
+            filtrar('Filtrar_Funciones', 'js_funciones');
+        });
+
+        createTree("js_funciones", funcionesData);
+        createTree("js_usuarios", usuariosData);
+
+        hideLoading();
+        $('#myModalReporte').modal('show');
+        ajustamodal();
+    });
+    function ajustamodal() {
+        var altura = $(window).height() - 160; //value corresponding to the modal heading + footer
+        $(".reportes-body").css({ "height": altura });
+        ajustarScrollBarsConsultas()
+    }
+    function setDefaultDates() {
+        /*por default, el "desde" es un mes atras*/
+        $("#FechaDesde").datepicker("setDate", new Date((new Date()).setMonth(new Date().getMonth() - 1)));
+        $("#FechaHasta").datepicker("setDate", new Date());
+    }
+    function activarSecciones(secciones) {
+        $(".panel-heading[role='region']").not(secciones).addClass("panel-deshabilitado");
+        $(".panel-heading[role='region'].panel-deshabilitado").each(function (idx, panel) {
+            $("a[data-toggle]", panel).addClass("collapsed");
+            $("[aria-labelledby='" + $(panel).attr("id") + "']").removeClass("in").attr("aria-expanded", false);
+        });
+        $(secciones).removeClass("panel-deshabilitado");
+    }
+    function createDataTable(tableId, options) {
+        var config = {
+            dom: 'rtp',
+            language: {
+                url: BASE_URL + "Scripts/dataTables.spanish.txt",
+            }
+        };
+        $("#" + tableId).DataTable($.extend(config, options));
+    }
+    function ajustarScrollBarsConsultas() {
+        $('#reportes-content').css({ "max-height": $(".reportes-body").height() + 'px' });
+        $('#reportes-content').getNiceScroll().resize();
+    }
+    function createTree(tree, data) {
+        $('#' + tree)
+            .on('open_node.jstree', ajustarScrollBarsConsultas)
+            .on('close_node.jstree', ajustarScrollBarsConsultas)
+            .jstree({
+                "core": {
+                    "multiple": true,
+                    "animation": 0,
+                    "themes": { "icons": false },
+                    "expand_selected_onload": false,
+                    "data": data
+                },
+                "checkbox": {
+                    "three_state": true,
+                    "whole_node": true
+                },
+                "search": { //para filtros
+                    "show_only_matches": true,
+                    "show_only_matches_children": true
+                },
+                "plugins": ["checkbox", "search", "types"]
+            });
+    }
+    function resetTree(tree) {
+        $('#' + tree).jstree().close_all();
+        $('#' + tree).jstree().deselect_all();
+        $('#' + tree).jstree().open_node('_todos');
+    }
+    function getSelectedLeaves(tree, data) {
+        var row = $('#Reportes').DataTable().row($("#Reportes tbody tr.selected")).data();
+        if (Number(row[data]) === 1) {
+            var selected = [];
+            $.each($('#' + tree).jstree("get_selected"), function (_, id) {
+                if (!isNaN(id)) {
+                    selected.push(Number(id));
+                }
+            });
+            return selected;
+        }
+        return null;
+    }
+    function validar() {
+        var desde = $('#FechaDesde').datepicker('getDate'), hasta = $('#FechaHasta').datepicker('getDate');
+        var errores = [];
+        //validacion de obligatoriedad
+        if (!desde) {
+            errores.push("Debe ingresar la FECHA DESDE.");
+        }
+        if (!hasta) {
+            errores.push("Debe ingresar la FECHA HASTA.");
+        }
+        //validacion de año actual
+        if (hasta && hasta.getFullYear() > parseInt('@DateTime.Now.Year')) {
+            errores.push("El año ingresado supera el año actual.");
+        }
+        //validacion de rango de fechas
+        if (desde && hasta && new Date(new Date(hasta).setFullYear(hasta.getFullYear() - 1)) > desde) {
+            errores.push("El Rango de fechas debe estar comprendido dentro de un año.");
+        }
+        var funciones = getSelectedLeaves("js_funciones", 1);
+        if (funciones && funciones.length === 0) { //si devuelve null es porque no necesita funciones
+            errores.push("Debe seleccionar al menos una función.");
+        }
+        var usuarios = getSelectedLeaves("js_usuarios", 2);
+        if (usuarios && usuarios.length === 0) { //si devuelve null es porque no necesita usuarios
+            errores.push("Debe seleccionar al menos un usuario.");
+        }
+        if (errores.length === 0) {
+            return { desde: desde, hasta: hasta, funciones: funciones, usuarios: usuarios };
+        }
+        return { errores: errores };
+    }
+    function buscar() {
+        var validacion = validar();
+        if (validacion.errores) {
+            mostrarMensaje(validacion.errores, "Advertencia - Validación");
+            return;
+        }
+        let process = Promise.resolve();
+        if (validacion.usuarios.length > 50) {
+            process = new Promise(ok => {
+                $("#ModalInfoReportes").one('hidden.bs.modal', ok);
+                mostrarMensaje(["Tenga en cuenta que la cantidad de usuarios seleccionados puede ocasionar que la consulta demore un tiempo importante."], "Selección de Usuarios", false);
+            });
+        }
+        process.then(() => {
+            showLoading();
+            var data = {
+                tipo: $('#Reportes').DataTable().row($("#Reportes tbody tr.selected")).data()[0],
+                FuncionAsociada: validacion.funciones || [],
+                idUsuarios: validacion.usuarios || [],
+                fechaDesde: validacion.desde.toLocaleDateString("es"),
+                fechaHasta: validacion.hasta.toLocaleDateString("es")
+            };
+            $.ajax({
+                url: '@Url.Action("GetConsultas", "Seguridad")',
+                data: data,
+                type: 'POST',
+                success: function (response) {
+                    $('#informeResultado').html(response);
+                    var orderColumn = 0;
+                    var orderDirection = 'asc';
+                    if ($('#Resultados [data-order]').length > 0) {
+                        orderColumn = $('#Resultados [data-order]').index();
+                        orderDirection = $('#Resultados [data-order]').data('order');
+                    }
+                    $("#headingInforme").removeClass("panel-deshabilitado");
+                    $("#headingInforme a.collapsed").click();
+                    (function (cb) {
+                        createDataTable('Resultados', {
+                            dom: "Blfrt<'row'<'col-sm-5'i><'col-sm-7'p>>",
+                            buttons: [{
+                                extend: 'excel',
+                                className: "hidden",
+                                title: $('td:nth-of-type(1)', '#Reportes tr.selected').html(),
+                                exportOptions: { columns: ':visible' }
+                            }, {
+                                extend: 'pdfHtml5',
+                                className: "hidden",
+                                title: $('td:nth-of-type(1)', '#Reportes tr.selected').html(),
+                                exportOptions: { columns: ':visible' }
+                            }],
+                            order: [orderColumn, orderDirection],
+                            initComplete: function () { setTimeout(cb, 350); }
+                        });
+                        $('#Resultados').DataTable().on('draw', cb);
+                    })(function () { $('#reportes-content').getNiceScroll().resize(); });
+                },
+                error: function () {
+                    mostrarMensaje(["Se produjo un error al generar el reporte"], "Generación de Reportes", true);
+                },
+                complete: hideLoading
+            });
+        });
+    }
+
+    function mostrarMensaje(mensajes, titulo, error) {
+        var tipo = error || false ? "alert-danger" : "alert-warning";
+        $('#TituloInfoReportes').html(titulo);
+        $('#DescripcionInfoReportes').html(mensajes.join("<br />"));
+        $("[role='alert']", "#ModalInfoReportes").removeClass("alert-danger alert-warning").addClass(tipo);
+        $("#ModalInfoReportes").modal('show');
+    }
+
+    function filtrar(textId, tree) {
+        $("#" + tree).jstree(true).search($("#" + textId).val().toLowerCase().trim());
+        return false;
+    }
+    //# sourceURL=consultas.js
+</script>

@@ -1,0 +1,75 @@
+﻿@model GeoSit.Client.Web.Models.MapaTematicoModel
+<table id="fileTableCabercera" class="table-hover" style="width:100%">
+    <thead>
+        <tr class="borde-inferior h5" style="height:3em; ">
+            <th style="width:10%"></th>
+            <th class="centrado" width="2%">@Html.Raw("Color")</th>
+            <th class="centrado" id="THDesde" width="10%">@Html.Raw("Desde") </th>
+            <th class="centrado" id="THHasta" width="10%">@Html.Raw("Hasta") </th>
+            <th class="centrado" id="THValor" width="10%">@Html.Raw("Valor") </th>
+            <th class="centrado" width="15%">@Html.Raw("Casos") (<span id="totalCasos"></span>) </th>
+            <th class="izquierda" width="25%">@Html.Raw("Leyenda") </th>
+        </tr>
+    </thead>
+</table>
+<div id="contenerTabla" class="sscroll" style="height: 12em; width: 100%; overflow: hidden;">
+    <input type="hidden" id="hfCantRangos" value="@(Model.Visualizacion != null && Model.Visualizacion.Items != null ? Model.Visualizacion.Items.Count : 0)" />
+    <table id="fileTable" class="table-hover" style="overflow: hidden; height: 100%;width:100%">
+        <tbody id="tbodyid" style="overflow:hidden;height:100%">
+            @for (int i = 0; i < Model.Visualizacion.Items.Count; i++)
+                {
+
+                    var lorco = "#" + @Model.Visualizacion.Items[i].Color;
+                    var lorcoBorde = System.Drawing.ColorTranslator.FromHtml("#" + Model.Visualizacion.Items[i].ColorBorde);
+                    var anchoBorde = @Model.Visualizacion.Items[i].AnchoBorde + "px";
+                <tr>
+                    <td style="width:10%">
+                        <input type="hidden" id="hfRowId" value="@i" />
+                    </td>
+                    <td class="centrado" width="2%">
+                        <div class="color_rango_@i">
+                            @*@Html.HiddenFor(model => model.Visualizacion.Items[i].sIcono, new { @class = "iconoh" })*@
+                            @Html.HiddenFor(model => model.Visualizacion.Items[i].sIcono, new { @class = "iconoh" })
+                            @Html.HiddenFor(model => model.Visualizacion.Items[i].Color, new { @class = "colorh" })
+                            @Html.HiddenFor(model => model.Visualizacion.Items[i].ColorBorde, new { @class = "colorbordeh" })
+                            @Html.HiddenFor(model => model.Visualizacion.Items[i].AnchoBorde, new { @class = "anchobordeh" })
+                            @Html.HiddenFor(model => model.Visualizacion.Items[i].Valor)
+                            @Html.HiddenFor(model => model.Visualizacion.Items[i].Casos)
+
+                            <a id="link_ColorPrincipal_@i" class="colorManual">
+                                @*<span class="glyphicon glyphicon-one-fine-dot zona" style="color: @lorco ; font-size: 1em; height: 45px; text-shadow: @Model.Visualizacion.Items[i].AnchoBorde px 0px 0px rgb(@lorcoBorde.R , @lorcoBorde.G ,@lorcoBorde.B ), 0px @Model.Visualizacion.Items[i].AnchoBorde px 0px rgb(@lorcoBorde.R , @lorcoBorde.G ,@lorcoBorde.B ), -@Model.Visualizacion.Items[i].AnchoBorde px 0px 0px rgb(@lorcoBorde.R , @lorcoBorde.G ,@lorcoBorde.B ), 0px -@Model.Visualizacion.Items[i].AnchoBorde px 0px rgb(@lorcoBorde.R , @lorcoBorde.G ,@lorcoBorde.B ); -webkit-text-stroke: @Model.Visualizacion.Items[i].AnchoBorde px rgb(@lorcoBorde.R , @lorcoBorde.G ,@lorcoBorde.B );" id="ColorPrincipal_@i"></span>*@
+                                @*<span class="glyphicon glyphicon-one-fine-dot zona" style="color: @lorco ; font-size: 1em; height: 45px; -webkit-text-stroke: @Model.Visualizacion.Items[i].AnchoBorde px rgb(@lorcoBorde.R , @lorcoBorde.G ,@lorcoBorde.B );" id="ColorPrincipal_@i"></span>*@
+                                <span class="glyphicon glyphicon-one-fine-dot zona" style="color: @lorco ; font-size: 1em; height: 45px; text-shadow: @anchoBorde 0px 0px rgb(@lorcoBorde.R , @lorcoBorde.G ,@lorcoBorde.B ), 0px @anchoBorde px 0px rgb(@lorcoBorde.R , @lorcoBorde.G ,@lorcoBorde.B ), -anchoBorde 0px 0px rgb(@lorcoBorde.R , @lorcoBorde.G ,@lorcoBorde.B ), 0px -anchoBorde 0px rgb(@lorcoBorde.R , @lorcoBorde.G ,@lorcoBorde.B ); -webkit-text-stroke: @anchoBorde rgb(@lorcoBorde.R , @lorcoBorde.G ,@lorcoBorde.B );" id="ColorPrincipal_@i"></span>
+
+                            </a>
+                        </div>
+                    </td>
+                    @if (Model.Visualizacion.Items[i].Desde != null || Model.Visualizacion.Items[i].Hasta != null)
+                        {
+                        <td class="centrado" width="10%">
+                            @Html.TextBoxFor(modelItem => modelItem.Visualizacion.Items[i].Desde, new { @class = "editor-texto tdesde", @id = "tdesde" + i.ToString() })
+                        </td>
+                        <td class="centrado" width="10%">
+                            @Html.TextBoxFor(modelItem => modelItem.Visualizacion.Items[i].Hasta, new { @class = "editor-texto thasta", @id = "thasta" + i.ToString() })
+                        </td>
+                        }
+                        else
+                        {
+                        <td class="centrado" width="10%">
+                            @*@Html.TextBoxFor(modelItem => item.Valor, new { @class = "editor-texto" })*@
+                            @Html.DisplayFor(modelItem => Model.Visualizacion.Items[i].Valor)
+                        </td>
+                        }
+                    <td class="centrado casos" width="15%">
+                        @*@Html.DisplayFor(modelItem => modelItem.Visualizacion.Items[i].Casos, new { @id = "casos" + i.ToString() })*@
+                        @Html.TextBoxFor(modelItem => modelItem.Visualizacion.Items[i].Casos, new { @class = "editor-texto tfcasos", @id = "casos" + i.ToString() })
+                    </td>
+                    <td class="izquierda" width=" 25%">
+                        @Html.TextBoxFor(modelItem => modelItem.Visualizacion.Items[i].Leyenda, new { @class = "editor-texto", @maxlength = "25" })
+                    </td>
+
+                </tr>
+                }
+        </tbody>
+    </table>
+</div>

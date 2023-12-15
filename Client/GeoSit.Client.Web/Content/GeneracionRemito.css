@@ -1,0 +1,6 @@
+﻿#modal-GeneracionRemito .dropup > button > span.caret {
+    margin-left: 15px;
+}
+button.ui-datepicker-current {
+    display: none;
+}

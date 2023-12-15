@@ -1,0 +1,46 @@
+﻿@model GeoSit.Client.Web.Models.ExpedientesObras.SuperficieViewModel
+
+@Html.HiddenFor(model => model.ExpedienteObraSuperficieId)
+
+<div class="form-group">
+    <label class="control-label col-xs-3">Fecha</label>
+    <div class="col-xs-9">        
+        <div class="input-group date">
+            @Html.TextBoxFor(model => model.Fecha, new { @class = "form-control date" })
+            <span class="input-group-addon">
+                <span class="fa fa-calendar"></span>
+            </span>
+        </div>
+    </div>
+</div>
+
+<div class="form-group">
+    <label class="control-label col-xs-3">Tipo</label>
+    <div class="col-xs-9">
+        @Html.DropDownListFor(model => model.TipoSuperficieId, Model.TipoList, new { @class = "form-control" })
+    </div>
+</div>
+
+<div class="form-group">
+    <label class="control-label col-xs-3">Destino</label>
+    <div class="col-xs-9">
+        @Html.DropDownListFor(model => model.DestinoId, Model.DestinoList, new { @class = "form-control" })
+    </div>
+</div>
+
+<div class="form-group">
+    <label class="control-label col-xs-3">Superficie</label>
+    <div class="col-xs-9">
+        @Html.TextBoxFor(model => model.Superficie, new {@class = "form-control"})
+    </div>
+</div>
+
+<div class="form-group">
+    <label class="control-label col-xs-3">Plantas</label>
+    <div class="col-xs-9">
+        @Html.TextBoxFor(model => model.CantidadPlantas, new { @class = "form-control" })
+    </div>
+</div>
+
+<span class="fa fa-2x fa-times-circle pull-right black cursor-pointer pull-right" aria-hidden="true" id="superficie-cancel"></span>
+<span class="fa fa-2x fa-check-circle pull-right black cursor-pointer pull-right" id="superficie-submit"></span>

@@ -1,0 +1,12 @@
+﻿{
+  "data": [
+  {  
+  "DomicilioInmuebleId":248,
+  "Localidad":"aa",
+  "NombreVia":"RIO NEGRO Nro 1571 Barrio PROGRESO",
+  "NumeroPuerta":null,
+  "Piso":null,
+  "CodigoPostal":null
+  }
+  ]
+}

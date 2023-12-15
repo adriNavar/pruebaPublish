@@ -1,0 +1,144 @@
+﻿@using GeoSit.Data.BusinessEntities.Common
+@model GeoSit.Client.Web.ViewModels.Parcela
+
+@Html.Partial("Partials/ObjetoEspecificoBaseView", new GeoSit.Client.Web.ViewModels.ObjetoEspecificoViewModel { Guid = Model.Guid, IdTramiteEntrada = Model.IdTramiteEntrada })
+
+<label style="width: 100%; color: #a3a99b; font-style: italic;">
+    Parcela @Model.Operacion.ToString()
+</label>
+
+<label for="hdnOperacionObjetoEspecifico" style="display:none">Tipo</label>
+@Html.Hidden("hdnOperacionObjetoEspecifico", Model.Operacion, new { @class = "form-control", @readonly = "true" })
+
+
+@if (Model.Operacion == OperacionParcela.Origen)
+{
+    <div class="form-group" parcela-origen>
+        @Html.LabelFor(m => m.Partida, new { @class = "col-md-3 control-label text-muted" })
+        <div class="col-xs-8">
+            <div class="input-group">
+                @Html.TextBoxFor(m => m.Partida, new { @class = "form-control visibleArbolObjetos", @readonly = "true" })
+                @Html.HiddenFor(m => m.IdPartidaPersona, new { @class = "form-control", Id = "hdnIdPartidaPersona", @readonly = "true" })
+                <div class="input-group-addon cursor-pointer" id="parcela-search">
+                    <span data-placement="bottom" title="Buscar Parcela" class="fa-lg fa fa-search black cursor-pointer @((bool)ViewData["habilitarBuscadorParcela"]?string.Empty: "boton-deshabilitado")"
+                          aria-hidden="true" id="btn_ParcelaSearch"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="form-group">
+        @Html.LabelFor(m => m.Plano, "ID s/Plano", new { @class = "col-md-4 control-label" })
+        <div class="col-md-7">
+            @Html.TextBoxFor(m => m.Plano, new { @class = "form-control visibleArbolObjetos" })
+            @Html.ValidationMessageFor(m => m.Plano, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Tipo, "Clase", new { @class = "col-md-4 control-label" })
+        <div class="col-md-7">
+            @Html.DropDownListFor(m => m.Tipo, Model.Tipos, new { @class = "form-control visibleArbolObjetos" })
+            @Html.ValidationMessageFor(m => m.Tipo, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(m => m.Zona, new { @class = "col-md-4 control-label" })
+        <div class="col-md-7">
+            @Html.DropDownListFor(m => m.Zona, Model.Zonas, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Zona, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+}
+
+<script>
+    $(document).ready(function () {
+        $("#divEdicionObjetoContainer").off("ModificarObjeto").on("ModificarObjeto",()=> $("#btn_ParcelaSearch","[parcela-origen]").removeClass('boton-deshabilitado'));
+        jQuery.validator.addMethod("alphanumeric", function (value, element) {
+            return this.optional(element) || /^[A-Za-z0-9\d\/\.\-\s]+$/g.test(value);
+        });
+
+        @* TODO: Esta funcion debe eliminarse cuando funcione jquery.validation.unobtrusive *@
+
+        if ('@Model.Operacion' === '@OperacionParcela.Origen') {
+            $("#divEdicionObjetoContainer").validate({
+                rules: {
+                    Partida: {
+                        required: true
+                    }
+                },
+                messages: {
+                    Partida: {
+                        required: "Este campo es requerido",
+                    }
+                },
+            });
+            $("#btn_ParcelaSearch","[parcela-origen]").off("click").on("click",function () {
+                buscarParcelas()
+                    .then(function (seleccion) {
+                        let partida = [seleccion[0]];
+                        if (seleccion[2]) {
+                            partida = [...partida, seleccion[2]];
+                        }
+                        document.getElementById("Partida").value = partida.join("-");
+                        document.getElementById("hdnIdPartidaPersona").value = seleccion[1];
+                        $("#Partida").valid();
+                    })
+                    .catch(function (err) {
+                        console.log(err);
+                    });
+            });
+            const buscarParcelas = () => {
+                return new Promise(function (resolve) {
+                    var data = { tipos: BuscadorTipos.Parcelas, multiSelect: false, verAgregar: false, titulo: 'Buscar Parcela', campos: ['Partida','nomenclatura:Nomenclatura'] };
+                    $("#buscador-container").load(BASE_URL + "BuscadorGenerico", data, function () {
+                        $(".modal", this).one('hidden.bs.modal', function () {
+                            $(window).off('seleccionAceptada');
+                            $("#buscador-container").empty();
+                        });
+                        $(window).one("seleccionAceptada", function (evt) {
+                            if (evt.seleccion) {
+                                resolve(evt.seleccion.slice(1));
+                            } else {
+                                resolve();
+                            }
+                        });
+                    });
+                });
+            }
+        } else {
+
+            $("#divEdicionObjetoContainer").validate({
+                rules: {
+                    Zona: {
+                        required: true
+                    },
+                    Tipo: {
+                        required: true
+                    },
+                    Plano: {
+                        required: true,
+                        alphanumeric: true
+                    }
+                },
+                messages: {
+                    Zona: {
+                        required: "El campo es requerido"
+                    },
+                    Tipo: {
+                        required: "El campo es requerido"
+                    },
+                    Plano: {
+                        required: "El campo es requerido",
+                        alphanumeric: "Debe tener cargado un valor alfanumérico"
+                    }
+                }
+            });
+        }
+    });
+</script>
+

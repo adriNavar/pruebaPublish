@@ -1,0 +1,31 @@
+﻿@using Newtonsoft.Json
+@model IEnumerable<GeoSit.Data.BusinessEntities.ModuloPloteo.PlantillaTexto>
+
+@foreach (var pt in Model)
+{
+    <tr>
+        <td class="hide">@pt.IdPlantillaTexto</td>
+        <td>
+            @switch (pt.Tipo)
+            {
+                case 1:
+                    @:Estático
+                    break;
+                case 2:
+                @:Variable
+                    break;
+                case 3:
+                @:De datos
+                    break;
+                case 4:
+                @:Atributos
+                    break;
+            }
+    </td>
+    <td>@pt.Origen</td>
+</tr>
+}
+
+<script type="text/javascript">
+    var modelTextos = @Html.Raw(JsonConvert.SerializeObject(Model));
+</script>

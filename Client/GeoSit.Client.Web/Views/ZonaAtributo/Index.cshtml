@@ -1,0 +1,187 @@
+﻿@model GeoSit.Data.BusinessEntities.ObrasPublicas.PLN_ZonaAtributo
+
+<link href="~/Content/dataTables.bootstrap.css" rel="stylesheet" />
+<link href="~/Content/atributosZona.css" rel="stylesheet" />
+
+@Html.AntiForgeryToken()
+<div class="modal fade theme_new" id="modal-window-atributoszona" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="scroll-content" id="scroll-content-atributos">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="lblModalAtributosZona">@Resources.Recursos.AtributosZona</h3>
+                    <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+                </div>
+                <div class="modal-body atributos-body">
+                    <div class="body-content atributos-content">
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                                <label class="control-label col-xs-3 text-right">Zona:</label>
+                                <div class="col-xs-7">
+                                    @Html.DropDownList("CmbZona", (ViewBag.ZonasList as System.Collections.Generic.IEnumerable<SelectListItem>
+                                                    ), new { id = "CmbZonaID", @class = "form-control btn btn-default dropdown-toggle remove-margin" })
+                                </div>
+                            </div>
+                        </div>
+                        <div id="atributosZona-datos">
+                            <div class="panel remove-shadow">
+                                <div class='panel-heading bg-primary main-heading no-hover'>
+                                    <a href="javascript:void();">
+                                        <div class='panel-title' style="cursor:default; pointer-events:none">
+                                            Atributos
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="panel-body">
+                                    <div class="tabla-con-botones">
+                                        <table id="Grilla_Atributos" class="table table-striped table-bordered table-responsive">
+                                            <thead>
+                                                <tr>
+                                                    <th class="hide"></th>
+                                                    <th class="hide"></th>
+                                                    <th class="hide"></th>
+                                                    <th>Atributo</th>
+                                                    <th>Valor</th>
+                                                    <th>UM</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                        <dl>
+                                            <dt><span class="fa fa-2x fa-plus-circle cursor-pointer" aria-hidden="true" id="btn_Agregar"></span></dt>
+                                            <dt><span class="fa fa-2x fa-minus-circle cursor-pointer boton-deshabilitado" aria-hidden="true" id="btn_Eliminar"></span></dt>
+                                            <dt><span class="fa fa-2x fa-pencil cursor-pointer boton-deshabilitado" aria-hidden="true" id="btn_Modificar"></span></dt>
+                                        </dl>
+                                    </div>
+                                    <div class="form-horizontal">
+                                        <div class="form-group remove-margin">
+                                            <label class="col-xs-12 control-label">Observaciones</label>
+                                            <div class="col-xs-12">
+                                                <textarea class="form-control" rows="5" id="txtObservacionesId" style="height:auto !important;"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="atributosZona-edicion" class="hidden">
+                            <div class="panel remove-shadow">
+                                <div class='panel-heading bg-primary main-heading no-hover'>
+                                    <a href="javascript:void();">
+                                        <div class='panel-title' style="cursor:default; pointer-events:none">
+                                            Edici&oacute;n de Atributos
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="panel-body" style="padding-top:7px;">
+                                    <form class="form-horizontal" id="Form-Add">
+                                        <div class="form-group">
+                                            <label class="control-label col-xs-3 text-right">Atributo:</label>
+                                            <div class="col-xs-7">
+                                                @Html.DropDownList("CmbAtributos", (ViewBag.AtributosList as System.Collections.Generic.IEnumerable<SelectListItem>), new { id = "CmbAtributosID", @class = "form-control dropdown-toggle", name = "atributos" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-xs-3 text-right">Valor:</label>
+                                            <div class="col-xs-7">
+                                                @Html.TextBoxFor(at => at.Valor, new { id = "txtValor", name = "valor", @class = "form-control", maxlength = "50" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-xs-3 text-right">UM:</label>
+                                            <div class="col-xs-7">
+                                                @Html.TextBoxFor(at => at.U_Medida, new { id = "txtUM", name = "um", @class = "form-control", maxlength = "10" })
+                                            </div>
+                                        </div>
+                                        <span title="Cancelar" data-original-title="Cancelar" class="fa fa-2x fa-times-circle pull-right black cursor-pointer" aria-hidden="true" id="atributo-cancel"></span>
+                                        <span title="Aceptar" data-original-title="Aceptar" class="fa fa-2x fa-check-circle pull-right black cursor-pointer" id="atributo-save"></span>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" id="footer-atributos">
+                    <div class="col-xs-4 pull-right">
+                        <span aria-hidden="true" aria-controls="button" data-placement="right" title="Guardar" data-original-title="Guardar" id="btnGrabar" class="fa fa-save fa-2x black cursor-pointer"></span>
+                        <span aria-hidden="true" aria-controls="button" data-placement="right" title="Cancelar" data-original-title="Cancelar" id="btnCerrar" class="fa fa-undo fa-2x black cursor-pointer"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade theme_new mensaje" id="confirmModal" tabindex="-2" role="dialog" aria-labelledby="TituloAdvertencia" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <input type="hidden" id="TipoAdvertencia" value="">
+                <h3 class="modal-title" id="TituloAdvertencia">Titulo</h3>
+                <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer" style="padding-top:3px;" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+            </div>
+            <div class="modal-body">
+                <div id="MensajeAlertaConfirmacion" class="alert alert-warning alert-dismissible" role="alert">
+                    <p id="DescripcionAdvertencia">
+                        Está a punto de DESACTIVAR al usuario Perez, Juan <br>Está seguro de continuar?
+                    </p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-xs-4 pull-right">
+                    <span id="btnAdvertenciaOK" aria-hidden="true" data-dismiss="modal" data-placement="right" title="Aceptar" data-original-title="Aceptar" class="fa fa-check-circle light-blue fa-3x cursor-pointer"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade theme_new mensaje" id="exitModal" tabindex="-2" role="dialog" aria-labelledby="Tituloexit" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <input type="hidden" id="TipoExit" value="">
+                <h3 class="modal-title" id="TituloExit">Titulo</h3>
+                <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+            </div>
+            <div class="modal-body">
+                <div id="MensajeExit" class="alert alert-warning alert-dismissible" role="alert">
+                    <p id="DescripcionAdvertencia">
+                        ¿Esta seguro que desea salir de Mantenimiento Atributos Zona?
+                    </p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-xs-4 pull-right">
+                    <span id="btnExitOk" aria-hidden="true" data-dismiss="modal" data-placement="right" title="Aceptar" data-original-title="Aceptar" class="fa fa-check-circle light-blue fa-3x cursor-pointer"></span>
+                    <span id="btnCancelarExit" aria-hidden="true" data-dismiss="modal" data-placement="right" title="Cancelar" data-original-title="Cancelar" class="fa fa-times-circle light-blue fa-3x cursor-pointer"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade theme_new mensaje" id="ErrorModal" tabindex="-2" role="dialog" aria-labelledby="TituloAdvertencia" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <input type="hidden" id="TipoConfirmar" value="">
+                <h3 class="modal-title" id="TituloError">Titulo</h3>
+                <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+            </div>
+            <div class="modal-body">
+                <div id="MensajeAlerta" class="alert alert-danger alert-dismissible" role="alert">
+                    <p id="DescripcionError">Está a punto de DESACTIVAR al usuario Perez, Juan <br>Está seguro de continuar?</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="~/Scripts/jquery.dataTables.min.js"></script>
+<script src="~/Scripts/formValidation.min.js"></script>
+<script src="~/Scripts/bootstrapValidation.min.js"></script>
+<script src="~/Scripts/dataTables.bootstrap.js"></script>
+<script src="~/Scripts/atributoszona/main.js"></script>
+

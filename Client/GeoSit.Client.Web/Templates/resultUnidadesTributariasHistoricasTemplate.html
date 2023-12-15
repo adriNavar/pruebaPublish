@@ -1,0 +1,15 @@
+﻿<div class='srow uts-historicas'>
+    <div class="controls fa pull-right">
+        <span class="opcion fa-file-pdf-o tooltips" data-placement="bottom" title="Informe de Baja" data-ng-click="getReporteUnidadTributaria()"></span>
+    </div>
+    <div class="roundChkBox uts-historicas">
+        <input type="checkbox" id="{{chkboxid}}" ng-click="selectedChanged()" ng-model="unidadTributaria.selected" />
+        <label for="{{chkboxid}}"></label>
+    </div>
+    <div>
+        <p class='text-primary'>
+            <span data-ng-bind-html="unidadTributaria.nombre | highlight:pattern:true"></span>
+        </p>
+        <p ng-if="tieneDescripcion"><span data-ng-bind-html="unidadTributaria.descripcion | highlight:pattern:true"></span></p>
+    </div>
+</div>

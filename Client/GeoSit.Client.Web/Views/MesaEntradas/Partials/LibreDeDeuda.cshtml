@@ -1,0 +1,235 @@
+﻿@model GeoSit.Client.Web.ViewModels.LibreDeDeudaViewModel
+
+@Html.Partial("Partials/ObjetoEspecificoBaseView", new GeoSit.Client.Web.ViewModels.ObjetoEspecificoViewModel { Guid = Model.Guid, IdTramiteEntrada = Model.IdTramiteEntrada })
+
+<label style="width: 100%; color: #a3a99b; font-style: italic;">
+    Libre de deuda a presentar
+</label>
+
+<div class="form-group">
+    @Html.LabelFor(m => m.EnteEmisor, new { @class = "col-md-4 control-label" })
+    <div class="col-md-8">
+        @Html.DropDownListFor(m => m.EnteEmisor, Model.EntesEmisores, new { @class = "form-control visibleArbolObjetos" })
+        @Html.ValidationMessageFor(m => m.EnteEmisor, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(m => m.NroCertificado, new { @class = "col-md-4 control-label" })
+    <div class="col-md-8">
+        <div class="input-group">
+            @Html.TextBoxFor(m => m.NroCertificado, new { @class = "form-control", @readonly = "true" })
+            @Html.ValidationMessageFor(m => m.NroCertificado, "", new { @class = "text-danger" })
+            <div class="input-group-addon cursor-pointer " id="libreDeuda-search">
+                <span data-placement="bottom" title="Buscar Libre de Deuda" class="fa-lg fa fa-search black cursor-pointer boton-deshabilitado"
+                      aria-hidden="true" id="btn_libreDeudaSearch"></span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    @Html.LabelFor(m => m.FechaEmision, new { @class = "col-md-4 control-label" })
+    <div class="col-md-8">
+        @Html.TextBoxFor(m => m.FechaEmision, "{0:dd/MM/yyyy}", new { @class = "form-control", id = "fecha-emision", placeholder = "XX/XX/XXXX", @readonly = "true" })
+        @Html.ValidationMessageFor(m => m.FechaEmision, "", new { @class = "text-danger" })
+    </div>
+</div>
+<div class="form-group">
+    @Html.LabelFor(m => m.FechaVigencia, new { @class = "col-md-4 control-label" })
+    <div class="col-md-8">
+        @Html.TextBoxFor(m => m.FechaVigencia, "{0:dd/MM/yyyy}", new { @class = "form-control", id = "fecha-vigencia", placeholder = "XX/XX/XXXX", @readonly = "true" })
+        @Html.ValidationMessageFor(m => m.FechaVigencia, "", new { @class = "text-danger" })
+    </div>
+</div>
+<div class="form-group">
+    @Html.LabelFor(m => m.Superficie, new { @class = "col-md-4 control-label" })
+    <div class="col-md-8">
+        @Html.TextBoxFor(m => m.Superficie, new { @class = "form-control", @readonly = "true" })
+        @Html.ValidationMessageFor(m => m.Superficie, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(m => m.Valuacion, new { @class = "col-md-4 control-label" })
+    <div class="col-md-8">
+        @Html.TextBoxFor(m => m.Valuacion, new { @class = "form-control", @readonly = "true" })
+        @Html.ValidationMessageFor(m => m.Valuacion, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(m => m.Deuda, new { @class = "col-md-4 control-label" })
+    <div class="col-md-8">
+        @Html.TextBoxFor(m => m.Deuda, new { @class = "form-control", @readonly = "true" })
+        @Html.ValidationMessageFor(m => m.Deuda, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+
+<script src="~/Scripts/MesaEntradas/DatosEspecificos/libreDeDeuda.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        libreDeDeuda.init();
+
+        const habilitarControles = () => {
+            @if((bool)ViewData["HabilitaConsultaLibreDeudaDGR"])
+            {
+            <text>
+            const esDGR = $("option:selected", $("#EnteEmisor")).text() === "DGR";
+            </text>
+            }
+            else
+            {
+            <text>
+            const esDGR = false;
+            </text>
+            }
+            $("#btn_libreDeudaSearch").addClass("boton-deshabilitado").off('click');
+            $("#NroCertificado").prop('readonly', esDGR);
+            $("#fecha-emision").prop('readonly', esDGR);
+            $("#fecha-vigencia").prop('readonly', esDGR);
+            $("#Superficie").prop('readonly', esDGR);
+            $("#Valuacion").prop('readonly', esDGR);
+            $("#Deuda").prop('readonly', esDGR);
+
+            if (esDGR) {
+                $("#btn_libreDeudaSearch")
+                    .removeClass("boton-deshabilitado")
+                    .on('click', function () {
+                        let propPartida = "Partida";
+                        if (parseInt(parent.TipoObjeto.Id) === tipoEntradaUT) {
+                            propPartida = "UnidadFuncionalCodigo";
+                        }
+                        const partida = parent.Propiedades.find(prop => prop.Id === propPartida).Value.split("-")[0];
+                        $.getJSON(`${BASE_URL}MesaEntradas/GetLibreDeuda?partida=${partida}`, (data) => {
+                            if (data.libreDeuda && Object.keys(data.libreDeuda).length || data.deuda && Object.keys(data.deuda).length) {
+                                $("#NroCertificado").val(data.libreDeuda.numeroCertificado)
+                                $("#fecha-emision").val(data.libreDeuda.fechaEmision);
+                                $("#fecha-vigencia").val(data.libreDeuda.fechaVigenciaHasta);
+                                $("#Superficie").val(data.libreDeuda.superficie);
+                                $("#Valuacion").val(data.libreDeuda.valuacion);
+                                var deuda = data.deuda.importeActualizado;
+                                $("#Deuda").val(deuda);
+                                if (deuda != 0) {
+                                    mostrarMensaje(3, "Interfaz con Rentas", "El inmueble presenta deuda, regularizar la situación");
+                                } else {
+                                    $("#Deuda").val(deuda);
+                                }
+                            } else {
+                                mostrarMensaje(3, "Interfaz con Rentas", "Certificado no encontrado", function () {
+                                    $("#fecha-emision").val("");
+                                    $("#fecha-vigencia").val("");
+                                    $("#Superficie").val("");
+                                    $("#Valuacion").val("");
+                                    $("#Deuda").val("");
+                                });
+                            }
+                        }).fail(() => {
+                            mostrarMensaje(3, "Interfaz con Rentas", "Interfaz inactiva, cargar los datos manualmente", function () {
+                                $("#btn_libreDeudaSearch").addClass("boton-deshabilitado");
+                                $("#NroCertificado").prop('readonly', false);
+                                $("#fecha-emision").prop('readonly', false);
+                                $("#fecha-vigencia").prop('readonly', false);
+                                $("#Superficie").prop('readonly', false);
+                                $("#Valuacion").prop('readonly', false);
+                                $("#Deuda").prop('readonly', false);
+                            });
+                        })
+                    });
+            }
+        };
+
+        $("#EnteEmisor")
+            .on('change', () => {
+                habilitarControles();
+                $("#Deuda,#Valuacion,#Superficie,#fecha-vigencia,#fecha-emision,#NroCertificado").val("");
+            });
+        @if (Model.Guid == null)
+        {
+        <text>
+        habilitarControles();
+        </text>
+        }
+        else
+        {
+        <text>
+        $("#divEdicionObjetoContainer").off("ModificarObjeto").on("ModificarObjeto", habilitarControles);
+        </text>
+        }
+
+
+
+        const selected = getTreeSelectedElements()[0].data,
+            entradas = getDatosEspecificos(),
+            tipoEntradaUT = 3,
+            esEdicion = selected.TipoObjeto.Id === $("#cboObjetoEspecificoTramite").val(),
+            parent = entradas.filter(elem => elem.Guid === (esEdicion ? selected.ParentGuids[0] : selected.Guid))[0];
+
+        jQuery.validator.addMethod('positiveNumber', function (value) {
+            return Number(value) > 0;
+        });
+
+        jQuery.validator.addMethod('positiveNumberCero', function (value) {
+            return Number(value) >= 0;
+        });
+
+        $("#divEdicionObjetoContainer").validate({
+            rules: {
+                EnteEmisor: {
+                    required: true
+                },
+                FechaVigencia: {
+                    required: true
+                },
+                FechaEmision: {
+                    required: true
+                },
+                NroCertificado: {
+                    required: true,
+                    regex: /^[A-Za-z0-9\d\-_/\s]+$/g
+                },
+                Superficie: {
+                    required: true,
+                    positiveNumber: true
+                },
+                Valuacion: {
+                    required: true,
+                    positiveNumber: true
+                },
+                Deuda: {
+                    required: true,
+                    positiveNumberCero: true
+                }
+            },
+            messages: {
+                EnteEmisor: {
+                    required: "El campo es requerido",
+                },
+                FechaVigencia: {
+                    required: "El campo es requerido",
+                },
+                FechaEmision: {
+                    required: "El campo es requerido",
+                },
+                NroCertificado: {
+                    required: "El campo es requerido",
+                    //regex: "Debe tener cargados datos con el siguiente formato: 9999-X"
+                    regex: "Debe tener cargado un valor alfanumérico"
+                },
+                Superficie: {
+                    required: "El campo es requerido",
+                    positiveNumber: "Debe tener cargado un valor numérico mayor a 0"
+                },
+                Valuacion: {
+                    required: "El campo es requerido",
+                    positiveNumber: "Debe tener cargado un valor numérico mayor a 0"
+                },
+                Deuda: {
+                    required: "El campo es requerido",
+                    positiveNumberCero: "Debe tener cargado un valor numérico"
+                }
+            }
+        });
+    });
+</script>

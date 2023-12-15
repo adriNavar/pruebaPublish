@@ -1,0 +1,267 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="BajaMensura" xml:space="preserve">
+    <value>55</value>
+    <comment>Baja/Anulación de Mensura</comment>
+  </data>
+  <data name="CertificadoCatastral" xml:space="preserve">
+    <value>35</value>
+  </data>
+  <data name="CertificadoValuatorio" xml:space="preserve">
+    <value>36</value>
+  </data>
+  <data name="CertificadoValuatorioHistorico" xml:space="preserve">
+    <value>48</value>
+  </data>
+  <data name="CopiasCertificadas" xml:space="preserve">
+    <value>50</value>
+  </data>
+  <data name="CopiasSimples" xml:space="preserve">
+    <value>49</value>
+  </data>
+  <data name="DivisionEdificacionAConstruirRegimenPreHorizontalidadMensuraRegistrada" xml:space="preserve">
+    <value>60</value>
+    <comment>Mensura de División de la Edificación a Construir Para Someter al Régimen de Pre-horizontalidad en Base a Mensura Registrada</comment>
+  </data>
+  <data name="DivisionEdificacionExistenteAConstruirRegimenPHMensuraRegistrada" xml:space="preserve">
+    <value>62</value>
+    <comment>Mensura de División de la Edificación Existente y a Construir Para Someter al Régimen de Propiedad Horizontal en Base a Mensura Registrada</comment>
+  </data>
+  <data name="DivisionEdificacionExistenteRegimenPHMensuraRegistrada" xml:space="preserve">
+    <value>61</value>
+    <comment>Mensura De División de la Edificación Existente Para Someter al Régimen de Propiedad Horizontal en Base a Mensura Registrada</comment>
+  </data>
+  <data name="DivisionMensuraRegistrada" xml:space="preserve">
+    <value>37</value>
+    <comment>División en Base a Mensura Registrada</comment>
+  </data>
+  <data name="DivisionPrescripcionAdquisitivaMensuraRegistrada" xml:space="preserve">
+    <value>85</value>
+    <comment>División en Base a Mensura Registrada Para Prescripción adquisitiva</comment>
+  </data>
+  <data name="DivisionRegimenConjuntoInmobiliarioCementerioPrivadoMensuraRegistrada" xml:space="preserve">
+    <value>56</value>
+    <comment>División en base a mensura registrada para someter al régimen de conjunto inmobiliario – cementerio privado</comment>
+  </data>
+  <data name="DivisionRegimenConjuntoInmobiliarioMensuraRegistrada" xml:space="preserve">
+    <value>57</value>
+    <comment>División en Base a Mensura Registrada para someter al Régimen de Conjuntos Inmobiliarios</comment>
+  </data>
+  <data name="FraccionExtensionMayorRegimenDerechoRealSuperficie" xml:space="preserve">
+    <value>65</value>
+    <comment>Mensura de una fracción de otra de mayor extensión, para someterla al Régimen de Derecho Real de Superficie</comment>
+  </data>
+  <data name="InformeBienesRegistrados" xml:space="preserve">
+    <value>51</value>
+  </data>
+  <data name="InformeFotogrametrico" xml:space="preserve">
+    <value>53</value>
+  </data>
+  <data name="InformeSituacionPartidaInmobiliaria" xml:space="preserve">
+    <value>52</value>
+  </data>
+  <data name="Mensura" xml:space="preserve">
+    <value>59</value>
+    <comment>Mensura</comment>
+  </data>
+  <data name="MensuraProyectoUnificacionYRedistribucionParcelaria" xml:space="preserve">
+    <value>72</value>
+    <comment>Mensura, Proyecto de Unificación y Redistribución Parcelaria</comment>
+  </data>
+  <data name="MensuraServidumbre" xml:space="preserve">
+    <value>86</value>
+    <comment>Mensura para servidumbre</comment>
+  </data>
+  <data name="MensuraUnificacionYRedistribucionParcelaria" xml:space="preserve">
+    <value>73</value>
+    <comment>Mensura, Unificación y Redistribución Parcelaria</comment>
+  </data>
+  <data name="MensuraYDeslinde" xml:space="preserve">
+    <value>67</value>
+    <comment>Mensura y Deslinde</comment>
+  </data>
+  <data name="MensuraYDivision" xml:space="preserve">
+    <value>68</value>
+    <comment>Mensura y División</comment>
+  </data>
+  <data name="MensuraYDivisionRegimenConjuntoInmobiliario" xml:space="preserve">
+    <value>58</value>
+    <comment>Mensura y División para someter al régimen de conjuntos inmobiliarios</comment>
+  </data>
+  <data name="MensuraYDivisionRegimenConjuntoInmobiliarioCementerioPrivado" xml:space="preserve">
+    <value>69</value>
+    <comment>Mensura y división para someter al régimen de conjunto inmobiliario – cementerio privado</comment>
+  </data>
+  <data name="MensuraYDivisionUrbana" xml:space="preserve">
+    <value>2</value>
+    <comment>Mensura y División (Urbana)</comment>
+  </data>
+  <data name="MensuraYProyectoUnificacion" xml:space="preserve">
+    <value>70</value>
+    <comment>Mensura y Proyecto de Unificación</comment>
+  </data>
+  <data name="MensuraYUnificacion" xml:space="preserve">
+    <value>71</value>
+    <comment>Mensura y Unificación</comment>
+  </data>
+  <data name="ModificacionEdificacionExistenteRegimenPHMensuraRegistrada" xml:space="preserve">
+    <value>63</value>
+    <comment>Mensura de Modificación de la División de la Edificación Existente Para Someter al Régimen de Propiedad Horizontal en Base a Mensura Registrada</comment>
+  </data>
+  <data name="ModificacionEstadoParcelarioMensuraRegistrada" xml:space="preserve">
+    <value>74</value>
+    <comment>Modificación del Estado Parcelario en Base a Mensura Registrada</comment>
+  </data>
+  <data name="OficiosInformes" xml:space="preserve">
+    <value>54</value>
+  </data>
+  <data name="ParcelaPlanoRegistrado" xml:space="preserve">
+    <value>64</value>
+    <comment>Mensura de una Parcela con Plano Registrado</comment>
+  </data>
+  <data name="PrescripcionAdquisitiva" xml:space="preserve">
+    <value>38</value>
+    <comment>Mensura Para Prescripción Adquisitiva</comment>
+  </data>
+  <data name="PrescripcionAdquisitivaDivision" xml:space="preserve">
+    <value>66</value>
+    <comment>Mensura Para Prescripción Adquisitiva y División</comment>
+  </data>
+  <data name="ProyectoUnificacionMensuraRegistrada" xml:space="preserve">
+    <value>75</value>
+    <comment>Proyecto de Unificación en Base a Mensura Registrada</comment>
+  </data>
+  <data name="ProyectoUnificacionYRedistribucionParcelariaMensuraRegistrada" xml:space="preserve">
+    <value>76</value>
+    <comment>Proyecto de Unificación en Base a Mensura Registrada y Redistribución Parcelaria</comment>
+  </data>
+  <data name="RectificacionMensura" xml:space="preserve">
+    <value>77</value>
+    <comment>Rectificación de la Mensura</comment>
+  </data>
+  <data name="UnificacionMensuraRegistrada" xml:space="preserve">
+    <value>78</value>
+    <comment>Unificación en Base a Mensura Registrada</comment>
+  </data>
+  <data name="UnificacionYRedistribucionParcelariaMensuraRegistrada" xml:space="preserve">
+    <value>79</value>
+    <comment>Unificación en Base a Mensura Registrada y Redistribución Parcelaria</comment>
+  </data>
+</root>

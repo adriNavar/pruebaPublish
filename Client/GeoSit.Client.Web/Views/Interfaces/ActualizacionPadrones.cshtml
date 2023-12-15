@@ -1,0 +1,372 @@
+﻿@model GeoSit.Client.Web.Models.ActualizacionPadronesModel
+@using GeoSit.Client.Web.Controllers;
+
+@{
+    ViewBag.Title = "Actualización de Padrones";
+    ViewBag.Description = "";
+}
+
+<link href="~/Content/Interfaces.css" rel="stylesheet" />
+<link href="~/Content/dataTables.bootstrap.css" rel="stylesheet" />
+<link href="~/Content/jquery.dataTables.css" rel="stylesheet" />
+<link rel="stylesheet" href="css/select2-bootstrap.css">
+
+@using (Ajax.BeginForm("ActulizacionPadrones", "Interfaces", new { ReturnUrl = ViewBag.ReturnUrl }, new AjaxOptions { }, new { id = "form-ActualizarPadrones", role = "form", novalidate = "", enctype = "multipart/form-data" }))
+{ @Html.AntiForgeryToken()
+
+    <div class="modal fade" id="myModal" tabindex="-100" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false" data-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header" style="background-color: #808080; padding: 10px 0px 40px;">
+                    <h4 class="modal-title col-lg-12 col-xs-12 col-sm-12 col-md-12" id="myModalLabel" @*style="color:#ffffff;"*@>@ViewBag.Title</h4>
+                </div>
+                <div class="modal-body modal-body-scroll">
+                    Transacciones Pendientes
+                    <div class="row " style="height:1em"></div>
+                    <div class="row" style="padding: 0px 15px;">
+                        <div id="contedor-transaccion" class="col-lg-12 col-xs-12 col-sm-12 col-md-12">
+                            @*style=" overflow:scroll; height:300px;"*@
+
+                            <table id="Grilla_transaccion" class="table table-striped table-bordered table-responsive" cellspacing="0" style="width:100%;">
+                                <thead>
+                                    <tr>
+                                        <th class="no-sort"></th>
+                                        <th>Trs</th>
+                                        <th>Operación</th>
+                                        <th>Fecha</th>
+                                        <th>Padrón</th>
+                                        <th>Op</th>
+                                        <th>Otros</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @*@{ var cantTP = 1;}*@
+
+                                    @foreach (var item in Model.ListaTransaccionesPendientes)
+                                    {
+                                        <tr style="cursor:pointer;">
+                                            <td style="text-align:center" class="primera">
+                                                @{var tienenomen = "";
+                                                if (item.ParcelaID == null)
+                                                {
+                                                    tienenomen = "disabled=\"disabled\"";
+                                                }
+                                                }
+                                                <input type="checkbox" aria-label="..." id="IdTransaccion" name="Id_Transaccion" class="id_transaccion" value="@item.IdTransaccion" @tienenomen>
+                                            </td>
+                                            <td>@item.IdTransaccion</td>
+                                            <td>@item.Relacion</td>
+                                            <td>@item.Alta_Fecha</td>
+                                            <td class="padronOrigen">@item.Mi_Identificacion</td>
+                                            <td>@item.listaDestino[0].TipoOperacion</td>
+                                            <td class="padronDestino">@item.listaDestino[0].Padron</td>
+                                            @*<td class="padronDestino">
+                                        @for (int i = 0; i < item.listaDestino.Count(); i++)
+                                        {
+                                            <span>@item.listaDestino[i].Padron,</span>
+                                        }
+                                    </td>*@
+
+                                        </tr>
+
+                                        //cantTP++;
+
+                                    }
+
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+
+                    <div class="row"></div>
+
+                    @*BOTONES*@
+                    <div class="modal-footer" style="background-color:#ffffff;" id="Panel_Botones">
+                        <img title="Confirmar" id="btnConfirmar" src="~/Content/images/Interfaces/icons/dark/32/checkbox.png" style="cursor: pointer; margin-right: 10px;">
+                        <img id="btnCancelar" title="Cerrar" src="~/Content/images/Interfaces/icons/dark/32/cancelar.png" style="cursor:pointer;">
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+            <!-- Modal Detalle Operacion-->
+    <div class="modal fade" id="DetalleOperacion" tabindex="-2" role="dialog" aria-labelledby="TituloDetalleOperacion" aria-hidden="true" data-backdrop="false" data-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header centrado">
+                    <h4 class="modal-title col-lg-11 col-xs-11 col-sm-11 col-md-11 letraNegra" id="TituloDetalleOperacion">Detalle de Operación</h4>
+                    <br />
+                </div>
+                <div class="modal-body">
+
+                    @Html.Label("Tipo de Operación: ") @Html.Label("123", new { id = "tipoOperacion" })
+
+                    <div class="row " style="height:1em"></div>
+
+                    @Html.Label("Padrón/es de Origen")
+                    <div class="row" style="padding: 0px 15px;">
+                        <div id="contedor-padronOrigen" class="col-lg-12 col-xs-12 col-sm-12 col-md-12 ">
+
+                            <table id="Grilla_padronOrigen" class="table table-striped table-bordered table-responsive" cellspacing="0" style="width:100%;">
+                                <thead>
+                                    <tr>
+                                        <th>Padrón</th>
+                                        <th>Fecha Op</th>
+                                        <th>Nomenclatura Parc.</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                    <div class="row " style="height:1em"></div>
+
+                    @Html.Label("Padrón/es de Destino")
+                    <div class="row" style="padding: 0px 15px;">
+                        <div id="contedor-padronDestino" class="col-lg-12 col-xs-12 col-sm-12 col-md-12 ">
+
+                            <table id="Grilla_padronDestino" class="table table-striped table-bordered table-responsive" cellspacing="0" style="width: 100%;">
+                                <thead>
+                                    <tr>
+                                        <th>Padrón</th>
+                                        <th>Fecha Op</th>
+                                        <th>Nomenclatura Parc.</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+
+                    </div>
+                    <div class="row " style="height:1em"></div>
+                    <div id="divErrores" class="row" style="padding: 0px 15px; margin-right: 0px;">
+                        <div class="col-lg-1 col-xs-1 col-sm-1 col-md-1 " style="height: 50px">
+                            @Html.Label("Error: ")
+
+                        </div>
+                        <div id="Errores" class="col-lg-11 col-xs-11 col-sm-11 col-md-11 " style="height: 50px; overflow-y: auto">
+
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-footer" id="Panel_Botones">
+                    <img title="Confirmar" id="btnConfirmarInfo" src="~/Content/images/interfaces/icons/dark/32/checkbox.png" style="cursor: pointer; margin-right: 10px;">
+                </div>
+            </div>
+        </div>
+    </div>
+
+}
+<script src="~/Scripts/jquery.dataTables.js"></script>
+<script src="~/Scripts/jquery-sortable.js"></script>
+<script src="~/Scripts/jquery.form.js"></script>
+<script>
+
+    $(window).keydown(function (event) {
+        if (event.keyCode == 13) {
+            event.preventDefault();
+            return false;
+        }
+    });
+
+    $(window).resize(ajustamodal);
+    function ajustamodal() {
+        var altura = $(window).height() - 160; //value corresponding to the modal heading + footer
+        $(".modal-body-scroll").css({ "height": altura, "overflow-y": "auto" });
+    }
+
+
+    $(document).ready(function () {
+        $("#btnCancelar").click(function () {
+            $("#myModal").modal('hide');
+        });
+
+
+        $("#btnConfirmar").click(function () {
+            $("#form-ActualizarPadrones").attr("Action", "@Url.Action("ActualizarPadrones", "Interfaces")");
+            $("#form-ActualizarPadrones").submit();
+        });
+
+
+        $('#Grilla_transaccion').dataTable({
+            "scrollY": "550px",
+            "scrollX": true,
+            "sScrollXInner": "100%",
+            "scrollCollapse": true,
+            "paging": true,
+            "searching": true,
+            "bInfo": false,
+            "destroy": true,
+            "aaSorting": [[1, 'asc']],
+            "language": {
+                "url": BASE_URL + "Scripts/dataTables.spanish.txt"
+            },
+            "columnDefs": [
+                {
+                    "targets": 'no-sort',
+                    "orderable": false,
+                }
+            ],
+            "columns": [
+                { "width": "5%" },
+                { "width": "5%" },
+                { "width": "10%" },
+                { "width": "30%" },
+                { "width": "15%" },
+                { "width": "15%" },
+                { "width": "20%" }
+            ]
+        });
+
+        $(".id_transaccion").click(function () {
+
+            var numeroTransaccion = $(this).val();
+            var padronOrigen = $(this).parent().parent().find(".padronOrigen").html();
+            var padronDestino = $(this).parent().parent().find(".padronDestino").html();
+
+            $('tr').each(function (index, elem) {
+
+                if (($(elem).find(".padronOrigen").html() == padronOrigen) || ($(elem).find(".padronDestino").html() == padronDestino)) {
+                    $(elem).find(".id_transaccion").attr("checked", "checked");
+                }
+
+            });
+
+        });
+
+        $('tbody tr td').not(".primera").click(function () {
+
+            $("#DetalleOperacion").modal('show');
+            $('#Grilla_padronOrigen').DataTable().destroy();
+            $('#Grilla_padronDestino').DataTable().destroy();
+            $('#Grilla_padronOrigen tbody').empty();
+            $('#Grilla_padronDestino tbody').empty();
+            $('#Errores').html("");
+            $('#divErrores').hide();
+            $("#tipoOperacion").html("");
+
+
+            $.ajax({
+                url: '@Url.Action("GetTransaccion", "Interfaces")',
+                data: { id: $(this).parent().find('.id_transaccion').val() },
+                dataType: 'json',
+                async: false,
+                cache: false,
+                success: function (data) {
+                    $("#tipoOperacion").html(data[0].TipoTransaccion);
+
+                    $.each(data, function (index, value) {
+                        if (value.IdPadronTempOrigen == null) {
+                            var registro = "<tr>" +
+                                        "<td>" + value.Padron + "</td>" +
+                                        "<td>" + new Date(parseInt(value.Fecha.substr(6))).toLocaleString("es-ar") + "</td>" +
+                                        "<td>" + value.ParcelaNomenc + "</td>" +
+                                        "</tr>";
+
+                            $('#Grilla_padronOrigen tbody').append(registro);
+                        } else {
+                            var registrodest = "<tr>" +
+                                 "<td>" + value.Padron + "</td>" +
+                                 "<td>" + new Date(parseInt(value.Fecha.substr(6))).toLocaleString("es-ar") + "</td>" +
+                                 "<td>" + value.ParcelaNomenc + "</td>" +
+                                 "</tr>";
+
+                            $('#Grilla_padronDestino tbody').append(registrodest);
+                        }
+                        if (value.ParcelaID == null) {
+                            $('#divErrores').show();
+                            $('#Errores').append('<span style="color:red">No se encuentra la parcela ' + value.ParcelaNomenc + ' del padrón ' + value.Padron + '</span> <br>');
+                        }
+                    });
+
+                    $('#Grilla_padronOrigen').dataTable({
+                        "sScrollY": "300px",
+                        "sScrollX": false,
+                        "sScrollXInner": "99.5%",
+                        "bScrollCollapse": true,
+                        "paging": false,
+                        "searching": false,
+                        "bInfo": false,
+                        "destroy": true,
+                        "aaSorting": [[1, 'asc']],
+                        "language": {
+                            "url": BASE_URL + "Scripts/dataTables.spanish.txt"
+                        },
+                        "columnDefs": [
+                            {
+                                "targets": 'no-sort',
+                                "orderable": false,
+                            }
+                        ]
+                    });
+
+                    $('#Grilla_padronDestino').dataTable({
+                        "sScrollY": "300px",
+                        "sScrollX": false,
+                        "sScrollXInner": "99.5%",
+                        "bScrollCollapse": true,
+                        "paging": false,
+                        "searching": false,
+                        "bInfo": false,
+                        "destroy": true,
+                        "aaSorting": [[1, 'asc']],
+                        "language": {
+                            "url": BASE_URL + "Scripts/dataTables.spanish.txt"
+                        },
+                        "columnDefs": [
+                            {
+                                "targets": 'no-sort',
+                                "orderable": false,
+                            }
+                        ]
+                    });
+                },
+                error: function (error) {
+                    alert(error.responseText);
+                }
+            });
+
+
+
+
+        });
+
+        $('#btnConfirmarInfo').click(function () {
+
+            $("#DetalleOperacion").modal('hide');
+        });
+        hideLoading();
+        $("#form-ActualizarPadrones").ajaxForm({
+            success: function (data) {
+                $("#contenido").empty();
+                $("#contenido").html(data);
+            },
+            error: function () {
+                alert("error");
+            }
+        });
+        $("#form-ActualizarPadrones").submit(function (evt) {
+            /*evita el doble submit*/
+            evt.preventDefault();
+            evt.stopImmediatePropagation();
+            return false;
+        });
+        $('#myModal').modal('show');
+        ajustamodal();
+    });
+</script>

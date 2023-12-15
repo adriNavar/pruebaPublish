@@ -1,0 +1,740 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{2B2F2AD9-E9C8-47EE-8EE3-564F017F923C}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>GeoSit.Reportes.Api</RootNamespace>
+    <AssemblyName>GeoSit.Reportes.Api</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\..\</SolutionDir>
+    <TargetFrameworkProfile />
+    <Use64BitIISExpress />
+    <UseGlobalApplicationHostFile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="DevExpress.Charts.v22.2.Core, Version=22.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="DevExpress.Drawing.v22.2, Version=22.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="DevExpress.Data.v22.2, Version=22.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="DevExpress.DataAccess.v22.2, Version=22.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="DevExpress.ExpressApp.v22.2, Version=22.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="DevExpress.ExpressApp.Xpo.v22.2, Version=22.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="DevExpress.Office.v22.2.Core, Version=22.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="DevExpress.PivotGrid.v22.2.Core, Version=22.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="DevExpress.RichEdit.v22.2.Export, Version=22.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="DevExpress.Printing.v22.2.Core, Version=22.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="DevExpress.RichEdit.v22.2.Core, Version=22.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="DevExpress.Sparkline.v22.2.Core, Version=22.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="DevExpress.Data.Desktop.v22.2, Version=22.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="DevExpress.Utils.v22.2, Version=22.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="DevExpress.Web.ASPxThemes.v22.2, Version=22.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="DevExpress.Web.Mvc.v22.2, Version=22.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="DevExpress.Web.Mvc5.v22.2, Version=22.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="DevExpress.Web.v22.2, Version=22.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="DevExpress.Xpo.v22.2, Version=22.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="DevExpress.XtraGauges.v22.2.Core, Version=22.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="DevExpress.XtraCharts.v22.2, Version=22.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="DevExpress.XtraReports.v22.2, Version=22.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="DevExpress.XtraReports.v22.2.Extensions, Version=22.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="DevExpress.XtraReports.v22.2.Web.WebForms, Version=22.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="DevExpress.XtraReports.v22.2.Web, Version=22.2.6.0, Culture=neutral, PublicKeyToken=b88d1754d700e49a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.Messaging" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Net.Http.Formatting, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Web.Http, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebApi.Core.5.2.7\lib\net45\System.Web.Http.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Web.Http.WebHost, Version=5.2.7.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Microsoft.AspNet.WebApi.WebHost.5.2.7\lib\net45\System.Web.Http.WebHost.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\Imagenes\Logo DGC Corrientes.png" />
+    <Content Include="Content\Imagenes\logo.png" />
+    <Content Include="Content\Imagenes\logoVerde.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Site.css" />
+    <Content Include="Global.asax" />
+    <Content Include="Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\InformeAdjudicacionController.cs" />
+    <Compile Include="Controllers\InformeHistoricoCambiosController.cs" />
+    <Compile Include="Controllers\InformeDDJJSoRController.cs" />
+    <Compile Include="Controllers\InformeE1E2Controller.cs" />
+    <Compile Include="Controllers\InformeParcelarioBajaController.cs" />
+    <Compile Include="Controllers\InformeParcelarioVIRController.cs" />
+    <Compile Include="Controllers\InformeUnidadTributariaBajaController.cs" />
+    <Compile Include="Controllers\InformeValuacionPhController.cs" />
+    <Compile Include="Controllers\InformeValuacionRuralController.cs" />
+    <Compile Include="Controllers\InformeDDJJUController.cs" />
+    <Compile Include="Controllers\InformeValuacionUrbanaController.cs" />
+    <Compile Include="Controllers\InformeHistoricoValuacionesController.cs" />
+    <Compile Include="Controllers\ExpedienteObraController.cs" />
+    <Compile Include="Controllers\InformeBienesRegistradosController.cs" />
+    <Compile Include="Controllers\InformeCatastralController.cs" />
+    <Compile Include="Controllers\InformeCertificadoCatastralController.cs" />
+    <Compile Include="Controllers\InformeExpedienteObraDetalladoController.cs" />
+    <Compile Include="Controllers\InformeObjetosInfraectruturaController.cs" />
+    <Compile Include="Controllers\InformePersonaController.cs" />
+    <Compile Include="Controllers\CertificadoValuatorioController.cs" />
+    <Compile Include="Controllers\InformePropiedadController.cs" />
+    <Compile Include="Controllers\InformeSituacionPartidaInmobiliariaController.cs" />
+    <Compile Include="Controllers\InformeTitularesController.cs" />
+    <Compile Include="Controllers\InformeZonaController.cs" />
+    <Compile Include="Controllers\InspeccionesController.cs" />
+    <Compile Include="Controllers\InformeParcelarioController.cs" />
+    <Compile Include="Controllers\InformeTramiteController.cs" />
+    <Compile Include="Controllers\InformeUnidadTributariaController.cs" />
+    <Compile Include="Controllers\InformesMesaEntradasController.cs" />
+    <Compile Include="Controllers\ReporteEstadoTramiteController.cs" />
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Helpers\MonedaHelper.cs" />
+    <Compile Include="Helpers\ReporteHelper.cs" />
+    <Compile Include="Helpers\ReporteNomenclaturaHelper.cs" />
+    <Compile Include="Models\ExpedienteObraModel.cs" />
+    <Compile Include="Models\MEListadoGeneralTramitesModel.cs" />
+    <Compile Include="Objetos\ObjetoInformeObjetosInfrestructura.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\InformeAdjudicacion.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\InformeAdjudicacion.Designer.cs">
+      <DependentUpon>InformeAdjudicacion.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\InformeAdjudicacionPorcen.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\InformeAdjudicacionPorcen.Designer.cs">
+      <DependentUpon>InformeAdjudicacionPorcen.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\InformeHistoricoCambios.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\InformeHistoricoCambios.Designer.cs">
+      <DependentUpon>InformeHistoricoCambios.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\InformeDDJJSoR.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\InformeDDJJSoR.Designer.cs">
+      <DependentUpon>InformeDDJJSoR.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\InformeE1E2.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\InformeE1E2.Designer.cs">
+      <DependentUpon>InformeE1E2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\InformeParcelarioBaja.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\InformeParcelarioBaja.Designer.cs">
+      <DependentUpon>InformeParcelarioBaja.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\InformeParcelarioVIR.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\InformeParcelarioVIR.Designer.cs">
+      <DependentUpon>InformeParcelarioVIR.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\InformeUnidadTributariaBaja.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\InformeUnidadTributariaBaja.Designer.cs">
+      <DependentUpon>InformeUnidadTributariaBaja.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\InformeValuacionRuralBKP.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\InformeValuacionRuralBKP.Designer.cs">
+      <DependentUpon>InformeValuacionRuralBKP.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\InformeValuacionRural.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\InformeValuacionRural.Designer.cs">
+      <DependentUpon>InformeValuacionRural.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\InformeValuacionPh.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\InformeValuacionPh.Designer.cs">
+      <DependentUpon>InformeValuacionPh.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\InformeDDJJU.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\InformeDDJJU.Designer.cs">
+      <DependentUpon>InformeDDJJU.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\InformeValuacionUrbana.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\InformeValuacionUrbana.Designer.cs">
+      <DependentUpon>InformeValuacionUrbana.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\InformeHistoricoValuaciones.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\InformeHistoricoValuaciones.Designer.cs">
+      <DependentUpon>InformeHistoricoValuaciones.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\InformeActasVencida.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\InformeCertificadoCatastral.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\InformeCertificadoCatastral.Designer.cs">
+      <DependentUpon>InformeCertificadoCatastral.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\CertificadoValuatorio.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\CertificadoValuatorio.Designer.cs">
+      <DependentUpon>CertificadoValuatorio.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\InformeSituacionPartidaInmobiliaria.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\InformeSituacionPartidaInmobiliaria.Designer.cs">
+      <DependentUpon>InformeSituacionPartidaInmobiliaria.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\InformeCatastral.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\InformeCatastral.Designer.cs">
+      <DependentUpon>InformeCatastral.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\InformeEstadoReporte.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\InformeInspeccionesPorTipo.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\InformeInspeccionesPorPeriodo.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\InformeExpedienteObra.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\InformeObjetosInfraestructura.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\InformeParcelario.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\InformeParcelario.Designer.cs">
+      <DependentUpon>InformeParcelario.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\InformeHistoricoTitulares.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\InformeHistoricoTitulares.Designer.cs">
+      <DependentUpon>InformeHistoricoTitulares.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\InformeBienesRegistrados.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\InformeBienesRegistrados.Designer.cs">
+      <DependentUpon>InformeBienesRegistrados.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\InformePropiedad.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\InformePropiedad.Designer.cs">
+      <DependentUpon>InformePropiedad.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\InformeTramite.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\InformeTramite.Designer.cs">
+      <DependentUpon>InformeTramite.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\InformeUnidadTributaria.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\InformeUnidadTributaria.Designer.cs">
+      <DependentUpon>InformeUnidadTributaria.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\InformeZonaAtributos.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\MECaratulaExpedienteSubRep.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\MECaratulaExpedienteSubRep.Designer.cs">
+      <DependentUpon>MECaratulaExpedienteSubRep.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\MEDesglosesSubRep.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\MEDesglosesSubRep.Designer.cs">
+      <DependentUpon>MEDesglosesSubRep.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\MEDocumentosSubRep.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\MEDocumentosSubRep.Designer.cs">
+      <DependentUpon>MEDocumentosSubRep.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\InformeExpedienteObraDetallado.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\InformeExpedienteObraDetallado.Designer.cs">
+      <DependentUpon>InformeExpedienteObraDetallado.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\MEInformeObservaciones.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\MEInformeObservaciones.Designer.cs">
+      <DependentUpon>MEInformeObservaciones.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\MEInformeDetallado.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\MEInformeDetallado.Designer.cs">
+      <DependentUpon>MEInformeDetallado.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\MEInformePendientesConfirmar.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\MEInformePendientesConfirmar.Designer.cs">
+      <DependentUpon>MEInformePendientesConfirmar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\MEListadoGeneralTramites.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\MEListadoGeneralTramites.Designer.cs">
+      <DependentUpon>MEListadoGeneralTramites.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\MEMovimientosSubRep.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\MEMovimientosSubRep.Designer.cs">
+      <DependentUpon>MEMovimientosSubRep.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\InformePersona.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\InformePersona.Designer.cs">
+      <DependentUpon>InformePersona.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\MERemitoReporte.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\MERemitoReporte.Designer.cs">
+      <DependentUpon>MERemitoReporte.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\MESubReporteFooter.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\MESubReporteFooter.Designer.cs">
+      <DependentUpon>MESubReporteFooter.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\MESubReporteHeader2.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\MESubReporteHeader2.Designer.cs">
+      <DependentUpon>MESubReporteHeader2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\MESubReporteHeader.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\MESubReporteHeader.Designer.cs">
+      <DependentUpon>MESubReporteHeader.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\SubReporteDOTramite.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\SubReporteDOTramite.Designer.cs">
+      <DependentUpon>SubReporteDOTramite.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\SubReporteEFTramite.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\SubReporteEFTramite.Designer.cs">
+      <DependentUpon>SubReporteEFTramite.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\SubReporteNomenclatura.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\SubReporteNomenclatura.Designer.cs">
+      <DependentUpon>SubReporteNomenclatura.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\SubReporteParcelasOrigen.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\SubReporteParcelasOrigen.Designer.cs">
+      <DependentUpon>SubReporteParcelasOrigen.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\SubReportePETramite.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\SubReportePETramite.Designer.cs">
+      <DependentUpon>SubReportePETramite.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\SubReporteParcelasDestino.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\SubReporteParcelasDestino.Designer.cs">
+      <DependentUpon>SubReporteParcelasDestino.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\SubReporteUTTramite.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\SubReporteUTTramite.Designer.cs">
+      <DependentUpon>SubReporteUTTramite.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Reportes\MECaratulaExpediente.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Reportes\MECaratulaExpediente.Designer.cs">
+      <DependentUpon>MECaratulaExpediente.cs</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="log4net.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <None Include="packages.config" />
+    <None Include="Properties\PublishProfiles\ReportesApi.pubxml" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Core\GeoSit.Core.Logging\GeoSit.Core.Logging.csproj">
+      <Project>{bce195ba-8854-4fc7-a829-9a2ddb3d9560}</Project>
+      <Name>GeoSit.Core.Logging</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Data\BusinessEntities\GeoSit.Data.BusinessEntities.csproj">
+      <Project>{ad3c9f66-1110-4666-9dc4-0960018c3066}</Project>
+      <Name>GeoSit.Data.BusinessEntities</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\InformeAdjudicacion.resx">
+      <DependentUpon>InformeAdjudicacion.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\InformeAdjudicacionPorcen.resx">
+      <DependentUpon>InformeAdjudicacionPorcen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\InformeHistoricoCambios.resx">
+      <DependentUpon>InformeHistoricoCambios.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\InformeDDJJSoR.resx">
+      <DependentUpon>InformeDDJJSoR.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\InformeE1E2.resx">
+      <DependentUpon>InformeE1E2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\InformeParcelarioBaja.resx">
+      <DependentUpon>InformeParcelarioBaja.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\InformeParcelarioVIR.resx">
+      <DependentUpon>InformeParcelarioVIR.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\InformeUnidadTributariaBaja.resx">
+      <DependentUpon>InformeUnidadTributariaBaja.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\InformeValuacionRuralBKP.resx">
+      <DependentUpon>InformeValuacionRuralBKP.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\InformeValuacionRural.resx">
+      <DependentUpon>InformeValuacionRural.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\InformeValuacionPh.resx">
+      <DependentUpon>InformeValuacionPh.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\InformeDDJJU.resx">
+      <DependentUpon>InformeDDJJU.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\InformeValuacionUrbana.resx">
+      <DependentUpon>InformeValuacionUrbana.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\InformeHistoricoValuaciones.resx">
+      <DependentUpon>InformeHistoricoValuaciones.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\InformeCertificadoCatastral.resx">
+      <DependentUpon>InformeCertificadoCatastral.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\CertificadoValuatorio.resx">
+      <DependentUpon>CertificadoValuatorio.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\InformeSituacionPartidaInmobiliaria.resx">
+      <DependentUpon>InformeSituacionPartidaInmobiliaria.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\InformeHistoricoTitulares.resx">
+      <DependentUpon>InformeHistoricoTitulares.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\InformeBienesRegistrados.resx">
+      <DependentUpon>InformeBienesRegistrados.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\InformePropiedad.resx">
+      <DependentUpon>InformePropiedad.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\MECaratulaExpediente.resx">
+      <DependentUpon>MECaratulaExpediente.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="Properties\licenses.licx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <EmbeddedResource Include="Reportes\InformeActasVencida.resx">
+      <DependentUpon>InformeActasVencida.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\InformeCatastral.resx">
+      <DependentUpon>InformeCatastral.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\InformeEstadoReporte.resx">
+      <DependentUpon>InformeEstadoReporte.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\InformeInspeccionesPorTipo.resx">
+      <DependentUpon>InformeInspeccionesPorTipo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\InformeInspeccionesPorPeriodo.resx">
+      <DependentUpon>InformeInspeccionesPorPeriodo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\InformeExpedienteObra.resx">
+      <DependentUpon>InformeExpedienteObra.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\InformeObjetosInfraestructura.resx">
+      <DependentUpon>InformeObjetosInfraestructura.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\InformeParcelario.resx">
+      <DependentUpon>InformeParcelario.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\InformeTramite.resx">
+      <DependentUpon>InformeTramite.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\InformeUnidadTributaria.resx">
+      <DependentUpon>InformeUnidadTributaria.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\InformeZonaAtributos.resx">
+      <DependentUpon>InformeZonaAtributos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\MECaratulaExpedienteSubRep.resx">
+      <DependentUpon>MECaratulaExpedienteSubRep.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\MEDesglosesSubRep.resx">
+      <DependentUpon>MEDesglosesSubRep.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\MEDocumentosSubRep.resx">
+      <DependentUpon>MEDocumentosSubRep.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\InformeExpedienteObraDetallado.resx">
+      <DependentUpon>InformeExpedienteObraDetallado.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\MEInformeObservaciones.resx">
+      <DependentUpon>MEInformeObservaciones.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\MEInformeDetallado.resx">
+      <DependentUpon>MEInformeDetallado.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\MEInformePendientesConfirmar.resx">
+      <DependentUpon>MEInformePendientesConfirmar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\MEListadoGeneralTramites.resx">
+      <DependentUpon>MEListadoGeneralTramites.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\MEMovimientosSubRep.resx">
+      <DependentUpon>MEMovimientosSubRep.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\InformePersona.resx">
+      <DependentUpon>InformePersona.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\MERemitoReporte.resx">
+      <DependentUpon>MERemitoReporte.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\MESubReporteFooter.resx">
+      <DependentUpon>MESubReporteFooter.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\MESubReporteHeader2.resx">
+      <DependentUpon>MESubReporteHeader2.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\MESubReporteHeader.resx">
+      <DependentUpon>MESubReporteHeader.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\SubReporteDOTramite.resx">
+      <DependentUpon>SubReporteDOTramite.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\SubReporteEFTramite.resx">
+      <DependentUpon>SubReporteEFTramite.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\SubReporteNomenclatura.resx">
+      <DependentUpon>SubReporteNomenclatura.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\SubReporteParcelasOrigen.resx">
+      <DependentUpon>SubReporteParcelasOrigen.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\SubReportePETramite.resx">
+      <DependentUpon>SubReportePETramite.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\SubReporteParcelasDestino.resx">
+      <DependentUpon>SubReporteParcelasDestino.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reportes\SubReporteUTTramite.resx">
+      <DependentUpon>SubReporteUTTramite.cs</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>4617</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:10024/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

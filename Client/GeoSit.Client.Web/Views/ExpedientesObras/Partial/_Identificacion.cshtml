@@ -1,0 +1,54 @@
+﻿@model GeoSit.Client.Web.Models.ExpedientesObras.IdentificacionViewModel
+
+<fieldset class="fieldset-border fieldset-height">
+    <legend class="fieldset-border">Expediente</legend>
+    <div class="form-group row">
+        <label class="control-label col-xs-2">Número</label>
+        <div class="col-xs-4">
+            @Html.TextBoxFor(model => model.NumeroExpediente, new { @class = "form-control" })
+        </div>
+        <label class="control-label col-xs-2">Fecha Inicio</label>
+        <div class="col-xs-4">
+            <div class="input-group date">
+                @Html.TextBoxFor(model => model.FechaExpediente, new { @class = "form-control date" })
+                <span class="input-group-addon">
+                    <span class="fa fa-calendar"></span>
+                </span>
+            </div>
+        </div>
+    </div>
+</fieldset>
+<fieldset class="fieldset-border fieldset-height">
+    <legend class="fieldset-border">Legajo</legend>
+    <div class="form-group row">
+        <label class="control-label col-xs-2">Número</label>
+        <div class="col-xs-4">
+            @Html.TextBoxFor(model => model.NumeroLegajo, new { @class = "form-control" })
+        </div>
+        <label class="control-label col-xs-2">Fecha Inicio</label>
+        <div class="col-xs-4">
+            <div class="input-group date">
+                @Html.TextBoxFor(model => model.FechaLegajo, new { @class = "form-control date" })
+                <span class="input-group-addon">
+                    <span class="fa fa-calendar"></span>
+                </span>
+            </div>
+        </div>
+    </div>
+</fieldset>
+<div class="form-group row">
+    <label class="control-label col-xs-3 col-md-2" style="padding-top: 2em;">En Posesión</label>
+    <div class="col-xs-2 col-md-2" style="padding-top: 2em;">
+        <div class="switch">
+            @Html.CheckBoxFor(model => model.EnPosesion, new { @class = "cmn-toggle cmn-toggle-round-flat" })
+        </div>
+    </div>
+    <label class="control-label col-xs-4 col-md-2" style="padding-top: 2em;">Número Chapa</label>
+    <div class="col-xs-3 col-md-3" style="padding-top: 2em;">
+        @Html.TextBoxFor(model => model.Chapa, new { @class = "form-control" })
+    </div>
+    <label class="control-label col-xs-2 col-md-1" style="padding-top: 2em;">Plan</label>
+    <div class="col-xs-4 col-md-2" style="padding-top: 2em;">
+        @Html.DropDownListFor(model => model.PlanId, Model.PlanList, new { @class = "form-control" })
+    </div>
+</div>

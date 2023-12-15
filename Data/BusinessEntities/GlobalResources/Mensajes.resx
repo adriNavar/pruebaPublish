@@ -1,0 +1,495 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AgregarFeriadosOK" xml:space="preserve">
+    <value>Se agregó el Feriado correctamente.</value>
+  </data>
+  <data name="AgregarHorariosOK" xml:space="preserve">
+    <value>Se agregó el Horario correctamente.</value>
+  </data>
+  <data name="AgregarPerfilesOK" xml:space="preserve">
+    <value>Se agregó el Perfil correctamente.</value>
+  </data>
+  <data name="AgregarPlanoOK" xml:space="preserve">
+    <value>Se agregó el Plano correctamente.</value>
+  </data>
+  <data name="AgregarPlanosOK" xml:space="preserve">
+    <value>Se agregaron los Planos correctamente.</value>
+  </data>
+  <data name="AgregarTablasAuxOK" xml:space="preserve">
+    <value>Se agregó el registro correctamente.</value>
+  </data>
+  <data name="AgregarUsuariosOK" xml:space="preserve">
+    <value>Se agregó el Usuario correctamente.</value>
+  </data>
+  <data name="AltaAlfanumericodeParcelasyPosesionesOK" xml:space="preserve">
+    <value>Se agregó el el alfanumerico de Parcelas correctamente.</value>
+  </data>
+  <data name="AltaAtributoOK" xml:space="preserve">
+    <value>Se agregó el Atributo correctamente.</value>
+  </data>
+  <data name="AltaCertificadosOK" xml:space="preserve">
+    <value>Se agregó el Certificado correctamente.</value>
+  </data>
+  <data name="AltaControlTecnicoOK" xml:space="preserve">
+    <value>Se agregó el Control Tecnico correctamente.</value>
+  </data>
+  <data name="AltadeActasOK" xml:space="preserve">
+    <value>Se agregó el Acta correctamente.</value>
+  </data>
+  <data name="AltadeInspeccionOK" xml:space="preserve">
+    <value>Se agregó el Inspeccion correctamente.</value>
+  </data>
+  <data name="AltadeinspectoresOK" xml:space="preserve">
+    <value>Se agregó el Inspector correctamente.</value>
+  </data>
+  <data name="AltadeParcelasDestinoOK" xml:space="preserve">
+    <value>Se agregó la Parcela Destino correctamente.</value>
+  </data>
+  <data name="AltadeParcelasOrigenOK" xml:space="preserve">
+    <value>Se agregó la Parcela Origen correctamente.</value>
+  </data>
+  <data name="AltadePersonasOK" xml:space="preserve">
+    <value>Se agregó la Persona correctamente.</value>
+  </data>
+  <data name="AltadeProfesionOK" xml:space="preserve">
+    <value>Se agregó la Profesión correctamente.</value>
+  </data>
+  <data name="AltaderegistrosOK" xml:space="preserve">
+    <value>Se agregó el Registro correctamente.</value>
+  </data>
+  <data name="AltadeResultadodeBusquedaOK" xml:space="preserve">
+    <value>Se agregó el Resultado de Busqueda correctamente.</value>
+  </data>
+  <data name="AltadeTramitesOK" xml:space="preserve">
+    <value>Se agregó el Tramite correctamente.</value>
+  </data>
+  <data name="AltaDocumentoOK" xml:space="preserve">
+    <value>Se agregó el Documento correctamente.</value>
+  </data>
+  <data name="AltaDocumentosParcelaOK" xml:space="preserve">
+    <value>Se agregó el Documento Parcela correctamente.</value>
+  </data>
+  <data name="AltaDocumentosUnidadTributariaOK" xml:space="preserve">
+    <value>Se agregó el Documento Unidad Tributaria correctamente.</value>
+  </data>
+  <data name="AltaDomicilioOK" xml:space="preserve">
+    <value>Se agregó el Domicilio correctamente.</value>
+  </data>
+  <data name="AltaDominioOK" xml:space="preserve">
+    <value>Se agregó el Dominio correctamente.</value>
+  </data>
+  <data name="AltaEstadoOK" xml:space="preserve">
+    <value>Se agregó el Estado correctamente.</value>
+  </data>
+  <data name="AltaExpedientesObraOK" xml:space="preserve">
+    <value>Se agregó el Expediente Obra correctamente.</value>
+  </data>
+  <data name="AltaInspeccionOK" xml:space="preserve">
+    <value>Se agregó el Inspeccion correctamente.</value>
+  </data>
+  <data name="AltaLiquidacionOK" xml:space="preserve">
+    <value>Se agregó la Liquidacion correctamente.</value>
+  </data>
+  <data name="AltaMantenedorUnidadTributariaOK" xml:space="preserve">
+    <value>Se agregó el Mantenedor Unidad Tributaria correctamente.</value>
+  </data>
+  <data name="AltaNomenclaturaOK" xml:space="preserve">
+    <value>Se agregó la Nomenclatura correctamente.</value>
+  </data>
+  <data name="AltaObservacionOK" xml:space="preserve">
+    <value>Se agregó la Observación correctamente.</value>
+  </data>
+  <data name="AltaPersonaOK" xml:space="preserve">
+    <value>Se agregó la Persona correctamente.</value>
+  </data>
+  <data name="AltaResponsableFiscalOK" xml:space="preserve">
+    <value>Se agregó el Responsable Fiscal correctamente.</value>
+  </data>
+  <data name="AltaSuperficieOK" xml:space="preserve">
+    <value>Se agregó la Superficie correctamente.</value>
+  </data>
+  <data name="AltaTitularOK" xml:space="preserve">
+    <value>Se agregó el Titular correctamente.</value>
+  </data>
+  <data name="AltaUbicacionObraOK" xml:space="preserve">
+    <value>Se agregó la Ubicacion correctamente.</value>
+  </data>
+  <data name="AltaUnidadesTributariasOK" xml:space="preserve">
+    <value>Se agregó la Unidad Tributaria correctamente.</value>
+  </data>
+  <data name="BajaCertificadosOK" xml:space="preserve">
+    <value>Se quito el Certificado correctamente.</value>
+  </data>
+  <data name="BajaControlTecnicoOK" xml:space="preserve">
+    <value>Se quito el Control Tecnico correctamente.</value>
+  </data>
+  <data name="BajadeactasOK" xml:space="preserve">
+    <value>Se quito el Acta correctamente.</value>
+  </data>
+  <data name="BajadeAtributosOK" xml:space="preserve">
+    <value>Se quito el Atributo correctamente.</value>
+  </data>
+  <data name="BajadeInspeccionOK" xml:space="preserve">
+    <value>Se quito la Inspeccion correctamente.</value>
+  </data>
+  <data name="BajadeinspectoresOK" xml:space="preserve">
+    <value>Se quito el Inspector correctamente.</value>
+  </data>
+  <data name="BajadeLiquidacionOK" xml:space="preserve">
+    <value>Se quito la Liquidacion correctamente.</value>
+  </data>
+  <data name="BajadeParcelasDestinoOK" xml:space="preserve">
+    <value>Se quito la Parcela Destino correctamente.</value>
+  </data>
+  <data name="BajadeParcelasOrigenOK" xml:space="preserve">
+    <value>Se quito la Parcela Origen correctamente.</value>
+  </data>
+  <data name="BajadePersonasOK" xml:space="preserve">
+    <value>Se quito la Persona correctamente.</value>
+  </data>
+  <data name="BajadeProfesionOK" xml:space="preserve">
+    <value>Se quito la Profesion correctamente.</value>
+  </data>
+  <data name="BajadeRegistrosOK" xml:space="preserve">
+    <value>Se quito el Registro correctamente.</value>
+  </data>
+  <data name="BajadeResultadodeBusquedaOK" xml:space="preserve">
+    <value>Se quito el Resultado de Busqueda correctamente.</value>
+  </data>
+  <data name="BajadeTramiteOK" xml:space="preserve">
+    <value>Se quito el Tramite correctamente.</value>
+  </data>
+  <data name="BajaDocumentoOK" xml:space="preserve">
+    <value>Se quito el Documento correctamente.</value>
+  </data>
+  <data name="BajaDocumentosParcelaOK" xml:space="preserve">
+    <value>Se quito el Documento Parcela correctamente.</value>
+  </data>
+  <data name="BajaDocumentosUnidadTributariaOK" xml:space="preserve">
+    <value>Se quito el Atributo correctamente.</value>
+  </data>
+  <data name="BajaDomicilioOK" xml:space="preserve">
+    <value>Se quito el Domicilio correctamente.</value>
+  </data>
+  <data name="BajaDominioOK" xml:space="preserve">
+    <value>Se quito el Dominio correctamente.</value>
+  </data>
+  <data name="BajaExpedientedeObraOK" xml:space="preserve">
+    <value>Se quito el Expediente Obra correctamente.</value>
+  </data>
+  <data name="BajaExpedientesObraOK" xml:space="preserve">
+    <value>Se eliminaron los Expedientes de Obra Correntamente.</value>
+  </data>
+  <data name="BajaLiquidacionOK" xml:space="preserve">
+    <value>Se quito la Liquidacion Correctamente.</value>
+  </data>
+  <data name="BajaMantenedorUnidadTributariaOK" xml:space="preserve">
+    <value>Se quito el Mantenedor Unidad Tributaria Correctamente.</value>
+  </data>
+  <data name="BajaNomenclaturaOK" xml:space="preserve">
+    <value>Se quito la Nomenclatura Correctamente.</value>
+  </data>
+  <data name="BajaObservacionOK" xml:space="preserve">
+    <value>Se quito la Observacion Correctamente.</value>
+  </data>
+  <data name="BajaPersonaOK" xml:space="preserve">
+    <value>Se quito la Persona Correctamente.</value>
+  </data>
+  <data name="BajaResponsableFiscalOK" xml:space="preserve">
+    <value>Se quito el Responsable Fiscal Correctamente.</value>
+  </data>
+  <data name="BajaSuperficieOK" xml:space="preserve">
+    <value>Se quito la Superficie Correctamente.</value>
+  </data>
+  <data name="BajaTitularOK" xml:space="preserve">
+    <value>Se quito el Titular Correctamente.</value>
+  </data>
+  <data name="BajaUbicacionObraOK" xml:space="preserve">
+    <value>Se quito la Ubicacion de Obra Correctamente.</value>
+  </data>
+  <data name="BajaUnidadesTributariasOK" xml:space="preserve">
+    <value>Se quito la Unidad Tributaria Correctamente.</value>
+  </data>
+  <data name="EliminarFeriadosOK" xml:space="preserve">
+    <value>Se quito el Feriado Correctamente.</value>
+  </data>
+  <data name="EliminarHorariosOK" xml:space="preserve">
+    <value>Se quito el Horario Correctamente.</value>
+  </data>
+  <data name="EliminarInspectoresOK" xml:space="preserve">
+    <value>Se quito el Inspector Correctamente.</value>
+  </data>
+  <data name="EliminarParcelaDestinoOK" xml:space="preserve">
+    <value>Se quito la Parcela Destino Correctamente.</value>
+  </data>
+  <data name="EliminarParcelaOrigenOK" xml:space="preserve">
+    <value>Se quito la Parcela Origen Correctamente.</value>
+  </data>
+  <data name="EliminarPerfilesOK" xml:space="preserve">
+    <value>Se quito el Perfil Correctamente.</value>
+  </data>
+  <data name="EliminarTablaAuxOK" xml:space="preserve">
+    <value>Se quito el registro Correctamente.</value>
+  </data>
+  <data name="EliminarUsuariosOK" xml:space="preserve">
+    <value>Se quito el Usuario Correctamente.</value>
+  </data>
+  <data name="ExportarOK" xml:space="preserve">
+    <value>Se Exporto Correctamente.</value>
+  </data>
+  <data name="GuardarExpedienteObraOK" xml:space="preserve">
+    <value>Se guardo el Expediente Obra Correctamente.</value>
+  </data>
+  <data name="LoginOK" xml:space="preserve">
+    <value>-</value>
+  </data>
+  <data name="ModificaciondeActasOK" xml:space="preserve">
+    <value>Se modifico el Acta Correctamente.</value>
+  </data>
+  <data name="ModificaciondeAtributosOK" xml:space="preserve">
+    <value>Se modifico el Atributo Correctamente</value>
+  </data>
+  <data name="ModificaciondeResultadodeBusquedaOK" xml:space="preserve">
+    <value>Se modifico el Resultado de Busqueda Correctamente.</value>
+  </data>
+  <data name="ModificacionExpedientesObraOK" xml:space="preserve">
+    <value>Se modifico el Expediente Obra Correctamente.</value>
+  </data>
+  <data name="ModificarCertificadosOK" xml:space="preserve">
+    <value>Se modifico el Certificado Correctamente.</value>
+  </data>
+  <data name="ModificarControlTecnicoOK" xml:space="preserve">
+    <value>Se modifico el Control Tecnico Correctamente.</value>
+  </data>
+  <data name="ModificarDocumentoOK" xml:space="preserve">
+    <value>Se modifico el Documento Correctamente.</value>
+  </data>
+  <data name="ModificarDocumentosParcelaOK" xml:space="preserve">
+    <value>Se modifico el Documento Parcela Correctamente.</value>
+  </data>
+  <data name="ModificarDocumentosUnidadTributariaOK" xml:space="preserve">
+    <value>Se modifico el Documento Unidad Tributaria Correctamente.</value>
+  </data>
+  <data name="ModificarDomicilioOK" xml:space="preserve">
+    <value>Se modifico el Domicilio Correctamente.</value>
+  </data>
+  <data name="ModificarDominioOK" xml:space="preserve">
+    <value>Se modifico el Domicio Correctamente.</value>
+  </data>
+  <data name="ModificarEstadoOK" xml:space="preserve">
+    <value>Se modifico el Estado Correctamente.</value>
+  </data>
+  <data name="ModificarFeriadosOK" xml:space="preserve">
+    <value>Se modifico el Feriado Correctamente.</value>
+  </data>
+  <data name="ModificarHorariosOK" xml:space="preserve">
+    <value>Se modifico el Horario Correctamente.</value>
+  </data>
+  <data name="ModificarInspeccionOK" xml:space="preserve">
+    <value>Se modifico la Inspeccion Correctamente.</value>
+  </data>
+  <data name="ModificarinspectoresOK" xml:space="preserve">
+    <value>Se modificaron los Inspectores Correctamente.</value>
+  </data>
+  <data name="ModificarLiquidacionOK" xml:space="preserve">
+    <value>Se modifico la Liquidacion Correctamente.</value>
+  </data>
+  <data name="ModificarMantenedorParcelarioOK" xml:space="preserve">
+    <value>Se modifico el Mantenedor Parcelario Correctamente</value>
+  </data>
+  <data name="ModificarMantenedorUnidadTributariaOK" xml:space="preserve">
+    <value>Se modifico el Mantenedor Unidad Tributaria Correctamente.</value>
+  </data>
+  <data name="ModificarNomenclaturaOK" xml:space="preserve">
+    <value>Se modifico la Nomenclatura Correctamente.</value>
+  </data>
+  <data name="ModificarObservacionOK" xml:space="preserve">
+    <value>Se modifico la Observacion Correctamente</value>
+  </data>
+  <data name="ModificarParametrosGeneralesOK" xml:space="preserve">
+    <value>Se modificaron los Parametros Generales Correctamente</value>
+  </data>
+  <data name="ModificarPerfilesOK" xml:space="preserve">
+    <value>Se modificaron el Perfil Correctamente.</value>
+  </data>
+  <data name="ModificarPersonasOK" xml:space="preserve">
+    <value>Se modifico la Persona Correctamente</value>
+  </data>
+  <data name="ModificarProfesionOK" xml:space="preserve">
+    <value>Se modifico la Profesion Correctamente</value>
+  </data>
+  <data name="ModificarRegistreosOK" xml:space="preserve">
+    <value>Se modificaron losRegistros Correctamente.</value>
+  </data>
+  <data name="ModificarResponsableFiscalOK" xml:space="preserve">
+    <value>Se modificaron los Responsables Fiscales Correctamente.</value>
+  </data>
+  <data name="ModificarSuperficieOK" xml:space="preserve">
+    <value>Se modifico la Superficie Correctamente.</value>
+  </data>
+  <data name="ModificarTablasAuxOK" xml:space="preserve">
+    <value>Se modifico el Registro Correctamente.</value>
+  </data>
+  <data name="ModificarTitularOK" xml:space="preserve">
+    <value>Se modifico el Titular Correctamente.</value>
+  </data>
+  <data name="ModificarTramitesOK" xml:space="preserve">
+    <value>Se modifico el Tramite Correctamente.</value>
+  </data>
+  <data name="ModificarUsuariosOK" xml:space="preserve">
+    <value>Se modifico el Usuario Correctamente.</value>
+  </data>
+  <data name="NoAutorizadoOK" xml:space="preserve">
+    <value>5</value>
+  </data>
+  <data name="ProcesadoTransaccionesOK" xml:space="preserve">
+    <value>Se procesaron las transacciones correctamente.</value>
+  </data>
+  <data name="ColeccionController_ImportarArchivoColeccion_FormatoInvalido" xml:space="preserve">
+    <value>Formato del archivo seleccionado inválido.</value>
+  </data>
+  <data name="ColeccionController_NombreColeccionExistente" xml:space="preserve">
+    <value>El nombre [{0}] ya existe, por favor ingrese uno nuevo.</value>
+  </data>
+  <data name="ConfirmarTramiteOK" xml:space="preserve">
+    <value>Se confirmo el Tramite Correctamente</value>
+  </data>
+  <data name="AgregarRemitoOK" xml:space="preserve">
+    <value>Se agregó el Remito Correctamente</value>
+  </data>
+  <data name="AbrirLibroDiarioOK" xml:space="preserve">
+    <value>Se abrió el Libro Diario correctamente</value>
+  </data>
+  <data name="CerrarLibroDiarioOK" xml:space="preserve">
+    <value>Se cerró el Libro Diario correctamente</value>
+  </data>
+  <data name="AgregarMensuraOK" xml:space="preserve">
+    <value>Se agrego la Mensura Correctamente</value>
+  </data>
+  <data name="EliminarMensuraOK" xml:space="preserve">
+    <value>Se elimino la Mensura Correctamente</value>
+  </data>
+  <data name="ModificarMensuraOK" xml:space="preserve">
+    <value>Se modifico la Mensura Correctamente</value>
+  </data>
+  <data name="AltaDeParcelaMensuraOK" xml:space="preserve">
+    <value>Se agrego la Parcela Mensura correctamente</value>
+  </data>
+</root>

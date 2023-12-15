@@ -1,0 +1,16 @@
+﻿<div class="srow tramites">
+    <div class="controls fa pull-right">
+        <span class="opcion fa-inbox tooltips" data-placement="bottom" ng-click="abrirBandeja()" data-ng-show="allowTramite" data-original-title="Bandeja de Trámites"></span>
+        <span class="opcion fa-file-pdf-o tooltips" data-placement="bottom" ng-click="abrirInformeDetallado()" data-ng-show="allowTramite" data-original-title="Informe Detallado"></span>
+    </div>
+    <div class="roundChkBox tramites">
+        <input type="checkbox" data-name="{{tramite.id}}" data-componente="{{tramite.tipo}}" id="{{chkboxid}}" ng-click="selectedChanged()" ng-model="tramite.selected" />
+        <label for="{{chkboxid}}"></label>
+    </div>
+    <div>
+        <p class="text-primary">
+            <span data-ng-bind-html="tramite.nombre | highlight:pattern:true" class="ng-binding"></span>
+        </p>
+        <p><span data-ng-bind-html="tramite.descripcion | highlight:pattern:true"></span></p>
+    </div>
+</div>

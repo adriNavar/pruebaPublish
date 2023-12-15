@@ -1,0 +1,90 @@
+﻿@model GeoSit.Client.Web.Models.Usuario
+@{
+    ViewBag.Title = "Login";
+    bool expirada = ViewBag.SessionExpirada ?? false;
+    string ocultarLogin = expirada ? "hidden" : "";
+    string mostrarLogin = expirada ? "" : "hidden";
+}
+@section styles
+{
+    <link href="~/Content/login.css" rel="stylesheet" />
+    <style>
+        body {
+            background: url('~/../../Content/images/background.jpg');
+            background-size: cover;
+        }
+    </style>
+}
+<div class="container login-page">
+    <div class="form-login @ocultarLogin">
+        <h2 class="form-login-heading">
+            Acceder a mi cuenta
+        </h2>
+        <div class="login-wrap ">
+            @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { id = "LoginForm", role = "form", novalidate = "" }))
+            {
+                @Html.AntiForgeryToken()
+                @Html.TextBoxFor(m => m.Login, new { @class = "form-control new-control", @placeholder = "User ID", required = "", autofocus = "" })
+                <br>
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control  new-control", @placeholder = "Password", required = "" })
+
+                <label class="checkbox">
+                    <span class="pull-right">
+                        @Html.ActionLink("Olvidé mi clave", "ForgotPassword", "Account")
+                    </span>
+                </label>
+                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                <br><br><button type="submit" id="loginbtn" class="btn btn-theme btn-block">INGRESAR</button>
+                <hr>
+            }
+            <div class="centered texto-condiciones">
+                <p>Operar con GeoSITM implica aceptar los <a data-toggle="modal" href="#terminos-condiciones" tabindex="1">Términos y Condiciones</a> en los que se ofrece el servicio.</p>
+            </div>
+        </div>
+        <!-- Modal -->
+        <div id="terminos-condiciones" aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">Terminos y condiciones</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>Powered by Geosystems</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button data-dismiss="modal" class="btn btn-default" type="button">Aceptar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- modal -->
+    </div>
+    <div class="sesion-expirada @mostrarLogin">
+        <h2 class="sesion-expirada-heading" style="padding-top: 95px;">
+            Sesión Expirada
+        </h2>
+        <div class="sesion-expirada-wrap">
+            <p>Su Sesión ha Expirado</p>
+            <p>Si desea volver a ingresar haga <a class="cursor-pointer" onclick="hacerLogin()">click aquí</a></p>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>
+@section scripts
+{
+    <script>
+        function hacerLogin() {
+            $('.sesion-expirada').addClass("hidden");
+            $('.form-login').removeClass("hidden");
+        }
+
+        $(document).ready(function () {
+            $('#loginbtn').click(function (e) {
+                $('#Password').val(CryptoJS.MD5($('#Password').val()));
+                $("#LoginForm").submit();
+                e.preventDefault();
+            });
+        });
+    </script>
+}

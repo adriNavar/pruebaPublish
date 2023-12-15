@@ -1,0 +1,151 @@
+﻿html, body {
+    background-size: auto;
+    background-image: url(images/MapasTematicos/background.jpg);
+    font-family: 'Segoe UI' !important;
+}
+/*.btn {
+    background-color: transparent;
+}*/
+/*.modal-header{
+    background-color:#FFFFFF
+}*/
+/*.modal-title{
+    color:#ffffff;
+}*/
+div.dataTables_filter {
+    display: none;
+}
+.boton-grabar {
+    height: 32px;
+    width: 32px;
+    max-height: 32px;
+    min-height: 32px;
+    max-width: 32px;
+    min-width: 32px;
+    background-repeat: no-repeat;
+    background-image: url("../Content/images/Seguridad/icons/blue/32/save.png");
+    border: none;
+}
+
+
+.modal-footer{
+
+    background-color:#ffffff !important;
+
+}
+
+.borde-derecho {
+    border-color: #999;
+    border-right-width: 1px;
+    border-right-style: solid;
+}
+
+.borde-izquierdo {
+    border-color: #999;
+    border-left-width: 1px;
+    border-left-style: solid;
+}
+
+.borde-superior {
+    border-color: #999;
+    border-top-width: 1px;
+    border-top-style: solid;
+}
+
+.borde-inferior {
+    border-color: #999;
+    border-bottom-width: 1px;
+    border-bottom-style: solid;
+}
+
+.centrado {
+    text-align: center;
+}
+
+.subrayado {
+    border: 0;
+    outline: 0;
+    background: transparent;
+    border-bottom: 1px solid black;
+    background: url(images/MapasTematicos/icons/dark/16/editar.png) no-repeat scroll right;
+    text-align: center;
+}
+
+.btnSinBorde{
+    border-color:transparent;
+    background-color:transparent;
+}
+
+.btnConBorde{
+    background-color:transparent;
+    border-color:black;
+}
+
+.panel-desactivado {
+    background-color:#b5b3b3 !important;
+}
+.panel-activo {
+    background-color:#FFFFFF !important;
+}
+
+.sin-padding{
+    padding-left: 0px;
+    padding-right: 0px;
+}
+
+.btn-lg {
+  padding: 0px 0px;
+  font-size: 18px;
+  line-height: 1.33;
+  border-radius: 0px;
+}
+
+.boton-buscar{
+    height:32px;
+    width:32px;
+    max-height:32px;
+    min-height:32px;
+    max-width:32px;
+    min-width:32px;
+    background-repeat:no-repeat;
+    background-image: url("../Content/images/Seguridad/icons/blue/32/buscar.png");
+    border:none;
+    background-color: transparent;
+}
+
+.boton-Seleccionar{
+    height:32px;
+    width:32px;
+    max-height:32px;
+    min-height:32px;
+    max-width:32px;
+    min-width:32px;
+    background-repeat:no-repeat;
+    background-image: url("../Content/images/Seguridad/icons/blue/32/checkbox.png");
+    border:none;
+}
+
+.glyphicon-refresh-animate {
+    -animation: spin .7s infinite linear;
+    -ms-animation: spin .7s infinite linear;
+    -webkit-animation: spinw .7s infinite linear;
+    -moz-animation: spinm .7s infinite linear;
+}
+
+@keyframes spin {
+    from { transform: scale(1) rotate(0deg);}
+    to { transform: scale(1) rotate(360deg);}
+}
+  
+@-webkit-keyframes spinw {
+    from { -webkit-transform: rotate(0deg);}
+    to { -webkit-transform: rotate(360deg);}
+}
+
+@-moz-keyframes spinm {
+    from { -moz-transform: rotate(0deg);}
+    to { -moz-transform: rotate(360deg);}
+}
+.flecha-desactivada {
+    display: none;
+}

@@ -1,0 +1,243 @@
+﻿@model GeoSit.Data.BusinessEntities.ObjetosAdministrativos.DTO.JurisdiccionDTO
+@{
+    Layout = "Index.cshtml";
+}
+@section Title
+{
+    @Html.Raw("Listado de Jurisdicciones")
+}
+@section Detail
+{
+    @Html.Raw("Detalle de Jurisdicción")
+}
+
+@section Scripts
+{
+    <script>
+        var ObjetoManager = function (owner) {
+            const form = "form.object-data",
+                cols = [
+                    { name: "Codigo", data: "Codigo" },
+                    { name: "Nombre", data: "Nombre" },
+                    { name: "Nomenclatura", data: "Nomenclatura" },
+                    { name: "Departamento", data: "Departamento" },
+                ];
+            const fill = (jurisdiccion) => {
+                $("#FeatId", form).val(jurisdiccion.FeatId);
+                $("#DepartamentoId", form).val(jurisdiccion.DepartamentoId).trigger('change');
+                $("#Nombre", form).val(jurisdiccion.Nombre);
+                $("#Codigo", form).val(jurisdiccion.Codigo);
+                $("#Alias", form).val(jurisdiccion.Alias);
+                $("#Nomenclatura", form).val(jurisdiccion.Nomenclatura);
+                $("#Descripcion", form).val(jurisdiccion.Descripcion);
+                $("#WKT", form).val(jurisdiccion.WKT);
+            };
+            const get = function (row) {
+                let loaded = Promise.resolve(true);
+                if (row) {
+                    loaded = new Promise((ok, error) => {
+                        showLoading();
+                        $.getJSON(`${BASE_URL}EditorGrafico/Jurisdicciones/${row.FeatId}`)
+                            .done(data => {
+                                fill(data);
+                                ok(false);
+                            })
+                            .fail(error)
+                            .always(hideLoading);
+                    });
+                }
+                return loaded;
+            };
+            const save = function () {
+                return new Promise((ok, error) => {
+                    $.post(`${BASE_URL}EditorGrafico/Jurisdicciones`, $(form).serialize())
+                        .done(() => ok(`La jurisdicción se ha grabado correctamente`))
+                        .fail(() => error(`No se pudo grabar la jurisdicción`));
+                });
+            };
+            const remove = function (row) {
+                return new Promise((ok, error) => {
+                    $.post(`${BASE_URL}EditorGrafico/BorrarJurisdiccion/${row.FeatId}`)
+                        .done(() => ok(`La jurisdicción seleccionada se ha borrado correctamente`))
+                        .fail(() => error(`No se pudo borrar la jurisdicción seleccionada`));
+                });
+            };
+            const beginEdit = function () {
+                $("#btnEditarUbicacion,#btnEliminarUbicacion,#DepartamentoId", form).removeAttr("disabled");
+                $("#Nombre,#Codigo,#Alias,#Nomenclatura,#Descripcion,#Zona,#LetraDepartamento,#LetraMensura", form).removeAttr("readonly");
+            };
+            const reset = function () {
+                endEdit();
+                fill({});
+            };
+            const endEdit = function () {
+                $("#btnEditarUbicacion,#btnEliminarUbicacion,#DepartamentoId", form).attr("disabled", "disabled");
+                $("#Nombre,#Codigo,#Alias,#Nomenclatura,#Descripcion,#Zona,#LetraDepartamento,#LetraMensura", form).attr("readonly", "readonly");
+                resetValidator();
+            };
+            const valid = function () {
+                const fv = $(form).data('formValidation');
+                fv.validate();
+                return fv.isValid();
+            };
+            const showGeometry = function (edit) {
+                $(owner).trigger("showGeometry", { edit });
+            };
+            const writeGeometry = function (wkt) {
+                $("#WKT", form).val(wkt);
+            };
+            const getWKT = function () {
+                return $("#WKT", form).val();
+            };
+            const getSelection = function () {
+                const id = getWKT() ? Number($("#FeatId", form).val()) : Number($("#DepartamentoId", form).val());
+                const layer = getWKT() ? "@(ViewData["Layer"])" : "@(ViewData["LayerDepartamento"])";
+
+                return [[[id]], [layer]];
+            };
+            const resetValidator = function () {
+                if ($(form).data("bootstrapValidator")) {
+                    $(form).bootstrapValidator("resetForm");
+                }
+                $(form).bootstrapValidator({
+                    message: 'Este valor no es válido',
+                    excluded: ['[readonly]', '[disabled]', ':disabled'],
+                    fields: {
+                        DepartamentoId: {
+                            message: 'Departamento no válido',
+                            validators: {
+                                notEmpty: {
+                                    message: 'Debe seleccionar un Departamento.'
+                                }
+                            }
+                        },
+                        Codigo: {
+                            message: 'Código no válido',
+                            validators: {
+                                notEmpty: {
+                                    message: 'Debe especificar un Código.'
+                                }
+                            }
+                        },
+                        Nombre: {
+                            message: 'Nombre no válido',
+                            validators: {
+                                notEmpty: {
+                                    message: 'Debe especificar un Nombre.'
+                                }
+                            }
+                        }
+                    }
+                });
+            };
+            resetValidator();
+            $("#filtroDepartamento").select2();
+            $("#DepartamentoId", form).select2();
+
+            $("#btnEliminarUbicacion").on("click", writeGeometry.bind(null, ""));
+            $("#btnEditarUbicacion").on("click", showGeometry.bind(null, true));
+
+            return {
+                tableColumns: cols,
+                get,
+                save,
+                remove,
+                reset,
+                valid,
+                edit: beginEdit,
+                showGeometry: showGeometry.bind(null, false),
+                writeGeometry,
+                getWKT,
+                getSelection
+            };
+        }
+    </script>
+}
+
+@section TableColumns
+{
+    <th> C&oacute;digo</th>
+    <th> Nombre</th>
+    <th> Nomemnclatura</th>
+    <th> Departamento</th>
+}
+
+@section TableFilters
+{
+    <th><form onsubmit="javascript:void(0);"><input autocomplete="off" type="text" data-filter class="form-control input-sm" placeholder="Buscar..."></form></th>
+    <th><form onsubmit="javascript:void(0);"><input autocomplete="off" type="text" data-filter class="form-control input-sm" placeholder="Buscar..."></form></th>
+    <th><form onsubmit="javascript:void(0);"><input autocomplete="off" type="text" data-filter class="form-control input-sm" placeholder="Buscar..."></form></th>
+    <th>
+        <form onsubmit="javascript:void(0);">
+            @Html.DropDownList("filtroDepartamento", (IEnumerable<SelectListItem>)ViewData["FiltroDepartamentos"], new { @class = "form-control input-sm", @Value = ViewData["DepartamentoDefault"] })
+        </form>
+    </th>
+}
+@section ObjectData
+{
+    <form class="form-horizontal object-data">
+        @Html.HiddenFor(model => model.FeatId)
+        <div class="row">
+            <div class="form-group col-xs-6">
+                <label class="control-label col-xs-4">Departamento</label>
+                <div class="col-xs-8">
+                    @Html.DropDownListFor(model => model.DepartamentoId, (IEnumerable<SelectListItem>)ViewData["Departamentos"], new { @class = "form-control", @disabled = "disabled" })
+                </div>
+            </div>
+            <div class="form-group col-xs-6">
+                <div class="row">
+                    <div class="form-group col-xs-7 remove-margin">
+                        <label class="control-label col-xs-4">Nombre</label>
+                        <div class="col-xs-8">
+                            @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control", @required = "required", @readonly = "readonly" })
+                        </div>
+                    </div>
+                    <div class="form-group col-xs-5 remove-margin">
+                        <label class="control-label col-xs-5">C&oacute;digo</label>
+                        <div class="col-xs-7">
+                            @Html.TextBoxFor(model => model.Codigo, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-xs-6">
+                <label class="control-label col-xs-4">Alias</label>
+                <div class="col-xs-8">
+                    @Html.TextBoxFor(model => model.Alias, new { @class = "form-control", @readonly = "readonly" })
+                </div>
+            </div>
+            <div class="form-group col-xs-6">
+                <label class="control-label col-xs-4">Nomenclatura</label>
+                <div class="col-xs-8">
+                    @Html.TextBoxFor(model => model.Nomenclatura, new { @class = "form-control", @readonly = "readonly" })
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-xs-6">
+                <label class="control-label col-xs-4">Descripci&oacute;n</label>
+                <div class="col-xs-8">
+                    @Html.TextBoxFor(model => model.Descripcion, new { @class = "form-control", @readonly = "readonly" })
+                </div>
+            </div>
+            <div class="form-group col-xs-6">
+                <label class="control-label col-xs-4">Coordenadas</label>
+                <div class="col-xs-8">
+                    <div class="input-group">
+                        @Html.TextBoxFor(model => model.WKT, new { @class = "form-control", @readonly = "readonly" })
+                        <span class="input-group-btn">
+                            <button type="button" title="Editar" id="btnEditarUbicacion" class="btn btn-default" disabled="disabled">
+                                <i class="fa fa-edit"></i>
+                            </button>
+                            <button type="button" title="Quitar" id="btnEliminarUbicacion" class="btn btn-default" disabled="disabled">
+                                <i class="fa fa-eraser"></i>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+}

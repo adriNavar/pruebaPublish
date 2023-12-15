@@ -1,0 +1,8 @@
+﻿@model GeoSit.Client.Web.Models.ExpedientesObras.TipoTramiteViewModel
+
+<div class="panel-body">
+    <h4>Tipos de Trámite</h4>
+    <div class="col-xs-11">
+        @Html.DropDownListFor(model => model.IdTipo, Model.TipoList, new { @class = "form-control select2", multiple = "" })
+    </div>
+</div>

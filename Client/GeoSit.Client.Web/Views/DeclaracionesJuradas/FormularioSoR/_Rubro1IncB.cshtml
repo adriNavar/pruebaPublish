@@ -1,0 +1,64 @@
+﻿@model GeoSit.Client.Web.Models.FormularioSoRModel
+
+<div id="Rubro1IncB" class="panel remove-margin remove-shadow">
+    <div class="col-xs-12 remove-padding">
+        <div class="panel-title">
+            <h4 class="title-border"><strong>Rubro 1</strong></h4>
+        </div>
+        <div class="panel-body">
+            <div class="row" style="margin: 0;margin-left: 15px;">
+                <h5><strong>Inc. B</strong></h5>
+            </div>
+            <div class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-xs-5 control-label text-right">Paraje / Isla</label>
+                    <div class="col-xs-4">
+                        <div class="input-group">
+                            @Html.HiddenFor(x => x.DDJJDesignacion.IdParaje)
+                            @Html.TextBoxFor(x => x.DDJJDesignacion.Paraje, new { @class = "form-control", @readonly = true })
+                            <div id="btnBuscarParajes" class="input-group-addon cursor-pointer @(Model.ReadOnly?"boton-deshabilitado": string.Empty)">
+                                <span class="fa fa-lg fa-search"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-5 control-label text-right">Secci&oacute;n</label>
+                    <div class="col-xs-4">
+                        <div class="input-group">
+                            @Html.HiddenFor(x => x.DDJJDesignacion.IdSeccion)
+                            @Html.TextBoxFor(x => x.DDJJDesignacion.Seccion, new { @class = "form-control", @readonly = true })
+                            <div id="btnBuscarSecciones" class="input-group-addon cursor-pointer @(Model.ReadOnly?"boton-deshabilitado": string.Empty)">
+                                <span class="fa fa-lg fa-search"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-5 control-label text-right">Chacra</label>
+                    <div class="col-xs-4">
+                        @Html.TextBoxFor(x => x.DDJJDesignacion.Chacra, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-5 control-label text-right">Quinta</label>
+                    <div class="col-xs-4">
+                        @Html.TextBoxFor(x => x.DDJJDesignacion.Quinta, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-5 control-label text-right">Fracci&oacute;n</label>
+                    <div class="col-xs-4">
+                        @Html.TextBoxFor(x => x.DDJJDesignacion.Fraccion, new { @class = "form-control" })
+                    </div>
+                </div>
+                <!--<div class="form-group">
+                    <label class="col-xs-5 control-label text-right">Parcela</label>
+                    <div class="col-xs-4">
+                        @*@Html.TextBoxFor(x => x.DDJJDesignacion.Lote, new { @class = "form-control" })*@
+                    </div>
+                </div>-->
+            </div>
+        </div>
+    </div>
+</div>

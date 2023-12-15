@@ -1,0 +1,98 @@
+﻿@model GeoSit.Client.Web.Models.InterfaseRentasLogModel[]
+@{
+    ViewBag.Title = "Interfase Rentas";
+}
+
+<link href="~/Content/dataTables.bootstrap.css" rel="stylesheet" />
+<link href="~/Content/interfaseRentas.css" rel="stylesheet" />
+
+<div id="rnt_winLogInterfaseRentas" class="modal fade" tabindex="-1" data-backdrop="static" role="dialog" aria-labelledby="modal-windowLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title col-lg-11 col-xs-11 col-sm-11 col-md-11" id="rnt_lblModal">@ViewBag.Title</h3>
+                <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer" style="padding-top: 3px;" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+            </div>
+            <div class="modal-body">
+                <div class="body-content">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <table id="rnt_tblLogInterfaseRentas" class="table table-striped table-bordered table-responsive">
+                                <thead>
+                                    <tr>
+                                        <th class="dt-header-center"><input type="checkbox" id="rnt_chkSeleccionarTodo" /></th>
+                                        <th>ID</th>
+                                        <th>Trans.</th>
+                                        <th>Fecha</th>
+                                        <th>ID Parcela</th>
+                                        <th>Partida</th>
+                                        <th>Operaci&oacute;n</th>
+                                        <th>Web Service</th>
+                                        <th>Resultado</th>
+                                        <th>Estado</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var log in Model)
+                                    {
+                                        <tr id="rnt_log_@log.LogID">
+                                            <td><input type="checkbox" class="checkbox" /></td>
+                                            <td>@log.LogID</td>
+                                            <td>@log.TransactionID</td>
+                                            <td>@log.Fecha.ToString("dd/MM/yyyy HH:mm")</td>
+                                            <td>@log.ParcelaID</td>
+                                            <td>@log.Partida</td>
+                                            <td>@log.Operacion</td>
+                                            <td>@log.WebService</td>
+                                            <td>@log.Resultado</td>
+                                            <td>@log.Estado</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                                <tfoot></tfoot>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <div id="rnt_pnlReprocessProgress" class="col-md-3 pull-left">
+                                <label>Procesando...</label>
+                                <div class="progress">
+                                    <div class="progress-bar" role="progressbar">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="pull-right">
+                                <button id="rnt_btnReprocesarTodo" type="button">Reprocesar Todos (Erróneos)</button>
+                                <button id="rnt_btnReprocesarSeleccion" type="button">Reprocesar Seleccionados</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Información-->
+<div class="modal fade" id="rnt_ModalInfo" tabindex="-3" role="dialog" aria-labelledby="TituloInfo" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="rnt_TituloInfo">Info</h4>
+            </div>
+            <div class="modal-body">
+                <div id="rnt_MensajeInfo" class="alert alert-dismissible" role="alert">
+                    <strong>Atención!</strong><br />
+                    <p id="rnt_DescripcionInfo"></p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <img id="rnt_btnCancelarInfo" data-dismiss="modal" title="Cancelar" src="~/Content/images/Seguridad/icons/blue/32/checkbox.png" style="cursor:pointer;">
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/jquery.dataTables.js"></script>
+<script src="~/Scripts/dataTables.bootstrap.js"></script>
+<script src="~/Scripts/InterfaseRentas/main.js"></script>

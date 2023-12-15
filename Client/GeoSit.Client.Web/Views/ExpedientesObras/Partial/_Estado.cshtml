@@ -1,0 +1,20 @@
+﻿@model GeoSit.Client.Web.Models.ExpedientesObras.EstadoViewModel
+
+@Html.HiddenFor(model => model.Fecha)
+
+<div class="form-group" id="group-estado">
+    <label class="control-label col-xs-3">Estado</label>
+    <div class="col-xs-9">
+        @Html.DropDownListFor(model => model.EstadoExpedienteId, Model.EstadoList, new { @class = "form-control" })    
+    </div>    
+</div>
+
+<div class="form-group">
+    <label class="control-label col-xs-3">Observaciones</label>
+    <div class="col-xs-9">
+        @Html.TextAreaFor(model => model.Observaciones, new { @class = "form-control" })
+    </div>
+</div>
+
+<span class="fa fa-2x fa-times-circle pull-right black cursor-pointer pull-right" aria-hidden="true" id="estado-cancel"></span>
+<span class="fa fa-2x fa-check-circle pull-right black cursor-pointer pull-right" id="estado-submit"></span>

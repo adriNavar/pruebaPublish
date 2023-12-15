@@ -1,0 +1,10 @@
+﻿#modal-GeneracionListadoGeneralTramites .dropup > button > span.caret {
+    margin-left: 15px;
+}
+button.ui-datepicker-current {
+    display: none;
+}
+
+#modal-GeneracionListadoGeneralTramites .date > input:not([disabled]) {
+    background-color: inherit;
+}

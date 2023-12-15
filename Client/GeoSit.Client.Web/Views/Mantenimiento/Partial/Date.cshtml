@@ -1,0 +1,7 @@
+﻿@model GeoSit.Data.BusinessEntities.Mantenimiento.AtributoTA
+<div class="form-group clearfix">
+    <label class="control-label col-xs-4 text-right">@Model.Nombre @(Model.Es_Obligatorio ? "*" : "")</label>
+    <div class="col-xs-8">
+        <input name="Parametros[@Model.Campo]" type="text" value="@Model.Valor" datepicker-append-to-body="true" class="form-control margin-bottom fecha" @(Model.Es_Obligatorio ? "required=\"required\"" : "") />
+    </div>
+</div>

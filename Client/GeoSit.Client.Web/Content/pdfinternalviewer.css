@@ -1,0 +1,46 @@
+.pdf-toolbar {
+    padding: 3px 0;
+    background: #3d4046;
+}
+
+    .pdf-toolbar button {
+        color: #fff;
+        background: none;
+        border: none;
+        outline: none;
+    }
+
+        .pdf-toolbar button:hover,
+        .pdf-toolbar button:active,
+        .pdf-toolbar button:focus {
+            outline: none !important;
+        }
+
+        .pdf-toolbar button.disabled {
+            background: none !important;
+            border: none !important;
+        }
+
+    .pdf-toolbar .dropdown-menu {
+        color: #fff;
+        background: #3d4046;
+    }
+
+        .pdf-toolbar .dropdown-menu > li:not(:last-of-type) {
+            color: #fff;
+            border-bottom: 1px solid #fff;
+        }
+
+        .pdf-toolbar .dropdown-menu > li > a {
+            color: #fff;
+        }
+
+            .pdf-toolbar .dropdown-menu > li > a:hover {
+                color: #333;
+                background-color: #e6e6e6;
+                border-color: #adadad;
+            }
+
+.pdf-viewer {
+    overflow: auto;
+}

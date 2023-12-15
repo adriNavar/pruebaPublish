@@ -1,0 +1,189 @@
+﻿@using GeoSit.Data.BusinessEntities.Designaciones;
+@model Designacion
+@{
+    bool esRural = (bool)ViewData["EsRural"];
+}
+
+<div class="modal fade theme_new" id="modal-window-designacion" tabindex="-1" data-backdrop="static" role="dialog" aria-labelledby="modal-windowLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="scroll-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="lblModal">Designaci&oacute;n - @((bool)ViewData["EsNueva"] ? "Nueva" : "Modificar")</h3>
+                    <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+                </div>
+                <div class="modal-body">
+                    <div id="message-error" class="alert alert-danger">
+                        <button type="button" class="close"><span aria-hidden="true">&times;</span></button>
+                        <p></p>
+                    </div>
+                    <div class="body-content">
+                        <div class="panel panel-default remove-shadow">
+                            <div class="panel-body">
+                                <form class="form-horizontal" id="form-designacion">
+                                    @Html.HiddenFor(model => model.IdDesignacion)
+                                    @Html.HiddenFor(model => model.IdParcela)
+                                    <div class="form-group" style="margin-bottom:35px;">
+                                        <label class="control-label col-sm-4 text-right">Designador</label>
+                                        <div class="col-sm-8">
+                                            @if ((bool)ViewData["PuedeCambiarDesignador"])
+                                            {
+                                                @Html.DropDownListFor(model => model.IdTipoDesignador, (IEnumerable<SelectListItem>)ViewData["TiposDesignador"], new { @class = "form-control" })
+                                            }
+                                            else
+                                            {
+                                                @Html.HiddenFor(model => model.IdTipoDesignador)
+                                                @Html.TextBoxFor(model => model.TipoDesignador.Nombre, new { @class = "form-control", @readonly = "readonly" })
+                                            }
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-4 text-right">Departamento</label>
+                                        <div class="col-sm-8">
+                                            @Html.DropDownListFor(model => model.IdDepartamento, (IEnumerable<SelectListItem>)ViewData["Departamentos"], new { @class = "form-control" })
+                                            @Html.HiddenFor(model => model.Departamento)
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        @if (esRural)
+                                        {
+                                            <label class="control-label col-sm-4 text-right">Localidad / Colonia</label>
+                                        }
+                                        else
+                                        {
+                                            <label class="control-label col-sm-4 text-right">Localidad</label>
+                                        }
+                                        <div class="col-sm-8">
+                                            @Html.DropDownListFor(model => model.IdLocalidad, (IEnumerable<SelectListItem>)ViewData["Localidades"], new { @class = "form-control", data_listen_departamento_changed = ViewData["IdTipoObjetoLocalidad"] })
+                                            @Html.HiddenFor(model => model.Localidad)
+                                        </div>
+                                    </div>
+                                    @if (esRural)
+                                    {
+                                        <div class="form-group">
+                                            <label class="control-label col-sm-4 text-right">Paraje / Isla</label>
+                                            <div class="col-sm-8">
+                                                <div class="input-group">
+                                                    @Html.HiddenFor(model => model.IdParaje)
+                                                    @Html.TextBoxFor(model => model.Paraje, new { @class = "form-control", @readonly = "readonly", data_listen_departamento_changed = "" })
+                                                    <span class="input-group-btn">
+                                                        <button class="btn btn-default" data-titulo="Parajes/Islas" data-solr="parajes" data-parent="IdDepartamento" type="button"><i class="fa fa-lg fa-search"></i></button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-sm-4 text-right">Secci&oacute;n</label>
+                                            <div class="col-sm-8">
+                                                <div class="input-group">
+                                                    @Html.HiddenFor(model => model.IdSeccion)
+                                                    @Html.TextBoxFor(model => model.Seccion, new { @class = "form-control", @readonly = "readonly", data_listen_departamento_changed = "" })
+                                                    <span class="input-group-btn">
+                                                        <button class="btn btn-default" data-titulo="Secciones" data-solr="secciones" data-parent="IdDepartamento" type="button"><i class="fa fa-lg fa-search"></i></button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div class="form-group">
+                                            <label class="control-label col-sm-4 text-right">Calle</label>
+                                            <div class="col-sm-8">
+                                                <div class="input-group">
+                                                    @Html.HiddenFor(model => model.IdCalle)
+                                                    @Html.TextBoxFor(model => model.Calle, new { @class = "form-control", @readonly = "readonly", data_listen_localidad_changed = "" })
+                                                    <span class="input-group-btn">
+                                                        <button class="btn btn-default" data-titulo="Calles" data-solr="calles" data-parent="IdLocalidad" data-include-search type="button"><i class="fa fa-lg fa-search"></i></button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-sm-4 text-right">N&uacute;mero</label>
+                                            <div class="col-sm-8">
+                                                @Html.TextBoxFor(model => model.Numero, new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                    }
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-4 text-right">Chacra</label>
+                                        <div class="col-sm-8">
+                                            @Html.TextBoxFor(model => model.Chacra, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                    @if (esRural)
+                                    {
+                                        <div class="form-group">
+                                            <label class="control-label col-sm-4 text-right">Quinta</label>
+                                            <div class="col-sm-8">
+                                                @Html.TextBoxFor(model => model.Quinta, new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                    }
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-4 text-right">Fracci&oacute;n</label>
+                                        <div class="col-sm-8">
+                                            @Html.TextBoxFor(model => model.Fraccion, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                    @if (!esRural)
+                                    {
+                                        <div class="form-group">
+                                            <label class="control-label col-sm-4 text-right">Manzana</label>
+                                            <div class="col-sm-8">
+                                                <div class="input-group">
+                                                    @Html.HiddenFor(model => model.IdManzana)
+                                                    @Html.TextBoxFor(model => model.Manzana, new { @class = "form-control", @readonly = "readonly", data_listen_localidad_changed = "" })
+                                                    <span class="input-group-btn">
+                                                        <button class="btn btn-default" data-titulo="Manzanas" data-solr="manzanas" data-parent="IdLocalidad" data-include-search type="button"><i class="fa fa-lg fa-search"></i></button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                    <div class="form-group">
+                                        <label class="control-label col-sm-4 text-right">Parcela</label>
+                                        <div class="col-sm-8">
+                                            @Html.TextBoxFor(model => model.Lote, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-lg-4 pull-right">
+                        <span data-placement="bottom" title="Guardar" data-original-title="Guardar" id="btnGuardarDesignacion" class="fa fa-save fa-2x black cursor-pointer"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade theme_new mensaje" id="designacion-alert-modal" tabindex="-2" role="dialog" aria-labelledby="TituloAlertDesignacion" aria-hidden="true" data-backdrop="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="TituloAlertDesignacion">Titulo</h3>
+                <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-dismissible" role="alert">
+                    <p id="DescripcionAlertDesignacion"></p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-xs-4 pull-right">
+                    <span id="btnAlertDesignacionOK" aria-hidden="true" data-dismiss="modal" data-placement="right" title="Aceptar" data-original-title="Aceptar" class="fa fa-check-circle light-blue fa-2x cursor-pointer"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="buscador-container"></div>
+
+<script src="~/Scripts/formValidation.min.js"></script>
+<script src="~/Scripts/bootstrapValidation.min.js"></script>
+<script src="~/Scripts/designaciones/main.js"></script>

@@ -1,0 +1,68 @@
+﻿<link href="~/Content/theme_new.css" rel="stylesheet" />
+<link href="~/Content/CierreLibroDiario.css" rel="stylesheet" />
+<link href="~/Content/formValidation.min.css" rel="stylesheet" />
+
+<div class="modal fade theme_new" id="modal-CierreLibroDiario" tabindex="-2" data-backdrop="static" role="dialog" aria-labelledby="modal-windowLabel" aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div id="scroll-content-cierreLibroDiario" class="scroll-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="lblCierreLibroDiario">@ViewBag.Title</h3>
+                    <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+                </div>
+                <div class="modal-body cierreLibroDiario-body">
+                    <div id="cierreLibroDiario-content" class="body-content cierrelibro-content">
+                        @Html.Hidden("hdnLibroDiarioAbierto", (string)ViewBag.libroDiarioAbierto)
+                        <div class="form-horizontal">
+                            <div class="form-group">
+                                <label id="lblFechaLibro" class="col-xs-6 control-label text-muted text-right">
+                                    Fecha Libro Diario:
+                                </label>
+                                <div class="col-xs-6">
+                                    @Html.TextBox("txtFechaLibro", (string)ViewBag.FechaLibro, new { @class = "form-control", @maxlength = "10", @readonly = "readonly" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label id="lblMsgConfirmacion" class="col-xs-12 control-label text-muted text-right">
+                                    Confirma el cierre del Libro Diario para la fecha indicada?
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-xs-5">
+                        <button class="btn btn-secondary" id="btnInformePendientesLibroDiario" title="Generar Informe Pendientes Libro Diario">
+                            <span>Generar Informe</span>
+                        </button>
+                    </div>
+                    <div class="col-xs-5 pull-right">
+                        <button class="btn btn-secondary boton-deshabilitado" id="btnCerrarLibroDiario" title="Aceptar">
+                            <span>Aceptar</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal theme_new fade mensaje" id="mensajeModalCierreLibroDiario" tabindex="-2" role="dialog" aria-labelledby="TituloAdvertencia" aria-hidden="true" style="z-index:99999999;" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <input type="hidden" id="TipoAdvertencia" value="">
+                <h3 class="modal-title" id="TituloAdvertencia">Titulo</h3>
+                <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+            </div>
+            <div class="modal-body">
+                <div id="MensajeAlerta" class="alert alert-warning alert-dismissible" role="alert">
+                    <p id="DescripcionAdvertencia">Está a punto de DESACTIVAR al usuario Perez, Juan <br>Está seguro de continuar?</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/formValidation.min.js"></script>
+<script src="~/Scripts/MesaEntradas/cierrelibrodiario.js"></script>

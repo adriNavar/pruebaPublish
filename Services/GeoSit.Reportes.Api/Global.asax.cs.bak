@@ -1,0 +1,31 @@
+﻿using GeoSit.Core.Logging;
+using GeoSit.Core.Logging.Loggers;
+using System;
+using System.Collections.Generic;
+using System.Configuration;
+using System.Linq;
+using System.Web;
+using System.Web.Http;
+using System.Web.Routing;
+
+namespace GeoSit.Reportes.Api
+{
+    public class WebApiApplication : System.Web.HttpApplication
+    {
+        private static LoggerManager _loggerManager = null;
+        protected void Application_Start(object sender, EventArgs e)
+        {
+            GlobalConfiguration.Configure(WebApiConfig.Register);
+
+            if (_loggerManager == null)
+            {
+                _loggerManager = new LoggerManager();
+                _loggerManager.Add(new Log4NET(Server.MapPath(ConfigurationManager.AppSettings["log4net.config"].ToString()), "DefaultLogger", "ErrorLogger"));
+            }
+        }
+        internal static LoggerManager GetLogger()
+        {
+            return _loggerManager;
+        }
+    }
+}

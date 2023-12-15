@@ -1,0 +1,88 @@
+﻿@using Newtonsoft.Json;
+@model IEnumerable<GeoSit.Data.BusinessEntities.ObrasPublicas.TramiteSeccion>
+@{
+    <input type="hidden" id="secciones-json" value="@Html.Raw(JsonConvert.SerializeObject(Model).ToString().Replace('"', '\''))" />
+    foreach (var seccion in Model)
+    {
+        var id = @seccion.Id_Tipo_Seccion.ToString();
+        var idTipoSeccionHidden = "hdfTipoSeccion_" + id;
+        var defaultValueHidden = "hdfDefault_" + id;
+        var nombreControl = "txtSeccion_" + id;
+        var nombreCheck = "chkSeccion_" + id;
+        var collapse = "collapse-seccion-" + id;
+        var heading = "heading-seccion-" + id;
+
+
+        <div class="section-position">
+            @if (seccion.Visualizar == true)
+            {
+                <div class='panel-heading bg-primary main-heading' role='region' id='@heading'>
+                    <a data-toggle='collapse' data-parent='#accordion-certificados' href='#@collapse' aria-expanded='false'
+                       aria-controls='@collapse' class="collapsed">
+                        <div class='panel-title'>
+                            @seccion.TipoSeccion.Nombre
+                            <i class="fa"></i>
+                        </div>
+                    </a>
+                </div>
+            }
+            else
+            { 
+                <div class='panel-heading bg-primary main-heading panel-deshabilitado' role='region' id='@heading'>
+                    <a data-toggle='collapse' data-parent='#accordion-certificados' href='#@collapse' aria-expanded='false'
+                       aria-controls='@collapse' class="collapsed">
+                        <div class='panel-title'>
+                            @seccion.TipoSeccion.Nombre
+                            <i class="fa"></i>
+                        </div>
+                    </a>
+                </div>
+            }
+            
+            <div id='@collapse' class="panel-collapse collapse main-collapse" aria-labelledby='@heading'>
+                <div class="panel-body">
+                    <div class="col-xs-11">
+                        <input type="hidden" id="@defaultValueHidden" value="@seccion.Detalle" />
+                       @if (seccion.Editar == true)
+                        {
+                            @Html.TextArea(nombreControl, @seccion.Detalle, new { @id = nombreControl, @rows = "4", @class = "form-control col-sm-2 pull-left", @style = "resize:none;height:100px"})
+                        }
+                        else
+                        {
+                            @Html.TextArea(nombreControl, @seccion.Detalle, new { @id = nombreControl, @rows = "4", @class = "form-control col-sm-2 pull-left boton-deshabilitado", @style = "resize:none;height:100px" })
+                        }
+                    </div>
+                    <div class="col-xs-1 margin-bottom" id="informe-final-controls">
+                        <dl>
+                            @if (seccion.Editar == true)
+                            {
+                                <dt><span class="fa fa-2x fa-random cursor-pointer black" title="Cargar Plantilla" data-original-title="Cargar Plantilla" aria-hidden="true" onclick="cargarDefault(@id)"></span></dt>
+                            }
+                            else
+                            {
+                                <dt><span class="fa fa-2x fa-random cursor-pointer black boton-deshabilitado" title="Cargar Plantilla" data-original-title="Cargar Plantilla" aria-hidden="true" onclick="cargarDefault(@id)"></span></dt>
+                            }
+                        </dl>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <label class="control-label col-xs-2">Imprime</label>
+                    <div class="col-xs-2" style="margin-top:5px">
+                        
+                            @if (seccion.Editar == true)
+                            {
+                                <div class="switch">
+                                    @Html.CheckBox(@nombreCheck, @seccion.Imprime, new { @id = @nombreCheck, @class = "cmn-toggle cmn-toggle-round-flat" })
+                                </div>
+                            }
+                            else
+                            {<div class="switch boton-deshabilitado">
+                                @Html.CheckBox(@nombreCheck, @seccion.Imprime, new { @id = @nombreCheck, @class = "cmn-toggle cmn-toggle-round-flat" })
+                            </div>
+                            }
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}

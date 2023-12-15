@@ -1,0 +1,1131 @@
+﻿@model GeoSit.Data.BusinessEntities.Interfaces.DatosGenerales
+@using GeoSit.Client.Web.Controllers;
+@{
+    ViewBag.Title = "Consulta SIGEMI - Inmuebles";
+    ViewBag.Description = "";
+    ViewBag.CantidadMaxima = 1000;
+
+}
+    <link href="~/Content/Interfaces.css" rel="stylesheet" />
+
+    <style type="text/css">
+        .dt-buttons {
+            float: right !important;
+            display: none;
+        }
+    </style>
+
+
+<div class="modal fade" id="myModalSIGEMI" tabindex="-100" role="dialog" style="z-index:10" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false" data-keyboard="false">
+
+    <div class="modal-dialog" id="mdialTamanioInmuebles">
+        <div class="modal-content">
+            <div class="modal-header" style="height: 60px">
+                <h4 class="modal-title col-lg-11 col-xs-11 col-sm-11 col-md-11" id="myModalLabel">@ViewBag.Title</h4>
+                <span aria-hidden="true" id="btnCerrar" class="fa fa-close fa-2x white cursor-pointer" style="padding-top:3px;" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+            </div>
+            <div class="modal-body modal-body-scroll">
+                @***********Encabezado**********@
+                <div class="panel panel-default">
+                    <div class="panel-body" style="color:black" id="encabezado">
+                        <div class="row">
+                            <div class="form-group">
+                                <h5 class=" col-lg-2 col-xs-2 col-sm-2 col-md-2">
+                                    Padrón/s
+                                </h5>
+                                <div class="col-lg-4 col-xs-4 col-sm-4 col-md-4">
+                                    @Html.TextBox("padron", Model.Catastro_Id, new { @readonly = "readonly" })
+                                </div>
+                                <h5 class=" col-lg-2 col-xs-2 col-sm-2 col-md-2">
+                                    Est.Imp
+                                </h5>
+                                <div class="col-lg-4 col-xs-4 col-sm-4 col-md-4">
+                                    @Html.TextBox("Estado", Model.Estado, new { @readonly = "readonly" })
+                                    @*<input id="padron" type="text" value="Definitivo" readonly="readonly">*@
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                                <h5 class=" col-lg-2 col-xs-2 col-sm-2 col-md-2">
+                                    Nom.Cat
+                                </h5>
+                                <div class="col-lg-4 col-xs-4 col-sm-4 col-md-4">
+                                    @Html.TextBox("nomClatura", Model.Nomenclatura_Cat, new { @readonly = "readonly" })
+                                </div>
+                                <h5 class=" col-lg-2 col-xs-2 col-sm-2 col-md-2">
+                                    
+                                </h5>
+                                <div class="col-lg-4 col-xs-4 col-sm-4 col-md-4">
+                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class=" col-lg-1 col-xs-1 col-sm-1 col-md-1 text-right">
+                                Circ.
+                                @Html.TextBox("circ", Model.Nom_Nueva_Circuns, new { @readonly = "readonly" })
+                            </div>
+                            <div class=" col-lg-1 col-xs-1 col-sm-1 col-md-1 text-right">
+                                Sec
+                                @Html.TextBox("sec", Model.Nom_Nueva_Sector, new { @readonly = "readonly" })
+                            </div>
+                            <div class=" col-lg-1 col-xs-1 col-sm-1 col-md-1 text-right">
+                                Ch
+                                @Html.TextBox("ch", Model.Nom_Nueva_Chacra, new { @readonly = "readonly" })
+                            </div>
+                            <div class=" col-lg-2 col-xs-2 col-sm-2 col-md-2 text-right">
+                                C QMF
+                                @Html.TextBox("cqmf", Model.Nom_Nueva_Codqmf, new { @readonly = "readonly" })
+                            </div>
+                            <div class=" col-lg-2 col-xs-2 col-sm-2 col-md-2 text-right">
+                                N QMF
+                                @Html.TextBox("nqmf", Model.Nom_Nueva_Qmf, new { @readonly = "readonly" })
+                            </div>
+                            <div class=" col-lg-1 col-xs-1 col-sm-1 col-md-1 text-right">
+                                Par
+                                @Html.TextBox("parc", Model.Nom_Nueva_Parcela, new { @readonly = "readonly" })
+                            </div>
+                            <div class=" col-lg-1 col-xs-1 col-sm-1 col-md-1 text-right">
+                                Mzo
+                                @Html.TextBox("mzo", Model.Nom_Nueva_Macizo, new { @readonly = "readonly" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @*Fin de listado*@
+                <div id="accordion">
+                    @*Aspecto Juridico Dominal*@
+                    <div class="panel-group panel-primary" id="div_Dominial">
+                        <div class="panel-heading panel-activo" style="height: 40px; padding: 10px 0 0 0;">
+                            <div class="col-lg-11 col-xs-11 col-sm-11 col-md-11 ">
+                                Aspecto Jurídico Dominial
+                            </div>
+                            <div class="col-lg-1 col-xs-1 col-sm-1 col-md-1 text-right ">
+                                <span id="Flecha_Aspecto_Juridico" class="glyphicon glyphicon-chevron-down flecha-activada"></span>
+                            </div>
+                        </div>
+                        <div id="accordion_panel_dominial" class="panel-collapse collapse" aria-expanded="true" style="border: solid; border-width: 1px; border-color: #a5a5a5; color: #000000">
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-lg-3 col-xs-3 col-sm-3 col-md-3" style="text-align:left">
+                                        <h5 class="" style="text-decoration-style:solid">
+                                            <b>  Titular</b>
+                                        </h5>
+                                    </div>
+
+                                </div>
+                                <div class="borde-inferior borde-superior borde-derecho borde-izquierdo" style="padding-top: 10px;">
+
+                                    <div class="row">
+                                        <div class="col-lg-3 col-xs-3 col-sm-3 col-md-3" style="text-align:right">
+                                            <h5 class="">
+                                                Identificación
+                                            </h5>
+                                        </div>
+                                        <div class="col-lg-5 col-xs-5 col-sm-5 col-md-5">
+                                            <div>
+                                                @Html.TextBox("identificacion", Model.Tit_Identificacion, new { @readonly = "readonly", @style = "width: 150px" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-3 col-xs-3 col-sm-3 col-md-3" style="text-align:right">
+                                            <h5 class="">Nombre</h5>
+                                        </div>
+                                        <div class="col-lg-6 col-xs-6 col-sm-6 col-md-6">
+                                            @Html.TextBox("nom", Model.Tit_Nombre, new { @readonly = "readonly", @style = "width: 372px" })
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-3 col-xs-3 col-sm-3 col-md-3" style="text-align:right">
+                                            <h5 class="">Cat.Tributaria</h5>
+                                        </div>
+                                        <div class="col-lg-3 col-xs-3 col-sm-3 col-md-3">
+                                            @Html.TextBox("catTribu", Model.Tit_Tributaria_Categoria, new { @readonly = "readonly", @style = "width: 120px" })
+                                        </div>
+                                        <div class="col-lg-2 col-xs-2 col-sm-2 col-md-2" style="text-align:right">
+                                            <h5 class="">Id.Tribut.</h5>
+                                        </div>
+                                        <div class="col-lg-3 col-xs-3 col-sm-3 col-md-3">
+                                            @Html.TextBox("idTribu", Model.Tit_Tributaria_Id, new { @readonly = "readonly" })
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6 col-xs-6 col-sm-6 col-md-6" style="text-align:left">
+                                        <h5 class="" style="text-decoration-style:solid">
+                                            <b>  Responsable de Pago</b>
+                                        </h5>
+                                    </div>
+
+                                </div>
+
+                                <div class="borde-inferior borde-superior borde-derecho borde-izquierdo" style="padding-top: 10px;">
+                                    <div class="row">
+                                        <div class="col-lg-3 col-xs-3 col-sm-3 col-md-3" style="text-align:right">
+                                            <h5 class="">
+                                                Indetificación
+                                            </h5>
+                                        </div>
+                                        <div class="col-lg-5 col-xs-5 col-sm-5 col-md-5">
+                                            <div>
+                                                @Html.TextBox("respIdenti", Model.Rp_Identificacion, new { @readonly = "readonly", @style = "width: 150px" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-3 col-xs-3 col-sm-3 col-md-3" style="text-align:right">
+                                            <h5 class="">Nombre</h5>
+                                        </div>
+                                        <div class="col-lg-6 col-xs-6 col-sm-6 col-md-6">
+                                            @Html.TextBox("respNom", Model.Rp_Nombre, new { @readonly = "readonly", @style = "width: 372px" })
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-lg-3 col-xs-3 col-sm-3 col-md-3" style="text-align:right">
+                                            <h5 class="">Cat.Tributaria</h5>
+                                        </div>
+                                        <div class="col-lg-3 col-xs-3 col-sm-3 col-md-3">
+                                            @Html.TextBox("respCatTribu", Model.Rp_Tributaria_Categoria, new { @readonly = "readonly", @style = "width: 120px" })
+                                        </div>
+                                        <div class="col-lg-2 col-xs-2 col-sm-2 col-md-2" style="text-align:right">
+                                            <h5 class="">Id.Tribut.</h5>
+                                        </div>
+                                        <div class="col-lg-3 col-xs-3 col-sm-3 col-md-3">
+                                            @Html.TextBox("respIdTribu", Model.Rp_Tributaria_Id, new { @readonly = "readonly" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-6 col-xs-6 col-sm-6 col-md-6" style="text-align:left">
+                                        <h5 class="" style="text-decoration-style:solid">
+                                            <b> Inscripción</b>
+                                        </h5>
+                                    </div>
+
+                                </div>
+                                <div class="borde-inferior borde-superior borde-derecho borde-izquierdo" style="padding-top: 10px;">
+                                    <div class="row">
+                                        <div class="col-lg-3 col-xs-3 col-sm-3 col-md-3" style="text-align:right">
+                                            <h5 class="">Numero</h5>
+                                        </div>
+                                        <div class="col-lg-3 col-xs-3 col-sm-3 col-md-3">
+                                            @Html.TextBox("inscrip", Model.Inscripcion, new { @readonly = "readonly", @style = "width: 120px" })
+                                        </div>
+                                        <div class=" col-lg-2 col-xs-2 col-sm-2 col-md-2" style="text-align:right">
+                                            <h5 class="">Ord./Res.</h5>
+                                        </div>
+                                        <div class="col-lg-3 col-xs-3 col-sm-3 col-md-3">
+                                            @Html.TextBox("inscrip", Model.Restricciones, new { @readonly = "readonly" })
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-lg-3 col-xs-3 col-sm-3 col-md-3" style="text-align:left">
+                                        <h5 class="" style="text-decoration-style:solid">
+                                            <b>  Co-Propietarios</b>
+                                        </h5>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div id="example_wrapper" class="dataTables_wrapper">
+                                    <table id="coPropietarios" class="table table-striped table-bordered table-hover table-responsive" role="grid" aria-describedby="example_info"></table>
+                                </div>
+                            </div>
+                        </div>
+
+                        @*Domicilio de la Propiedad*@
+                        <div class="panel-group panel-primary" id="div_Prop">
+                            <div class="panel-heading panel-activo" style="height: 40px; padding: 10px 0 0 0;">
+                                <div class="col-lg-11 col-xs-11 col-sm-11 col-md-11 ">
+                                    Domicilio de la Propiedad
+                                </div>
+                                <div class="col-lg-1 col-xs-1 col-sm-1 col-md-1 text-right ">
+                                    <span id="Flecha_Dom_Prop" class="glyphicon glyphicon-chevron-down flecha-activada"></span>
+                                </div>
+                            </div>
+                            <div id="accordion_panel_propiedad" class="panel-collapse collapse" aria-expanded="true" style="border: solid; border-width: 1px; border-color: #a5a5a5; color: #000000">
+                                <div class="panel-body">
+                                    <div class="form-horizontal" role="form">
+                                        <div class="form-group">
+                                            <h5 class=" col-lg-3 col-xs-3 col-sm-3 col-md-3">
+                                                País
+                                            </h5>
+                                            <div class="col-lg-9 col-xs-9 col-sm-9 col-md-9">
+                                                @Html.TextBox("inscrip", Model.Dprop_Pais, new { @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <h5 class=" col-lg-3 col-xs-3 col-sm-3 col-md-3">
+                                                Provincia
+                                            </h5>
+                                            <div class="col-lg-9 col-xs-9 col-sm-9 col-md-9">
+                                                @Html.TextBox("dpostProv", Model.Dprop_Provincia, new { @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <h5 class=" col-lg-3 col-xs-3 col-sm-3 col-md-3">
+                                                Departamento
+                                            </h5>
+                                            <div class="col-lg-9 col-xs-9 col-sm-9 col-md-9">
+                                                @Html.TextBox("Dpost_Depto", Model.Dprop_Depto, new { @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <h5 class=" col-lg-3 col-xs-3 col-sm-3 col-md-3">
+                                                Cod.Postal
+                                            </h5>
+                                            <div class="col-lg-3 col-xs-3 col-sm-3 col-md-3" style="margin-right:10px;">
+                                                @Html.TextBox("Dpost_Codigo_Postal", Model.Dprop_Codigo_Postal, new { @readonly = "readonly" })
+                                            </div>
+                                            <h5 class=" col-lg-2 col-xs-2 col-sm-2 col-md-2">
+                                                Localidad
+                                            </h5>
+                                            <div class="col-lg-3 col-xs-3 col-sm-3 col-md-3">
+                                                @Html.TextBox("Dpost_Localidad", Model.Dprop_Localidad, new { @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <h5 class=" col-lg-3 col-xs-3 col-sm-3 col-md-3">
+                                                Cod.Barrio
+                                            </h5>
+                                            <div class="col-lg-3 col-xs-3 col-sm-3 col-md-3" style="margin-right:10px;">
+                                                @Html.TextBox("Dpost_Barrio", Model.Dpost_Barrio, new { @readonly = "readonly" })
+                                            </div>
+                                            <h5 class=" col-lg-2 col-xs-2 col-sm-2 col-md-2">
+                                                Barrio
+                                            </h5>
+                                            <div class="col-lg-3 col-xs-3 col-sm-3 col-md-3">
+                                                @Html.TextBox("Dpost_Barrio", Model.Dprop_Barrio, new { @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <h5 class=" col-lg-3 col-xs-3 col-sm-3 col-md-3">
+                                                Cod.Calle
+                                            </h5>
+                                            <div class="col-lg-3 col-xs-3 col-sm-3 col-md-3" style="margin-right:10px;">
+                                                @Html.TextBox("Dpost_Calle", Model.Dpost_Calle, new { @readonly = "readonly" })
+                                            </div>
+                                            <h5 class=" col-lg-2 col-xs-2 col-sm-2 col-md-2">
+                                                Calle
+                                            </h5>
+                                            <div class="col-lg-3 col-xs-3 col-sm-3 col-md-3">
+                                                @Html.TextBox("Dpost_Calle", Model.Dprop_Calle, new { @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <h5 class=" col-lg-3 col-xs-3 col-sm-3 col-md-3">
+                                                Número
+                                            </h5>
+                                            <div class="col-lg-3 col-xs-3 col-sm-3 col-md-3" style="margin-right:10px;">
+                                                @Html.TextBox("Dpost_Numero", Model.Dpost_Numero, new { @readonly = "readonly" })
+                                            </div>
+                                            <h5 class=" col-lg-2 col-xs-2 col-sm-2 col-md-2">
+                                                Ext. del Nro
+                                            </h5>
+                                            <div class="col-lg-3 col-xs-3 col-sm-3 col-md-3">
+                                                @Html.TextBox("Dpost_Numero", Model.Dprop_Numero, new { @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <h5 class=" col-lg-3 col-xs-3 col-sm-3 col-md-3">
+                                                Piso
+                                            </h5>
+                                            <div class="col-lg-3 col-xs-3 col-sm-3 col-md-3" style="margin-right:10px;">
+                                                @Html.TextBox("Dpost_Piso", Model.Dprop_Piso, new { @readonly = "readonly" })
+                                            </div>
+                                            <h5 class=" col-lg-2 col-xs-2 col-sm-2 col-md-2">
+                                                Depto
+                                            </h5>
+                                            <div class="col-lg-3 col-xs-3 col-sm-3 col-md-3">
+                                                @Html.TextBox("Dpost_Departamento", Model.Dprop_Departamento, new { @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-horizontal" role="form">
+                                        <div class="form-group">
+                                            <h5 class=" col-lg-3 col-xs-3 col-sm-3 col-md-3">
+                                                Local
+                                            </h5>
+                                            <div class="col-lg-9 col-xs-9 col-sm-9 col-md-9">
+                                                @Html.TextBox("Dpost_Local", Model.Dprop_Local, new { @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @*Aspecto Ecónomico*@
+                            <div class="panel-group panel-primary" id="div_Econom">
+                                <div class="panel-heading panel-activo" style="height: 40px; padding: 10px 0 0 0;">
+                                    <div class="col-lg-11 col-xs-11 col-sm-11 col-md-11 ">
+                                        Aspecto Ecónomico
+                                    </div>
+                                    <div class="col-lg-1 col-xs-1 col-sm-1 col-md-1 text-right ">
+                                        <span id="Flecha_Econom" class="glyphicon glyphicon-chevron-down flecha-activada"></span>
+                                    </div>
+                                </div>
+                                <div id="accordion_panel_Econom" class="panel-collapse collapse" aria-expanded="true" style="border: solid; border-width: 1px; border-color: #a5a5a5; color: #000000">
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <div class="col-lg-6 col-xs-6 col-sm-6 col-md-6" style="text-align:left">
+                                                <h5 class="" style="text-decoration-style:solid">
+                                                    <b>  Coeficientes</b>
+                                                </h5>
+                                            </div>
+
+                                            <div class="col-lg-6 col-xs-6 col-sm-6 col-md-6" style="text-align:left">
+                                                <h5 class="" style="text-decoration-style:solid">
+                                                    <b>  Ultima Subdivisión</b>
+                                                </h5>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group borde-superior borde-inferior borde-izquierdo col-lg-6 col-xs-6 col-sm-6 col-md-6">
+                                            <div class="col-lg-12 col-xs-12 col-sm-12 col-md-12 sin-padding" style="padding-top: 10px;">
+                                                <h5 class="col-lg-3 col-xs-3 col-sm-3 col-md-3">
+                                                    Fiscal
+                                                </h5>
+                                                <div class="col-lg-9 col-xs-9 col-sm-9 col-md-9">
+                                                    @Html.TextBox("Coeficiente_Fiscal", Model.Coeficiente_Fiscal, new { @readonly = "readonly" })
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12 col-xs-12 col-sm-12 col-md-12 sin-padding" style="padding-top: 10px;">
+                                                <h5 class="  col-lg-3 col-xs-3 col-sm-3 col-md-3">
+                                                    Tierra
+                                                </h5>
+                                                <div class="col-lg-9 col-xs-9 col-sm-9 col-md-9">
+                                                    @Html.TextBox("Coeficiente_Tierra", Model.Coeficiente_Tierra, new { @readonly = "readonly" })
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12 col-xs-12 col-sm-12 col-md-12 sin-padding" style="padding-top: 10px;">
+                                                <h5 class="col-lg-3 col-xs-3 col-sm-3 col-md-3">
+                                                    Mejoras
+                                                </h5>
+                                                <div class="col-lg-3 col-xs-3 col-sm-3 col-md-3">
+                                                    @Html.TextBox("Coeficiente_Mejoras", Model.Coeficiente_Mejoras, new { @readonly = "readonly" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group borde-superior borde-derecho borde-inferior borde-izquierdo col-lg-6 col-xs-6 col-sm-6 col-md-6">
+                                            <div class="col-lg-12 col-xs-12 col-sm-12 col-md-12 sin-padding" style="padding-top: 10px;">
+                                                <h5 class="col-lg-3 col-xs-3 col-sm-3 col-md-3">
+                                                    Año
+                                                </h5>
+                                                <div class="col-lg-9 col-xs-9 col-sm-9 col-md-9">
+                                                    @Html.TextBox("Coeficiente_Fiscal", Model.Coeficiente_Fiscal, new { @readonly = "readonly" })
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12 col-xs-12 col-sm-12 col-md-12 sin-padding" style="padding-top: 10px;">
+                                                <h5 class="col-lg-3 col-xs-3 col-sm-3 col-md-3">
+                                                    Cta
+                                                </h5>
+                                                <div class="col-lg-3 col-xs-3 col-sm-3 col-md-3">
+                                                    @Html.TextBox("Coeficiente_Mejoras", Model.Coeficiente_Mejoras, new { @readonly = "readonly" })
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12 col-xs-12 col-sm-12 col-md-12 sin-padding" style="padding-top: 10px;">
+                                                <h5 class="col-lg-3 col-xs-3 col-sm-3 col-md-3">
+                                                    Lib
+                                                </h5>
+                                                <div class="col-lg-9 col-xs-9 col-sm-9 col-md-9">
+                                                    @Html.TextBox("Subdivision_Lib", Model.Subdivision_Lib, new { @readonly = "readonly" })
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12 col-xs-12 col-sm-12 col-md-12 sin-padding" style="padding-top: 10px;">
+                                                <h5 class="col-lg-3 col-xs-3 col-sm-3 col-md-3">
+                                                    Folio
+                                                </h5>
+                                                <div class="col-lg-9 col-xs-9 col-sm-9 col-md-9">
+                                                    @Html.TextBox("Subdivision_Folio", Model.Subdivision_Folio, new { @readonly = "readonly" })
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-lg-4 col-xs-4 col-sm-4 col-md-4" style="text-align:left">
+                                                <h5 class="" style="text-decoration-style:solid">
+                                                    <b>  Otros Datos</b>
+                                                </h5>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group borde-superior borde-derecho borde-inferior borde-izquierdo col-lg-6 col-xs-6 col-sm-6 col-md-6">
+                                            <div class="col-lg-12 col-xs-12 col-sm-12 col-md-12 sin-padding" style="margin-top: 10px;">
+                                                <h5 class="col-lg-3 col-xs-3 col-sm-3 col-md-3">
+                                                    Zona Geo
+                                                </h5>
+                                                <div class="col-lg-9 col-xs-9 col-sm-9 col-md-9">
+                                                    @Html.TextBox("Zona_Geografica", Model.Zona_Geografica, new { @readonly = "readonly" })
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12 col-xs-12 col-sm-12 col-md-12 sin-padding">
+                                                <h5 class="col-lg-3 col-xs-3 col-sm-3 col-md-3">
+                                                    Coef. Ph
+                                                </h5>
+                                                <div class="col-lg-9 col-xs-9 col-sm-9 col-md-9">
+                                                    @Html.TextBox("Coeficiente_Ph", Model.Coeficiente_Ph, new { @readonly = "readonly" })
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12 col-xs-12 col-sm-12 col-md-12 sin-padding">
+                                                <h5 class="col-lg-3 col-xs-3 col-sm-3 col-md-3">
+                                                    Trámites
+                                                </h5>
+                                                <div class="col-lg-9 col-xs-9 col-sm-9 col-md-9">
+                                                    @Html.TextBox("Tramites", Model.Tramites, new { @readonly = "readonly" })
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-12 col-xs-12 col-sm-12 col-md-12 sin-padding">
+                                                <h5 class="col-lg-5 col-xs-5 col-sm-5 col-md-5">
+                                                    <input type="radio" disabled> Liquida
+                                                </h5>
+                                                <h5 class="col-lg-5 col-xs-5 col-sm-5 col-md-5">
+                                                    <input type="radio" disabled> Emite
+                                                </h5>
+                                            </div>
+                                            <div class="col-lg-12 col-xs-12 col-sm-12 col-md-12 sin-padding">
+                                                <h5 class="col-lg-3 col-xs-3 col-sm-3 col-md-3">
+                                                    Deb. Automático
+                                                </h5>
+                                                <div class="col-lg-9 col-xs-9 col-sm-9 col-md-9">
+                                                    @Html.TextBox("Tramites", Model.Tramites, new { @readonly = "readonly" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                @*Aspecto Físico Urbano*@
+                                <div class="panel-group panel-primary" id="div_Urbano">
+                                    <div class="panel-heading panel-activo" style="height: 40px; padding: 10px 0 0 0;">
+                                        <div class="col-lg-11 col-xs-11 col-sm-11 col-md-11 ">
+                                            Aspecto Físico Urbano
+                                        </div>
+                                        <div class="col-lg-1 col-xs-1 col-sm-1 col-md-1 text-right ">
+                                            <span id="Flecha_Urbano" class="glyphicon glyphicon-chevron-down flecha-activada"></span>
+
+                                        </div>
+                                    </div>
+                                    <div id="accordion_panel_Urbano" class="panel-collapse collapse" aria-expanded="true" style=" border:solid; border-width: 1px; border-color: #a5a5a5; color: #000000">
+                                        <div class="panel-body">
+                                            <h5 class="" style="text-decoration-style:solid">
+                                                <b>  Expedientes</b>
+                                            </h5>
+                                            <div class="borde-inferior borde-superior borde-derecho borde-izquierdo" style="padding-top: 10px;">
+                                                <div class="row">
+                                                    <div class="form-group" style="padding-left: 5px;">
+                                                        <h5 class=" col-lg-2 col-xs-2 col-sm-2 col-md-2">
+                                                            Exp.Constr
+                                                        </h5>
+                                                        <div class="col-lg-4 col-xs-4 col-sm-4 col-md-4">
+                                                            @Html.TextBox("Expediente_Constr", Model.Expediente_Constr, new { @readonly = "readonly" })
+                                                        </div>
+                                                        <h5 class=" col-lg-1 col-xs-1 col-sm-1 col-md-1">
+                                                            Exp.En Trá.
+                                                        </h5>
+                                                        <div class="col-lg-4 col-xs-4 col-sm-4 col-md-4">
+                                                            @Html.TextBox("Expediente_En_Tramite", Model.Expediente_En_Tramite, new { @readonly = "readonly" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="form-group" style=" padding:10px 0 0 5px;">
+                                                    <h5 class=" col-lg-2 col-xs-2 col-sm-2 col-md-2">
+                                                        Designación
+                                                    </h5>
+                                                    <div class="col-lg-4 col-xs-4 col-sm-4 col-md-4">
+                                                        @Html.TextBox("Designacion", Model.Designacion, new { @readonly = "readonly" })
+                                                    </div>
+                                                    <h5 class=" col-lg-1 col-xs-1 col-sm-1 col-md-1">
+                                                        Lugar
+                                                    </h5>
+                                                    <div class="col-lg-4 col-xs-4 col-sm-4 col-md-4">
+                                                        @Html.TextBox("Lugar", Model.Lugar, new { @readonly = "readonly" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group" style="padding-left: 5px;">
+                                                    <h5 class=" col-lg-2 col-xs-2 col-sm-2 col-md-2">
+                                                        Caract
+                                                    </h5>
+                                                    <div class="col-lg-2 col-xs-2 col-sm-2 col-md-2">
+                                                        @Html.TextBox("Caract", Model.Caract, new { @readonly = "readonly", @style = "width: 85px" })
+                                                    </div>
+                                                    <h5 class=" col-lg-1 col-xs-1 col-sm-1 col-md-1">
+                                                        Rubro
+                                                    </h5>
+                                                    <div class="col-lg-2 col-xs-2 col-sm-2 col-md-2">
+                                                        @Html.TextBox("Rubro", Model.Rubro, new { @readonly = "readonly", @style = "width: 85px" })
+                                                    </div>
+                                                    <h5 class=" col-lg-1 col-xs-1 col-sm-1 col-md-1">
+                                                        Destino
+                                                    </h5>
+                                                    <div class="col-lg-2 col-xs-2 col-sm-2 col-md-2" style="padding-left: 25px;">
+                                                        @Html.TextBox("Destino", Model.Destino, new { @readonly = "readonly", @style = "width: 85px" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group" style="padding-left: 5px;">
+                                                    <h5 class=" col-lg-2 col-xs-2 col-sm-2 col-md-2">
+                                                        CICU/Año
+                                                    </h5>
+                                                    <div class="col-lg-3 col-xs-3 col-sm-3 col-md-3">
+                                                        @Html.TextBox("Certf_Info_Cat_Urb", Model.Certf_Info_Cat_Urb, new { @readonly = "readonly", @style = "width: 120px" })
+                                                    </div>
+                                                    <div class="col-lg-3 col-xs-3 col-sm-3 col-md-3">
+                                                        @Html.TextBox("Certf_Anio", Model.Certf_Anio, new { @readonly = "readonly", @style = "width: 120px" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group" style="padding-left: 5px;">
+                                                    <h5 class=" col-lg-2 col-xs-2 col-sm-2 col-md-2">
+                                                        Emp
+                                                    </h5>
+                                                    <div class="col-lg-3 col-xs-3 col-sm-3 col-md-3">
+                                                        @Html.TextBox("Empadronamiento", Model.Empadronamiento, new { @readonly = "readonly", @style = "width: 120px" })
+                                                    </div>
+                                                    <h5 class=" col-lg-1 col-xs-1 col-sm-1 col-md-1" style="margin-right: 10px;">
+                                                        Plantas
+                                                    </h5>
+                                                    <div class="col-lg-2 col-xs-2 col-sm-2 col-md-2">
+                                                        @Html.TextBox("Plantas", Model.Plantas, new { @readonly = "readonly", @style = "width: 80px" })
+                                                    </div>
+                                                    <h5 class=" col-lg-1 col-xs-1 col-sm-1 col-md-1">
+                                                        Sub.
+                                                    </h5>
+                                                    <div class="col-lg-2 col-xs-2 col-sm-2 col-md-2">
+                                                        @Html.TextBox("Subsuelos", Model.Subsuelos, new { @readonly = "readonly", @style = "width: 80px" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="form-group" style="padding-left: 5px;">
+                                                    <h5 class=" col-lg-2 col-xs-2 col-sm-2 col-md-2">
+                                                        Zona Cub.
+                                                    </h5>
+                                                    <div class="col-lg-4 col-xs-4 col-sm-4 col-md-4">
+                                                        @Html.TextBox("Zona_Curb", Model.Zona_Curb, new { @readonly = "readonly" })
+                                                    </div>
+                                                    <div class="radio">
+                                                        <h5 class=" col-lg-4 col-xs-4 col-sm-4 col-md-4">
+                                                            <input type="radio" disabled> Tiene Revalúo
+                                                        </h5>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    @*Datos Particulares*@
+                                    <div class="panel-group panel-primary" id="div_Part" style="margin-bottom: 0px;">
+                                        <div class="panel-heading panel-activo" style="height: 40px; padding: 10px 0 0 0;">
+                                            <div class="col-lg-11 col-xs-11 col-sm-11 col-md-11 ">
+                                                Datos Particulares
+                                            </div>
+                                            <div class="col-lg-1 col-xs-1 col-sm-1 col-md-1 text-right ">
+                                                <span id="Flecha_Datos_Part" class="glyphicon glyphicon-chevron-down flecha-activada"></span>
+
+                                            </div>
+                                        </div>
+                                        <div id="accordion_panel_Part" class="panel-collapse collapse" aria-expanded="true" style=" border: solid; border-width: 1px; border-color: #a5a5a5; color: #000000">
+                                            <div class="panel-body" style="padding:15px 25px 15px 15px;">
+                                                <div class="row">
+                                                    <div class="col-lg-9 col-xs-9 col-sm-9 col-md-9" style="text-align:left">
+                                                        <h5 class="" style="text-decoration-style:solid">
+                                                            <b>  Superficie/Valuación</b>
+                                                        </h5>
+                                                    </div>
+                                                </div>
+                                                <div class="borde-inferior borde-superior borde-derecho borde-izquierdo" style="padding-top: 10px;">
+                                                    <div class="form-group">
+                                                        <h5 class=" col-lg-1 col-xs-1 col-sm-1 col-md-1">
+                                                            Matr.
+                                                        </h5>
+                                                        <div class="col-lg-2 col-xs-2 col-sm-2 col-md-2" style="margin-right:10px;">
+                                                            @Html.TextBox("Matricula", Model.Matricula, new { @readonly = "readonly", @style = "width: 80px;" })
+                                                        </div>
+                                                        <h5 class=" col-lg-1 col-xs-1 col-sm-1 col-md-1">
+                                                            Zona
+                                                        </h5>
+                                                        <div class="col-lg-1 col-xs-1 col-sm-1 col-md-1">
+                                                            @Html.TextBox("Zona_Codigo", Model.Zona_Codigo, new { @readonly = "readonly", @style = "width: 40px" })
+                                                        </div>
+                                                        <div class="col-lg-2 col-xs-2 col-sm-2 col-md-2" style="margin-right:10px;">
+                                                            @Html.TextBox("Zona_Descripcion", Model.Zona_Descripcion, new { @readonly = "readonly", @style = "width: 80px;" })
+                                                        </div>
+                                                        <h5 class=" col-lg-1 col-xs-1 col-sm-1 col-md-1">
+                                                            PPH
+                                                        </h5>
+                                                        <div class="col-lg-2 col-xs-2 col-sm-2 col-md-2">
+                                                            @Html.TextBox("Porc_Ph", Model.Porc_Ph, new { @readonly = "readonly", @style = "width: 80px" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group" style="padding-top: 25px;">
+                                                        <h5 class="col-lg-2 col-xs-2 col-sm-2 col-md-2">
+                                                            Sup.Tierra
+                                                        </h5>
+                                                        <div class="col-lg-3 col-xs-3 col-sm-3 col-md-3">
+                                                            @Html.TextBox("Sup_Tierra", Model.Sup_Tierra, new { @readonly = "readonly", @style = "width: 80px" })
+                                                        </div>
+                                                        <h5 class=" col-lg-2 col-xs-2 col-sm-2 col-md-2">
+                                                            Val.Tier.
+                                                        </h5>
+                                                        <div class="col-lg-3 col-xs-3 col-sm-3 col-md-3">
+                                                            @Html.TextBox("Val_Tierra", Model.Val_Tierra, new { @readonly = "readonly", @style = "width: 80px" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group" style="padding-top: 25px;">
+                                                        <h5 class="col-lg-2 col-xs-2 col-sm-2 col-md-2">
+                                                            Sup.viv.
+                                                        </h5>
+                                                        <div class="col-lg-3 col-xs-3 col-sm-3 col-md-3">
+                                                            @Html.TextBox("Sup_Vivienda", Model.Sup_Vivienda, new { @readonly = "readonly", @style = "width: 80px" })
+                                                        </div>
+                                                        <h5 class="col-lg-2 col-xs-2 col-sm-2 col-md-2">
+                                                            Val.Viv
+                                                        </h5>
+                                                        <div class="col-lg-3 col-xs-3 col-sm-3 col-md-3">
+                                                            @Html.TextBox("Val_Vivienda", Model.Val_Vivienda, new { @readonly = "readonly", @style = "width: 80px" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group" style="padding-top: 25px;">
+                                                        <h5 class="col-lg-2 col-xs-2 col-sm-2 col-md-2">
+                                                            Sup.Ind
+                                                        </h5>
+                                                        <div class="col-lg-3 col-xs-3 col-sm-3 col-md-3">
+                                                            @Html.TextBox("Sup_Industria", Model.Sup_Industria, new { @readonly = "readonly", @style = "width: 80px" })
+                                                        </div>
+                                                        <h5 class="col-lg-2 col-xs-2 col-sm-2 col-md-2">
+                                                            Val.Ind.
+                                                        </h5>
+                                                        <div class="col-lg-3 col-xs-3 col-sm-3 col-md-3">
+                                                            @Html.TextBox("Val_Industria", Model.Val_Industria, new { @readonly = "readonly", @style = "width: 80px" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group" style="padding-top: 25px;">
+                                                        <h5 class="col-lg-2 col-xs-2 col-sm-2 col-md-2">
+                                                            Sup.Neg.
+                                                        </h5>
+                                                        <div class="col-lg-3 col-xs-3 col-sm-3 col-md-3">
+                                                            @Html.TextBox("Sup_Negocio", Model.Sup_Negocio, new { @readonly = "readonly", @style = "width: 80px" })
+                                                        </div>
+                                                        <h5 class="col-lg-2 col-xs-2 col-sm-2 col-md-2">
+                                                            Val.Neg
+                                                        </h5>
+                                                        <div class="col-lg-3 col-xs-3 col-sm-3 col-md-3">
+                                                            @Html.TextBox("Val_Negocio", Model.Val_Negocio, new { @readonly = "readonly", @style = "width: 80px" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group" style="padding:25px 0 25px 0;">
+                                                        <h5 class="col-lg-2 col-xs-2 col-sm-2 col-md-2">
+                                                            Sup.I.O.
+                                                        </h5>
+                                                        <div class="col-lg-3 col-xs-3 col-sm-3 col-md-3">
+                                                            @Html.TextBox("Sup_Inst_Obras", Model.Sup_Inst_Obras, new { @readonly = "readonly", @style = "width: 80px" })
+                                                        </div>
+                                                        <h5 class="col-lg-2 col-xs-2 col-sm-2 col-md-2">
+                                                            Val.I.O
+                                                        </h5>
+                                                        <div class="col-lg-3 col-xs-3 col-sm-3 col-md-3">
+                                                            @Html.TextBox("Val_Inst_Obras", Model.Val_Inst_Obras, new { @readonly = "readonly", @style = "width: 80px" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-lg-9 col-xs-9 col-sm-9 col-md-9" style="text-align:left">
+                                                        <h5 class="" style="text-decoration-style:solid">
+                                                            <b> Otros</b>
+                                                        </h5>
+                                                    </div>
+                                                </div>
+                                                <div class="borde-inferior borde-superior borde-derecho borde-izquierdo" style="padding-top: 10px;">
+                                                    <div class="form-group">
+                                                        <h5 class="col-lg-2 col-xs-2 col-sm-2 col-md-2">Tomo</h5>
+                                                        <div class="col-lg-3 col-xs-3 col-sm-3 col-md-3">
+                                                            @Html.TextBox("Tomo", Model.Tomo, new { @readonly = "readonly", @style = "width: 80px" })
+                                                        </div>
+                                                        <h5 class="col-lg-2 col-xs-2 col-sm-2 col-md-2">Folio</h5>
+                                                        <div class="col-lg-3 col-xs-3 col-sm-3 col-md-3">
+                                                            @Html.TextBox("Folio", Model.Folio, new { @readonly = "readonly", @style = "width: 80px" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group" style="padding: 25px 0 25px 0;">
+                                                        <h5 class="col-lg-2 col-xs-2 col-sm-2 col-md-2">Año</h5>
+                                                        <div class="col-lg-3 col-xs-3 col-sm-3 col-md-3">
+                                                            @Html.TextBox("Anio_Matricula", Model.Anio_Matricula, new { @readonly = "readonly", @style = "width: 80px" })
+                                                        </div>
+                                                        <h5 class="col-lg-2 col-xs-2 col-sm-2 col-md-2">Finca</h5>
+                                                        <div class="col-lg-3 col-xs-3 col-sm-3 col-md-3">
+                                                            @Html.TextBox("Finca", Model.Finca, new { @readonly = "readonly", @style = "width: 80px" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-12 col-xs-12 col-sm-12 col-md-12 sin-padding" style="text-align:left">
+                                                    <h5 class="" style="text-decoration-style:solid">
+                                                        <b>Servicios</b>
+                                                    </h5>
+                                                </div>
+                                                <div class="row" style="height:1em;"></div>
+
+                                                <div class="col-lg-12 col-xs-12 col-sm-12 col-md-12 sin-padding">
+                                                    <table id="Grilla_servicios" class="table table-striped table-bordered table-responsive" cellspacing="0" style="width:100%">
+                                                        <thead>
+                                                            <tr>
+                                                                <th class="no-sort"></th>
+                                                                <th>Ag</th>
+                                                                <th>Cl</th>
+                                                                <th>Re</th>
+                                                                <th>Co</th>
+                                                                <th>Ba</th>
+                                                                <th>Cant Viv</th>
+                                                                <th>Cant Neg</th>
+                                                            </tr>
+                                                        </thead>
+
+                                                        <tbody>
+                                                            <tr>
+                                                                <td class="centrado">Viv</td>
+                                                                <td class="centrado">@Html.TextBox("Serv_Viv_Agua", Model.Serv_Viv_Agua, new { @readonly = "readonly", @style = "width: 25px", @class = "centrado" })</td>
+                                                                <td class="centrado">@Html.TextBox("Serv_Viv_Cloaca", Model.Serv_Viv_Cloaca, new { @readonly = "readonly", @style = "width: 25px", @class = "centrado" })</td>
+                                                                <td class="centrado">@Html.TextBox("Serv_Viv_Recoleccion", Model.Serv_Viv_Recoleccion, new { @readonly = "readonly", @style = "width: 25px", @class = "centrado" })</td>
+                                                                <td class="centrado">@Html.TextBox("Serv_Viv_Conservacion", Model.Serv_Viv_Conservacion, new { @readonly = "readonly", @style = "width: 25px", @class = "centrado" })</td>
+                                                                <td class="centrado">@Html.TextBox("Serv_Viv_Barrido", Model.Serv_Viv_Barrido, new { @readonly = "readonly", @style = "width: 25px", @class = "centrado" })</td>
+                                                                <td class="centrado">@Html.TextBox("Can_Viviendas", Model.Can_Viviendas, new { @readonly = "readonly", @style = "width: 25px", @class = "centrado" })</td>
+                                                                <td class="centrado"><input class="centrado" value="0" style="width:25px" readonly="readonly"></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="centrado">Neg</td>
+                                                                <td class="centrado">@Html.TextBox("Serv_Com_Agua", Model.Serv_Com_Agua, new { @readonly = "readonly", @style = "width: 25px", @class = "centrado" })</td>
+                                                                <td class="centrado">@Html.TextBox("Serv_Com_Cloaca", Model.Serv_Com_Cloaca, new { @readonly = "readonly", @style = "width: 25px", @class = "centrado" })</td>
+                                                                <td class="centrado">@Html.TextBox("Serv_Com_Recoleccion", Model.Serv_Com_Recoleccion, new { @readonly = "readonly", @style = "width: 25px", @class = "centrado" })</td>
+                                                                <td class="centrado">@Html.TextBox("Serv_Com_Conservacion", Model.Serv_Com_Conservacion, new { @readonly = "readonly", @style = "width: 25px", @class = "centrado" })</td>
+                                                                <td class="centrado">@Html.TextBox("Serv_Com_Barrido", Model.Serv_Com_Barrido, new { @readonly = "readonly", @style = "width: 25px", @class = "centrado" })</td>
+                                                                <td class="centrado"><input class="centrado" value="0" style="width:25px" readonly="readonly"></td>
+                                                                <td class="centrado">@Html.TextBox("Unidad_Comercios", Model.Unidad_Comercios, new { @readonly = "readonly", @style = "width: 25px", @class = "centrado" })</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        @*Relaciones*@
+                                        <div class="panel-group panel-primary" id="div_Relaciones">
+                                            <div class="panel-heading panel-activo" style="height: 40px; padding: 10px 0 0 0;">
+                                                <div class="col-lg-11 col-xs-11 col-sm-11 col-md-11 ">
+                                                    Relaciones
+                                                </div>
+                                                <div class="col-lg-1 col-xs-1 col-sm-1 col-md-1 text-right ">
+                                                    <span id="Flecha_Relaciones" class="glyphicon glyphicon-chevron-down flecha-activada"></span>
+
+                                                </div>
+                                            </div>
+                                            <div id="accordion_panel_Relaciones" class="panel-collapse collapse" aria-expanded="true" style=" border: solid; border-width: 1px; border-color: #a5a5a5; color: #000000">
+                                                <div class="panel-body">
+                                                    <div class="row">
+                                                        <div class="col-lg-3 col-xs-3 col-sm-3 col-md-3" style="text-align:left">
+                                                            <h5 class="" style="text-decoration-style:solid">
+                                                                <b>  Relaciones</b>
+                                                            </h5>
+                                                        </div>
+                                                    </div>
+                                                    <hr>
+                                                    <div id="example_wrapper" class="dataTables_wrapper">
+                                                        <table id="relaciones" class="table table-striped table-bordered table-hover table-responsive" role="grid" aria-describedby="example_info"></table>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Modal Advertencia-->
+            <div class="modal fade" id="ModalAdvertencia" tabindex="-2" role="dialog" style="z-index:11" aria-labelledby="TituloAdvertencia" aria-hidden="true" data-backdrop="false">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <input type="hidden" id="TipoAdvertencia" value="" />
+                            <h4 class="modal-title col-lg-11 col-xs-11 col-sm-11 col-md-11" id="TituloAdvertencia" style="color:#000000;">Titulo</h4>
+                            <br />
+                        </div>
+                        <div class="modal-body">
+                            <div id="MensajeAlerta" class="alert alert-warning alert-dismissible" role="alert">
+                                <strong>Atención!</strong><br />
+                                <p id="DescripcionAdvertencia"> <br />Está seguro de continuar?</p>
+                            </div>
+                        </div>
+                        <div class="modal-footer" style="background-color:#ffffff;" id="Panel_Botones">
+                            <img id="btnAdvertenciaOK" data-dismiss="modal" class="" title="Aceptar" src="~/Content/images/Seguridad/icons/blue/32/checkbox.png" style="cursor:pointer;">&ensp;&ensp;
+                            <img id="btnCancelarAdvertencia" title="Cancelar" src="~/Content/images/Seguridad/icons/blue/32/cancelar.png" style="cursor:pointer;">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<input type="hidden" name="RespuestaValidacion" id="RespuestaValidacion" value="" />
+
+    <script src="~/Scripts/jquery.dataTables.js"></script>
+    <script src="~/Scripts/jquery-sortable.js"></script>
+    <script src="~/Scripts/jquery.dataTables.min.js"></script>
+
+
+
+    <script>
+
+        var radio_listados;
+        var EstadoTreeFunciones = false;
+        var EstadoTreeComponentes = false;
+        var usuarioSelec = 0;
+        var functionSelec = 3;
+        var valorTabla = true;
+        var validarSeccion = false;
+        var validarSeccGenTareas = false;
+        var validarSeccGenObj = false;
+
+        $(window).keydown(function (event) {
+            if (event.keyCode == 13) {
+                event.preventDefault();
+                return false;
+            }
+        });
+
+        function buscar() {
+
+
+
+        }
+
+        $(window).resize(ajustamodal);
+
+        function ajustamodal() {
+            var altura = $(window).height() - 160; //value corresponding to the modal heading + footer
+            $(".modal-body-scroll").css({ "height": altura, "overflow-y": "auto" });
+
+        }
+
+        $(document).ready(function () {
+
+            $('#myModalReporte').modal('show');
+
+            $.ajax({
+                url: BASE_URL + 'Interfaces/GetRelaciones',
+                data: { nroPadron: $("#padron").val() },
+                dataType: 'json',
+                type: 'POST',
+                success: function (data) {
+                    var table = $('#relaciones').dataTable({
+                        "language": {
+                            "url": BASE_URL + "Scripts/dataTables.spanish.txt"
+                        },
+                        "bFilter": false, // Disable searching
+                        "bPaginate": false, // Disable pagination
+                        "bInfo": false,    // Disable info text
+                        "scrollY": "200px",
+                        "scrollCollapse": true,
+                        "scrollX": true,
+                        "destroy": true,
+                        "sEmptyTable": "No se encontraron resultados",
+                        "sZeroRecords": "No se encontraron resultados",
+                        "aaData": data,
+                        "aoColumns": [
+                                { "sWidth": "10%", sTitle: "Origen", "bSortable": false, "mData": "ORIGEN", "bVisible": true },
+                                { "sWidth": "10%", sTitle: "Estado Origen", "bSortable": false, "mData": "ESTADO_ORIGEN", "bVisible": true },
+                                { "sWidth": "10%", sTitle: "Destino", "bSortable": false, "mData": "DESTINO", "bVisible": true },
+                                { "sWidth": "10%", sTitle: "Estado Destino", "bSortable": false, "mData": "ESTADO_DESTINO", "bVisible": true },
+                                { "sWidth": "10%", sTitle: "Tipo Relacion", "bSortable": false, "mData": "TIPO_RELACION", "bVisible": true },
+                                { "sWidth": "10%", sTitle: "Operacion", "bSortable": false, "mData": "OPERACION", "bVisible": true },
+                                { "sWidth": "10%", sTitle: "Alta Fecha", "bSortable": false, "mData": "ALTA_FECHA", "bVisible": true },
+                                { "sWidth": "10%", sTitle: "Fecha Desde", "bSortable": false, "mData": "FECHA_DESDE", "bVisible": true },
+                                { "sWidth": "10%", sTitle: "Fecha Hasta", "bSortable": false, "mData": "FECHA_HASTA", "bVisible": true },
+                                //{ "sWidth": "10%", sTitle: "Tipo", "bSortable": false, "mData": "Otro_Imp_Tipo", "bVisible": true },
+                                //{ "sWidth": "13%", sTitle: "Leyenda", "bSortable": false, "mData": "Otro_Imp_Leyeda", "bVisible": true },
+                                //{ "sWidth": "15%", sTitle: "Indentificación", "bSortable": false, "mData": "Otro_Imp_Identificacion", "bVisible": true },
+                                //{ "sWidth": "18%", sTitle: "Nombre", "bSortable": false, "mData": "Otro_Imp_Nombre", "bVisible": true },
+                                //{ "sWidth": "13%", sTitle: "Estado", "bSortable": false, "mData": "Otro_Imp_Definitivo", "bVisible": true },
+                                //{ "sWidth": "16%", sTitle: "Tipo Relación", "bSortable": false, "mData": "Es", "bVisible": true },
+                                //{ "sWidth": "16%", sTitle: "Relación", "bSortable": false, "mData": "Relacion", "bVisible": true }
+
+                        ]
+                    });
+
+
+                }, error: function (ex) {
+                    alert('Error al recuperar los resultados de Relaciones' + ex);
+                }
+            });
+
+            $.ajax({
+                url: BASE_URL + 'Interfaces/GetCoPropietarios',
+                data: { nroPadron: $("#padron").val() },
+                dataType: 'json',
+                type: 'POST',
+                success: function (data) {
+                    
+                    var table = $('#coPropietarios').dataTable({
+                        "language": {
+                            "url": BASE_URL + "Scripts/dataTables.spanish.txt"
+                        },
+                        "bFilter": false, // Disable searching
+                        "bPaginate": false, // Disable pagination
+                        "bInfo": false,    // Disable info text
+                        "scrollY": "200px",
+                        "scrollCollapse": true,
+                        "scrollX": true,
+                        "destroy": true,
+                        "sEmptyTable": "No se encontraron resultados",
+                        "sZeroRecords": "No se encontraron resultados",
+                        "aaData": data,
+                        "aoColumns": [
+                                { "sWidth": "18%", sTitle: "Identificación", "bSortable": false, "mData": "Ind_Identificacion", "bVisible": true },
+                                { "sWidth": "13%", sTitle: "Nombre", "bSortable": false, "mData": "Nombre", "bVisible": true },
+                                { "sWidth": "15%", sTitle: "Categoría Trib.", "bSortable": false, "mData": "Tributaria_Categoria", "bVisible": true },
+                                { "sWidth": "18%", sTitle: "Id. Tributaria", "bSortable": false, "mData": "Tributaria_Id", "bVisible": true }
+                        ]
+                    });
+
+
+                }, error: function (ex) {
+                    alert('Error al recuperar los resultados de CoPropietarios' + ex);
+                }
+            });
+
+            var MensajeEntrada = '@ViewBag.Mensaje'
+            if (MensajeEntrada != null && MensajeEntrada != '') {
+
+                $('#TituloInfo').html("Información")
+                $('#DescripcionInfo').html(MensajeEntrada)
+                $("#ModalInfo").modal('show');
+            }
+
+
+            $("#btnCancelarAdvertencia").click(function () {
+                $('#myModalReporte').modal('show');
+                $('#ModalAdvertencia').modal('hide');
+                $('#busqueda').show();
+            });
+
+            $("#btncancelarInforme").click(function () {
+                var msj = "Está a punto de Cancelar la operacion, se borrarán los datos ingresados ¿Desea Continuar?";
+                $('#TituloAdvertencia').html("Advertencia - Cancelar");
+                $('#DescripcionAdvertencia').html(msj);
+                $('#TipoAdvertencia').val('Cancelar');
+                $('#ModalAdvertencia').modal('show');
+                $('#busqueda').hide();
+            });
+
+            ajustamodal();
+
+            $("#Flecha_Aspecto_Juridico").click(function () {
+                if ($("#accordion_panel_dominial").hasClass("in") == false) {
+                    $("#accordion_panel_dominial").addClass("in");
+                    $("#Flecha_Aspecto_Juridico").removeClass("glyphicon-chevron-down");
+                    $("#Flecha_Aspecto_Juridico").addClass("glyphicon-chevron-up");
+                    $('#coPropietarios').DataTable().columns.adjust().draw();
+                    $('#relaciones').DataTable().columns.adjust().draw();
+                } else {
+                    $("#accordion_panel_dominial").removeClass("in");
+                    $("#Flecha_Aspecto_Juridico").addClass("glyphicon-chevron-down");
+                    $("#Flecha_Aspecto_Juridico").removeClass("glyphicon-chevron-up");
+                }
+            });
+            $("#Flecha_Dom_Prop").click(function () {
+                if ($("#accordion_panel_propiedad").hasClass("in") == false) {
+                    $("#accordion_panel_propiedad").addClass("in");
+                    $("#Flecha_Dom_Prop").removeClass("glyphicon-chevron-down");
+                    $("#Flecha_Dom_Prop").addClass("glyphicon-chevron-up");
+                } else {
+                    $("#accordion_panel_propiedad").removeClass("in");
+                    $("#Flecha_Dom_Prop").addClass("glyphicon-chevron-down");
+                    $("#Flecha_Dom_Prop").removeClass("glyphicon-chevron-up");
+                }
+            });
+            $("#Flecha_Econom").click(function () {
+                if ($("#accordion_panel_Econom").hasClass("in") == false) {
+                    $("#accordion_panel_Econom").addClass("in");
+                    $("#Flecha_Econom").removeClass("glyphicon-chevron-down");
+                    $("#Flecha_Econom").addClass("glyphicon-chevron-up");
+
+                } else {
+                    $("#accordion_panel_Econom").removeClass("in");
+                    $("#Flecha_Econom").addClass("glyphicon-chevron-down");
+                    $("#Flecha_Econom").removeClass("glyphicon-chevron-up");
+                }
+            });
+            $("#Flecha_Urbano").click(function () {
+                if ($("#accordion_panel_Urbano").hasClass("in") == false) {
+                    $("#accordion_panel_Urbano").addClass("in");
+                    $("#Flecha_Urbano").removeClass("glyphicon-chevron-down");
+                    $("#Flecha_Urbano").addClass("glyphicon-chevron-up");
+                } else {
+                    $("#accordion_panel_Urbano").removeClass("in");
+                    $("#Flecha_Urbano").addClass("glyphicon-chevron-down");
+                    $("#Flecha_Urbano").removeClass("glyphicon-chevron-up");
+                }
+            });
+
+            $("#Flecha_Datos_Part").click(function () {
+                if ($("#accordion_panel_Part").hasClass("in") == false) {
+                    $("#accordion_panel_Part").addClass("in");
+                    $("#Flecha_Datos_Part").removeClass("glyphicon-chevron-down");
+                    $("#Flecha_Datos_Part").addClass("glyphicon-chevron-up");
+                } else {
+                    $("#accordion_panel_Part").removeClass("in");
+                    $("#Flecha_Datos_Part").addClass("glyphicon-chevron-down");
+                    $("#Flecha_Datos_Part").removeClass("glyphicon-chevron-up");
+                }
+            });
+
+            $("#Flecha_Relaciones").click(function () {
+                if ($("#accordion_panel_Relaciones").hasClass("in") == false) {
+                    $("#accordion_panel_Relaciones").addClass("in");
+                    $("#Flecha_Relaciones").removeClass("glyphicon-chevron-down");
+                    $("#Flecha_Relaciones").addClass("glyphicon-chevron-up");
+                    $('#relaciones').DataTable().columns.adjust().draw();
+                } else {
+                    $("#accordion_panel_Relaciones").removeClass("in");
+                    $("#Flecha_Relaciones").addClass("glyphicon-chevron-down");
+                    $("#Flecha_Relaciones").removeClass("glyphicon-chevron-up");
+                }
+            });
+
+            $("#btnCerrar").click(function () {
+                $("#myModalSIGEMI").modal('hide');
+                $("#modal-window-mantenedor").modal('show');
+                
+            });
+            $('#myModalSIGEMI').modal('show');
+            hideLoading();
+
+        })
+
+    </script>
+

@@ -1,0 +1,23 @@
+﻿@using GeoSit.Client.Web.Models.ObrasPublicas
+@model List<EditorSintactico>
+
+
+
+@foreach (var p in (List<EditorSintactico>) ViewBag.EditosSintacticoList)
+{
+    <tr>
+        <td class="hide">@p.Id</td>
+        <td>@p.Atributo</td>
+        @if (p.Comparador == null)
+        {
+            <td> @string.Empty </td>}
+        else
+        {
+            <td> @p.Comparador.Visual </td>
+        }
+        <td>@p.Valor</td>
+        <td>@p.Conector.Visual</td>
+    </tr>
+
+}
+

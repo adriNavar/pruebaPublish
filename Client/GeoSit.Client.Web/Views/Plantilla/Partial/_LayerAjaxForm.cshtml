@@ -1,0 +1,266 @@
+﻿@model GeoSit.Client.Web.Models.ViewLayer
+
+@Html.TextBoxFor(model => model.IdLayer, new { @type = "hidden" })
+
+<div class="form-group">
+    <label class="control-label col-xs-3">Nombre</label>
+    <div class="col-xs-9">
+        @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control" })
+    </div>
+</div>
+<div class="form-group">
+    <label class="control-label col-xs-3">Componente</label>
+    <div class="col-xs-9">
+        @Html.DropDownListFor(model => model.ComponenteId, Model.ComponenteList, new { @class = "form-control select2", @style = "padding:0;" })
+    </div>
+</div>
+<div class="form-group">
+    <label class="control-label col-xs-3">Categoría</label>
+    <div class="col-xs-3">
+        <label class="radio-inline">
+            @Html.RadioButtonFor(model => model.Categoria, "0") Normal
+        </label>
+    </div>
+    <div class="col-xs-3">
+        <label class="radio-inline">
+            @Html.RadioButtonFor(model => model.Categoria, "1") Principal
+        </label>
+    </div>
+    <div class="col-xs-3">
+        <label class="radio-inline">
+            @Html.RadioButtonFor(model => model.Categoria, "2") Secundaria
+        </label>
+    </div>
+</div>
+<div class="form-group">
+    <label class="control-label col-xs-3">Orden</label>
+    <div class="col-xs-9">
+        @Html.TextBoxFor(model => model.Orden, new { @class = "form-control" })
+    </div>
+</div>
+<div class="form-group">
+    <label class="control-label col-xs-3">Filtro Geográfico</label>
+    <div class="col-xs-3">
+        <label class="radio-inline">
+            @Html.RadioButtonFor(model => model.FiltroGeografico, "0") Todo
+        </label>
+    </div>
+    <div class="col-xs-3">
+        <label class="radio-inline">
+            @Html.RadioButtonFor(model => model.FiltroGeografico, "1") Contenido
+        </label>
+    </div>
+    <div class="col-xs-3">
+        <label class="radio-inline">
+            @Html.RadioButtonFor(model => model.FiltroGeografico, "2") Excluido
+        </label>
+    </div>
+</div>
+<div class="form-group">
+    <label class="control-label col-xs-3">Valor del filtro</label>
+    <div class="col-xs-9">
+        <div class="input-group">
+            @Html.TextBoxFor(model => model.CapaFiltro, new { @class = "form-control" })
+            <div class="input-group-btn">
+                <button type="button" title="Validar filtro" class="btn btn-primary">Validar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<fieldset class="fieldset-border">
+    <legend class="fieldset-border">Contorno</legend>
+    <div class="form-group">
+        <label class="control-label col-xs-3"></label>
+        <div class="col-xs-9">
+            <div class="switch">
+                @Html.CheckBoxFor(model => model.Contorno, new { id = "layer-contorno", @class = "cmn-toggle cmn-toggle-round-flat" })
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-xs-3">
+            Color
+        </label>
+        <div class="col-xs-9">
+            @Html.TextBoxFor(model => model.ContornoColor, new { id = "layer-contorno-color", @class = "form-control pick-a-color" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-xs-3">
+            Grosor (mm)
+        </label>
+        <div class="col-xs-9">
+            @Html.TextBoxFor(model => model.ContornoGrosor, new { id = "layer-contorno-grosor", @class = "form-control" })
+        </div>
+    </div>
+</fieldset>
+
+<fieldset class="fieldset-border">
+    <legend class="fieldset-border">Relleno</legend>
+    <div class="form-group">
+        <label class="control-label col-xs-3"></label>
+        <div class="col-xs-9">
+            <div class="switch">
+                @Html.CheckBoxFor(model => model.Relleno, new { id = "layer-relleno", @class = "cmn-toggle cmn-toggle-round-flat" })
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-xs-3">
+            Color
+        </label>
+        <div class="col-xs-9">
+            @Html.TextBoxFor(model => model.RellenoColor, new { id = "layer-relleno-color", @class = "form-control pick-a-color" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-xs-3">Transparencia</label>
+        <div class="col-xs-9">
+            @Html.TextBoxFor(model => model.RellenoTransparencia, new { id = "layer-relleno-trans", @class = "jslider-single" })
+        </div>
+    </div>
+</fieldset>
+
+<fieldset class="fieldset-border">
+    <legend class="fieldset-border">Punto</legend>
+
+    <div class="form-group">
+        <label class="control-label col-xs-3">Representación</label>
+        <div class="col-xs-3">
+            <label class="radio-inline">
+                @Html.RadioButtonFor(model => model.PuntoRepresentacion, "0") No tiene
+            </label>
+        </div>
+        <div class="col-xs-3">
+            <label class="radio-inline">
+                @Html.RadioButtonFor(model => model.PuntoRepresentacion, "1") Predefinido
+            </label>
+        </div>
+        <div class="col-xs-3">
+            <label class="radio-inline">
+                @Html.RadioButtonFor(model => model.PuntoRepresentacion, "2") Imagen
+            </label>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-xs-3">Predeterminado</label>
+        <div class="col-xs-3">
+            <label class="radio-inline">
+                @Html.RadioButtonFor(model => model.PuntoPredeterminado, "1", new { @checked = "true" }) Círculo
+            </label>
+        </div>
+        <div class="col-xs-3">
+            <label class="radio-inline">
+                @Html.RadioButtonFor(model => model.PuntoPredeterminado, "2") Cuadrado
+            </label>
+        </div>
+        <div class="col-xs-3"></div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-xs-3">Imagen</label>
+        <div class="col-xs-9">
+            @Html.TextBoxFor(model => model.ImagenPunto, new { type = "file", @class = "file" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-xs-3">Alto (mm)</label>
+        <div class="col-xs-9">
+            @Html.TextBoxFor(model => model.PuntoAlto, new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-xs-3">Ancho (mm)</label>
+        <div class="col-xs-9">
+            @Html.TextBoxFor(model => model.PuntoAncho, new { @class = "form-control" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-xs-3">Escalado</label>
+        <div class="col-xs-9">
+            @Html.TextBoxFor(model => model.PuntoEscala, new { @class = "form-control" })
+        </div>
+    </div>
+</fieldset>
+<fieldset class="fieldset-border">
+    <legend class="fieldset-border">Etiqueta</legend>
+    <div class="form-group">
+        <label class="control-label col-xs-3"></label>
+        <div class="col-xs-9">
+            <div class="switch">
+                @Html.CheckBoxFor(model => model.Etiqueta, new { id = "layer-etiqueta", @class = "cmn-toggle cmn-toggle-round-flat" })
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-3">Atributo</label>
+        <div class="col-xs-9">
+            @Html.DropDownListFor(model => model.EtiquetaIdAtributo, Model.AtributoList, new { id = "layer-atributo", @class = "form-control select2", @style = "padding:0;" })
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-3">Letra</label>
+        <div class="col-xs-9">
+            @Html.DropDownListFor(model => model.EtiquetaFuenteNombre, Model.FuenteList, new { id = "layer-fuente-nombre", @class = "form-control select2", @style = "padding:0;" })
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-3">Tamaño (mm)</label>
+        <div class="col-xs-9">
+            @Html.TextBoxFor(model => model.EtiquetaFuenteTamanio, new { id = "layer-fuente-tamanio", @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-3">
+            Color
+        </label>
+        <div class="col-xs-9">
+            @Html.TextBoxFor(model => model.EtiquetaColor, new { id = "layer-etiqueta-color", @class = "form-control pick-a-color" })
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-3">
+            Estilo
+        </label>
+        <div class="col-xs-2">
+            <label class="checkbox-inline">
+                @Html.CheckBoxFor(model => model.Negrita, new { id = "layer-negrita" }) Negrita
+            </label>
+        </div>
+        <div class="col-xs-2">
+            <label class="checkbox-inline">
+                @Html.CheckBoxFor(model => model.Cursiva, new { id = "layer-cursiva" }) Cursiva
+            </label>
+        </div>
+        <div class="col-xs-2">
+            <label class="checkbox-inline">
+                @Html.CheckBoxFor(model => model.Subrayada, new { id = "layer-subrayada" }) Subrayada
+            </label>
+        </div>
+        <div class="col-xs-3">
+            <label class="checkbox-inline">
+                @Html.CheckBoxFor(model => model.Tachada, new { id = "layer-tachada" }) Tachada
+            </label>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-3">Mantiene Orientación</label>
+        <div class="col-xs-9">
+            <div class="switch">
+                @Html.CheckBoxFor(model => model.EtiquetaMantieneOrientacion, new { id = "layer-mantiene-orientacion", @class = "cmn-toggle cmn-toggle-round-flat" })
+            </div>
+        </div>
+    </div>
+</fieldset>
+
+<span title="Cancelar" data-original-title="Cancelar" class="fa fa-2x fa-times-circle pull-right black cursor-pointer hidden" aria-hidden="true" id="layer-cancel" data-toggle="tooltip" data-placement="top"></span>
+<span title="Aceptar" data-original-title="Aceptar" class="fa fa-2x fa-check-circle pull-right black cursor-pointer hidden" aria-hidden="true" id="layer-submit" data-toggle="tooltip" data-placement="top"></span>

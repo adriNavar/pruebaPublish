@@ -1,0 +1,617 @@
+﻿@using GeoSit.Client.Web.Controllers
+@model GeoSit.Data.BusinessEntities.MesaEntradas.METramite
+@{
+    ViewBag.Title = "Mesa de Entradas";
+
+    ViewBag.tipoTramiteSelected = "";
+    ViewBag.objetoTramiteSelected = "";
+    ViewBag.estadoTramiteSelected = "";
+    ViewBag.prioridadTramiteSelected = "";
+    ViewBag.sectorSelected = "";
+
+    ViewBag.tipoTramiteSelectedPendientes = "";
+    ViewBag.objetoTramiteSelectedPendientes = "";
+    ViewBag.estadoTramiteSelectedPendientes = "";
+    ViewBag.prioridadTramiteSelectedPendientes = "";
+    ViewBag.sectorSelectedPendientes = "";
+
+    ViewBag.tipoTramiteSelectedProcesados = "";
+    ViewBag.objetoTramiteSelectedProcesados = "";
+    ViewBag.estadoTramiteSelectedProcesados = "";
+    ViewBag.prioridadTramiteSelectedProcesados = "";
+    ViewBag.sectorSelectedProcesados = "";
+
+}
+
+<link href="~/Content/dataTables.bootstrap.css" rel="stylesheet" />
+<link href="~/Content/mesaEntradas.css" rel="stylesheet" />
+
+<div class="modal fade theme_new" id="modal-mesaentradas" tabindex="-1" data-backdrop="static" role="dialog" aria-labelledby="modal-windowLabel" aria-hidden="true">
+    <div class="modal-dialog modal-fullwidth">
+        <div class="modal-content">
+            <div class="scroll-content" id="scroll-content-mesaEntradas">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="lblMesaEntradas">@ViewBag.Title</h3>
+                    <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+                </div>
+                <div class="modal-body mesaEntradas-body">
+                    <div id="mesaEntradas-content" class="body-content">
+                        <input type="hidden" value='@Json.Encode(ViewData["objetosTramites"])' id="hdnObjetosTramite" />
+                        <input type="hidden" id="hdnEsProfesional" value="@ViewBag.esProfesional" />
+                        <form class="form-horizontal">
+                            <div class="form-group">
+                                <div class="col-xs-6">
+                                    <label class="col-xs-1 control-label text-muted">
+                                        Sector:
+                                    </label>
+                                    <div class="col-xs-11">
+                                        <input type="text" id="txtSector" readonly="readonly" value="@ViewBag.sector" class="form-control text-primary" />
+                                    </div>
+                                </div>
+                                <div class="col-xs-6">
+                                    <label class="col-xs-1 control-label text-muted">
+                                        Usuario:
+                                    </label>
+                                    <div class="col-xs-11">
+                                        <input type="text" id="txtUsuario" readonly="readonly" value="@ViewBag.usuarioNombre" class="form-control text-primary" />
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                        @*Inicio de listado*@
+                        <div class="panel-group accordion mesaEntrada-listado" style="margin-bottom:0;">
+                            <div class='panel-heading bg-primary main-heading' role='tab'>
+                                <a data-toggle='collapse' aria-expanded='true'>
+                                    <div class='panel-title'>
+                                        Tr&aacute;mites
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="panel-body" id="Panel_MesaEntradas">
+                                <div class="container-fluid" style="margin-top: 10px;">
+                                    @if (@ViewBag.esProfesional == 0)
+                                    {
+                                        <ul id="tabsTramites" class="nav nav-tabs">
+                                            <li class="nav-item active" data-tab="enProceso">
+                                                <a class="nav-link" href="#tabEnProceso" data-toggle="tab">En Proceso</a>
+                                            </li>
+                                            <li class="nav-item" data-tab="pendientes">
+                                                <a class="nav-link" href="#tabPendientes" data-toggle="tab">Pendientes</a>
+                                            </li>
+                                            <li class="nav-item" data-tab="procesados">
+                                                <a class="nav-link" href="#tabProcesados" data-toggle="tab">Procesados</a>
+                                            </li>
+                                            @if (SeguridadController.ExisteFuncion(@Resources.Seguridad.ReasignacionTramites))
+                                            {
+                                                <li class="nav-item" data-tab="reasignados">
+                                                    <a class="nav-link" href="#tabReasignados" data-toggle="tab">Reasignables</a>
+                                                </li>
+                                            }
+                                        </ul>
+                                        <div id="divTabContent" class="tab-content col-xs-12">
+                                            <div id="tabEnProceso" class="tab-pane active">
+                                                <div id="scroll-content-enproceso" class="scroll-content">
+                                                    <div class="col-xs-12 remove-padding">
+                                                        <div class="tabla-sin-botones">
+                                                            <table id="Grilla_mesaEntradas" class="table table-striped table-bordered table-responsive">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th> Identificante</th>
+                                                                        <th> N&uacute;mero</th>
+                                                                        <th> Iniciador</th>
+                                                                        <th> Tipo</th>
+                                                                        <th> Objeto</th>
+                                                                        <th> Estado</th>
+                                                                        <th> Sector Or&iacute;gen</th>
+                                                                        <th> Prioridad</th>
+                                                                        <th> Fecha Ult. Act.</th>
+                                                                        <th> Fecha Vto.</th>
+                                                                    </tr>
+                                                                    <tr class="filtros">
+                                                                        <!-- filtros -->
+                                                                        <th><form><input autocomplete="off" type="number" class="form-control input-sm" placeholder="Buscar..." step="1" min="1"></form></th>
+                                                                        <th><form><input autocomplete="off" type="text" class="form-control input-sm" placeholder="Buscar..."></form></th>
+                                                                        <th><form><input autocomplete="off" type="text" class="form-control input-sm" placeholder="Buscar..."></form></th>
+                                                                        <th>
+                                                                            <form>
+                                                                                @Html.DropDownListFor(model => model.IdTipoTramite, (IEnumerable<SelectListItem>)ViewData["tiposTramites"], new { @class = "form-control input-sm", @Value = ViewBag.tipoTramiteSelected, autocomplete = "off" })
+                                                                            </form>
+                                                                        </th>
+                                                                        <th>
+                                                                            <form>
+                                                                                @Html.DropDownListFor(model => model.IdObjetoTramite, new SelectListItem[0], new { @class = "form-control input-sm", @Value = ViewBag.objetoTramiteSelected, autocomplete = "off" })
+                                                                            </form>
+                                                                        </th>
+                                                                        <th>
+                                                                            <form>
+                                                                                @Html.DropDownListFor(model => model.IdEstado, (IEnumerable<SelectListItem>)ViewData["estadosTramites"], new { @class = "form-control input-sm", @id = "estados", @Value = ViewBag.estadoTramiteSelected, autocomplete = "off" })
+                                                                            </form>
+                                                                        </th>
+                                                                        <th>
+                                                                            <form>
+                                                                                @Html.DropDownList("sectorOrigen", (IEnumerable<SelectListItem>)ViewData["sectores"], new { @class = "form-control input-sm", autocomplete = "off" })
+                                                                            </form>
+                                                                        </th>
+                                                                        <th>
+                                                                            <form>
+                                                                                @Html.DropDownListFor(model => model.IdPrioridad, (IEnumerable<SelectListItem>)ViewData["prioridadesTramites"], new { @class = "form-control input-sm", @Value = ViewBag.prioridadTramiteSelected, autocomplete = "off" })
+                                                                            </form>
+                                                                        </th>
+                                                                        <th>
+                                                                            <form>
+                                                                                <div class="input-group date input-group-sm">
+                                                                                    <input type="text" class="form-control" autocomplete="off" placeholder="Buscar..." />
+                                                                                    <span class="input-group-addon">
+                                                                                        <i class="fa fa-calendar"></i>
+                                                                                    </span>
+                                                                                </div>
+                                                                            </form>
+                                                                        </th>
+
+                                                                        <th>
+                                                                            <form>
+                                                                                <div class="input-group date input-group-sm">
+
+                                                                                    <input type="text" class="form-control" autocomplete="off" placeholder="Buscar..." />
+                                                                                    <span class="input-group-addon">
+                                                                                        <i class="fa fa-calendar"></i>
+                                                                                    </span>
+                                                                                </div>
+                                                                            </form>
+                                                                        </th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody></tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div id="tabPendientes" class="tab-pane">
+                                                <div class="col-xs-12 remove-padding">
+                                                    <div class="tabla-sin-botones">
+                                                        <table id="Grilla_mesaEntradasPendientes" class="table table-striped table-bordered table-responsive">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th> Identificante</th>
+                                                                    <th> N&uacute;mero</th>
+                                                                    <th> Iniciador</th>
+                                                                    <th> Tipo</th>
+                                                                    <th> Objeto</th>
+                                                                    <th> Estado</th>
+                                                                    <th> Sector Or&iacute;gen</th>
+                                                                    <th> Prioridad</th>
+                                                                    <th> Fecha Ult. Act.</th>
+                                                                    <th> Fecha Vto.</th>
+                                                                </tr>
+                                                                <tr class="filtros">
+                                                                    <!-- filtros -->
+                                                                    <th><form><input autocomplete="off" type="number" class="form-control input-sm" placeholder="Buscar..." step="1" min="1"></form></th>
+                                                                    <th><form><input autocomplete="off" type="text" class="form-control input-sm" placeholder="Buscar..."></form></th>
+                                                                    <th><form><input autocomplete="off" type="text" class="form-control input-sm" placeholder="Buscar..."></form></th>
+                                                                    <th>
+                                                                        <form>
+                                                                            @Html.DropDownListFor(model => model.IdTipoTramite, (IEnumerable<SelectListItem>)ViewData["tiposTramites"], new { @class = "form-control input-sm", @Value = ViewBag.tipoTramiteSelectedPendientes, autocomplete = "off" })
+                                                                        </form>
+                                                                    </th>
+                                                                    <th>
+                                                                        <form>
+                                                                            @Html.DropDownListFor(model => model.IdObjetoTramite, new SelectListItem[0], new { @class = "form-control input-sm", @Value = ViewBag.objetoTramiteSelectedPendientes, autocomplete = "off" })
+                                                                        </form>
+                                                                    </th>
+                                                                    <th>
+                                                                        <form>
+                                                                            @Html.DropDownListFor(model => model.IdEstado, (IEnumerable<SelectListItem>)ViewData["estadosTramites"], new { @class = "form-control input-sm", @Value = ViewBag.estadoTramiteSelectedPendientes, autocomplete = "off" })
+                                                                        </form>
+                                                                    </th>
+                                                                    <th>
+                                                                        <form>
+                                                                            @Html.DropDownList("cboSectorOrigenPendientes", (IEnumerable<SelectListItem>)ViewData["sectores"], new { @class = "form-control input-sm", autocomplete = "off" })
+                                                                        </form>
+                                                                    </th>
+                                                                    <th>
+                                                                        <form>
+                                                                            @Html.DropDownListFor(model => model.IdPrioridad, (IEnumerable<SelectListItem>)ViewData["prioridadesTramites"], new { @class = "form-control input-sm", @Value = ViewBag.prioridadTramiteSelectedPendientes, autocomplete = "off" })
+                                                                        </form>
+                                                                    </th>
+                                                                    <th>
+                                                                        <form>
+                                                                            <div class="input-group date input-group-sm">
+                                                                                <input autocomplete="off" type="text" class="form-control" placeholder="Buscar..." />
+                                                                                <span class="input-group-addon">
+                                                                                    <i class="fa fa-calendar"></i>
+                                                                                </span>
+                                                                            </div>
+                                                                        </form>
+                                                                    </th>
+                                                                    <th>
+                                                                        <form>
+                                                                            <div class="input-group date input-group-sm">
+                                                                                <input autocomplete="off" type="text" class="form-control" placeholder="Buscar..." />
+                                                                                <span class="input-group-addon">
+                                                                                    <i class="fa fa-calendar"></i>
+                                                                                </span>
+                                                                            </div>
+                                                                        </form>
+                                                                    </th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody></tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div id="tabProcesados" class="tab-pane">
+                                                <div class="col-xs-12 remove-padding">
+                                                    <div class="tabla-sin-botones">
+                                                        <table id="Grilla_mesaEntradasProcesados" class="table table-striped table-bordered table-responsive">
+                                                            <thead>
+                                                                <tr>
+                                                                    <th> Identificante</th>
+                                                                    <th> N&uacute;mero</th>
+                                                                    <th> Iniciador</th>
+                                                                    <th> Tipo</th>
+                                                                    <th> Objeto</th>
+                                                                    <th> Estado</th>
+                                                                    <th> Sector Destino</th>
+                                                                    <th> Prioridad</th>
+                                                                    <th> Fecha Ult. Act.</th>
+                                                                    <th> Fecha Vto.</th>
+                                                                </tr>
+                                                                <tr class="filtros">
+                                                                    <!-- filtros -->
+                                                                    <th><form><input autocomplete="off" type="number" class="form-control input-sm" placeholder="Buscar..." step="1" min="1"></form></th>
+                                                                    <th><form><input autocomplete="off" type="text" class="form-control input-sm" placeholder="Buscar..."></form></th>
+                                                                    <th><form><input autocomplete="off" type="text" class="form-control input-sm" placeholder="Buscar..."></form></th>
+                                                                    <th>
+                                                                        <form>
+                                                                            @Html.DropDownListFor(model => model.IdTipoTramite, (IEnumerable<SelectListItem>)ViewData["tiposTramites"], new { @class = "form-control input-sm", @Value = ViewBag.tipoTramiteSelectedProcesados, autocomplete = "off" })
+                                                                        </form>
+                                                                    </th>
+                                                                    <th>
+                                                                        <form>
+                                                                            @Html.DropDownListFor(model => model.IdObjetoTramite, new SelectListItem[0], new { @class = "form-control input-sm", @Value = ViewBag.objetoTramiteSelectedProcesados, autocomplete = "off" })
+                                                                        </form>
+                                                                    </th>
+                                                                    <th>
+                                                                        <form>
+                                                                            @Html.DropDownListFor(model => model.IdEstado, (IEnumerable<SelectListItem>)ViewData["estadosTramites"], new { @class = "form-control input-sm", @Value = ViewBag.estadoTramiteSelectedProcesados, autocomplete = "off" })
+                                                                        </form>
+                                                                    </th>
+                                                                    <th>
+                                                                        <form>
+                                                                            @Html.DropDownList("cboSectorOrigenProcesados", (IEnumerable<SelectListItem>)ViewData["sectores"], new { @class = "form-control input-sm", autocomplete = "off" })
+                                                                        </form>
+                                                                    </th>
+                                                                    <th>
+                                                                        <form>
+                                                                            @Html.DropDownListFor(model => model.IdPrioridad, (IEnumerable<SelectListItem>)ViewData["prioridadesTramites"], new { @class = "form-control input-sm", @Value = ViewBag.prioridadTramiteSelectedProcesados, autocomplete = "off" })
+                                                                        </form>
+                                                                    </th>
+                                                                    <th>
+                                                                        <form>
+                                                                            <div class="input-group date input-group-sm">
+                                                                                <input autocomplete="off" type="text" class="form-control" placeholder="Buscar..." />
+                                                                                <span class="input-group-addon">
+                                                                                    <i class="fa fa-calendar"></i>
+                                                                                </span>
+                                                                            </div>
+                                                                        </form>
+                                                                    </th>
+                                                                    <th>
+                                                                        <form>
+                                                                            <div class="input-group date input-group-sm">
+                                                                                <input autocomplete="off" type="text" class="form-control" placeholder="Buscar..." />
+                                                                                <span class="input-group-addon">
+                                                                                    <i class="fa fa-calendar"></i>
+                                                                                </span>
+                                                                            </div>
+                                                                        </form>
+                                                                    </th>
+                                                                </tr>
+                                                            </thead>
+                                                            <tbody></tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            @if (SeguridadController.ExisteFuncion(@Resources.Seguridad.ReasignacionTramites))
+                                            {
+                                                <div id="tabReasignados" class="tab-pane">
+                                                    <div class="col-xs-12 remove-padding">
+                                                        <div class="tabla-sin-botones">
+                                                            <table id="Grilla_mesaEntradasReasignados" class="table table-striped table-bordered table-responsive">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th> Identificante</th>
+                                                                        <th> N&uacute;mero</th>
+                                                                        <th> Iniciador</th>
+                                                                        <th> Tipo</th>
+                                                                        <th> Objeto</th>
+                                                                        <th> Estado</th>
+                                                                        <th> Sector Or&iacute;gen</th>
+                                                                        <th> Prioridad</th>
+                                                                        <th> Fecha Ult. Act.</th>
+                                                                        <th> Fecha Vto.</th>
+                                                                    </tr>
+                                                                    <tr class="filtros">
+                                                                        <!-- filtros -->
+                                                                        <th><form><input autocomplete="off" type="number" class="form-control input-sm" placeholder="Buscar..." step="1" min="1"></form></th>
+                                                                        <th><form><input autocomplete="off" type="text" class="form-control input-sm" placeholder="Buscar..."></form></th>
+                                                                        <th><form><input autocomplete="off" type="text" class="form-control input-sm" placeholder="Buscar..."></form></th>
+                                                                        <th>
+                                                                            <form>
+                                                                                @Html.DropDownListFor(model => model.IdTipoTramite, (IEnumerable<SelectListItem>)ViewData["tiposTramites"], new { @class = "form-control input-sm", @Value = ViewBag.tipoTramiteSelected, autocomplete = "off" })
+                                                                            </form>
+                                                                        </th>
+                                                                        <th>
+                                                                            <form>
+                                                                                @Html.DropDownListFor(model => model.IdObjetoTramite, new SelectListItem[0], new { @class = "form-control input-sm", @Value = ViewBag.objetoTramiteSelected, autocomplete = "off" })
+                                                                            </form>
+                                                                        </th>
+                                                                        <th>
+                                                                            <form>
+                                                                                @Html.DropDownListFor(model => model.IdEstado, (IEnumerable<SelectListItem>)ViewData["estadosTramites"], new { @class = "form-control input-sm", @Value = ViewBag.estadoTramiteSelected, autocomplete = "off" })
+                                                                            </form>
+                                                                        </th>
+                                                                        <th>
+                                                                            <form>
+                                                                                @Html.DropDownList("sectorOrigen", (IEnumerable<SelectListItem>)ViewData["sectores"], new { @class = "form-control input-sm", autocomplete = "off" })
+                                                                            </form>
+                                                                        </th>
+                                                                        <th>
+                                                                            <form>
+                                                                                @Html.DropDownListFor(model => model.IdPrioridad, (IEnumerable<SelectListItem>)ViewData["prioridadesTramites"], new { @class = "form-control input-sm", @Value = ViewBag.prioridadTramiteSelected, autocomplete = "off" })
+                                                                            </form>
+                                                                        </th>
+                                                                        <th>
+                                                                            <form>
+                                                                                <div class="input-group date input-group-sm">
+                                                                                    <input type="text" class="form-control" autocomplete="off" placeholder="Buscar..." />
+                                                                                    <span class="input-group-addon">
+                                                                                        <i class="fa fa-calendar"></i>
+                                                                                    </span>
+                                                                                </div>
+                                                                            </form>
+                                                                        </th>
+
+                                                                        <th>
+                                                                            <form>
+                                                                                <div class="input-group date input-group-sm">
+
+                                                                                    <input type="text" class="form-control" autocomplete="off" placeholder="Buscar..." />
+                                                                                    <span class="input-group-addon">
+                                                                                        <i class="fa fa-calendar"></i>
+                                                                                    </span>
+                                                                                </div>
+                                                                            </form>
+                                                                        </th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody></tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div id="divTabContent" class="tab-content col-xs-12">
+                                            <div id="tabEnProceso" class="tab-pane active">
+                                                <div id="scroll-content-enproceso" class="scroll-content">
+                                                    <div class="col-xs-12 remove-padding">
+                                                        <div class="tabla-sin-botones">
+                                                            <table id="Grilla_mesaEntradas" class="table table-striped table-bordered table-responsive">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th> Identificante</th>
+                                                                        <th> N&uacute;mero</th>
+                                                                        <th> Iniciador</th>
+                                                                        <th> Tipo</th>
+                                                                        <th> Objeto</th>
+                                                                        <th> Estado</th>
+                                                                        <th> Sector Or&iacute;gen</th>
+                                                                        <th> Prioridad</th>
+                                                                        <th> Fecha Ult. Act.</th>
+                                                                        <th> Fecha Vto.</th>
+                                                                    </tr>
+                                                                    <tr class="filtros">
+                                                                        <!-- filtros -->
+                                                                        <th><form><input autocomplete="off" type="number" class="form-control input-sm" placeholder="Buscar..." step="1" min="1"></form></th>
+                                                                        <th><form><input autocomplete="off" type="text" class="form-control input-sm" placeholder="Buscar..."></form></th>
+                                                                        <th><form><input autocomplete="off" type="text" class="form-control input-sm" placeholder="Buscar..."></form></th>
+                                                                        <th>
+                                                                            <form>
+                                                                                @Html.DropDownListFor(model => model.IdTipoTramite, (IEnumerable<SelectListItem>)ViewData["tiposTramites"], new { @class = "form-control input-sm", @Value = ViewBag.tipoTramiteSelected, autocomplete = "off" })
+                                                                            </form>
+                                                                        </th>
+                                                                        <th>
+                                                                            <form>
+                                                                                @Html.DropDownListFor(model => model.IdObjetoTramite, new SelectListItem[0], new { @class = "form-control input-sm", @Value = ViewBag.objetoTramiteSelected, autocomplete = "off" })
+                                                                            </form>
+                                                                        </th>
+                                                                        <th>
+                                                                            <form>
+                                                                                @Html.DropDownListFor(model => model.IdEstado, (IEnumerable<SelectListItem>)ViewData["estadosTramites"], new { @class = "form-control input-sm", @Value = ViewBag.estadoTramiteSelected, autocomplete = "off" })
+                                                                            </form>
+                                                                        </th>
+                                                                        <th>
+                                                                            <form>
+                                                                                @Html.DropDownList("sectorOrigen", (IEnumerable<SelectListItem>)ViewData["sectores"], new { @class = "form-control input-sm", autocomplete = "off" })
+                                                                            </form>
+                                                                        </th>
+                                                                        <th>
+                                                                            <form>
+                                                                                @Html.DropDownListFor(model => model.IdPrioridad, (IEnumerable<SelectListItem>)ViewData["prioridadesTramites"], new { @class = "form-control input-sm", @Value = ViewBag.prioridadTramiteSelected, autocomplete = "off" })
+                                                                            </form>
+                                                                        </th>
+                                                                        <th>
+                                                                            <form>
+                                                                                <div class="input-group date input-group-sm">
+                                                                                    <input type="text" class="form-control" autocomplete="off" placeholder="Buscar..." />
+                                                                                    <span class="input-group-addon">
+                                                                                        <i class="fa fa-calendar"></i>
+                                                                                    </span>
+                                                                                </div>
+                                                                            </form>
+                                                                        </th>
+                                                                        <th>
+                                                                            <form>
+                                                                                <div class="input-group date input-group-sm">
+                                                                                    <input type="text" class="form-control" autocomplete="off" placeholder="Buscar..." />
+                                                                                    <span class="input-group-addon">
+                                                                                        <i class="fa fa-calendar"></i>
+                                                                                    </span>
+                                                                                </div>
+                                                                            </form>
+                                                                        </th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody></tbody>
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                        @*Fin de listado*@
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-xs-6 text-left">
+                        <div class="btn-group dropup btn-acciones" style="display:none;">
+                            <button type="button" class="btn btn-accion" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Acciones <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-xs-6 text-right">
+                        <button class="btn btn-secondary" id="refreshButton" title="Refrescar">
+                            <span>Refrescar</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="divEdicionTramiteContainer"></div>
+
+<!-- Modal Advertencia-->
+<div class="modal fade theme_new" id="ModalObservaciones" tabindex="-3" role="dialog" aria-labelledby="TituloInfoObservaciones" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="TituloInfoObservaciones">@ViewBag.Title</h3>
+                <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+            </div>
+            <div class="modal-body">
+                <div class="body-content">
+                    <div class="form-group">
+                        <div class="row">
+                            <label id="lblDestinoInfoObservaciones" class="col-xs-2 control-label text-muted">
+                                Destino:
+                            </label>
+                            <label id="lblUsuarioInfoObservaciones" class="col-xs-2 control-label text-muted">
+                                Usuario:
+                            </label>
+                            <div class="col-xs-10">
+                                @Html.DropDownList("cboSectorInfoObservaciones", (IEnumerable<SelectListItem>)ViewData["sectores"], new { @class = "form-control input-sm" })
+                                @Html.DropDownList("cboUsuariosInfoObservaciones", (IEnumerable<SelectListItem>)ViewData["usuariosMismoSector"], new { @class = "form-control input-sm" })
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label id="lblObservacionInfoObservaciones" class="col-xs-2 control-label text-muted">
+                                Observaci&oacute;n:
+                            </label>
+                            <div class="col-xs-10">
+                                @Html.TextArea("txtObservacionInfoObservaciones", null, new { @style = "margin-left: 0px; margin-top: 5px; height: 80px;", @maxlength = "254", @class = "form-control", @placeholder = "Ingrese una descripción" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-xs-4 pull-right">
+                    <span id="btnAceptarInfoObservaciones" aria-hidden="true" data-placement="right" title="Aceptar" data-original-title="Aceptar" class="fa fa-check-circle light-blue fa-2x cursor-pointer"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade theme_new mensaje" id="mensajeModal" tabindex="-2" role="dialog" aria-labelledby="TituloAdvertencia" aria-hidden="true" style="z-index:99999999;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="TituloAdvertencia">Titulo</h3>
+                <span aria-hidden="true" id="BotonCerrar" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+            </div>
+            <div class="modal-body">
+                <div id="MensajeAlerta" class="alert alert-warning alert-dismissible" role="alert">
+                    <p id="DescripcionAdvertencia">Está a punto de DESACTIVAR al usuario Perez, Juan <br>Está seguro de continuar?</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal theme_new fade mensaje" id="mensajeModalEnviarMail" tabindex="-2" role="dialog" aria-labelledby="TituloAdvertencia" aria-hidden="true" style="z-index:99999999;" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <input type="hidden" id="TipoAdvertencia" value="">
+                <h3 class="modal-title col-xs-10" id="TituloAdvertenciaEmail">Enviar Email</h3>
+                <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+            </div>
+            <div class="modal-body">
+                <div id="MensajeAlerta" class="alert alert-warning alert-dismissible" role="alert">
+                    <p id="DescripcionAdvertenciaEmail">
+                        ¿Desea notificar del estado del trámite al iniciador XXXXXXXXX?
+                    </p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-xs-4 pull-right">
+                    <span id="btnAceptarAdvertenciaEnviarMail" aria-hidden="true" data-dismiss="modal" data-placement="right" title="Aceptar" data-original-title="Aceptar" class="fa fa-check-circle light-blue fa-2x cursor-pointer"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal theme_new fade mensaje" id="mensajeModalAcciones" tabindex="-2" role="dialog" aria-labelledby="TituloAdvertencia" aria-hidden="true" style="z-index:99999999;" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <input type="hidden" id="TipoAdvertencia" value="">
+                <h3 class="modal-title col-xs-10" id="TituloAdvertenciaAcciones">Accion</h3>
+                <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+            </div>
+            <div class="modal-body">
+                <div id="MensajeAlerta" class="alert alert-warning alert-dismissible" role="alert">
+                    <p id="DescripcionAdvertenciaAcciones">
+                        ¿Desea xxxxxxx el trámite con los datos generados?
+                    </p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-xs-4 pull-right">
+                    <span id="btnAceptarAdvertenciaAcciones" aria-hidden="true" data-dismiss="modal" data-placement="right" title="Aceptar" data-original-title="Aceptar" class="fa fa-check-circle light-blue fa-2x cursor-pointer"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/jquery.dataTables.min.js"></script>
+<script src="~/Scripts/dataTables.bootstrap.js"></script>
+<script src="~/Scripts/MesaEntradas/main.js"></script>

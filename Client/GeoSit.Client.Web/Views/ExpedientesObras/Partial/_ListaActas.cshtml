@@ -1,0 +1,12 @@
+﻿@model IEnumerable<GeoSit.Data.BusinessEntities.ObrasParticulares.ActaExpedienteObra>
+
+@foreach (var a in Model)
+{
+    <tr>
+        <td>@a.TipoActa</td>
+        <td>@a.NumeroActa</td>
+        <td>@a.FechaActa.ToShortDateString()</td>
+        <td>@a.InspectorNombre</td>
+        <td>@a.EstadoActa</td>
+    </tr>
+}

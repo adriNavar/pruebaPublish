@@ -1,0 +1,1004 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AgregarFeriados" xml:space="preserve">
+    <value>17</value>
+    <comment>Agregar Feriados</comment>
+  </data>
+  <data name="AgregarHorarios" xml:space="preserve">
+    <value>14</value>
+    <comment>Agregar Horarios</comment>
+  </data>
+  <data name="AgregarPerfiles" xml:space="preserve">
+    <value>11</value>
+    <comment>Agregar Perfiles</comment>
+  </data>
+  <data name="AgregarPlano" xml:space="preserve">
+    <value>2</value>
+    <comment>Agregar Plano</comment>
+  </data>
+  <data name="AgregarPlanos" xml:space="preserve">
+    <value>6</value>
+    <comment>Agregar Planos</comment>
+  </data>
+  <data name="AgregarTablasAux" xml:space="preserve">
+    <value>26</value>
+    <comment>Agregar Tablas Aux</comment>
+  </data>
+  <data name="AgregarUsuarios" xml:space="preserve">
+    <value>7</value>
+    <comment>Agregar Usuarios</comment>
+  </data>
+  <data name="AltaAlfanumericodeParcelasyPosesiones" xml:space="preserve">
+    <value>20</value>
+    <comment>Alta Alfanumérico de Parcelas y Posesiones</comment>
+  </data>
+  <data name="AltaAtributo" xml:space="preserve">
+    <value>85</value>
+    <comment>Alta Atributo</comment>
+  </data>
+  <data name="AltaCertificados" xml:space="preserve">
+    <value>91</value>
+    <comment>Alta Certificados</comment>
+  </data>
+  <data name="AltaControlTecnico" xml:space="preserve">
+    <value>78</value>
+    <comment>Alta Control Tecnico</comment>
+  </data>
+  <data name="AltadeActas" xml:space="preserve">
+    <value>103</value>
+    <comment>Alta de Actas</comment>
+  </data>
+  <data name="AltadeInspeccion" xml:space="preserve">
+    <value>97</value>
+    <comment>Alta de Inspección</comment>
+  </data>
+  <data name="Altadeinspectores" xml:space="preserve">
+    <value>100</value>
+    <comment>Alta de inspectores</comment>
+  </data>
+  <data name="AltadeParcelasDestino" xml:space="preserve">
+    <value>31</value>
+    <comment>Alta de Parcelas Destino</comment>
+  </data>
+  <data name="AltadeParcelasOrigen" xml:space="preserve">
+    <value>30</value>
+    <comment>Alta de Parcelas Origen</comment>
+  </data>
+  <data name="AltadePersonas" xml:space="preserve">
+    <value>106</value>
+    <comment>Alta de Personas</comment>
+  </data>
+  <data name="AltadeProfesion" xml:space="preserve">
+    <value>109</value>
+    <comment>Alta de Profesión</comment>
+  </data>
+  <data name="Altaderegistros" xml:space="preserve">
+    <value>112</value>
+    <comment>Alta de registros</comment>
+  </data>
+  <data name="AltadeResultadodeBusqueda" xml:space="preserve">
+    <value>88</value>
+    <comment>Alta de Resultado de Búsqueda</comment>
+  </data>
+  <data name="AltadeTramites" xml:space="preserve">
+    <value>94</value>
+    <comment>Alta de Trámites</comment>
+  </data>
+  <data name="AltaDocumento" xml:space="preserve">
+    <value>68</value>
+    <comment>Alta Documento</comment>
+  </data>
+  <data name="AltaDocumentosParcela" xml:space="preserve">
+    <value>38</value>
+    <comment>Alta Documentos Parcela</comment>
+  </data>
+  <data name="AltaDocumentosUnidadTributaria" xml:space="preserve">
+    <value>47</value>
+    <comment>Alta Documentos Unidad Tributaria</comment>
+  </data>
+  <data name="AltaDomicilio" xml:space="preserve">
+    <value>41</value>
+    <comment>Alta Domicilio</comment>
+  </data>
+  <data name="AltaDominio" xml:space="preserve">
+    <value>50</value>
+    <comment>Alta Dominio</comment>
+  </data>
+  <data name="AltaEstado" xml:space="preserve">
+    <value>63</value>
+    <comment>Alta Estado</comment>
+  </data>
+  <data name="AltaExpedientesObra" xml:space="preserve">
+    <value>56</value>
+    <comment>Alta Expedientes Obra</comment>
+  </data>
+  <data name="AltaInspeccion" xml:space="preserve">
+    <value>77</value>
+    <comment>Alta Inspeccion</comment>
+  </data>
+  <data name="AltaLiquidacion" xml:space="preserve">
+    <value>74</value>
+    <comment>Alta Liquidacion</comment>
+  </data>
+  <data name="AltaMantenedorUnidadTributaria" xml:space="preserve">
+    <value>22</value>
+    <comment>Alta Mantenedor Unidad Tributaria</comment>
+  </data>
+  <data name="AltaNomenclatura" xml:space="preserve">
+    <value>35</value>
+    <comment>Alta Nomenclatura</comment>
+  </data>
+  <data name="AltaObservacion" xml:space="preserve">
+    <value>81</value>
+    <comment>Alta Observacion</comment>
+  </data>
+  <data name="AltaPersona" xml:space="preserve">
+    <value>71</value>
+    <comment>Alta Persona</comment>
+  </data>
+  <data name="AltaResponsableFiscal" xml:space="preserve">
+    <value>44</value>
+    <comment>Alta Responsable Fiscal</comment>
+  </data>
+  <data name="AltaSuperficie" xml:space="preserve">
+    <value>65</value>
+    <comment>Alta Superficie</comment>
+  </data>
+  <data name="AltaTitular" xml:space="preserve">
+    <value>53</value>
+    <comment>Alta Titular</comment>
+  </data>
+  <data name="AltaUbicacionObra" xml:space="preserve">
+    <value>61</value>
+    <comment>Alta Ubicacion Obra</comment>
+  </data>
+  <data name="AltaUnidadesTributarias" xml:space="preserve">
+    <value>59</value>
+    <comment>Alta Unidades Tributarias</comment>
+  </data>
+  <data name="BajaCertificados" xml:space="preserve">
+    <value>93</value>
+    <comment>Baja Certificados</comment>
+  </data>
+  <data name="BajaControlTecnico" xml:space="preserve">
+    <value>79</value>
+    <comment>Baja Control Tecnico</comment>
+  </data>
+  <data name="Bajadeactas" xml:space="preserve">
+    <value>105</value>
+    <comment>Baja de actas</comment>
+  </data>
+  <data name="BajadeAtributos" xml:space="preserve">
+    <value>87</value>
+    <comment>Baja de Atributos</comment>
+  </data>
+  <data name="BajadeInspeccion" xml:space="preserve">
+    <value>99</value>
+    <comment>Baja de Inspección</comment>
+  </data>
+  <data name="Bajadeinspectores" xml:space="preserve">
+    <value>101</value>
+    <comment>Baja de inspectores</comment>
+  </data>
+  <data name="BajadeLiquidacion" xml:space="preserve">
+    <value>73</value>
+    <comment>Baja de Liquidación</comment>
+  </data>
+  <data name="BajadeParcelasDestino" xml:space="preserve">
+    <value>33</value>
+    <comment>Baja de Parcelas Destino</comment>
+  </data>
+  <data name="BajadeParcelasOrigen" xml:space="preserve">
+    <value>32</value>
+    <comment>Baja de Parcelas Origen</comment>
+  </data>
+  <data name="BajadePersonas" xml:space="preserve">
+    <value>108</value>
+    <comment>Baja de Personas</comment>
+  </data>
+  <data name="BajadeProfesion" xml:space="preserve">
+    <value>111</value>
+    <comment>Baja de Profesión</comment>
+  </data>
+  <data name="BajadeRegistros" xml:space="preserve">
+    <value>114</value>
+    <comment>Baja de Registros</comment>
+  </data>
+  <data name="BajadeResultadodeBusqueda" xml:space="preserve">
+    <value>90</value>
+    <comment>Baja de Resultado de Búsqueda</comment>
+  </data>
+  <data name="BajadeTramite" xml:space="preserve">
+    <value>96</value>
+    <comment>Baja de Trámite</comment>
+  </data>
+  <data name="BajaDocumento" xml:space="preserve">
+    <value>69</value>
+    <comment>Baja Documento</comment>
+  </data>
+  <data name="BajaDocumentosParcela" xml:space="preserve">
+    <value>40</value>
+    <comment>Baja Documentos Parcela</comment>
+  </data>
+  <data name="BajaDocumentosUnidadTributaria" xml:space="preserve">
+    <value>49</value>
+    <comment>Baja Documentos Unidad Tributaria</comment>
+  </data>
+  <data name="BajaDomicilio" xml:space="preserve">
+    <value>43</value>
+    <comment>Baja Domicilio</comment>
+  </data>
+  <data name="BajaDominio" xml:space="preserve">
+    <value>52</value>
+    <comment>Baja Dominio</comment>
+  </data>
+  <data name="BajaExpedientedeObra" xml:space="preserve">
+    <value>84</value>
+    <comment>Baja Expediente de Obra</comment>
+  </data>
+  <data name="BajaExpedientesObra" xml:space="preserve">
+    <value>57</value>
+    <comment>Baja Expedientes Obra</comment>
+  </data>
+  <data name="BajaLiquidacion" xml:space="preserve">
+    <value>75</value>
+    <comment>Baja Liquidacion</comment>
+  </data>
+  <data name="BajaMantenedorUnidadTributaria" xml:space="preserve">
+    <value>24</value>
+    <comment>Baja Mantenedor Unidad Tributaria</comment>
+  </data>
+  <data name="BajaNomenclatura" xml:space="preserve">
+    <value>37</value>
+    <comment>Baja Nomenclatura</comment>
+  </data>
+  <data name="BajaObservacion" xml:space="preserve">
+    <value>82</value>
+    <comment>Baja Observacion</comment>
+  </data>
+  <data name="BajaPersona" xml:space="preserve">
+    <value>72</value>
+    <comment>Baja Persona</comment>
+  </data>
+  <data name="BajaResponsableFiscal" xml:space="preserve">
+    <value>46</value>
+    <comment>Baja Responsable Fiscal</comment>
+  </data>
+  <data name="BajaSuperficie" xml:space="preserve">
+    <value>66</value>
+    <comment>Baja Superficie</comment>
+  </data>
+  <data name="BajaTitular" xml:space="preserve">
+    <value>55</value>
+    <comment>Baja Titular</comment>
+  </data>
+  <data name="BajaUbicacionObra" xml:space="preserve">
+    <value>62</value>
+    <comment>Baja Ubicacion Obra</comment>
+  </data>
+  <data name="BajaUnidadesTributarias" xml:space="preserve">
+    <value>60</value>
+    <comment>Baja Unidades Tributarias</comment>
+  </data>
+  <data name="EliminarFeriados" xml:space="preserve">
+    <value>19</value>
+    <comment>Eliminar Feriados</comment>
+  </data>
+  <data name="EliminarHorarios" xml:space="preserve">
+    <value>16</value>
+    <comment>Eliminar Horarios</comment>
+  </data>
+  <data name="EliminarInspectores" xml:space="preserve">
+    <value>29</value>
+    <comment>Eliminar Inspectores</comment>
+  </data>
+  <data name="EliminarParcelaDestino" xml:space="preserve">
+    <value>23</value>
+    <comment>Eliminar Parcela Destino</comment>
+  </data>
+  <data name="EliminarParcelaOrigen" xml:space="preserve">
+    <value>21</value>
+    <comment>Eliminar Parcela Origen</comment>
+  </data>
+  <data name="EliminarPerfiles" xml:space="preserve">
+    <value>13</value>
+    <comment>Eliminar Perfiles</comment>
+  </data>
+  <data name="EliminarTablaAux" xml:space="preserve">
+    <value>28</value>
+    <comment>Eliminar Tabla Aux</comment>
+  </data>
+  <data name="EliminarUsuarios" xml:space="preserve">
+    <value>9</value>
+    <comment>Eliminar Usuarios</comment>
+  </data>
+  <data name="Exportar" xml:space="preserve">
+    <value>4</value>
+    <comment>Exportar</comment>
+  </data>
+  <data name="GuardarExpedienteObra" xml:space="preserve">
+    <value>3</value>
+    <comment>Guardar Expediente Obra</comment>
+  </data>
+  <data name="Login" xml:space="preserve">
+    <value>1</value>
+    <comment>Login</comment>
+  </data>
+  <data name="ModificaciondeActas" xml:space="preserve">
+    <value>104</value>
+    <comment>Modificación de Actas</comment>
+  </data>
+  <data name="ModificaciondeAtributos" xml:space="preserve">
+    <value>86</value>
+    <comment>Modificación de Atributos</comment>
+  </data>
+  <data name="ModificaciondeResultadodeBusqueda" xml:space="preserve">
+    <value>89</value>
+    <comment>Modificación de Resultado de Búsqueda</comment>
+  </data>
+  <data name="ModificacionExpedientesObra" xml:space="preserve">
+    <value>58</value>
+    <comment>Modificacion Expedientes Obra</comment>
+  </data>
+  <data name="ModificarCertificados" xml:space="preserve">
+    <value>92</value>
+    <comment>Modificar Certificados</comment>
+  </data>
+  <data name="ModificarControlTecnico" xml:space="preserve">
+    <value>80</value>
+    <comment>Modificar Control Tecnico</comment>
+  </data>
+  <data name="ModificarDocumento" xml:space="preserve">
+    <value>70</value>
+    <comment>Modificar Documento</comment>
+  </data>
+  <data name="ModificarDocumentosParcela" xml:space="preserve">
+    <value>39</value>
+    <comment>Modificar Documentos Parcela</comment>
+  </data>
+  <data name="ModificarDocumentosUnidadTributaria" xml:space="preserve">
+    <value>48</value>
+    <comment>Modificar Documentos Unidad Tributaria</comment>
+  </data>
+  <data name="ModificarDomicilio" xml:space="preserve">
+    <value>42</value>
+    <comment>Modificar Domicilio</comment>
+  </data>
+  <data name="ModificarDominio" xml:space="preserve">
+    <value>51</value>
+    <comment>Modificar Dominio</comment>
+  </data>
+  <data name="ModificarEstado" xml:space="preserve">
+    <value>64</value>
+    <comment>Modificar Estado</comment>
+  </data>
+  <data name="ModificarFeriados" xml:space="preserve">
+    <value>18</value>
+    <comment>Modificar Feriados</comment>
+  </data>
+  <data name="ModificarHorarios" xml:space="preserve">
+    <value>15</value>
+    <comment>Modificar Horarios</comment>
+  </data>
+  <data name="ModificarInspeccion" xml:space="preserve">
+    <value>98</value>
+    <comment>Modificar Inspección</comment>
+  </data>
+  <data name="Modificarinspectores" xml:space="preserve">
+    <value>102</value>
+    <comment>Modificar inspectores </comment>
+  </data>
+  <data name="ModificarLiquidacion" xml:space="preserve">
+    <value>76</value>
+    <comment>Modificar Liquidacion</comment>
+  </data>
+  <data name="ModificarMantenedorParcelario" xml:space="preserve">
+    <value>34</value>
+    <comment>Modificar Mantenedor Parcelario</comment>
+  </data>
+  <data name="ModificarMantenedorUnidadTributaria" xml:space="preserve">
+    <value>25</value>
+    <comment>Modificar Mantenedor Unidad Tributaria</comment>
+  </data>
+  <data name="ModificarNomenclatura" xml:space="preserve">
+    <value>36</value>
+    <comment>Modificar Nomenclatura</comment>
+  </data>
+  <data name="ModificarObservacion" xml:space="preserve">
+    <value>83</value>
+    <comment>Modificar Observacion</comment>
+  </data>
+  <data name="ModificarParametrosGenerales" xml:space="preserve">
+    <value>10</value>
+    <comment>Modificar Parametros Generales</comment>
+  </data>
+  <data name="ModificarPerfiles" xml:space="preserve">
+    <value>12</value>
+    <comment>Modificar Perfiles</comment>
+  </data>
+  <data name="ModificarPersonas" xml:space="preserve">
+    <value>107</value>
+    <comment>Modificar Personas</comment>
+  </data>
+  <data name="ModificarProfesion" xml:space="preserve">
+    <value>110</value>
+    <comment>Modificar Profesión</comment>
+  </data>
+  <data name="ModificarRegistreos" xml:space="preserve">
+    <value>113</value>
+    <comment>Modificar Registreos</comment>
+  </data>
+  <data name="ModificarResponsableFiscal" xml:space="preserve">
+    <value>45</value>
+    <comment>Modificar Responsable Fiscal</comment>
+  </data>
+  <data name="ModificarSuperficie" xml:space="preserve">
+    <value>67</value>
+    <comment>Modificar Superficie</comment>
+  </data>
+  <data name="ModificarTablasAux" xml:space="preserve">
+    <value>27</value>
+    <comment>Modificar Tablas Aux</comment>
+  </data>
+  <data name="ModificarTitular" xml:space="preserve">
+    <value>54</value>
+    <comment>Modificar Titular</comment>
+  </data>
+  <data name="ModificarTramites" xml:space="preserve">
+    <value>95</value>
+    <comment>Modificar Trámites</comment>
+  </data>
+  <data name="ModificarUsuarios" xml:space="preserve">
+    <value>8</value>
+    <comment>Modificar Usuarios</comment>
+  </data>
+  <data name="NoAutorizado" xml:space="preserve">
+    <value>5</value>
+    <comment>No Autorizado</comment>
+  </data>
+  <data name="AltaAtributoZona" xml:space="preserve">
+    <value>118</value>
+    <comment>Alta Atributo Zona</comment>
+  </data>
+  <data name="AltaObjetoAdministrativo" xml:space="preserve">
+    <value>124</value>
+    <comment>Alta Objeto Infraestructura</comment>
+  </data>
+  <data name="AltaObjetoInf" xml:space="preserve">
+    <value>115</value>
+    <comment>Alta Objeto Infraestructura</comment>
+  </data>
+  <data name="AltaParcela" xml:space="preserve">
+    <value>134</value>
+    <comment>Alta Parcela</comment>
+  </data>
+  <data name="AltaParcelagrafica" xml:space="preserve">
+    <value>121</value>
+    <comment>Alta Parcela grafica</comment>
+  </data>
+  <data name="AltaValuacion" xml:space="preserve">
+    <value>127</value>
+    <comment>Alta Valuacion Cabecera</comment>
+  </data>
+  <data name="AltaValuacionDetalle" xml:space="preserve">
+    <value>131</value>
+    <comment>Alta Valuacion Detalle</comment>
+  </data>
+  <data name="BajaAtributoZona" xml:space="preserve">
+    <value>119</value>
+    <comment>Baja Atributo Zona</comment>
+  </data>
+  <data name="BajaObjetoAdministrativo" xml:space="preserve">
+    <value>125</value>
+    <comment>BajaObjeto indraestrcutura.</comment>
+  </data>
+  <data name="BajaObjetoInf" xml:space="preserve">
+    <value>116</value>
+    <comment>BajaObjeto indraestrcutura.</comment>
+  </data>
+  <data name="BajaParcela" xml:space="preserve">
+    <value>136</value>
+    <comment>Baja Parcela</comment>
+  </data>
+  <data name="BajaParcelagrafica" xml:space="preserve">
+    <value>123</value>
+    <comment>Baja Parcela Grafica</comment>
+  </data>
+  <data name="BajaValuacion" xml:space="preserve">
+    <value>129</value>
+    <comment>Baja Valuacion Cabecera</comment>
+  </data>
+  <data name="BajaValuacionDetalle" xml:space="preserve">
+    <value>133</value>
+    <comment>Baja Valuacion Detalle</comment>
+  </data>
+  <data name="ModificacionAtributoZona" xml:space="preserve">
+    <value>120</value>
+    <comment>Modificacion Atributo Zona</comment>
+  </data>
+  <data name="ModificacionObjetoAdministrativo" xml:space="preserve">
+    <value>126</value>
+    <comment>Modificar Objeto Insfraestrctura</comment>
+  </data>
+  <data name="ModificacionObjetoInf" xml:space="preserve">
+    <value>117</value>
+    <comment>Modificar Objeto Insfraestrctura</comment>
+  </data>
+  <data name="ModificacionParcelaGrafica" xml:space="preserve">
+    <value>122</value>
+    <comment>Modificacion Parcela Grafica</comment>
+  </data>
+  <data name="ModificacionValuacion" xml:space="preserve">
+    <value>128</value>
+    <comment>Modificacion Valuacion Cabecera</comment>
+  </data>
+  <data name="ModificacionValuacionDetalle" xml:space="preserve">
+    <value>132</value>
+    <comment>Modificacion Valuacion Detalle</comment>
+  </data>
+  <data name="ModificarParcela" xml:space="preserve">
+    <value>135</value>
+    <comment>Modificar Parcela</comment>
+  </data>
+  <data name="ValuacionTemporal" xml:space="preserve">
+    <value>130</value>
+    <comment>Valuacion Temporal</comment>
+  </data>
+  <data name="AltaDePlantilla" xml:space="preserve">
+    <value>139</value>
+    <comment>Alta De Plantilla</comment>
+  </data>
+  <data name="BajaDePlantilla" xml:space="preserve">
+    <value>141</value>
+    <comment>Baja De Plantilla</comment>
+  </data>
+  <data name="DespublicarBibliotecaMT" xml:space="preserve">
+    <value>142</value>
+    <comment>DespublicarBibliotecaMT</comment>
+  </data>
+  <data name="EliminarBibliotecaMT" xml:space="preserve">
+    <value>143</value>
+    <comment>EliminarBibliotecaMT</comment>
+  </data>
+  <data name="GeneracionPloteoGeneral" xml:space="preserve">
+    <value>146</value>
+    <comment>Generación Ploteo General</comment>
+  </data>
+  <data name="GeneracionPloteoPlanchetaA4" xml:space="preserve">
+    <value>146</value>
+    <comment>Generación de Ploteo Plancheta A4</comment>
+  </data>
+  <data name="GeneracionResultadosEnMT" xml:space="preserve">
+    <value>146</value>
+    <comment>Generación Resultados Mapa Temático</comment>
+  </data>
+  <data name="GenerarPdf" xml:space="preserve">
+    <value>147</value>
+    <comment>Generar Pdf</comment>
+  </data>
+  <data name="GrabarBibliotecaMT" xml:space="preserve">
+    <value>148</value>
+    <comment>GrabarBibliotecaMT</comment>
+  </data>
+  <data name="GrabarColeccionMT" xml:space="preserve">
+    <value>149</value>
+    <comment>GrabarColeccionMT</comment>
+  </data>
+  <data name="ModificacionDePlantilla" xml:space="preserve">
+    <value>151</value>
+    <comment>Modificacion De Plantilla</comment>
+  </data>
+  <data name="PublicarBibliotecaMT" xml:space="preserve">
+    <value>153</value>
+    <comment>PublicarBibliotecaMT</comment>
+  </data>
+  <data name="VerMapaMT" xml:space="preserve">
+    <value>154</value>
+    <comment>Ver Mapa MT</comment>
+  </data>
+  <data name="AltaColeccion" xml:space="preserve">
+    <value>138</value>
+    <comment>AltaColeccion</comment>
+  </data>
+  <data name="ExportarColeccion" xml:space="preserve">
+    <value>145</value>
+    <comment>ExportarColeccion</comment>
+  </data>
+  <data name="ModificarColeccion" xml:space="preserve">
+    <value>152</value>
+    <comment>ModificarColeccion</comment>
+  </data>
+  <data name="AgregarObjetosColeccion" xml:space="preserve">
+    <value>137</value>
+    <comment>AgregarObjetosColeccion</comment>
+  </data>
+  <data name="BajaColeccion" xml:space="preserve">
+    <value>140</value>
+    <comment>BajaColeccion</comment>
+  </data>
+  <data name="EliminarObjetosColeccion" xml:space="preserve">
+    <value>144</value>
+    <comment>EliminarObjetosColeccion</comment>
+  </data>
+  <data name="ImportarColeccion" xml:space="preserve">
+    <value>150</value>
+    <comment>ImportarColeccion</comment>
+  </data>
+  <data name="AgregarRegistro" xml:space="preserve">
+    <value>64</value>
+  </data>
+  <data name="EliminarRegistro" xml:space="preserve">
+    <value>66</value>
+  </data>
+  <data name="ModificarRegistro" xml:space="preserve">
+    <value>65</value>
+  </data>
+  <data name="AnularCapaLibroTramite" xml:space="preserve">
+    <value>140</value>
+    <comment>Anular Capa Libro Tramite</comment>
+  </data>
+  <data name="AnularDerivaciónTramite" xml:space="preserve">
+    <value>147</value>
+    <comment>Anular Derivación Tramite</comment>
+  </data>
+  <data name="AnularTramite" xml:space="preserve">
+    <value>143</value>
+    <comment>Anular Tramite</comment>
+  </data>
+  <data name="ArchivarTramtie" xml:space="preserve">
+    <value>145</value>
+    <comment>Archivar Tramite</comment>
+  </data>
+  <data name="ConfirmarTramite" xml:space="preserve">
+    <value>139</value>
+    <comment>Confirmar Tramite</comment>
+  </data>
+  <data name="DerivarTramite" xml:space="preserve">
+    <value>137</value>
+    <comment>Derivar Tramite</comment>
+  </data>
+  <data name="DesarchivarTramite" xml:space="preserve">
+    <value>148</value>
+    <comment>Desarchivar Tramite</comment>
+  </data>
+  <data name="DespacharTramite" xml:space="preserve">
+    <value>144</value>
+    <comment>Despachar Tramite</comment>
+  </data>
+  <data name="FinalizarTramite" xml:space="preserve">
+    <value>142</value>
+    <comment>Finalizar Tramite</comment>
+  </data>
+  <data name="RechazarTramite" xml:space="preserve">
+    <value>141</value>
+    <comment>Rechazar Tramite</comment>
+  </data>
+  <data name="RecibirPresentadoTramite" xml:space="preserve">
+    <value>146</value>
+    <comment>Recibir Presentado Tramite</comment>
+  </data>
+  <data name="RecibirTramite" xml:space="preserve">
+    <value>138</value>
+    <comment>Recibir Tramite</comment>
+  </data>
+  <data name="ReingresarTramite" xml:space="preserve">
+    <value>149</value>
+    <comment>Reingresar Tramite</comment>
+  </data>
+  <data name="EditarTramite" xml:space="preserve">
+    <value>150</value>
+    <comment>Editar Tramite</comment>
+  </data>
+  <data name="DespublicarBibliotecaBA" xml:space="preserve">
+    <value>156</value>
+  </data>
+  <data name="EliminarBibliotecaBA" xml:space="preserve">
+    <value>158</value>
+  </data>
+  <data name="ExportarExcelBA" xml:space="preserve">
+    <value>159</value>
+  </data>
+  <data name="GeneracionResultadosEnBA" xml:space="preserve">
+    <value>155</value>
+  </data>
+  <data name="GrabarColeccionBA" xml:space="preserve">
+    <value>160</value>
+  </data>
+  <data name="PublicarBibliotecaBA" xml:space="preserve">
+    <value>157</value>
+  </data>
+  <data name="VerMapaBA" xml:space="preserve">
+    <value>161</value>
+  </data>
+  <data name="AgregarRemito" xml:space="preserve">
+    <value>155</value>
+    <comment>Agregar Remito</comment>
+  </data>
+  <data name="AbrirLibroDiario" xml:space="preserve">
+    <value>162</value>
+    <comment>Abrir Libro Diario</comment>
+  </data>
+  <data name="CerrarLibroDiario" xml:space="preserve">
+    <value>163</value>
+    <comment>Cerrar Libro Diario</comment>
+  </data>
+  <data name="ExistenciaDeCorteAnterior" xml:space="preserve">
+    <value>36</value>
+  </data>
+  <data name="ExportarExcelMT" xml:space="preserve">
+    <value>49</value>
+  </data>
+  <data name="ImportarArchivo" xml:space="preserve">
+    <value>15</value>
+  </data>
+  <data name="MedidoresDiferenciadosPorMarca" xml:space="preserve">
+    <value>34</value>
+  </data>
+  <data name="RangosDeConsumo" xml:space="preserve">
+    <value>37</value>
+  </data>
+  <data name="RankingAntiguedadEnDias" xml:space="preserve">
+    <value>19</value>
+  </data>
+  <data name="RankingDeFacturasImpagas" xml:space="preserve">
+    <value>20</value>
+  </data>
+  <data name="RankingTotalDeDeuda" xml:space="preserve">
+    <value>32</value>
+  </data>
+  <data name="TiposDeCorte" xml:space="preserve">
+    <value>35</value>
+  </data>
+  <data name="TodosLosMedidores" xml:space="preserve">
+    <value>33</value>
+  </data>
+  <data name="EntregarTramite" xml:space="preserve">
+    <value>165</value>
+    <comment>Entregar Trámite</comment>
+  </data>
+  <data name="AltaDeMensura" xml:space="preserve">
+    <value>188</value>
+    <comment>Mensura - Alta de Mensura</comment>
+  </data>
+  <data name="EliminarMensura" xml:space="preserve">
+    <value>190</value>
+    <comment>Mensura - Eliminar Mensura</comment>
+  </data>
+  <data name="ModificacionDeMensura" xml:space="preserve">
+    <value>189</value>
+    <comment>Mensura - Modificacion de Mensura</comment>
+  </data>
+  <data name="AltaDeParcelaMensura" xml:space="preserve">
+    <value>191</value>
+    <comment>Mensura - Alta de Parcela Mensura</comment>
+  </data>
+  <data name="ProcesarTramite" xml:space="preserve">
+    <value>192</value>
+    <comment>Procesar Trámite</comment>
+  </data>
+  <data name="AltaDesignacion" xml:space="preserve">
+    <value>194</value>
+    <comment>Alta de Designación</comment>
+  </data>
+  <data name="BajaDesignacion" xml:space="preserve">
+    <value>195</value>
+    <comment>Baja de Designación</comment>
+  </data>
+  <data name="ModificarDesignacion" xml:space="preserve">
+    <value>196</value>
+    <comment>Modificacion de Designación</comment>
+  </data>
+  <data name="AltaDDJJE1" xml:space="preserve">
+    <value>199</value>
+    <comment>Alta de DDJJ E1</comment>
+  </data>
+  <data name="AltaDDJJE2" xml:space="preserve">
+    <value>200</value>
+    <comment>Alta de DDJJ E2</comment>
+  </data>
+  <data name="AltaDDJJSoR" xml:space="preserve">
+    <value>198</value>
+    <comment>Alta de DDJJ SoR</comment>
+  </data>
+  <data name="AltaDDJJU" xml:space="preserve">
+    <value>197</value>
+    <comment>Alta de DDJJ U</comment>
+  </data>
+  <data name="ModificarDDJJE1" xml:space="preserve">
+    <value>203</value>
+    <comment>Modificación de DDJJ E1</comment>
+  </data>
+  <data name="ModificarDDJJE2" xml:space="preserve">
+    <value>204</value>
+    <comment>Modificación de DDJJ E2</comment>
+  </data>
+  <data name="ModificarDDJJSoR" xml:space="preserve">
+    <value>202</value>
+    <comment>Modificación de DDJJ SoR</comment>
+  </data>
+  <data name="ModificarDDJJU" xml:space="preserve">
+    <value>201</value>
+    <comment>Modificación de DDJJ U</comment>
+  </data>
+  <data name="NuevaValuacion" xml:space="preserve">
+    <value>205</value>
+    <comment>Nueva Valuación</comment>
+  </data>
+  <data name="PresentarTramite" xml:space="preserve">
+    <value>206</value>
+    <comment>Presentar Tramite</comment>
+  </data>
+  <data name="AltaParcelaOrigen" xml:space="preserve">
+    <value>209</value>
+    <comment>Alta de Parcela Origen (desde Mantenedor Parcelario)</comment>
+  </data>
+  <data name="BajaParcelaOrigen" xml:space="preserve">
+    <value>210</value>
+    <comment>Baja de Parcela Origen (desde Mantenedor Parcelario)</comment>
+  </data>
+  <data name="ModificacionParcelaOrigen" xml:space="preserve">
+    <value>211</value>
+    <comment>Modificación de Parcela Origen (desde Mantenedor Parcelario)</comment>
+  </data>
+  <data name="ModificacionVIR" xml:space="preserve">
+    <value>212</value>
+    <comment>Modificación de VIR</comment>
+  </data>
+  <data name="BajaDDJJ" xml:space="preserve">
+    <value>213</value>
+    <comment>Baja Mejora</comment>
+  </data>
+  <data name="GenerarCertificadoValuatorio" xml:space="preserve">
+    <value>214</value>
+    <comment>Generar Certificado Valuatorio</comment>
+  </data>
+  <data name="GenerarInformeCatastral" xml:space="preserve">
+    <value>215</value>
+    <comment>Generar Informe Catastral</comment>
+  </data>
+  <data name="GenerarInformeHistoricoTitulares" xml:space="preserve">
+    <value>217</value>
+    <comment>Generar Informe Histórico Titulares</comment>
+  </data>
+  <data name="GenerarInformeHistoricoValuaciones" xml:space="preserve">
+    <value>220</value>
+    <comment>Generar Informe Histórico Valuaciones</comment>
+  </data>
+  <data name="GenerarInformeParcelario" xml:space="preserve">
+    <value>216</value>
+    <comment>Generar Informe Parcelario</comment>
+  </data>
+  <data name="GenerarInformePropiedad" xml:space="preserve">
+    <value>219</value>
+    <comment>Generar Informe Propiedad</comment>
+  </data>
+  <data name="GenerarInformeSituacion" xml:space="preserve">
+    <value>221</value>
+    <comment>Generar Informe Situación</comment>
+  </data>
+  <data name="GenerarInformeUT" xml:space="preserve">
+    <value>218</value>
+    <comment>Generar Informe UT</comment>
+  </data>
+  <data name="ReasignarTramite" xml:space="preserve">
+    <value>223</value>
+    <comment>Reasignación de Trámite</comment>
+  </data>
+</root>

@@ -1,0 +1,15 @@
+﻿#Grilla_Consulta tr, #Grilla_Columnas tr {
+    background: #fff;
+}
+
+#Grilla_Consulta tr, #Grilla_Columnas tr {
+    border: 1px solid #ddd !important;
+}
+
+#infraestructura-datos {
+    overflow: hidden;
+}
+
+#modal-window-infraestructura #Grilla_Objetos {
+    width: 100% !important;
+}

@@ -1,0 +1,80 @@
+﻿@using GeoSit.Data.BusinessEntities.Inmuebles
+@model GeoSit.Client.Web.Models.Dominio.DominioViewModel
+
+@{
+    ViewBag.Title = "Inscripción de Dominio";
+}
+
+<div class="modal fade theme_new" id="modal-window-dominio" tabindex="-1" data-backdrop="true" role="dialog" aria-labelledby="modal-label-dominio" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id="scroll-content-dominio" class="scroll-content">
+                <div id="message-error" class="alert alert-danger">
+                    <button type="button" class="close"><span aria-hidden="true">&times;</span></button>
+                    <p></p>
+                </div>
+                <div class="modal-header">
+                    <h3 class="modal-title" id="lblModal-dominio">@ViewBag.Title</h3>
+                    <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+                </div>
+                <div class="modal-body dominio-body">
+                    <div class="body-content">
+                        <div class="panel-group remove-margin">
+                            <div class="panel panel-default remove-shadow">
+                                <div class="panel-body">
+                                    <div class="col-xs-12">
+
+                                        <form id="dominio-form" class="form-horizontal">
+                                            @Html.HiddenFor(model => model.DominioID)
+                                            @Html.HiddenFor(model => model.UnidadTributariaID)
+                                            @Html.HiddenFor(model => model.Operacion)
+
+                                            <div class="form-group">
+                                                <label class="control-label col-sm-4 text-right">Tipo</label>
+                                                <div class="col-sm-8">
+                                                    <select id="TipoInscripcionID" name="TipoInscripcionID" class="form-control">
+                                                        @foreach (var tipo in (ViewData["TipoInscripciones"] as IEnumerable<TipoInscripcion>))
+                                                        {
+                                                            if (tipo.TipoInscripcionID == Model.TipoInscripcionID)
+                                                            {
+                                                                <option value="@tipo.TipoInscripcionID" selected="selected" regexp="@tipo.ExpresionRegular">@tipo.Descripcion</option>
+                                                            }
+                                                            else
+                                                            {
+                                                                <option value="@tipo.TipoInscripcionID" regexp="@tipo.ExpresionRegular">@tipo.Descripcion</option>
+                                                            }
+                                                        }
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-sm-4 text-right">N&uacute;mero</label>
+                                                <div class="col-sm-8">
+                                                    @Html.TextBoxFor(model => model.Inscripcion, new { @class = "form-control" })
+                                                    <label id="labelNumero"></label>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label col-sm-4 text-right">Fecha</label>
+                                                <div class="col-sm-8">
+                                                    <input type="text" class="form-control" id="FechaHora" name="FechaHora" style="background-color:#fff" readonly="readonly" value="@Model.FechaHora" />
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-xs-4 pull-right">
+                        <span aria-hidden="true" data-placement="right" title="Guardar" data-original-title="Guardar" id="btnGrabar-dominio" class="fa fa-save fa-2x black cursor-pointer"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/Dominio/main.js"></script>

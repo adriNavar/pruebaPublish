@@ -1,0 +1,7 @@
+INSERT INTO GE_PARAMETRO (ID_PARAMETRO, DESCRIPCION, VALOR, AGRUPADOR, CLAVE)
+SELECT MAX(ID_PARAMETRO) + 1, 'Webservice de Zonas del Sistema Tributario',
+    'http://emaw70512.hopto.org/samws/clientes/clienteZonaT.php', 
+    'INTERFASE_SISTEMA_TRIBUTARIO', 'IST_WS_ZONAS_TRIBUTARIAS'  
+FROM GE_PARAMETRO;
+
+COMMIT;

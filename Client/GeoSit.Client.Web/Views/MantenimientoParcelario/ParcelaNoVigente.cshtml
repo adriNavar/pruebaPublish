@@ -1,0 +1,23 @@
+﻿<div class="modal fade theme_new mensaje"  id="mensaje-error-parcelas-noVigentes" tabindex="-2" role="dialog" aria-labelledby="TituloAdvertencia" aria-hidden="true" data-backdrop="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="TituloAdvertencia">Parcela no vigente</h3>
+                <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+            </div>
+            <div class="modal-body">
+                <div id="MensajeAlerta" class="alert alert-dismissible" role="alert">
+                    <p id="DescripcionAdvertencia">La parcela que intenta ver no está vigente y no puede ser vista</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    $(document).ready(function () {
+        $("#mensaje-error-parcelas-noVigentes").one("shown.bs.modal", hideLoading).modal("show");
+    });
+
+</script>

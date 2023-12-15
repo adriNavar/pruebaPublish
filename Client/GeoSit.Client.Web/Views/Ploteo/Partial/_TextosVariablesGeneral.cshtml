@@ -1,0 +1,17 @@
+﻿@using Newtonsoft.Json
+@model IEnumerable<GeoSit.Data.BusinessEntities.ModuloPloteo.PlantillaTexto>
+
+
+
+@foreach (var t in Model)
+{
+    if(!t.Origen.Contains("@"))
+    { 
+    <div class="form-group row">
+        <label for="texto_@t.IdPlantillaTexto" id="label_@t.IdPlantillaTexto" class="control-label col-lg-3 col-xs-3 col-sm-3 col-md-3">@t.Origen</label>
+        <div class="col-lg-9 col-xs-9 col-sm-9 col-md-9">
+            <input type="text" id="texto_@t.IdPlantillaTexto" class="form-control">
+        </div>
+    </div>
+    }
+}

@@ -1,0 +1,406 @@
+﻿@model GeoSit.Client.Web.Models.ValuacionModel
+@{
+    ViewBag.Title = "Valores para Coeficiente de Mejora";
+    ViewBag.Description = "";
+    ViewBag.MensajeEntrada = "";
+
+}
+
+
+@section styles
+{
+    <link href="../Content/valuacion.css" rel="stylesheet" />
+    <link href="../Content/jquery.jscrollpane.css" rel="stylesheet" />
+    <link href="../Content/dataTables.bootstrap.css" rel="stylesheet" />
+    <link href="../Content/formValidation.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/select2-bootstrap.css">
+}
+
+@*Modal Contenido*@
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    @using (Html.BeginForm("GrabaValorCoeficienteMejora", "Valuacion", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { id = "form", role = "form", novalidate = "" }))
+    {
+        @Html.AntiForgeryToken()
+        ViewBag.MensajeEntrada = Model.Mensaje;
+
+        if (Model.TipoCoeficienteMejora.IdTipoCoeficienteMejora == null)
+        {
+            Model.TipoCoeficienteMejora.IdTipoCoeficienteMejora = "";
+        }
+        <input class="centrado form-control" id="nombreCoeficiente" name="model.TipoCoeficienteMejora.IdTipoCoeficienteMejora" placeholder="Nombre del Coeficiente" style="width:100%;" type="hidden" value="@Model.TipoCoeficienteMejora.IdTipoCoeficienteMejora" data-bv-field="TipoCoeficienteTierra.IdTipoCoeficienteTierra">
+        <input class="centrado form-control" id="IdMejoraCoeficiente" name="model.MetadatoMejoraCoeficiente.IdMejoraCoeficiente" placeholder="AAA" style="width:100%;" type="hidden" value="@Model.MetadatoMejoraCoeficiente.IdMejoraCoeficiente" data-bv-field="MetadatoMejoraCoeficiente.IdMejoraCoeficiente">
+
+        @Html.HiddenFor(model => model.BusquedaPadron.IdPadron)
+        @Html.HiddenFor(model => model.BusquedaPadron.VigenciaDesde)
+        @Html.HiddenFor(model => model.BusquedaPadron.VigenciaHasta)
+        @Html.HiddenFor(model => model.MetadatoMejoraCoeficiente.IdMejoraCoeficiente)
+        @Html.HiddenFor(model => model.TipoCoeficienteMejora.IdTipoCoeficienteMejora)
+
+        <input class="centrado form-control" id="nombreCoeficiente" name="Model.TipoCoeficienteMejora.IdTipoCoeficienteMejora" placeholder="Nombre del Coeficiente" style="width:100%;" type="hidden" value="@Model.TipoCoeficienteMejora.IdTipoCoeficienteMejora" data-bv-field="TipoCoeficienteTierra.IdTipoCoeficienteTierra">
+
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header centrado" style="padding: 10px 0px 40px;">
+                    <h4 class="modal-title col-lg-12 col-xs-12 col-sm-12 col-md-12" id="myModalLabel">@ViewBag.Title @Html.Label(Model.TipoCoeficienteMejora.IdTipoCoeficienteMejora)</h4>
+                </div>
+                <div class="modal-body modal-body-scroll">
+                    <div class="row " style="height:3em;">
+                        <div class="col-lg-4 col-xs-4 col-sm-4 col-md-4 centrado"><label class="h4">Valor 1</label> </div>
+                        <div class="col-lg-4 col-xs-4 col-sm-4 col-md-4 centrado">
+                            <button type="button" id="masOpciones" class="btnSinBorde h4" title="Más Opciones" data-placement="bottom" style="border-radius:0px; height:100%; cursor:pointer;">
+                                Valor 2
+                            </button>
+                        </div>
+                        <div class="col-lg-4 col-xs-4 col-sm-4 col-md-4 centrado"><label class="h4">Valor Coeficiente</label> </div>
+                    </div>
+
+                    <div class="row" style=" padding: 0px 20px;">
+                        @{
+        var margensegundo = "";
+        var margen = "";
+        if (Model.ValorCoeficienteMejora.Valor1CoeficienteMejora.Count() > 0)
+        {
+            margen = "margin-top: 10px;";
+        }
+                        }
+                        <div class="col-lg-4 col-xs-4 col-sm-4 col-md-4 BordeCuadro borde-superior borde-izquierdo borde-inferior" id="valor1" style="height: 100%; padding: 10px 10px;">
+
+                            @********valor 1********@
+                            @for (int i = 0; i < Model.ValorCoeficienteMejora.Valor1CoeficienteMejora.Count(); i++)
+                            {
+                                var tabIndice = i + 1;
+                                if (i > 0)
+                                {
+                                    margensegundo = "margin-top: 10px;";
+                                }
+                            @*@Html.TextBoxFor(model => model.ValorCoeficienteMejora.Valor1CoeficienteMejora[i], new { @id = "Valor1_"+i, @class = "centrado", @style = "width:100%;"+ margensegundo , @onClick = "AgregarCampo("+i+")", @maxlength = "6", @tabindex = "1" })*@
+                            <input class="centrado inputValor1" data-val="true" id="Valor1_@i" name="model.ValorCoeficienteMejora.Valor1CoeficienteMejora" style="width:100%; @margensegundo" type="text" value="@Model.ValorCoeficienteMejora.Valor1CoeficienteMejora[i]" maxlength="10" tabindex="@tabIndice">
+                            }
+                            @{
+        var tabIndice2 = Model.ValorCoeficienteMejora.Valor1CoeficienteMejora.Count() + 1;
+                            }
+                            <input class="centrado inputValor1" data-val="true" id="Valor1_@Model.ValorCoeficienteMejora.Valor1CoeficienteMejora.Count()" name="model.ValorCoeficienteMejora.Valor1CoeficienteMejora" onclick="AgregarCampo(@Model.ValorCoeficienteMejora.Valor1CoeficienteMejora.Count())" style="width:100%; @margen" type="text" value="" maxlength="10" tabindex="@tabIndice2">
+
+                        </div>
+
+                        <div class="col-lg-4 col-xs-4 col-sm-4 col-md-4 BordeCuadro borde-izquierdo borde-superior borde-inferior" id="valor2" style="height: 100%; padding: 10px 10px;">
+
+                            @**********valor2 (opcional)*********@
+                            @{ margensegundo = ""; }
+                            @for (int i = 0; i < Model.ValorCoeficienteMejora.Valor2CoeficienteMejora.Count(); i++)
+                            {
+                                var tabIndice = i + 1;
+                                if (i > 0)
+                                {
+                                    margensegundo = "margin-top: 10px;";
+                                }
+                            <input class="centrado inputValor2" id="Valor2_@i" name="model.ValorCoeficienteMejora.Valor2CoeficienteMejora" style="width:100%; @margensegundo" type="text" value="@Model.ValorCoeficienteMejora.Valor2CoeficienteMejora[i]" maxlength="10" tabindex="@tabIndice">
+
+                            }
+                            <input class="centrado inputValor2" id="Valor2_@Model.ValorCoeficienteMejora.Valor2CoeficienteMejora.Count()" name="model.ValorCoeficienteMejora.Valor2CoeficienteMejora" style="width:100%; @margen" type="text" value="" maxlength="10" tabindex="@tabIndice2">
+
+                        </div>
+                        <div class="col-lg-4 col-xs-4 col-sm-4 col-md-4 BordeCuadro borde-izquierdo borde-superior borde-inferior borde-derecho" id="Coeficiente" style="text-align: end; height: 100%; padding: 10px 10px; ">
+
+                            @*********valor coeficiente**********@
+                            @{ margensegundo = ""; }
+                            @for (int i = 0; i < Model.ValorCoeficienteMejora.Valor3CoeficienteMejora.Count(); i++)
+                            {
+                                var tabIndice = i + 1;
+                                if (i > 0)
+                                {
+                                    margensegundo = "margin-top: 10px;";
+                                }
+                            <input class="centrado inputValor3" id="Valor3_@i" name="model.ValorCoeficienteMejora.Valor3CoeficienteMejora" style="width:100%; @margensegundo" type="text" value="@Model.ValorCoeficienteMejora.Valor3CoeficienteMejora[i]" maxlength="10" tabindex="@tabIndice">
+                            }
+                            <input class="centrado inputValor3" id="Valor3_@Model.ValorCoeficienteMejora.Valor3CoeficienteMejora.Count()" name="model.ValorCoeficienteMejora.Valor3CoeficienteMejora" style="width:100%; @margen" type="text" value="" maxlength="10" tabindex="@tabIndice2" onkeypress="VerificaAgregarCampo(event,this)">
+
+                        </div>
+
+                    </div>
+
+                    <div class="row " style="height:1em">
+
+                    </div>
+
+
+
+
+                </div>
+                @*BOTONES*@
+                <div class="modal-footer" id="Panel_Botones">
+                    @*<button id="btnConfirmar" class="botones" type="submit" style=" width:32px; margin-right:5px; padding:0 0 0 0;">*@
+                    <img title="Confirmar" id="btnGuardarValor" src="../Content/images/Valuacion/icons/blue/32/save.png" style="cursor: pointer; margin-right: 5px;">
+                    @*</button>*@
+
+                    <img id="btnCancelarValor" title="Cerrar" src="../Content/images/Valuacion/icons/blue/32/cancelar.png" style="cursor:pointer;">
+                </div>
+            </div>
+        </div>
+    }
+</div>
+<!-- Modal Advertencia-->
+<div class="modal fade" id="ModalAdvertencia" tabindex="-2" role="dialog" aria-labelledby="TituloAdvertencia" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <input type="hidden" id="TipoAdvertencia" value="" />
+                <h4 class="modal-title col-lg-11 col-xs-11 col-sm-11 col-md-11" id="TituloAdvertencia" style="color:#000000;">Titulo</h4>
+                <br />
+            </div>
+            <div class="modal-body">
+                <div id="MensajeAlerta" class="alert alert-warning alert-dismissible" role="alert">
+                    <strong>Atención!</strong><br />
+                    <p id="DescripcionAdvertencia">Está a punto de DESACTIVAR al usuario Perez, Juan <br />Está seguro de continuar?</p>
+                </div>
+            </div>
+            <div class="modal-footer" style="background-color:#ffffff;" id="Panel_Botones">
+                <img id="btnAdvertenciaOK" data-dismiss="modal" class="" title="Aceptar" src="../Content/images/Seguridad/icons/blue/32/checkbox.png" style="cursor:pointer;">&ensp;&ensp;
+                <img id="btnCancelarAdvertencia" data-dismiss="modal" title="Cancelar" src="../Content/images/Seguridad/icons/blue/32/cancelar.png" style="cursor:pointer;">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Información-->
+<div class="modal fade" id="ModalInfo" tabindex="-3" role="dialog" aria-labelledby="TituloInfo" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            btnCancelarInfo
+            <div class="modal-header">
+                <input type="hidden" id="TipoInformacion" value="" />
+                <h4 class="modal-title col-lg-11 col-xs-11 col-sm-11 col-md-11" id="TituloInfo" style="color:#000000;">Titulo</h4>
+                <br />
+            </div>
+            <div class="modal-body">
+                <div id="MensajeInfo" class="alert alert-success alert-dismissible" role="alert">
+                    <strong>Atención!</strong><br />
+                    <p id="DescripcionInfo">Descripcion de la informacion</p>
+                </div>
+            </div>
+            <div class="modal-footer" style="background-color:#ffffff;" id="Panel_Botones">
+                <img id="btnCancelarInfo" data-dismiss="modal" title="Cancelar" src="../Content/images/Seguridad/icons/blue/32/checkbox.png" style="cursor:pointer;">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section scripts
+{
+    <script src="../Scripts/jquery.dataTables.js"></script>
+    <script src="../Scripts/formValidation.min.js"></script>
+    <script src="../Scripts/bootstrapValidation.min.js"></script>
+    <script src="../Scripts/select2.js"></script>
+
+    <script src="~/Scripts/jquery.inputmask.js" type="text/javascript"></script>
+    <script src="~/Scripts/jquery.inputmask.regex.extensions.js" type="text/javascript"></script>
+    <script src="~/Scripts/jquery.inputmask.numeric.extensions.js" type="text/javascript"></script>
+
+    <script>
+        function AgregarCampo(Index) {
+
+            var indexTab = Index + 1;
+
+            $("#Valor1_" + Index).prop('onclick', null).off('click');
+
+
+            Index++;
+            indexTab++;
+
+            if ($("#valor2").hasClass('panel-desactivado')) {
+
+                var campoInput1 = '<input class="centrado inputValor1" data-val="true" id="Valor1_' + Index + '" name="model.ValorCoeficienteMejora.Valor1CoeficienteMejora" onclick="AgregarCampo(' + Index + ')" style="width:100%; margin-top: 10px;" type="text" value="" maxlength="10" tabindex = "' + indexTab + '">'
+                var campoInput2 = '<input class="centrado inputValor2" id="Valor2_' + Index + '" name="model.ValorCoeficienteMejora.Valor2CoeficienteMejora" style="width:100%; margin-top: 10px;" type="text" value="" maxlength="10" disabled="disabled" tabindex = "' + indexTab + '">'
+                var campoInput3 = '<input class="centrado inputValor3" id="Valor3_' + Index + '" name="model.ValorCoeficienteMejora.Valor3CoeficienteMejora" style="width:100%; margin-top: 10px;" type="text" value="" maxlength="10" tabindex = "' + indexTab + '" onkeypress="javascript:VerificaAgregarCampo(event,this)">'
+
+            } else {
+
+                var campoInput1 = '<input class="centrado inputValor1" data-val="true" id="Valor1_' + Index + '" name="model.ValorCoeficienteMejora.Valor1CoeficienteMejora" onclick="AgregarCampo(' + Index + ')" style="width:100%; margin-top: 10px;" type="text" value="" maxlength="10" tabindex = "' + indexTab + '">'
+                var campoInput2 = '<input class="centrado inputValor2" id="Valor2_' + Index + '" name="model.ValorCoeficienteMejora.Valor2CoeficienteMejora" style="width:100%; margin-top: 10px;" type="text" value="" maxlength="10" enable="enable" tabindex = "' + indexTab + '">'
+                var campoInput3 = '<input class="centrado inputValor3" id="Valor3_' + Index + '" name="model.ValorCoeficienteMejora.Valor3CoeficienteMejora" style="width:100%; margin-top: 10px;" type="text" value="" maxlength="10" tabindex = "' + indexTab + '" onkeypress="javascript:VerificaAgregarCampo(event,this)">'
+            }
+
+            $("#valor1").append(campoInput1);
+            $("#valor2").append(campoInput2);
+            $("#Coeficiente").append(campoInput3);
+
+            $("#Valor1_" + Index).inputmask('decimal', { digits: 2, rightAlign: false, radixPoint: '.' });
+            $("#Valor2_" + Index).inputmask('decimal', { digits: 2, rightAlign: false, radixPoint: '.' });
+            $("#Valor3_" + Index).inputmask('decimal', { digits: 3, rightAlign: false, radixPoint: '.' });
+
+        }
+
+
+        function VerificaAgregarCampo(event, obj) {
+
+            var char = event.which || event.keyCode;
+            var Cantidad = $("#Coeficiente input").length;
+
+            if (char == 9 && $(obj).prop("tabindex") == Cantidad) {
+
+                AgregarCampo($(obj).prop("tabindex") - 1);
+
+                $("#Valor3_" + (Cantidad - 1)).focus(); // no toma el foco en el valo1_
+
+            }
+
+        }
+
+
+        $(window).resize(ajustamodal);
+        function ajustamodal() {
+            var altura = $(window).height() - 190; //value corresponding to the modal heading + footer
+            $(".modal-body-scroll").css({ "height": altura, "overflow-y": "auto" });
+        }
+
+        $(document).ready(function () {
+            ajustamodal();
+
+            MostrarMensaje()
+
+            $('#myModal').modal('show');
+            //$("#myModal").draggable();
+
+
+            $("#btnCancelarValor").click(function () {
+
+                $("#form").attr("Action", "@Url.Action("MetadatoMejoraCoeficiente", "Valuacion")");
+                $("#form").submit();
+            });
+
+            $("#btnGuardarValor").click(function () {
+
+                var cantidad = $("#Coeficiente input").length;
+                for (var i = 0; i < cantidad; i++) {
+                    for (var j = (i + 1) ; j < cantidad; j++) {
+                        // && ($("#Valor3_" + i).val() == $("#Valor3_" + j).val())
+                        if (($("#Valor1_" + i).val() == $("#Valor1_" + j).val()) && ($("#Valor2_" + i).val() == $("#Valor2_" + j).val())) {
+
+                            var msj = "Las filas no pueden contener los mismos valores.<br>Por favor, ingréselos nuevamente.";
+                            $('#TituloAdvertencia').html("Advertencia - Grabar")
+                            $('#DescripcionAdvertencia').html(msj)
+                            $('#TipoAdvertencia').val('GrabarError')
+
+                            $('#ModalAdvertencia').modal('show');
+                            return false;
+                            //$('#ModalInfo2').modal('show');
+                            //$('#ModalInfo2').draggable();
+                            //return false;
+                        }
+
+                        if ((($("#Valor1_" + i).val() == "") || ($("#Valor2_" + i).val() == "") || ($("#Valor3_" + i).val() == "")) && !(($("#Valor1_" + i).val() == "") && ($("#Valor2_" + i).val() == "") && ($("#Valor3_" + i).val() == ""))) {
+
+                            var msj = "Todos los campos son obligatorios<br>Debe completarlos para poder grabar.";
+                            $('#TituloAdvertencia').html("Advertencia - Grabar")
+                            $('#DescripcionAdvertencia').html(msj)
+                            $('#TipoAdvertencia').val('GrabarError')
+
+                            $('#ModalAdvertencia').modal('show');
+                            return false;
+                            //$('#ModalAdvertencia').modal('show');
+                            //$('#ModalAdvertencia').draggable();
+                            //return false;
+                        }
+                    }
+                }
+                var msj = "Está a punto de GRABAR los valores para el coeficiente @Model.TipoCoeficienteTierra.IdTipoCoeficienteTierra<br>¿Está seguro de continuar?";
+                $('#TituloAdvertencia').html("Advertencia - Grabar")
+                $('#DescripcionAdvertencia').html(msj)
+                $('#TipoAdvertencia').val('Grabar')
+                $('#ModalAdvertencia').modal('show')
+
+                @*$("#form").attr("Action", "@Url.Action("ABMPadronTemporal", "Valuacion")");
+                $("#form").submit();*@
+
+            });
+
+            $("#btnAdvertenciaOK").click(function () {
+
+                if ($('#TipoAdvertencia').val() == 'Grabar') {
+                    $("#form").submit();
+                }
+
+            });
+            @*$("#btnCancelarInfo").click(function () {
+
+                if ($('#TipoInformacion').val() == 'GrabacionOK') {
+                    $("#form").attr("Action", "@Url.Action("ABMPadronTemporal", "Valuacion")")
+                    $("#form").submit();
+                }
+
+            });*@
+            $("#btnCerrarAdvertencia").click(function () {
+                //$('#myModal').modal('show');
+                $('#ModalAdvertencia').modal('hide');
+            });
+
+            $(".inputValor1").focus(function () { $(this).inputmask('decimal', { digits: 2, rightAlign: false, radixPoint: '.' }); });
+            $(".inputValor2").focus(function () { $(this).inputmask('decimal', { digits: 2, rightAlign: false, radixPoint: '.' }); });
+            $(".inputValor3").focus(function () { $(this).inputmask('decimal', { digits: 3, rightAlign: false, radixPoint: '.' }); });
+
+            $('#masOpciones').popover({
+                html: true,
+                content: '<div class="centrado" >' +
+                                '<button type="button" id="deshabilitarValor2" class="btnConBorde "   style="border-radius:0px; height:100%;  cursor:pointer;">Deshabilitar valor 2' +
+                                '</button>  ' +
+                                '<button type="button" id="habilitarValor2" class="btnConBorde "   style="border-radius:0px; height:100%;  cursor:pointer;">Habilitar valor 2' +
+                                '</button>  ' +
+                            '</div>'
+            });
+
+            $('#masOpciones').click(function () {
+
+                //$(".popover").css('margin-top', '-10px');
+                //$(".popover").css('background-color', '#093C57');
+                $(".popover").css('border-color', 'transparent');
+                $(".arrow").css('border-bottom-color', '#093C57');
+                if ($("#valor2").children().prop('disabled') == true) {
+                    $("#deshabilitarValor2").css('display', 'none');
+                    $("#habilitarValor2").css('display', '');
+                } else {
+                    $("#habilitarValor2").css('display', 'none');
+                    $("#deshabilitarValor2").css('display', '');
+                }
+
+                $("#deshabilitarValor2").click(function () {
+                    $("#valor2").children().prop('disabled', true);
+                    $("#valor2").addClass('panel-desactivado');
+                    $("#habilitarValor2").css('display', 'inline');
+                    $("#deshabilitarValor2").css('display', 'none');
+                    $("#valor2").removeClass('panel-activo');
+                    $('#masOpciones').popover('hide');
+                });
+
+                $("#habilitarValor2").click(function () {
+
+                    $("#valor2").children().prop('disabled', false);
+                    $("#valor2").removeClass('panel-desactivado');
+                    $("#valor2").addClass('panel-activo');
+                    $("#habilitarValor2").css('display', 'none');
+                    $("#deshabilitarValor2").css('display', 'inline');
+                    $('#masOpciones').popover('hide');
+
+                });
+
+            });
+
+
+        });
+
+        function MostrarMensaje() {
+
+            var MensajeEntrada = '@ViewBag.MensajeEntrada'
+            if (MensajeEntrada != null && MensajeEntrada != '') {
+                if (MensajeEntrada == "OK") {
+                    $('#TituloInfo').html("Información - Valores para Coeficiente de Mejora")
+                    $('#DescripcionInfo').html("Los datos han sido guardados satisfactoriamente.")
+                    $('#TipoInformacion').val('GrabacionOK')
+                    $("#ModalInfo").modal('show');
+                }
+
+            }
+        }
+
+    </script>
+}

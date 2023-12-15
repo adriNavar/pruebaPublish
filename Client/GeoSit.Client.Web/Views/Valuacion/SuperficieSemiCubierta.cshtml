@@ -1,0 +1,259 @@
+﻿@model GeoSit.Client.Web.Models.ValuacionModel
+@{
+    ViewBag.Title = "Coeficiente de Superficie Semi-Cubierta";
+    ViewBag.Description = "";
+    ViewBag.MensajeEntrada = "";
+
+}
+
+
+    <link href="../Content/valuacion.css" rel="stylesheet" />
+    <link href="../Content/jquery.jscrollpane.css" rel="stylesheet" />
+ 
+@using (Ajax.BeginForm("MetadatoMejora", "Valuacion", new { }, new AjaxOptions { }, new { id = "formVolver", role = "form", novalidate = "" }))
+{ @Html.AntiForgeryToken()
+}
+
+<div class="modal fade" id="myModal" tabindex="-100" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    @using (Ajax.BeginForm("GrabaSuperficieSemiCubierta", "Valuacion", new { ReturnUrl = ViewBag.ReturnUrl }, new AjaxOptions { }, new { id = "form", role = "form", novalidate = "" }))
+    {
+        @Html.AntiForgeryToken()
+//        ViewBag.MensajeEntrada = Model.Mensaje;
+        @Html.Hidden("model.IdFiltroParcela", Model.IdFiltroParcela)
+        @Html.Hidden("model.TipoValuacionId", Model.TipoValuacionId)
+        
+        
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header centrado" style="padding: 10px 0px 40px;">
+                    <h4 class="modal-title col-lg-12 col-xs-12 col-sm-12 col-md-12" id="myModalLabel">@ViewBag.Title</h4>
+                </div>
+                <div class="modal-body modal-body-scroll">
+                    <div class="row">
+                        <div class="col-lg-1 col-xs-1 col-sm-1 col-md-1"> </div>
+                        <div class="col-lg-10 col-xs-10 col-sm-10 col-md-10">
+                            <div class="col-lg-6 col-xs-6 col-sm-6 col-md-6 "></div>
+                            <div class="col-lg-6 col-xs-6 col-sm-6 col-md-6 centrado ">
+                                <label class="h4">Porcentaje</label>
+                            </div>
+                        </div>
+                        <div class="col-lg-1 col-xs-1 col-sm-1 col-md-1"> </div>
+                    </div>
+                    <div class="row ">
+                        <div class="col-lg-1 col-xs-1 col-sm-1 col-md-1"> </div>
+                        <div class="col-lg-10 col-xs-10 col-sm-10 col-md-10">
+
+                            <div class="col-lg-6 col-xs-6 col-sm-6 col-md-6 centrado borde-izquierdo borde-superior borde-inferior borde-derecho" id="supSemiCubierta" style="height:3em">
+                                <h5 >Superficie SemiCubierta</h5>
+                            </div>
+                            <div id="divPorcentajeCoeficiente" class="col-lg-6 col-xs-6 col-sm-6 col-md-6 centrado borde-derecho borde-superior borde-inferior" style="height:3em">
+                                @********Porcentaje del coeficiente********@
+                                @*@Html.TextBoxFor(model => model.SuperficieSemiCubiertaPorcentaje , new { @id = "PorcentajeCoeficiente", @class = "form-control centrado", @style = "margin-top: 1.5px" })*@
+                                @Html.TextBox("model.SuperficieSemiCubiertaPorcentaje",Model.SuperficieSemiCubiertaPorcentaje , new { @id = "PorcentajeCoeficiente", @class = "form-control centrado", @style = "margin-top: 1.5px" })
+                               
+                            </div>
+
+                        </div>
+                        <div class="col-lg-1 col-xs-1 col-sm-1 col-md-1"> </div>
+
+                    </div>
+                </div>
+
+                @*BOTONES*@
+                <div class="modal-footer" id="Panel_Botones">
+                    <img title="Confirmar" id="guardarPorcentaje" src="../Content/images/Valuacion/icons/blue/32/save.png" style="cursor: pointer; margin-right:10px;">
+                    <img id="btnCancelarPorcentaje" title="Cerrar" src="../Content/images/Valuacion/icons/blue/32/cancelar.png" style="cursor:pointer;">
+                </div>
+
+            </div>
+        </div>
+        <button type="submit" value="GRABAR" id="btnGrabar" style="display:none"></button>
+        <button type="submit" value="CANCELAR" id="btnCancelar" style="display:none"></button>
+    }
+</div>
+
+
+<!-- Modal Advertencia-->
+<div class="modal fade" id="ModalAdvertencia" tabindex="-2" role="dialog" aria-labelledby="TituloAdvertencia" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <input type="hidden" id="TipoAdvertencia" value="" />
+                <h4 class="modal-title col-lg-11 col-xs-11 col-sm-11 col-md-11" id="TituloAdvertencia" style="color:#000000;">Titulo</h4>
+                <br />
+            </div>
+            <div class="modal-body">
+                <div id="MensajeAlerta" class="alert alert-warning alert-dismissible" role="alert">
+                    <strong>Atención!</strong><br />
+                    <p id="DescripcionAdvertencia">Está a punto de DESACTIVAR al usuario Perez, Juan <br />Está seguro de continuar?</p>
+                </div>
+            </div>
+            <div class="modal-footer" style="background-color:#ffffff;" id="Panel_Botones">
+                <img id="btnAdvertenciaOK" data-dismiss="modal" class="" title="Aceptar" src="../Content/images/Seguridad/icons/blue/32/checkbox.png" style="cursor:pointer;">&ensp;&ensp;
+                <img id="btnCancelarAdvertencia" data-dismiss="modal" title="Cancelar" src="../Content/images/Seguridad/icons/blue/32/cancelar.png" style="cursor:pointer;">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Información-->
+<div class="modal fade" id="ModalInfo" tabindex="-3" role="dialog" aria-labelledby="TituloInfo" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <input type="hidden" id="TipoInformacion" value="" />
+                <h4 class="modal-title col-lg-11 col-xs-11 col-sm-11 col-md-11" id="TituloInfo" style="color:#000000;">Titulo</h4>
+                <br />
+            </div>
+            <div class="modal-body">
+                <div id="MensajeInfo" class="alert alert-success alert-dismissible" role="alert">
+                    <strong>Atención!</strong><br />
+                    <p id="DescripcionInfo">Descripcion de la informacion</p>
+                </div>
+            </div>
+            <div class="modal-footer" style="background-color:#ffffff;" id="Panel_Botones">
+                <img id="btnCancelarInfo" data-dismiss="modal" title="Cancelar" src="../Content/images/Seguridad/icons/blue/32/checkbox.png" style="cursor:pointer;">
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    <script src="~/Scripts/jquery.inputmask.js" type="text/javascript"></script>
+    <script src="~/Scripts/jquery.inputmask.regex.extensions.js" type="text/javascript"></script>
+    <script src="~/Scripts/jquery.inputmask.numeric.extensions.js" type="text/javascript"></script>
+    <script src="~/Scripts/jquery.form.js"></script>
+
+    <script>
+
+        $(window).resize(ajustamodal);
+        function ajustamodal() {
+            var altura = $(window).height() - 190; //value corresponding to the modal heading + footer
+            $(".modal-body-scroll").css({ "height": altura, "overflow-y": "auto" });
+        }
+
+        $(document).ready(function () {
+            ajustamodal();
+
+            //VALIDACIONES
+
+            //$('.modal-body')
+            //    .bootstrapValidator({
+            //        //excluded: ':disabled',
+            //        framework: 'bootstrap',
+            //        feedbackIcons: {
+            //            valid: 'glyphicon glyphicon-ok',
+            //            invalid: 'glyphicon glyphicon-remove',
+            //            validating: 'glyphicon glyphicon-refresh'
+            //        },
+            //        fields: {
+            //            "SuperficieSemiCubierta.SuperficieSemiCubiertaPorcentaje": {
+            //                validators: {
+            //                    notEmpty: {
+            //                        message: 'El Porcentaje es obligatorio.'
+            //                    }
+            //                }
+            //            }
+            //        },
+
+            //    })
+            //.on('success.field.fv', function (e, data) {
+            //    if (data.fv.getInvalidFields().length > 0) {    // There is invalid field
+            //        $("#guardarPorcentaje").submit();
+            //    }
+            //});
+
+            //FIN DE VALIDACIONES
+
+            MostrarMensaje()
+
+            $('#myModal').modal('show');
+
+            $("#btnCancelarPorcentaje").click(function () {
+
+                $("#form").attr("Action", "@Url.Action("ABMPadronTemporal", "Valuacion")");
+                $("#btnCancelar").click();
+            });
+
+            //$("#PorcentajeCoeficiente").inputmask('Regex', { regex: "^[1-9]?[0-9]{1}$|^100$" });
+            $("#PorcentajeCoeficiente").inputmask('decimal', { min:0 , max:100,digits: 2,  rightAlign: false, radixPoint: '.' });
+
+
+            $("#guardarPorcentaje").click(function () {
+
+                if ($("#PorcentajeCoeficiente").val().length > 0) {
+
+           
+                    var msj = "Desea utilizar " + $("#PorcentajeCoeficiente").val() +"% para las Superficies de Mejora Semi Cubiertas  <br>¿Está seguro de continuar?";
+                    $('#TituloAdvertencia').html("Advertencia - Grabar")
+                    $('#DescripcionAdvertencia').html(msj)
+                    $('#TipoAdvertencia').val('Grabar')
+                    $('#ModalAdvertencia').modal('show')
+
+                } else {
+
+                    $('#divPorcentajeCoeficiente').addClass('has-error')
+                    $('.form-control-feedback').css('padding-top', '5px');
+
+
+                }
+            });
+
+
+            var primerIngreso = 0;
+
+       
+
+            $("#btnAdvertenciaOK").click(function () {
+
+                if ($('#TipoAdvertencia').val() == 'Grabar') {
+                    $("#form").attr("Action", "@Url.Action("GrabaSuperficieSemiCubierta", "Valuacion")");
+                    $("#form").submit();
+                }
+
+
+            });
+            $("#form").ajaxForm({
+                beforeSubmit: function (arr, $form, options) {
+                    showLoading();
+                    $("#myModal").modal('hide');
+                    return true; //it will continue your submission.
+                },
+                success: function (data) {
+                    //levantar modal
+                    $("#contenido").empty();
+                    $("#contenido").html(data);
+
+                },
+                error: function () {
+                    alert("error");
+                }
+            });
+
+            hideLoading();
+
+            $("#form").submit(function (evt) {
+                /*evita el doble submit*/
+                $('#myModal').modal('hide');
+                evt.preventDefault();
+                evt.stopImmediatePropagation();
+                return false;
+            });
+
+        });
+
+        function MostrarMensaje() {
+
+            var MensajeEntrada = '@ViewBag.MensajeEntrada'
+            if (MensajeEntrada != null && MensajeEntrada != '') {
+                if (MensajeEntrada == "OK") {
+                    $('#TituloInfo').html("Información - Rangos para Coeficiente")
+                    $('#DescripcionInfo').html("Los datos han sido guardados satisfactoriamente.")
+                    $('#TipoInformacion').val('GrabacionOK')
+                    $("#ModalInfo").modal('show');
+                }
+
+            }
+        }
+
+    </script>

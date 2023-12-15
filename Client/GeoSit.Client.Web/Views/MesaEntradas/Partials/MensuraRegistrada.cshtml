@@ -1,0 +1,113 @@
+﻿@using GeoSit.Data.BusinessEntities.Common
+@model GeoSit.Client.Web.ViewModels.MensuraRegistrada
+
+@Html.Partial("Partials/ObjetoEspecificoBaseView", new GeoSit.Client.Web.ViewModels.ObjetoEspecificoViewModel { Guid = Model.Guid, IdTramiteEntrada = Model.IdTramiteEntrada })
+
+<label style="width: 100%; color: #a3a99b; font-style: italic;">
+    Mensura Registrada
+</label>
+
+<div class="form-group">
+    @Html.LabelFor(m => m.Mensura, new { @class = "col-md-4 control-label text-muted" })
+    <div class="col-xs-7">
+        <div class="input-group">
+            @Html.TextBoxFor(m => m.Mensura, new { @class = "form-control visibleArbolObjetos", @readonly = "true" })
+            @Html.HiddenFor(m => m.IdMensura, new { @class = "form-control", Id = "hdnIdMensura", @readonly = "true" })
+            <div class="input-group-addon cursor-pointer" id="mensura-search">
+                <span data-placement="bottom" title="Buscar Mensura" class="fa-lg fa fa-search black cursor-pointer @((bool)ViewData["habilitarBuscadorMensura"]?string.Empty: "boton-deshabilitado")"
+                      aria-hidden="true" id="btn_MensuraSearch"></span>
+            </div>
+            <div class="input-group-addon cursor-pointer" id="mensura-download">
+                <span data-placement="bottom" title="Descargar Mensura" class="fa fa-external-link"
+                      aria-hidden="true" id="btn_MensuraDoc"></span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(m => m.TipoMensura, "Objeto", new { @class = "col-md-4 control-label text-muted", id = "TipoMensuraTitulo" })
+    <div class="col-xs-7">
+        <div class="input-group">
+            @Html.TextAreaFor(m => m.TipoMensura, new { @class = "form-control", @readonly = "true", style = "width: 200px; height: auto; border:none; outline:none; background: transparent; resize: vertical; overflow: hidden;" })
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function () {
+
+        @* TODO: Esta funcion debe eliminarse cuando funcione jquery.validation.unobtrusive *@
+
+        $("#divEdicionObjetoContainer").off("ModificarObjeto").on("ModificarObjeto",()=>$("#btn_MensuraSearch").removeClass('boton-deshabilitado'));
+
+        $.validator.addMethod(
+            "regex",
+            function (value, element, regexp) {
+                var re = new RegExp(regexp);
+                return this.optional(element) || re.test(value);
+            }
+        );
+
+        $("#divEdicionObjetoContainer").validate({
+            rules: {
+                Mensura: {
+                    required: true,
+                    //regex: "^[0-9]{4}[-][A-Z]{1}"
+                }
+            },
+            messages: {
+                Mensura: {
+                    required: "El campo es requerido",
+                    //regex: "Debe tener cargados datos con el siguiente formato: 9999-X"
+                }
+            }
+        });
+
+        $("#btn_MensuraSearch").click(function () {
+            buscarUF()
+                .then(function (seleccion) {
+                    $.get(BASE_URL + "MesaEntradas/GetTipoMensura?idMensura=" + seleccion[1],
+                        (tipo) => {
+                            document.getElementById("Mensura").value = seleccion[0];
+                            document.getElementById("hdnIdMensura").value = seleccion[1];
+                            document.getElementById("TipoMensura").value = tipo;
+                            $("#Mensura").valid();
+                        });
+
+                })
+                .catch(function (err) {
+                    console.log(err);
+                });
+        });
+
+        $("#btn_MensuraDoc").click(verDocumento);
+    });
+
+    function buscarUF() {
+        return new Promise(function (resolve) {
+            var data = { tipos: BuscadorTipos.Mensuras, multiSelect: false, verAgregar: false, titulo: 'Buscar Mensura Registrada', campos: ['Nombre'] };
+            $("#buscador-container").load(BASE_URL + "BuscadorGenerico", data, function () {
+                $(".modal", this).one('hidden.bs.modal', function () {
+                    $(window).off('seleccionAceptada');
+                    $("#buscador-container").empty();
+                });
+                $(window).one("seleccionAceptada", function (evt) {
+                    if (evt.seleccion) {
+                        resolve(evt.seleccion.slice(1));
+                    } else {
+                        resolve();
+                    }
+                });
+            });
+        });
+    }
+
+    function verDocumento() {
+        showLoading();
+        var id = $("#hdnIdMensura").val();
+        $('#personas-externo-container').load(BASE_URL + "MesaEntradas/GetDocumentoMensura/" + id);
+    }
+
+</script>

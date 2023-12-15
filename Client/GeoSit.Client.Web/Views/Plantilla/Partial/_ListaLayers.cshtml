@@ -1,0 +1,30 @@
+﻿@using Newtonsoft.Json
+@model IEnumerable<GeoSit.Data.BusinessEntities.ModuloPloteo.Layer>
+
+@foreach (var p in Model)
+{
+    <tr>
+        <td class="hide">@p.IdLayer</td>
+        <td>@p.Nombre</td>
+        <td>@p.Componente.Nombre</td>
+        <td>@switch (p.Categoria)
+            {
+                case 0:
+                    @:Normal
+                    break;
+                case 1:
+                    @:Principal
+                break;
+                case 2:
+                    @:Secundaria
+                break;
+           }
+        </td>
+        <td>@p.Orden</td>
+    </tr>
+
+}
+
+<script type="text/javascript">
+    var modelLayers = @Html.Raw(JsonConvert.SerializeObject(Model));
+</script>

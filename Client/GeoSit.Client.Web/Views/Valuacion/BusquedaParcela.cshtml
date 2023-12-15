@@ -1,0 +1,211 @@
+﻿@model GeoSit.Client.Web.Models.ValuacionModel
+@using GeoSit.Client.Web.Controllers;
+
+@{
+    ViewBag.Title = "Búsqueda de Parcela";
+
+    ViewBag.MensajeEntrada = "";
+
+}
+    <link href="~/Content/jquery.jscrollpane.css" rel="stylesheet" />
+    <link href="~/Content/progress_bar.css" rel="stylesheet" />
+    <link href="~/Content/dataTables.bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/formValidation.min.css" rel="stylesheet" />
+    <link href="~/Content/select2-bootstrap.css" rel="stylesheet" />
+    <link href="~/Scripts/jstree/dist/themes/default/style.css" rel="stylesheet" />
+    <link href="~/Content/valuacion.css" rel="stylesheet" />
+
+<div class="modal fade" id="myModal" tabindex="-100" role="dialog"  aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+    @using (Ajax.BeginForm("BuscarParcelas", "Valuacion", new { ReturnUrl = ViewBag.ReturnUrl }, new AjaxOptions { }, new { id = "form", role = "form", novalidate = "", autocomplete = "off" }))
+    {  @Html.AntiForgeryToken()
+
+        <div class="modal-dialog ">
+            <div class="modal-content">
+                <div class="modal-header centrado" style="padding: 20px 0 40px;">
+                    <h4 class="modal-title col-lg-12 col-xs-12 col-sm-12 col-md-12" id="myModalLabel" style="color:#000000">@ViewBag.Title</h4>
+                </div>
+                <div class="modal-body modal-body-scroll" style="color: #000000">
+
+                    <div class="form-group" style="height:30px; padding:0 0 0 0">
+                        <div class="escala_fuente_11 col-lg-3 col-xs-3 col-sm-3 col-md-3 text-right">
+                            <u>Tipo de Parcela</u> :
+                        </div>
+                        <div class="escala_fuente_11 col-lg-9 col-xs-9 col-sm-9 col-md-9">
+                            @Html.DropDownList("Parcela.Tipo_Parcela", (SelectList)ViewBag.TipoParcela, "", new { @class = "form-control sin-padding centrado", @name = "Parcela.Tipo_Parcela" })
+                        </div>
+                    </div>
+                    <div class="form-group" style="height:30px; padding:0 0 0 0">
+                        <div class="escala_fuente_11 col-lg-3 col-xs-3 col-sm-3 col-md-3 text-right">
+                            <u>ID Inmueble</u> :
+                        </div>
+                        <div class="escala_fuente_11 col-lg-9 col-xs-9 col-sm-9 col-md-9">
+                            @Html.TextBoxFor(model => model.Parcela.Id_Inmueble, new { @id = "Id_Inmueble", @class = "form-control centrado", @style = "width:150px;", @value = "" })
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="height:30px; padding:0 0 0 0">
+                        <div class="escala_fuente_11 col-lg-3 col-xs-3 col-sm-3 col-md-3 text-right">
+                            <u>Partida</u> :
+                        </div>
+                        <div class="escala_fuente_11 col-lg-9 col-xs-9 col-sm-9 col-md-9">
+                            @Html.TextBoxFor(model => model.Parcela.Partida, new { @id = "Partida", @class = "form-control centrado", @style = "width:150px;", @value = "" })
+                        </div>
+                    </div>
+
+
+                    @*NOMENCLATURA*@
+                    <div class="panel panel-primary" style="margin-bottom:0;">
+                        <div class="panel-heading">
+                            Nomenclatura
+                        </div>
+                        <div class="panel-body" style="color:black;" id="Panel_Nomenclatura">
+
+                            <div class="form-group" style="height:30px; padding:0 0 0 0">
+                                <div class="escala_fuente_11 col-lg-4 col-xs-4 col-sm-4 col-md-4 text-right">
+                                    <u>Nomenclatura</u>:
+                                </div>
+                                <div class="escala_fuente_11 col-lg-4 col-xs-4 col-sm-4 col-md-4" style="padding: 0 0 0 0">
+                                    @Html.TextBoxFor(model => model.Parcela.Nomenclatura, new { @id = "Nomenclarura", @class = "form-control centrado", @style = "width:100%;", @value = "" })
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                    @*NOMENCLATURA*@
+
+                    <br />
+
+                    @*TITULAR*@
+                    <div class="panel panel-primary" style="margin-bottom:0;">
+                        <div class="panel-heading">
+                            Titular
+                        </div>
+                        <div class="panel-body" style="color:black;" id="Panel_Titular">
+
+                            <div class="form-group" style="padding:0 0 0 0">
+                                <div class="escala_fuente_11 col-lg-2 col-xs-2 col-sm-2 col-md-2 text-right">
+                                    <u>Nombre</u>:
+                                </div>
+                                <div class="escala_fuente_11 col-lg-4 col-xs-4 col-sm-4 col-md-4" style="padding: 0 0 0 0">
+                                    @Html.TextBoxFor(model => model.Parcela.Nombre, new { @id = "Nombre", @class = "form-control centrado", @style = "width:100%;", @value = "" })
+                                </div>
+                                <div class="escala_fuente_11 col-lg-2 col-xs-2 col-sm-2 col-md-2 text-right">
+                                    <u>Apellido</u>:
+                                </div>
+                                <div class="escala_fuente_11 col-lg-4 col-xs-4 col-sm-4 col-md-4" style="padding: 0 0 0 0">
+                                    @Html.TextBoxFor(model => model.Parcela.Apellido, new { @id = "Apellido", @class = "form-control centrado", @style = "width:100%;", @value = "" })
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    @*TITULAR*@
+
+                    @*<div class="form-group">
+                            <div class="panel-body escala_fuente_11 col-lg-3 col-xs-3 col-sm-3 col-md-3">
+                                <u>Tipo de Parcela</u>:
+                            </div>
+                            <div class="panel-body escala_fuente_11 col-lg-4 col-xs-4 col-sm-4 col-md-4">
+                                <select class="form-control sin-padding centrado" id="TipoParcela">
+                                    <option value="1">Urbana</option>
+                                    <option value="2">Suburbana</option>
+                                    <option value="3">Rural</option>
+                                </select>
+                            </div>
+                            <div class="panel-body escala_fuente_11 col-lg-5 col-xs-5 col-sm-5 col-md-5"></div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="panel-body escala_fuente_11 col-lg-3 col-xs-3 col-sm-3 col-md-3">
+                                * Nombres:
+                            </div>
+                            <div class="panel-body escala_fuente_11 col-lg-4 col-xs-4 col-sm-4 col-md-4">
+                                @Html.TextBoxFor(model => model.SuperficieSemiCubiertaPorcentaje, new { @id = "PorcentajeCoeficiente", @class = "form-control centrado", @style = "width:100%;", @value = "" })
+                            </div>
+                            <div class="panel-body escala_fuente_11 col-lg-5 col-xs-5 col-sm-5 col-md-5"></div>
+                        </div>*@
+
+
+                </div>
+                @*BOTONES*@
+                <div class="modal-footer color-fondo-footer" style="background-color:#ffffff;" id="Panel_Botones">
+                    <button type="submit" class="btn boton-buscar" id="btnBuscar"></button>&ensp;&ensp;
+                    <img id="btnCancelar" title="Cancelar" src="~/Content/images/Seguridad/icons/blue/32/cancelar.png" style="cursor:pointer;">
+                </div>
+
+            </div>
+        </div>
+    }
+</div>
+
+
+    <script src="~/Scripts/jquery.dataTables.js"></script>
+    <script src="~/Scripts/formValidation.min.js"></script>
+    <script src="~/Scripts/bootstrapValidation.min.js"></script>
+    <script src="~/Scripts/select2.js"></script>
+    <script src="~/Scripts/jquery-sortable.js"></script>
+    <script src="~/Scripts/jstree/dist/jstree.js"></script>
+    <script src="~/Scripts/jquery.form.js"></script>
+
+    <script>
+        var EstadoTreeFunciones = false;
+        var EstadoTreeComponentes = false;
+
+
+        $(window).keydown(function (event) {
+            if (event.keyCode == 13) {
+                event.preventDefault();
+                return false;
+            }
+        });
+
+        $(window).resize(ajustamodal);
+        function ajustamodal() {
+            var altura = $(window).height() - 190; //value corresponding to the modal heading + footer
+            $(".modal-body-scroll").css({ "height": altura, "overflow-y": "auto" });
+        }
+
+
+        $(document).ready(function () {
+
+            hideLoading();
+            $(".modal-backdrop").remove();
+            ajustamodal();
+            $('#myModal').modal('show');
+
+
+            $("#btnCancelar").click(function () {
+                $("#myModal").modal('hide');
+                //window.location.href = "@Url.Action("index", "Home")"
+            });
+
+            $("#form").ajaxForm({
+                beforeSubmit: function (arr, $form, options) {
+                    showLoading();
+                    $("#myModal").modal('hide');
+                    return true; //it will continue your submission.
+                },
+                success: function (data) {
+                    //levantar modal
+                    $("#contenido").empty();
+                    $("#contenido").html(data);
+
+                },
+                error: function () {
+                    alert("error");
+                }
+            });
+
+            $("#form").submit(function (evt) {
+                /*evita el doble submit*/
+                evt.preventDefault();
+                evt.stopImmediatePropagation();
+                return false;
+            });
+        })
+    </script>
+}
+

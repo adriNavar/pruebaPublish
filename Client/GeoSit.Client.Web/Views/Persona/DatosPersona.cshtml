@@ -1,0 +1,262 @@
+﻿@model GeoSit.Client.Web.Models.PersonaModels
+
+@{
+    ViewBag.Title = "Administración de Personas";
+   
+    ViewBag.PersonaId = 0;
+    ViewBag.TipoDocId = 0;
+    ViewBag.NroDocumento = "";
+    ViewBag.TipoPersonaId = 0;
+    ViewBag.NombreCompleto = "";
+    ViewBag.Nombre = "";
+    ViewBag.Apellido = "";
+    ViewBag.UsuarioAltaId = 0;
+    ViewBag.FechaAlta = "";
+    ViewBag.UsuarioModifId = 0;
+    ViewBag.FechaModif = "";
+    ViewBag.UsuarioBajaId = 0;
+    ViewBag.FechaBaja = "";
+    ViewBag.Sexo = 0;
+    ViewBag.EstadoCivil = 0;
+    ViewBag.Nacionalidad = 0;
+    ViewBag.Telefono = "";
+    ViewBag.Email = "";
+    ViewBag.ModoEdicion = "false";
+}
+
+<link href="~/Content/dataTables.bootstrap.css" rel="stylesheet" />
+<link href="~/Content/abmPersonas.css" rel="stylesheet" />
+
+<div class="modal theme_new fade mainwnd" id="modal-window-persona" tabindex="-1" data-backdrop="static" role="dialog" aria-labelledby="modal-windowLabel" aria-hidden="true">
+    <div class="modal-dialog" style="width: 85%; max-width: none;">
+        <div class="modal-content" style="width: 100%;">
+            <input type="hidden" id="editarLocal" name="editarLocal" value="" />
+            <input type="hidden" id="editarLocalIndex" name="editarLocalIndex" value="" />
+            <div id="scroll-content-persona" class="scroll-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="lblModalDomicilio">@ViewBag.Title</h3>
+                    <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+                </div>
+                @*Fin de modal-header*@
+                <div class="modal-body persona-body">
+                    @InputExtensions.Hidden(Html, "PersonaId", ViewBag.DatosPersona.PersonaId)
+                    @InputExtensions.Hidden(Html, "NombreCompleto", ViewBag.DatosPersona.NombreCompleto)
+                    @InputExtensions.Hidden(Html, "NroDocumento", ViewBag.DatosPersona.NroDocumento)
+                    <div id="body-content-persona" class="persona-content body-content">
+                        <div class="row">
+                            @*Inicio de listado*@
+                            <div class="panel panel-group persona-listado col-xs-4" id="panel_listado_personas">
+                                <div class='panel-heading bg-primary main-heading' role='tab' id='headingListado'>
+                                    <a data-toggle='collapse' aria-expanded='true'>
+                                        <div class='panel-title'>
+                                            Lista de Personas
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="panel-body" id="Panel_Grilla_Personas">
+                                    <div class="col-xs-11">
+                                        <h5>Filtrar</h5>
+
+                                        <div class="input-group">
+                                            <input type="search" value="" placeholder="Texto a buscar..." class="form-control search-filter" id="txtFiltroPersona" onkeypress=" runSearch(event) ">
+                                            <div class="input-group-addon cursor-pointer">
+                                                <span aria-hidden="true" data-placement="bottom" title="Borrar" data-original-title="Borrar" id="borrarBusqueda" class="fa-lg fa fa-trash black cursor-pointer"></span>
+                                                <span aria-hidden="true" data-placement="bottom" title="Buscar" data-original-title="Buscar" id="btnSearch" class="fa-lg fa fa-search black cursor-pointer"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="resultados col-xs-11">
+                                        <table id="Grilla_personas" class="table table-striped table-bordered table-responsive">
+                                            <thead>
+                                                <tr>
+                                                    <th class="hide"></th>
+                                                    <th> Nombre</th>
+                                                    <th> Documento</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                    @*<div class="resultados col-xs-1" id="persona-controls">
+                    <dl>
+                        <dt><span id="btn_Agregar" class="fa fa-plus-circle fa-2x black cursor-pointer" aria-hidden="true"></span></dt>
+                        <dt><span id="btn_Eliminar" class="fa fa-minus-circle fa-2x black cursor-pointer boton-deshabilitado" aria-hidden="true"></span></dt>
+                        <dt><span id="btn_Modificar" class="fa fa-pencil fa-2x black cursor-pointer boton-deshabilitado" aria-hidden="true"></span></dt>
+                    </dl>
+                </div>*@
+                                </div>
+                            </div>
+                            @*Fin de listado*@
+
+                            @*Inicio de accordion*@
+                            
+                                
+                        <div class="panel-group persona-datos" id="accordion-persona">
+                            @*Inicio Datos Persona*@
+                            <div class="col-md-4">
+                                @using (Ajax.BeginForm("Save_DatosPersona", "Persona", new AjaxOptions { OnBegin = "return ValidarDatos()" }, new { id = "form", role = "form", novalidate = "", enctype = "multipart/form-data" }))
+                                {
+                                    @Html.AntiForgeryToken()
+
+                                    <div id="div_informacion_persona" style="margin-bottom: 3px; margin-top: 0;">
+                                        <div class='panel-heading bg-primary main-heading panel-deshabilitado' role='region' id='headingPersonaInfo'>
+                                            <a data-toggle='collapse' data-parent='#accordion-persona' href='#collapsePersonaInfo' aria-expanded='false'
+                                               aria-controls='collapsePersonaInfo' class="collapsed">
+                                                <div class='panel-title'>
+                                                    Detalle de la Información
+                                                    <i class="fa"></i>
+                                                </div>
+                                            </a>
+                                        </div>
+                                        <div id='collapsePersonaInfo' class='panel-collapse collapse main-collapse' aria-labelledby='headingPersonaInfo'>
+                                            <div class="panel-body">
+                                                @Html.Hidden("ModoEdicion", "false")
+                                                @Html.Hidden("ResultadoBusqueda", "false")
+                                                @Html.Hidden("EstadoOperacion", "Consulta")
+                                                @Html.HiddenFor(model => model.DatosPersona.PersonaId, new { @Value = ViewBag.PersonaId })
+                                                @Html.HiddenFor(model => model.DatosPersona.FechaBaja, new { @Value = ViewBag.FechaBaja })
+                                                @Html.HiddenFor(model => model.DatosPersona.UsuarioBajaId, new { @Value = ViewBag.UsuarioBajaId })
+                                                @Html.HiddenFor(model => model.DatosPersona.FechaAlta, new { @Value = ViewBag.FechaAlta })
+                                                @Html.HiddenFor(model => model.DatosPersona.UsuarioAltaId, new { @Value = ViewBag.UsuarioAltaId })
+                                                @Html.HiddenFor(model => model.DatosPersona.FechaModif, new { @Value = ViewBag.FechaModif })
+                                                @Html.HiddenFor(model => model.DatosPersona.UsuarioModifId, new { @Value = ViewBag.UsuarioModifId })
+                                                <div class="form-horizontal">
+                                                    <div class="form-group">
+                                                        <label class="col-sm-4 control-label">Tipo de Persona</label>
+                                                        <div class="col-sm-8">
+                                                            @Html.DropDownListFor(model => model.DatosPersona.TipoPersonaId, (IEnumerable<SelectListItem>)ViewData["tipospersonas"], new { @class = "form-control", @Value = ViewBag.TipoPersonaId, onchange = "tipopersonaListChange(this.value)", onselectedindexchanged = "tipopersonaListChange(this.value)", disabled = "disabled" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="col-sm-4 control-label">Tipo y Nº de * Documento</label>
+                                                        <div class="col-sm-4">
+                                                            @Html.DropDownListFor(model => model.DatosPersona.TipoDocId, (IEnumerable<SelectListItem>)ViewData["tiposdocumentos"], new { @class = "form-control", @Value = ViewBag.TipoDocId, disabled = "disabled" })
+                                                        </div>
+                                                        <div class="col-sm-4">
+                                                            @Html.TextBoxFor(model => model.DatosPersona.NroDocumento, new { @class = "form-control", @Value = ViewBag.NroDocumento, disabled = "disabled", @maxlength = "20" })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @*Fin Datos Persona*@
+                                    @*Inicio Domicilio*@
+                                    
+                            <div id="div_domicilio" style="margin-bottom: 3px; margin-top: 0;">
+                                <div class="col-md-8">
+                                    <div class='panel-heading bg-primary main-heading panel-deshabilitado' role='region' id='headingPersonaDomicilio'>
+                                        <a data-toggle='collapse' data-parent='#accordion-persona' href='#collapsePersonaDomicilio' aria-expanded='false'
+                                           aria-controls='collapsePersonaDomicilio' class="collapsed">
+                                            <div class='panel-title' id="panel_titulo_domicilio">
+                                                Domicilio *
+                                                <i class="fa"></i>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div id='collapsePersonaDomicilio' class='panel-collapse collapse main-collapse' aria-labelledby='headingPersonaDomicilio'>
+                                        <div class="panel-body">
+                                            @Html.Hidden("ImputXLDomicilios", null, new { })
+                                            @Html.DropDownList("DomiTiposId", (IEnumerable<SelectListItem>)ViewData["tiposdomicilio"], new { @class = "form-control", @style = "display: none;" })
+                                            <div class="col-xs-11">
+
+                                                <table id="Domicilios" class="table table-striped table-bordered table-responsive">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="hide"></th>
+                                                            <th class="hide"></th>
+                                                            <th class="hide"></th>
+                                                            <th>Tipo</th>
+                                                            <th>Domicilio</th>
+                                                            <th>C.P.</th>
+                                                            <th>Localidad</th>
+                                                            <th class="hide"></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>
+                                            </div>
+
+                                            <div class="col-xs-1" id="plantilla-controls-domicilio">
+                                                <dl>
+                                                    <dt><span id="btn_Agregar_domicilio" class="fa fa-plus-circle fa-2x black cursor-pointer" aria-hidden="true" style="display: none"></span></dt>
+                                                    <dt><span id="btn_Eliminar_domicilio" class="fa fa-minus-circle fa-2x black cursor-pointer boton-deshabilitado" aria-hidden="true" style="display: none"></span></dt>
+                                                    <dt><span id="btn_Modificar_domicilio" class="fa fa-pencil fa-2x black cursor-pointer boton-deshabilitado" aria-hidden="true" style="display: none"></span></dt>
+                                                </dl>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                                    @*Fin Domicilio*@
+                                }
+                            </div>
+                            @*Fin accordion*@
+                        </div>
+                           
+                        </div>
+                </div>
+                @*Fin de modal-body*@
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Advertencia-->
+<div class="modal theme_new mensaje fade" id="ModalAdvertenciaPersona" tabindex="-2" role="dialog" aria-labelledby="TituloAdvertenciaPersona" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="TituloAdvertenciaPersona">Titulo</h3>
+                <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" id="btnCancelarAdvertenciaPersona" title="Cerrar"></span>
+            </div>
+            <div class="modal-body">
+                <div id="MensajeAlertaPersona" class="alert alert-warning alert-dismissible" role="alert">
+                    <p id="DescripcionAdvertenciaPersona">Está a punto de DAR DE BAJA a la persona<br />Está seguro de continuar?</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-xs-4 pull-right">
+                    <span aria-hidden="true" data-placement="right" title="Guardar" data-original-title="Guardar" id="btnGrabarAdvertenciaPersona" class="fa fa-check-circle light-blue fa-3x cursor-pointer"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+            </div>
+       
+ 
+
+
+<!-- Modal Información-->
+<div class="modal fade theme_new mensaje" id="ModalInfoPersona" tabindex="-3" role="dialog" aria-labelledby="TituloInfoPersona" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="TituloInfoPersona">Titulo</h3>
+                <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+            </div>
+            <div class="modal-body">
+                <div id="MensajeInfoPersona" class="alert alert-warning alert-dismissible" role="alert">
+                    <p id="DescripcionInfoPersona">Descripcion de la informacion</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="persona-externo"></div>
+@if (((bool?)ViewData["esAltaBuscador"]).GetValueOrDefault())
+{
+    <script>
+        function personaGuardada(persona) {
+            console.log(persona);
+            $(window).trigger({ type: "personaAgregada", persona: persona });
+            $("#modal-window-persona").modal('hide');
+        }
+    </script>
+}
+
+<script src="~/Scripts/jquery.form.js"></script>
+<script src="~/Scripts/jquery.dataTables.js"></script>
+<script src="~/Scripts/personas/main.js"></script>

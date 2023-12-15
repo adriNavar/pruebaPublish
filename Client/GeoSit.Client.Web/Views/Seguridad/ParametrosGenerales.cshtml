@@ -1,0 +1,360 @@
+﻿@model Dictionary<string, string>
+@using GeoSit.Client.Web.Controllers;
+@using System.Linq;
+@{
+    ViewBag.Title = "Parámetros Generales";
+}
+<link href="~/Content/SliderBar/jquery.range.css" rel="stylesheet">
+<link href="~/Content/seguridad_new.css" rel="stylesheet" />
+<link href="~/Content/parametrosGenerales.css" rel="stylesheet">
+
+@*Modal Contenido*@
+<div class="modal fade theme_new seguridad" id="myModalParamsGenerales" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id="scroll-content-params-generales" class="scroll-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">@ViewBag.Title</h3>
+                    <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+                </div>
+                <div class="modal-body params-generales-body">
+                    @using (Ajax.BeginForm("SetParametrosGenerales_Save", "Seguridad", new { }, new AjaxOptions { }, new { id = "form", role = "form", novalidate = "" }))
+                    {@Html.AntiForgeryToken()
+                    <div id="params-generales-content" class="body-content">
+                        <div class="panel-group accordion" id="accordion-params-generales" style="margin-bottom:0;">
+                            <div class="accordion-section">
+                                <div class='panel-heading bg-primary main-heading' role='region' id='headingLimitesAcceso'>
+                                    <a data-toggle='collapse' data-parent='#accordion-params-generales' href='#collapseLimitesAcceso' aria-expanded='false'
+                                       aria-controls='collapseLimitesAcceso'>
+                                        <div class='panel-title'>
+                                            Configuraciones de L&iacute;mites de Acceso
+                                            <i class="fa"></i>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div id='collapseLimitesAcceso' class='panel-collapse collapse in main-collapse' aria-expanded='false' aria-labelledby='headingLimitesAcceso'>
+                                    <div class="panel-body">
+                                        <div class="container">
+                                            <div class="row">
+                                                <span class="advise-message">Para desactivar opciones de seguridad, establezca valores en 0 (cero).</span>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-3">
+                                                    <span>Cantidad de conexiones permitidas por usuario</span>
+                                                </div>
+                                                <div class="col-xs-9">
+                                                    <div class="section">
+                                                        <input type="hidden" name="ConexionesDesde" class="single-slider" value="@Model["Conexiones simultaneas"]" />
+                                                        <span>Cantidad de conexiones permitidas por usuario.</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-3">
+                                                    <span>Intentos de accesos máximos por usuario</span>
+                                                </div>
+                                                <div class="col-xs-9">
+                                                    <div class="section">
+                                                        <input type="hidden" name="IntentosDesde" class="single-slider" value="@Model["Intentos de acceso"]" />
+                                                        <span>Cantidad de intentos de acceso que dispone un usuario antes del bloqueo de la cuenta.</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-3">
+                                                    <span>Per&iacute;odo de bloqueo por inactividad</span>
+                                                </div>
+                                                <div class="col-xs-9">
+                                                    <div class="section">
+                                                        <input type="hidden" name="InactividadDesde" class="single-slider" value="@Model["Período de bloqueo en minutos"]" />
+                                                        <span>Cantidad de minutos antes de bloquear la aplicaci&oacute;n por inactividad.</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-3">
+                                                    <span>Habilita el env&iacute;o de correo electr&oacute;nico</span>
+                                                </div>
+                                                <div class="col-xs-9">
+                                                    <input type="hidden" name="HabilitaMail" class="single-slider" value="@Model["Habilita envio de mail"]" />
+                                                    <a data-checked="@Model["Habilita envio de mail"]" onclick="javascript:toggleOption(event);" href="javascript:void(0);"><i class="fa"></i></a>
+                                                    <span>Habilita el env&iacute;o de un correo ante el bloqueo de cuenta de un usuario.</span>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-3">
+                                                    <span>
+                                                        Direcci&oacute;n de correo electr&oacute;nico especificada
+                                                        para env&iacute;o de notificaciones
+                                                    </span>
+                                                </div>
+                                                <div class="col-xs-9">
+                                                    <div class="section">
+                                                        <input type="email" name="Email" class="form-control" value="@Model["Email notificaciones"]" />
+                                                        <span>Direcci&oacute;n de correo electr&oacute;nico especificada para el env&iacute;o de avisos.</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-section">
+                                <div class='panel-heading bg-primary main-heading' role='region' id='headingLimitesPasswd'>
+                                    <a data-toggle='collapse' data-parent='#accordion-params-generales' href='#collapseLimitesPasswd' aria-expanded='false'
+                                       aria-controls='collapseLimitesPasswd'>
+                                        <div class='panel-title'>
+                                            Configuraciones de L&iacute;mites de Contrase&ntilde;a
+                                            <i class="fa"></i>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div id='collapseLimitesPasswd' class='panel-collapse collapse in main-collapse' aria-expanded='false' aria-labelledby='headingLimitesPasswd'>
+                                    <div class="panel-body">
+                                        <div class="container">
+                                            <div class="row">
+                                                <span class="advise-message">Para desactivar opciones de seguridad, establezca valores en 0 (cero).</span>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-3">
+                                                    <span>Vigencia de la contrase&ntilde;a actual del Usuario</span>
+                                                </div>
+                                                <div class="col-xs-9">
+                                                    <div class="section">
+                                                        <input type="hidden" name="VigenciaDesde" class="single-slider" value="@Model["Vigencia de clave en dias"]" />
+                                                        <span>
+                                                            Duraci&oacute;n m&aacute;xima en d&iacute;as de la
+                                                            contrase&ntilde;a actual del usuario.
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-3">
+                                                    <span>
+                                                        Cantidad de d&iacute;as de antelaci&oacute;n con la que
+                                                        se notificar&aacute; el vencimiento de la contrase&ntilde;a
+                                                    </span>
+                                                </div>
+                                                <div class="col-xs-9">
+                                                    <div class="section">
+                                                        <input type="hidden" name="CantidadDiasPassDesde" class="single-slider" value="@Model["Aviso de vencimiento en dias"]" />
+                                                        <span>
+                                                            Cantidad de d&iacute;as de antelaci&oacute;n que son
+                                                            necesarios para avisar al usuario del pr&oacute;ximo
+                                                            vencimiento de la contrase&ntilde;a.
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-3">
+                                                    <span>Contrase&ntilde;as almacenadas</span>
+                                                </div>
+                                                <div class="col-xs-9">
+                                                    <div class="section">
+                                                        <input type="hidden" name="CantidadAlmacenadaDesde" class="single-slider" value="@Model["Claves almacenadas"]" />
+                                                        <span>
+                                                            Cantidad de contrase&ntilde;as que se almacenan con el
+                                                            objeto de evitar la repetici&oacute;n al renovarlas.
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-3">
+                                                    <span>Longitud m&iacute;nima admitida</span>
+                                                </div>
+                                                <div class="col-xs-9">
+                                                    <div class="section">
+                                                        <input type="hidden" name="LongitudDesde" class="single-slider" value="@Model["Longitud minima de clave"]" />
+                                                        <span>
+                                                            Longitud m&iacute;nima admitida para la
+                                                            contrase&ntilde;a de usuario.
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-xs-3">
+                                                    <span>Complejidad de contrase&ntilde;a</span>
+                                                </div>
+                                                <div class="col-xs-9 inline">
+                                                    <div class="row">
+                                                        <input type="hidden" name="NivelLetras" class="single-slider" value="@Model["Nivel para clave letras"]" />
+                                                        <a data-checked="@Model["Nivel para clave letras"]" onclick="javascript:toggleOption(event);" href="javascript:void(0);"><i class="fa"></i></a>
+                                                        <span>Letras</span>
+                                                    </div>
+                                                    <div class="row">
+                                                        <input type="hidden" name="NivelNumeros" class="single-slider" value="@Model["Nivel para clave numeros"]" />
+                                                        <a data-checked="@Model["Nivel para clave numeros"]" onclick="javascript:toggleOption(event);" href="javascript:void(0);"><i class="fa"></i></a>
+                                                        <span>N&uacute;meros</span>
+                                                    </div>
+                                                    <div class="row">
+                                                        <input type="hidden" name="NivelEspeciales" class="single-slider" value="@Model["Nivel para clave caracteres especiales"]" />
+                                                        <a data-checked="@Model["Nivel para clave caracteres especiales"]" onclick="javascript:toggleOption(event);" href="javascript:void(0);"><i class="fa"></i></a>
+                                                        <span>Caracteres Especiales</span>
+                                                    </div>
+                                                    <div class="row">
+                                                        <input type="hidden" name="NivelMayusculas" class="single-slider" value="@Model["Nivel para clave mayusculas"]" />
+                                                        <a data-checked="@Model["Nivel para clave mayusculas"]" onclick="javascript:toggleOption(event);" href="javascript:void(0);"><i class="fa"></i></a>
+                                                        <span>May&uacute;sculas</span>
+                                                    </div>
+                                                    <div class="row">
+                                                        <input type="hidden" name="NivelMinusculas" class="single-slider" value="@Model["Nivel para clave minusculas"]" />
+                                                        <a data-checked="@Model["Nivel para clave minusculas"]" onclick="javascript:toggleOption(event);" href="javascript:void(0);"><i class="fa"></i></a>
+                                                        <span>Min&uacute;sculas</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                </div>
+                <div class="modal-footer">
+                    <div class="col-lg-4 pull-right">
+                        <span id="btnGuardar" aria-hidden="true" data-placement="right" title="Guardar" data-original-title="Guardar" class="fa fa-floppy-o fa-2x black cursor-pointer"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade theme_new mensaje" id="ModalInfoParams" tabindex="-2" role="dialog" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="TituloInfoParams">Titulo Modal</h3>
+                <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+            </div>
+            <div class="modal-body" style="word-wrap:break-word;">
+                <div class="alert alert-dismissible" role="alert">
+                    <p id="DescripcionInfoParams">Mensaje</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/Scripts/jquery.form.js"></script>
+<script src="~/Scripts/SliderBar/jquery.range.js"></script>
+<script src="~/Scripts/Negocio/utilidades.js"></script>
+
+<script>
+    $('#myModalParamsGenerales').on('shown.bs.modal', function () {
+        ajustarScrollBarsParamsGrales();
+        hideLoading();
+    });
+    $(window).resize(ajustarModalParamsGrales);
+    $(document).ready(function () {
+        $('[name="ConexionesDesde"]').jRange({
+            from: 0,
+            to: '@Model["Maximo conexiones"]',
+            step: 1,
+            width: 333,
+            theme: 'theme-blue margin-bottom'
+        });
+        $('[name="IntentosDesde"]').jRange({
+            from: 0,
+            to: '@Model["Maximo intentos"]',
+            step: 1,
+            width: 333,
+            theme: 'theme-blue margin-bottom'
+        });
+        $('[name="InactividadDesde"]').jRange({
+            from: 0,
+            to: '@Model["Maximo periodo bloqueo en minutos"]',
+            width: 333,
+            theme: 'theme-blue margin-bottom'
+        });
+        $('[name="VigenciaDesde"]').jRange({
+            from: 0,
+            to: '@Model["Maximo vigencia clave en dias"]',
+            width: 333,
+            theme: 'theme-blue margin-bottom'
+        });
+        $('[name="CantidadDiasPassDesde"]').jRange({
+            from: 0,
+            to: '@Model["Maximo notificacion vencimiento clave en dias"]',
+            width: 333,
+            theme: 'theme-blue margin-bottom'
+        });
+        $('[name="CantidadAlmacenadaDesde"]').jRange({
+            from: 0,
+            to: '@Model["Maximo claves almacenadas"]',
+            width: 333,
+            theme: 'theme-blue margin-bottom'
+        });
+        $('[name="LongitudDesde"]').jRange({
+            from: 0,
+            to: '@Model["Maximo longitud clave"]',
+            width: 333,
+            theme: 'theme-blue margin-bottom'
+        });
+
+        $("#btnGuardar").click(function () {
+            if (!$("[name='Email']").val() || $("[name='Email']").val().toString().isValidEmail()) {
+                showLoading();
+                $("#form", "#myModalParamsGenerales").submit();
+            } else {
+                mostrarMensaje(["La dirección de email especificada no es válida."], "Parámetros Generales - Advertencia", "warning");
+            }
+        });
+        $("#form", "#myModalParamsGenerales").ajaxForm({
+            beforeSubmit: function () {
+                showLoading();
+                return true;
+            },
+            success: function (data) {
+                if (data && data.error) {
+                    mostrarMensaje(["Ha ocurrido un error al guardar los parámetros.", data.mensaje], "Parámetros Generales - Error", "danger");
+                } else {
+                    mostrarMensaje(["Se han guardado los parámetros correctamente."], "Parámetros Generales", "success");
+                }
+            },
+            error: function () {
+                mostrarMensaje(["Ha ocurrido un error al guardar los parámetros."], "Parámetros Generales - Error", "danger");
+            }
+        });
+        $("#form", "#myModalParamsGenerales").submit(function (evt) {
+            evt.preventDefault();
+            evt.stopImmediatePropagation();
+            return false;
+        });
+        $(".body-content", "#myModalParamsGenerales").niceScroll(getNiceScrollConfig());
+        $('.panel-body', "#myModalParamsGenerales .scroll-content").resize(ajustarScrollBarsParamsGrales);
+        $('.panel-heading a', "#myModalParamsGenerales .scroll-content").click(function (evt) {
+            $(evt.currentTarget).siblings("input[type='hidden']").val(Number($(evt.currentTarget).siblings("input[type='hidden']").val()) ^ 1);
+            setTimeout(ajustarScrollBarsParamsGrales, 10);
+        });
+        ajustarModalParamsGrales();
+        $("#myModalParamsGenerales").modal("show");
+    });
+    function ajustarModalParamsGrales() {
+        var altura = $(window).height() - 160; //value corresponding to the modal heading + footer
+        $(".params-generales-body").css({ "height": altura });
+        ajustarScrollBarsParamsGrales();
+    }
+    function ajustarScrollBarsParamsGrales() {
+        $(".body-content", "#myModalParamsGenerales").css({ "max-height": $(".params-generales-body").height() + 'px' });
+        $(".body-content", "#myModalParamsGenerales").getNiceScroll().resize();
+    }
+    function toggleOption(evt) {
+        var val = Number($(evt.currentTarget).attr("data-checked")) ^ 1;
+        $(evt.currentTarget).attr("data-checked", val);
+        $(evt.currentTarget).siblings("input[type='hidden']").val(val);
+    }
+    function mostrarMensaje(mensajes, titulo, tipo) {
+        $('#TituloInfoParams').html(titulo);
+        $('#DescripcionInfoParams').html(mensajes.join("<br />"));
+        $("[role='alert']", "#ModalInfoParams").removeClass("alert-danger alert-success alert-warning").addClass("alert-" + tipo);
+        $(".modal-footer", "#ModalInfoParams").hide();
+        if (tipo === "alert-info") {
+            $(".modal-footer", "#ModalInfoParams").show();
+        }
+        $("#ModalInfoParams").modal('show');
+    }
+</script>

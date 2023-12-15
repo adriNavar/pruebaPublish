@@ -1,0 +1,144 @@
+﻿@model ICollection<GeoSit.Client.Web.Models.ObrasPublicas.ObjetoInfraestructuraModel>
+
+<link href="~/Content/dataTables.bootstrap.css" rel="stylesheet" />
+<link href="~/Content/ObrasPublicas.css" rel="stylesheet" />
+
+<div class="modal fade theme_new" id="modal-window-infraestructura" tabindex="-1" data-backdrop="static" role="dialog" aria-labelledby="modal-windowLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id="scroll-content-infraestructura">
+                <div class="modal-header">
+                    <h3 class="modal-title">Informe de Objetos de Infraestructura</h3>
+                    <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+                </div>
+                <div class="modal-body infraestructura-body">
+                    <div id="infraestructura-datos">
+                        <div id="mensaje-salida-infraestructura" class="alert alert-warning alert-dismissible" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true"></span></button>
+                            <strong></strong> <label id="lbl-msg-infraestructura"></label>
+                        </div>
+                        <div class="section-position">
+                            <div id='collapseBusqueda' class='panel-collapse collapse in main-collapse'>
+                                <div class="panel-body">
+                                    <div class="form-horizontal">
+                                        <div class="form-group">
+                                            <label class=" col-xs-3 control-label text-right">Tipo</label>
+                                            <div class="col-xs-8">
+                                                @Html.DropDownList("CmbTipoObjeto", (ViewBag.TipoObjetoList as System.Collections.Generic.IEnumerable<SelectListItem>), new { id = "CmbTipoObjeto", @class = "form-control" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="col-xs-3 control-label text-right">Sub Tipo</label>
+                                            <div class="col-xs-8">
+                                                @Html.DropDownList("CmbSubTipoObjeto", Enumerable.Empty<SelectListItem>(), new { id = "CmbSubTipoObjeto", @class = "form-control" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-3 col-xs-6">
+                                        <div class="form-group">
+                                            <label>Atributo</label>
+                                            @Html.DropDownList("CmbAtributo", Enumerable.Empty<SelectListItem>(), new { id = "CmbAtributo", @class = "form-control" })
+                                        </div>
+                                    </div>
+
+                                    <div class="col-sm-3 col-xs-6">
+                                        <div class="form-group">
+                                            <label>Comparador</label>
+                                            @Html.DropDownList("CmbComparador", (ViewBag.ComparadorList as System.Collections.Generic.IEnumerable<SelectListItem>), new { id = "CmbComparador", @class = "form-control" })
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4 col-xs-8">
+                                        <div class="form-group">
+                                            <label>Valor</label>
+                                            <div id="valorContainer">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2 col-xs-4">
+                                        <div class="form-group">
+                                            <label>Conector</label>
+                                            @Html.DropDownList("CmbConector", (ViewBag.ConectorList as System.Collections.Generic.IEnumerable<SelectListItem>), new { id = "CmbConector", @class = "form-control" })
+                                        </div>
+                                    </div>
+
+                                    <div class="col-xs-11">
+                                        <table id="Grilla_Consulta" class="table table-responsive">
+                                            <thead class="hidden">
+                                                <tr>
+                                                    <th></th>
+                                                    <th>Nombre</th>
+                                                    <th>Comparador</th>
+                                                    <th>Valor</th>
+                                                    <th>Conector</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="tbody_editor">
+                                                @Html.Partial("_DetalleConsulta")
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="col-xs-1" id="conditions-controls">
+                                        <dl>
+                                            <dt><span class="fa fa-2x fa-plus-circle cursor-pointer black" aria-hidden="false" id="btn_AgregarQ"></span></dt>
+                                            <dt><span class="fa fa-2x fa-minus-circle cursor-pointer black boton-deshabilitado" aria-hidden="true" id="btn_EliminarQ"></span></dt>
+                                            <dt><span class="fa fa-2x fa-pencil cursor-pointer black boton-deshabilitado" aria-hidden="true" id="btn_ModificarQ"></span></dt>
+                                            <dt><span class="fa fa-2x fa-eraser cursor-pointer black" aria-hidden="true" id="btn_LimpiarQ"></span></dt>
+                                        </dl>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id='collapseCampos' class='panel-collapse collapse in main-collapse'>
+                                <div class="panel-body" style="padding: 10px 15px 0;">
+                                    <div class="col-sm-12">
+                                        <div class="form-group remove-margin">
+                                            <label>Selecci&oacute;n de columnas del reporte</label>
+                                            <table id="Grilla_Columnas" class="table table-responsive dataTable">
+                                                <thead class="hidden">
+                                                    <tr>
+                                                        <th>Columna</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody />
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-xs-4 pull-right">
+                        <span id="btnGrabar" aria-hidden="true" data-placement="right" title="Guardar" data-original-title="Guardar" class="fa fa-check-circle light-blue fa-3x cursor-pointer"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade theme_new mensaje" id="confirmModal" tabindex="-2" role="dialog" aria-labelledby="TituloAdvertencia" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <input type="hidden" id="TipoAdvertencia" value="">
+                <h3 class="modal-title" id="TituloAdvertencia">Titulo</h3>
+                <span id="btnCancelarAdvertencia" aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cancelar" title="Cancelar"></span>
+            </div>
+            <div class="modal-body">
+                <div id="MensajeAlerta" class="alert alert-warning alert-dismissible" role="alert">
+                    <p id="DescripcionAdvertencia"></p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-xs-4 pull-right">
+                    <span id="btnAdvertenciaOK" aria-hidden="true" data-placement="right" title="Guardar" data-original-title="Guardar" class="fa fa-check-circle light-blue fa-3x cursor-pointer"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/jquery.dataTables.min.js"></script>
+<script src="~/Scripts/dataTables.bootstrap.js"></script>
+<script src="~/Scripts/ObjetosInfraestructura/informe.js"></script>

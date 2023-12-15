@@ -1,0 +1,26 @@
+﻿@model GeoSit.Client.Web.Models.Usuario
+@{
+    ViewBag.Title = "Login";
+    ViewBag.AppName = "GeoSIT";
+}
+@section styles
+{
+    <style>
+        body {
+            background: url('~/../../Content/images/background.jpg');
+            background-size: cover;
+        }
+    </style>
+}
+<div class="container login">
+    <div class="sesion-expirada">
+        <h2 class="sesion-expirada-heading" style="padding-top: 95px;">
+            Sesión Expirada
+        </h2>
+        <div class="sesion-expirada-wrap">
+            <p>Su Sesión ha Expirado</p>
+            <p>Si desea volver a ingresar haga <a class="cursor-pointer" href="@Url.Action("Login","Account")">click aquí</a></p>
+        </div>
+        <div class="clearfix"></div>
+    </div>
+</div>

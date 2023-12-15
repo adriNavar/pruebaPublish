@@ -1,0 +1,15 @@
+﻿<div class='srow parcelas-historicas'>
+    <div class="controls fa pull-right">
+        <span class="opcion fa-file-pdf-o tooltips" data-placement="bottom" title="Informe de Baja" data-ng-click="getInformeParcelario()" data-ng-if="allowInformeParcelario"></span>
+    </div>
+    <div class="roundChkBox parcelas-historicas">
+        <input type="checkbox" id="{{chkboxid}}" ng-click="selectedChanged()" ng-model="parcela.selected" />
+        <label for="{{chkboxid}}"></label>
+    </div>
+    <div>
+        <p class='text-primary'>
+            <span data-ng-bind-html="parcela.partida_nomenclatura | highlight:pattern:true"></span>
+        </p>
+        <p ng-if="tieneDescripcion"><span data-ng-bind-html="parcela.descripcion | highlight:pattern:true"></span></p>
+    </div>
+</div>

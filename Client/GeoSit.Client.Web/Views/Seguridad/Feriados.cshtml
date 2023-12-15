@@ -1,0 +1,372 @@
+﻿@model List<GeoSit.Client.Web.Models.FeriadosModel>
+@using GeoSit.Client.Web.Controllers;
+
+<link href="~/Content/dataTables.bootstrap.css" rel="stylesheet" />
+<link href="~/Scripts/jstree/dist/themes/default/style.css" rel="stylesheet" />
+<link href="~/Content/seguridad_new.css" rel="stylesheet" />
+
+@*Modal Contenido*@
+<div class="modal fade theme_new seguridad" id="myModalFeriados" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id="scroll-content-feriado" class="scroll-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">@Resources.Recursos.TituloFeriados</h3>
+                    <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+                </div>
+                <div class="modal-body abm-feriados-body">
+                    <div id="abm-feriados-content" class="body-content feriados-content">
+                        <div class="panel-group remove-margin">
+                            <div class='panel-body'>
+                                <div class="form-group clearfix" style="margin-top:10px;">
+                                    <label class="col-xs-offset-3 col-xs-1 text-info" style="margin-top:7px;">
+                                        A&ntilde;o
+                                    </label>
+                                    <div class="col-xs-3">
+                                        <div class="input-group date">
+                                            <input id="anio" type="text" class="form-control" />
+                                            <span class="input-group-addon">
+                                                <span class="fa fa-calendar">
+                                                </span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group clearfix remove-margin">
+                                    <div class="col-xs-12 remove-padding">
+                                        <div class="tabla-con-botones">
+                                            <table id="Grilla_Feriados" class="table table-striped table-condensed table-bordered table-responsive"></table>
+                                            <dl>
+                                                <dt><span data-edita="nuevo" id="btnAgregar" class="fa fa-plus-circle fa-2x"></span></dt>
+                                                <dt><span id="btnEliminar" class="fa fa-minus-circle fa-2x disabled"></span></dt>
+                                                <dt><span data-edita="existente" id="btnEditar" class="fa fa-pencil fa-2x disabled"></span></dt>
+                                            </dl>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-group accordion" id="accordion-abm-feriados" style="margin-bottom:0;">
+                            <div class="accordion-section">
+                                <div class='panel-heading bg-primary main-heading panel-deshabilitado' role='region' id='headingAsignacion'>
+                                    <a data-toggle='collapse' data-parent='#accordion-abm-feriados' href='#collapseAsignacion' aria-expanded='false'
+                                       aria-controls='collapseAsignacion' class="collapsed">
+                                        <div class='panel-title'>
+                                            Asignaci&oacute;n
+                                            <i class="fa"></i>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div id='collapseAsignacion' class='panel-collapse collapse main-collapse' aria-expanded='false' aria-labelledby='headingAsignacion'>
+                                    <div class="panel-body">
+                                        <div class="col-xs-12" style="display: inline-grid;">
+                                            @using (Ajax.BeginForm("GuardarFeriado", "Seguridad", new { }, new AjaxOptions { }, new { id = "Feriadoform", role = "form", novalidate = "", @class = "form-horizontal" }))
+                                            {
+                                                <input type="hidden" id="idFeriado" name="Id_Feriado" />
+                                                <div class="form-group" style="margin:10px 0 0;">
+                                                    <label class="col-xs-3 text-right" style="padding-top:7px">
+                                                        Fecha
+                                                    </label>
+                                                    <div class="col-xs-4">
+                                                        <div class="input-group date">
+                                                            <input id="fechaFeriado" type="text" name="Fecha" class="form-control" value="@System.DateTime.Today" readonly="readonly" />
+                                                            <span class="input-group-addon">
+                                                                <span class="fa fa-calendar">
+                                                                </span>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group" style="margin:5px 0 0;">
+                                                    <label class="col-xs-3 text-right" style="padding-top:7px">
+                                                        Descripci&oacute;n
+                                                    </label>
+                                                    <div class="col-xs-7">
+                                                        <textarea id="descripcion" name="descripcion" class="form-control" rows="3" maxlength="100" readonly="readonly"></textarea>
+                                                    </div>
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer" style="display:none;">
+                    <div class="col-lg-4 pull-right">
+                        <span id="btnGuardar" aria-hidden="true" data-placement="right" title="Guardar" data-original-title="Guardar" class="fa fa-floppy-o fa-2x black cursor-pointer"></span>
+                        <span id="btnDescartar" aria-hidden="true" data-placement="right" title="Cancelar" data-original-title="Cancelar" class="fa fa-undo fa-2x black cursor-pointer"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade theme_new mensaje" id="ModalInfoFeriado" tabindex="-2" role="dialog" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="TituloInfoFeriado">Titulo Modal</h3>
+                <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+            </div>
+            <div class="modal-body" style="word-wrap:break-word;">
+                <div class="alert alert-dismissible" role="alert">
+                    <p id="DescripcionInfoFeriado">Mensaje</p>
+                </div>
+            </div>
+            <div class="modal-footer" style="display:none;">
+                <div class="col-lg-2 pull-right">
+                    <span id="btnInfoOk" aria-hidden="true" data-dismiss="modal" data-placement="right" title="Aceptar" data-original-title="Aceptar" class="fa fa-check-circle fa-3x light-blue cursor-pointer"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/jquery.dataTables.min.js"></script>
+<script src="~/Scripts/dataTables.bootstrap.js"></script>
+<script src="~/Scripts/jquery.form.js"></script>
+
+<script>
+    $(window).resize(ajustarmodal);
+    var duplicado = 0;
+    $(document).ready(function () {
+        ajustarmodal();
+        $("#myModalFeriados").modal("show");
+        var defaults = {
+            orientation: "auto",
+            language: "es",
+            autoclose: true,
+            enableOnReadonly: false
+        };
+
+        $("#myModalFeriados #fechaFeriado")
+            .datepicker(Object.assign(defaults, { todayBtn: "linked", todayHighlight: true, format: 'dd/mm/yyyy' }))
+            .on("changeDate", function (evt) {
+                clearTimeout(duplicado);
+                (function (evt) {
+                    duplicado = setTimeout(function () {
+                        clearTimeout(duplicado);
+                        if (moment(evt.target.value, "DD/MM/YYYY").isValid()) {
+                            $.ajax({
+                                url: '@Url.Action("GetFeriadoPorFecha", "Seguridad")',
+                                data: { id: Number($("#idFeriado", $("#myModalFeriados form")).val()), fecha: evt.date.toLocaleDateString("es") },
+                                dataType: 'json',
+                                type: 'GET',
+                                success: function (data) {
+                                    $("#btnGuardar").removeClass("disabled");
+                                    if (data.existe) {
+                                        $("#btnGuardar").addClass("disabled");
+                                        mostrarMensajeError(["Existe otro feriado con la misma fecha."], "Feriado Duplicado");
+                                    }
+                                },
+                                error: function (error) {
+                                    alert(error.responseText);
+                                }
+                            });
+                        }
+                    }, 250);
+                })(evt);
+            });
+        $("#myModalFeriados #anio")
+            .datepicker(Object.assign(defaults, { todayBtn: false, format: 'yyyy', minViewMode: 'years', maxViewMode: 'years' }))
+            .on("changeDate", function (e) {
+                cargarFeriados($(this).datepicker("getDate").getFullYear());
+            });
+        $(".feriados-content").niceScroll(getNiceScrollConfig());
+        $("#myModalFeriados #anio").datepicker("setDate", '@DateTime.Today.ToShortDateString()');
+        $("dl [data-edita]").on("click", function () {
+            iniciarEdicion($(this).data("edita"));
+        });
+        $("#btnEliminar").on('click', function () {
+            mostrarMensajeGeneral(["Está a punto de DESCARTAR los cambios.", "¿Desea continuar?"], "Advertencia");
+            $("#btnInfoOk").one("click", function () {
+                var row = $("#Grilla_Feriados").DataTable().row('.selected');
+                $.post(BASE_URL + 'Seguridad/BajaFeriado?id=' + row.data().Id_Feriado, function () { row.remove().draw(); });
+                $("#fechaFeriado").val("");
+                $("#descripcion").val("");
+            });
+        });
+        $("#btnDescartar").on("click", function () {
+            mostrarMensajeGeneral(["Está a punto de DESCARTAR los cambios.", "¿Desea continuar?"], "Advertencia");
+            $("#btnInfoOk").one("click", finalizarEdicion);
+        });
+        $("#btnGuardar").on("click", function () {
+            $("#Feriadoform").submit();
+        });
+        $("#Feriadoform").ajaxForm({
+            beforeSubmit: function () {
+                var errores = [];
+                if (!$("#fechaFeriado").val()) {
+                    errores.push("Debe ingresar una fecha.");
+                }
+                if (!$("#descripcion").val()) {
+                    errores.push("Debe ingresar una descripción.");
+                }
+                if (errores.length) {
+                    mostrarMensajeError(errores, "Validación");
+                } else {
+                    showLoading();
+                }
+                return !errores.length;
+            },
+            success: function (data) {
+                if (data && data.error) {
+                    mostrarMensajeError(["Ha ocurrido un error al guardar.", data.mensaje], "Error al guardar", true);
+                } else {
+                    $("#Grilla_Feriados tr").removeClass("selected");
+                    finalizarEdicion();
+                    setTimeout(function () { cargarFeriados($("#myModalFeriados #anio").datepicker("getDate").getFullYear()); }, 100);
+                    hideLoading();
+                    mostrarMensajeOk(["Los datos del feriado han sido guardados satisfactoriamente."], "Feriado", true);
+                }
+            },
+            error: function () {
+                mostrarMensajeError(["Ha ocurrido un error al guardar."], "Error al guardar", true);
+            },
+            complete: hideLoading
+        });
+        $("#Feriadoform").submit(function (evt) {
+            /*evita el doble submit*/
+            evt.preventDefault();
+            evt.stopImmediatePropagation();
+            return false;
+        });
+
+        hideLoading();
+    });
+
+    function ajustarmodal() {
+        var altura = $(window).height() - 420;
+        $(".abm-feriados-body").css({ "height": altura });
+        $('.feriados-content').css({ "height": altura, "overflow": "hidden" });
+        ajustarScrollBars();
+    }
+
+    function ajustarScrollBars() {
+        $(".feriados-content").getNiceScroll().resize();
+        $(".feriados-content").getNiceScroll().show();
+    }
+
+    function cargarFeriados(year) {
+        $.ajax({
+            url: '@Url.Action("GetFeriados", "Seguridad")',
+            data: { year: year },
+            dataType: 'json',
+            type: 'GET',
+            success: function (feriados) {
+                $("#Grilla_Feriados").DataTable({
+                    dom: "ftr<'row'<'col-sm-5'i><'col-sm-7'p>>",
+                    destroy: true,
+                    language: {
+                        url: BASE_URL + "Scripts/dataTables.spanish.txt"
+                    },
+                    order: [0, 'asc'],
+                    data: feriados,
+                    columns: [{
+                        title: "Fecha",
+                        data: "Fecha",
+                        orderable: true,
+                        visible: true,
+                        render: function (data, type) {
+                            var d = moment(parseJsonDate(data));
+                            return (type === 'display' || type === 'filter') ? d.format("DD/MM/YYYY") : d;
+                        }
+                    }],
+                    createdRow: function (row, data) {
+                        $(row).data('id', data.Id_Feriado);
+                        $(row).data('descripcion', data.Descripcion);
+                        $(row).addClass('cursor-pointer');
+                    },
+                    initComplete: function (options) {
+                        $(options.nTBody).off("click", "tr");
+                        $(options.nTBody).on("click", "tr", function (e) {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            $(this).siblings().removeClass('selected');
+                            $(this).toggleClass('selected');
+                            activarSeccion($(this));
+                        });
+                    }
+                });
+            },
+            error: function (error) {
+                alert(error.responseText);
+            }
+        });
+    }
+    function activarSeccion(row, forzar) {
+        if (forzar || (row && row.hasClass('selected'))) {
+            $("#headingAsignacion").removeClass("panel-deshabilitado");
+            $("a[data-toggle]", "#headingAsignacion").removeClass("collapsed");
+            $("[aria-labelledby='headingAsignacion']").addClass("in").attr("aria-expanded", true);
+            $("dl .fa").not(":first").removeClass("disabled");
+        } else {
+            $("#headingAsignacion").addClass("panel-deshabilitado");
+            $("a[data-toggle]", "#headingAsignacion").addClass("collapsed");
+            $("[aria-labelledby='headingAsignacion']").removeClass("in").attr("aria-expanded", true);
+            $("dl .fa").not(":first").addClass("disabled");
+            row = null;
+        }
+        fillData(row);
+    }
+    function iniciarEdicion(tipo) {
+        if (tipo === "nuevo") {
+            $("#Grilla_Feriados > tbody > tr").removeClass("selected");
+            activarSeccion(null, true);
+        }
+        $("#anio").attr("readonly", "readonly");
+        $("table").attr("disabled", "disabled");
+        $("#myModalFeriados form .form-control").removeAttr("readonly");
+        $("dl .fa").addClass("disabled");
+        $(".modal-footer").show();
+    }
+    function finalizarEdicion() {
+        activarSeccion($("#Grilla_Feriados > tbody > tr.selected"));
+        $("#anio").removeAttr("readonly");
+        $("table").removeAttr("disabled");
+        $("#myModalFeriados form .form-control").attr("readonly", "readonly");
+        if ($("#Grilla_Feriados > tbody > tr.selected").length === 1) {
+            $("dl .fa").removeClass("disabled");
+        } else {
+            $("dl .fa:first").removeClass("disabled");
+        }
+
+        $(".modal-footer").hide();
+    }
+
+    function fillData(row) {
+        var form = $("#myModalFeriados form"),
+            id = "", descrip = '', fecha = '';
+        if (row) {
+            id = $(row).data('id');
+            descrip = $(row).data('descripcion');
+            fecha = $("td", row).html();
+        }
+        $("#idFeriado", form).val(id);
+        $("[name='descripcion']", form).val(descrip);
+        $("#fechaFeriado", form).datepicker('update', fecha);
+    }
+    function mostrarMensajeError(mensajes, titulo, error) {
+        mostrarMensaje(mensajes, titulo, (error || false ? "alert-danger" : "alert-warning"));
+    }
+    function mostrarMensajeGeneral(mensajes, titulo, confirmacion) {
+        mostrarMensaje(mensajes, titulo, (confirmacion || true ? "alert-info" : "alert-success"));
+    }
+    function mostrarMensajeOk(mensajes, titulo, confirmacion) {
+        mostrarMensaje(mensajes, titulo, (confirmacion || true ? "alert-success" : "alert-info"));
+    }
+    function mostrarMensaje(mensajes, titulo, tipo) {
+        $('#TituloInfoFeriado').html(titulo);
+        $('#DescripcionInfoFeriado').html(mensajes.join("<br />"));
+        $("[role='alert']", "#ModalInfoFeriado").removeClass("alert-danger alert-success alert-info alert-warning").addClass(tipo);
+        $(".modal-footer", "#ModalInfoFeriado").hide();
+        if (tipo === "alert-info") {
+            $(".modal-footer", "#ModalInfoFeriado").show();
+        }
+        $("#ModalInfoFeriado").modal('show');
+        $("#ModalInfoFeriado").one('hidden.bs.modal', function () { $("#btnInfoOk").off(); });
+    }
+    //# sourceURL=feriados.js
+</script>

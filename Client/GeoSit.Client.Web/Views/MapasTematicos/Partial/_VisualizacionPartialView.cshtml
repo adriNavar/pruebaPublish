@@ -1,0 +1,92 @@
+﻿@model GeoSit.Client.Web.Models.MapaTematicoModel
+<table id="cabeceraTablaCasos" style="width: 100%;border-bottom: solid 1px #e5e5e5;">
+    <colgroup>
+        <col span="1" style="width: 10%;">
+        <col span="1" style="width: 15%;">
+        <col span="1" style="width: 15%;">
+        <col span="1" style="width: 30%;">
+        <col span="1" style="width: 30%;">
+    </colgroup>
+    <thead>
+        <tr class="h5" style="height:3em; ">
+            <th class="text-center">@Html.Raw("Color")</th>
+            <th class="text-center" id="THDesde">
+                @Html.Raw("Desde")
+                <span style="color: rgb(255, 255, 255); margin-right: 3px;" title="Texto de ayuda pendiente de definir" class="fa fa-question-circle light-blue cursor-pointer"></span>
+            </th>
+            <th class="text-center" id="THHasta">
+                @Html.Raw("Hasta")
+                <span style="color: rgb(255, 255, 255); margin-right: 3px;" title="Texto de ayuda pendiente de definir" class="fa fa-question-circle light-blue cursor-pointer"></span>
+            </th>
+            <th class="text-center" id="THValor">@Html.Raw("Valor") </th>
+            <th class="text-center">@Html.Raw("Casos") (<span id="totalCasos">@(Model.Visualizacion.Items.Sum(i => i.Casos))</span>) </th>
+            <th class="text-center">@Html.Raw("Leyenda") </th>
+        </tr>
+    </thead>
+</table>
+<div id="tablaWrapper" class="sscroll" style="width: 100%; overflow: hidden;">
+    <input type="hidden" id="hfCantRangos" value="@(Model.Visualizacion != null && Model.Visualizacion.Items != null ? Model.Visualizacion.Items.Count : 0)" />
+    <table id="datosTablaCasos" class="table-hover" style="overflow: hidden; width:100%">
+        <colgroup>
+            <col span="1" style="width: 10%;">
+            <col span="1" style="width: 15%;">
+            <col span="1" style="width: 15%;">
+            <col span="1" style="width: 30%;">
+            <col span="1" style="width: 30%;">
+        </colgroup>
+        <tbody style="overflow:hidden;height:100%">
+            @for (int i = 0; i < Model.Visualizacion.Items.Count; i++)
+            {
+
+                var color = "#" + Model.Visualizacion.Items[i].Color;
+                var icono = string.IsNullOrEmpty(Model.Visualizacion.Items[i].sIcono) ? "glyphicon-one-fine-dot" : Model.Visualizacion.Items[i].sIcono;
+                var colorBorde = System.Drawing.ColorTranslator.FromHtml("#" + Model.Visualizacion.Items[i].ColorBorde);
+                var anchoBorde = @Model.Visualizacion.Items[i].AnchoBorde + "px";
+
+                <tr style="height: 40px;">
+                    <td class="text-center">
+                        <input type="hidden" class="hfRowId" id="hfRowId_@i" value="@i" />
+                        <div class="color_rango_@i">
+                            @Html.HiddenFor(model => model.Visualizacion.Items[i].sIcono, new { @class = "iconoh" })
+                            @Html.HiddenFor(model => model.Visualizacion.Items[i].Color, new { @class = "colorh" })
+                            @Html.HiddenFor(model => model.Visualizacion.Items[i].ColorBorde, new { @class = "colorbordeh" })
+                            @Html.HiddenFor(model => model.Visualizacion.Items[i].AnchoBorde, new { @class = "anchobordeh" })
+                            @Html.HiddenFor(model => model.Visualizacion.Items[i].Valor)
+                            @Html.HiddenFor(model => model.Visualizacion.Items[i].Casos)
+
+                            <a id="link_ColorPrincipal_@i" class="colorManual cursor-pointer @(Model.Visualizacion.Coloreado != 3? "remove-pointer-events" : "")">
+                                <span class="glyphicon zona @icono"
+                                      style="color:@color;"
+                                      id="ColorPrincipal_@i"></span>
+                            </a>
+
+                            <svg id="svgContent_@i" style="display:none"></svg>
+                        </div>
+                    </td>
+
+                    @if (Model.Visualizacion.Items[i].Desde != null || Model.Visualizacion.Items[i].Hasta != null)
+                    {
+                        <td class="text-center">
+                            @Html.TextBoxFor(modelItem => modelItem.Visualizacion.Items[i].Desde, new { @class = "editor-texto tdesde", @style = "width:80px;", @id = "tdesde" + i.ToString() })
+                        </td>
+                        <td class="text-center">
+                            @Html.TextBoxFor(modelItem => modelItem.Visualizacion.Items[i].Hasta, new { @class = "editor-texto thasta", @style = "width:80px;", @id = "thasta" + i.ToString() })
+                        </td>
+                    }
+                    else
+                    {
+                        <td class="text-center">
+                            @Html.DisplayFor(modelItem => Model.Visualizacion.Items[i].Valor)
+                        </td>
+                    }
+                    <td class="text-center casos">
+                        @Html.TextBoxFor(modelItem => modelItem.Visualizacion.Items[i].Casos, new { disabled = "disabled", @readonly = "readonly", @class = "editor-texto tfcasos", @style = "width:80px;", @id = "casos" + i.ToString() })
+                    </td>
+                    <td class="text-center">
+                        @Html.TextBoxFor(modelItem => modelItem.Visualizacion.Items[i].Leyenda, new { @class = "editor-texto", @id = "tleyenda" + i.ToString(), @style = "width:140px;", @maxlength = "25" })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

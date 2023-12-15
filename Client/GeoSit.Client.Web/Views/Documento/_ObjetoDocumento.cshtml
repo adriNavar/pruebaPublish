@@ -1,0 +1,85 @@
+﻿@model GeoSit.Client.Web.Models.DocumentoModels
+
+<div>
+        @{
+            if (ViewBag.Esquema != null)
+            {
+                System.Xml.Schema.XmlSchema mEsquema = System.Xml.Schema.XmlSchema.Read(new StringReader(ViewBag.Esquema), null);
+                System.Xml.Schema.XmlSchemaSet mEsquemaSet = new System.Xml.Schema.XmlSchemaSet();
+                mEsquemaSet.Add(mEsquema);
+                mEsquemaSet.Compile();
+                
+                System.Xml.Schema.XmlSchemaElement rootElement = null;
+
+                foreach (System.Collections.DictionaryEntry item in mEsquema.Elements)
+                {
+                    rootElement = item.Value as System.Xml.Schema.XmlSchemaElement;
+                    break;
+                }
+
+                System.Xml.Schema.XmlSchemaComplexType innerContent = rootElement.ElementSchemaType as System.Xml.Schema.XmlSchemaComplexType;
+                var innerContentsOfRoot = innerContent.Particle as System.Xml.Schema.XmlSchemaSequence;
+                
+                foreach (System.Xml.Schema.XmlSchemaElement item in innerContentsOfRoot.Items)
+                {   
+                    <div class="control-group schema-property">
+                        <div class="text-muted panel-body escala_fuente_11 col-lg-4 col-xs-4 col-sm-4 col-md-4" id="@("label_" + item.Name)" value = @item.Name>
+                            @item.Name:
+                        </div>
+                            <div class="panel-body escala_fuente_11 col-lg-8 col-xs-8 col-sm-8 col-md-8">
+                            @{System.Xml.Schema.XmlSchemaSimpleType moreInnerContent = item.ElementSchemaType as System.Xml.Schema.XmlSchemaSimpleType;
+                              
+                            if (((System.Xml.Schema.XmlSchemaSimpleTypeRestriction)(moreInnerContent.Content)).BaseTypeName.Name != "anySimpleType")
+                            {
+                                IEnumerable<SelectListItem>
+                                    enumeratedValues = mEsquema.Items.OfType<System.Xml.Schema.XmlSchemaSimpleType>
+                                        ()
+                                        .Where(s => (s.Content is System.Xml.Schema.XmlSchemaSimpleTypeRestriction)
+                                        && s.Name == item.SchemaTypeName.Name)
+                                        .SelectMany<System.Xml.Schema.XmlSchemaSimpleType, string>
+                                            (c => ((System.Xml.Schema.XmlSchemaSimpleTypeRestriction)c.Content)
+                                            .Facets.OfType<System.Xml.Schema.XmlSchemaEnumerationFacet>
+                                                ().Select(d => d.Value)).Select(i => new SelectListItem() { Value = i, Text = i });
+
+                                if (ViewBag.atributos != null)
+                                {
+                                    foreach (KeyValuePair<string, object> a in ViewBag.atributos)
+                                    {
+                                       if(a.Key.ToString() == @item.Name)
+                                       {
+                                            @Html.DropDownListFor(model => model.DatosDocumento._atributos[item.Name], new SelectList(enumeratedValues, "Value", "Text", a.Value.ToString()), new { @id = item.Name + "Id", @class = "form-control", @Style = "width:100%" })
+                                           break;           
+                                        }
+                                    }
+                                }
+                                else
+                                {
+                                    @Html.DropDownListFor(model => model.DatosDocumento._atributos[item.Name], enumeratedValues, new { @id = item.Name + "Id", @class = "form-control", @Style = "width:100%", @Value = "" })
+                                }
+                            }
+                            else
+                            {
+                                if (ViewBag.atributos != null)
+                                {
+                                    foreach (KeyValuePair<string, object> a in ViewBag.atributos)
+                                    {
+                                       if(a.Key.ToString() == @item.Name)
+                                       {
+                                            @Html.TextBoxFor(model => model.DatosDocumento._atributos[item.Name], new { @id = item.Name + "Id", @class = "form-control", @Style = "width:100%", @Value = a.Value.ToString()})
+                                           break;
+                                       }
+                                    }
+
+                                }
+                                else { 
+                                   @Html.TextBoxFor(model => model.DatosDocumento._atributos[item.Name], new { @id = item.Name + "Id", @class = "form-control", @Style = "width:100%" })
+                                }
+                            }
+                        }
+                        </div>
+                        </div>
+                }
+            }
+        }
+</div>
+

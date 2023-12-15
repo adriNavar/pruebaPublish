@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="urn:inmBajaPedido" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns="http://schemas.xmlsoap.org/wsdl/" targetNamespace="urn:inmBajaPedido" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="urn:inmBajaPedido">
+      <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <xsd:import namespace="http://schemas.xmlsoap.org/wsdl/" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="bajaPedidoRequest">
+    <wsdl:part name="objeto" type="xsd:int" />
+  </wsdl:message>
+  <wsdl:message name="bajaPedidoResponse">
+    <wsdl:part name="return" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:portType name="Baja de InmueblePortType">
+    <wsdl:operation name="bajaPedido">
+      <documentation>Verifica si se pueden dar de baja un inmueble, de acuerdo a si posee o no deuda. Devuelve "OK" o un mensaje de tipo "Error:..."</documentation>
+      <wsdl:input message="tns:bajaPedidoRequest" />
+      <wsdl:output message="tns:bajaPedidoResponse" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="Baja de InmuebleBinding" type="tns:Baja de InmueblePortType">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc" />
+    <wsdl:operation name="bajaPedido">
+      <soap:operation soapAction="urn:inmuebles#bajaPedido" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="urn:inmBajaPedido" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="urn:inmBajaPedido" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Baja de Inmueble">
+    <wsdl:port name="Baja de InmueblePort" binding="tns:Baja de InmuebleBinding">
+      <soap:address location="http://emaw70512.hopto.org/samws/inmBajaPedido.php" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tns="urn:inmEdita" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns="http://schemas.xmlsoap.org/wsdl/" targetNamespace="urn:inmEdita" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="urn:inmEdita">
+      <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+      <xsd:import namespace="http://schemas.xmlsoap.org/wsdl/" />
+      <xsd:complexType name="datos_inmueble">
+        <xsd:all>
+          <xsd:element name="accion" type="xsd:string" />
+          <xsd:element name="obj_id" type="xsd:int" />
+          <xsd:element name="s1" type="xsd:string" />
+          <xsd:element name="s2" type="xsd:string" />
+          <xsd:element name="s3" type="xsd:string" />
+          <xsd:element name="manz" type="xsd:string" />
+          <xsd:element name="parc" type="xsd:string" />
+          <xsd:element name="uf" type="xsd:int" />
+          <xsd:element name="porcuf" type="xsd:float" />
+          <xsd:element name="parp" type="xsd:int" />
+          <xsd:element name="parporigen" type="xsd:int" />
+          <xsd:element name="plano" type="xsd:int" />
+          <xsd:element name="anio_mensura" type="xsd:float" />
+          <xsd:element name="urbsub" type="xsd:string" />
+          <xsd:element name="regimen" type="xsd:int" />
+          <xsd:element name="tipo" type="xsd:string" />
+          <xsd:element name="titularidad" type="xsd:string" />
+          <xsd:element name="uso" type="xsd:int" />
+          <xsd:element name="tmatric" type="xsd:string" />
+          <xsd:element name="matric" type="xsd:string" />
+          <xsd:element name="fchmatric" type="xsd:date" />
+          <xsd:element name="supt" type="xsd:float" />
+          <xsd:element name="supm" type="xsd:float" />
+          <xsd:element name="avalt" type="xsd:float" />
+          <xsd:element name="avalm" type="xsd:float" />
+          <xsd:element name="frente" type="xsd:float" />
+          <xsd:element name="fondo" type="xsd:float" />
+          <xsd:element name="es_esquina" type="xsd:int" />
+          <xsd:element name="es_calleppal" type="xsd:int" />
+          <xsd:element name="zonat" type="xsd:string" />
+          <xsd:element name="zonav" type="xsd:int" />
+          <xsd:element name="zonaop" type="xsd:int" />
+          <xsd:element name="agua" type="xsd:int" />
+          <xsd:element name="cloaca" type="xsd:int" />
+          <xsd:element name="gas" type="xsd:int" />
+          <xsd:element name="alum" type="xsd:int" />
+          <xsd:element name="pav" type="xsd:int" />
+          <xsd:element name="barr_id" type="xsd:int" />
+          <xsd:element name="calle_id" type="xsd:int" />
+          <xsd:element name="calle_nom" type="xsd:string" />
+          <xsd:element name="puerta" type="xsd:int" />
+          <xsd:element name="piso" type="xsd:string" />
+          <xsd:element name="dpto" type="xsd:string" />
+          <xsd:element name="det" type="xsd:string" />
+          <xsd:element name="vigencia" type="xsd:int" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="titulares_inmueble">
+        <xsd:all>
+          <xsd:element name="num" type="xsd:string" />
+          <xsd:element name="tipo" type="xsd:string" />
+          <xsd:element name="porc" type="xsd:string" />
+        </xsd:all>
+      </xsd:complexType>
+      <xsd:complexType name="TitularesArray">
+        <xsd:complexContent mixed="false">
+          <xsd:restriction base="SOAP-ENC:Array">
+            <xsd:attribute wsdl:arrayType="tns:titulares_inmueble[]" ref="SOAP-ENC:arrayType" />
+          </xsd:restriction>
+        </xsd:complexContent>
+      </xsd:complexType>
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="editaRequest">
+    <wsdl:part name="datos_inmueble" type="tns:datos_inmueble" />
+    <wsdl:part name="titulares_inmueble" type="tns:TitularesArray" />
+  </wsdl:message>
+  <wsdl:message name="editaResponse">
+    <wsdl:part name="return" type="xsd:string" />
+  </wsdl:message>
+  <wsdl:portType name="Alta y Modificación de InmueblePortType">
+    <wsdl:operation name="edita">
+      <documentation>
+      </documentation>
+      <wsdl:input message="tns:editaRequest" />
+      <wsdl:output message="tns:editaResponse" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="Alta y Modificación de InmuebleBinding" type="tns:Alta y Modificación de InmueblePortType">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="rpc" />
+    <wsdl:operation name="edita">
+      <soap:operation soapAction="urn:inmuebles#edita" style="rpc" />
+      <wsdl:input>
+        <soap:body use="encoded" namespace="urn:inmModifica" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="encoded" namespace="urn:inmModifica" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="Alta y Modificación de Inmueble">
+    <wsdl:port name="Alta y Modificación de InmueblePort" binding="tns:Alta y Modificación de InmuebleBinding">
+      <soap:address location="http://emaw70512.hopto.org/samws/inmEdita.php" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

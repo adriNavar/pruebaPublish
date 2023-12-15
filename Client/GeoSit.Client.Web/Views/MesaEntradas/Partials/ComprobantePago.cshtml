@@ -1,0 +1,248 @@
+﻿@model GeoSit.Client.Web.ViewModels.ComprobantePago
+
+@Html.Partial("Partials/ObjetoEspecificoBaseView", new GeoSit.Client.Web.ViewModels.ObjetoEspecificoViewModel { Guid = Model.Guid, IdTramiteEntrada = Model.IdTramiteEntrada })
+
+<label style="width: 100%; color: #a3a99b; font-style: italic;">
+    Comprobante de pago a presentar
+</label>
+
+<div class="form-group">
+    @Html.LabelFor(m => m.TipoTasa, new { @class = "col-md-3 control-label" })
+    <div class="col-md-9">
+        @Html.DropDownListFor(m => m.TipoTasa, Model.TiposTasa, new { @class = "form-control visibleArbolObjetos" })
+        @Html.ValidationMessageFor(m => m.TipoTasa, "", new { @class = "text-danger" })
+    </div>
+</div>
+<div class="form-group">
+    @Html.LabelFor(m => m.Identificacion, new { @class = "col-md-3 control-label" })
+    <div class="col-md-9">
+        <div class="input-group">
+            @Html.TextBoxFor(m => m.Identificacion, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Identificacion, "", new { @class = "text-danger" })
+            <div class="input-group-addon cursor-pointer " id="comprobante-search">
+                <span data-placement="bottom" title="Buscar Comprobante" class="fa-lg fa fa-search black cursor-pointer boton-deshabilitado"
+                      aria-hidden="true" id="btn_ComprobanteSearch"></span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(m => m.TipoTramite, new { @class = "col-md-3 control-label" })
+    <div class="col-md-9">
+        @Html.TextBoxFor(m => m.TipoTramite, new { @class = "form-control", @readonly = "true" })
+        @Html.ValidationMessageFor(m => m.TipoTramite, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(m => m.FechaLiquidacion, new { @class = "col-md-3 control-label" })
+    <div class="col-md-9">
+        @Html.TextBoxFor(m => m.FechaLiquidacion, "{0:dd/MM/yyyy}", new { @class = "form-control", id = "fecha-liquidacion", placeholder = "XX/XX/XXXX", @readonly = "true" })
+        @Html.ValidationMessageFor(m => m.FechaLiquidacion, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(m => m.FechaPago, new { @class = "col-md-3 control-label" })
+    <div class="col-md-9">
+        @Html.TextBoxFor(m => m.FechaPago, "{0:dd/MM/yyyy}", new { @class = "form-control", id = "fecha-pago", placeholder = "XX/XX/XXXX", @readonly = "true" })
+        @Html.ValidationMessageFor(m => m.FechaPago, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(m => m.FechaVencimiento, new { @class = "col-md-3 control-label" })
+    <div class="col-md-9">
+        @Html.TextBoxFor(m => m.FechaVencimiento, "{0:dd/MM/yyyy}", new { @class = "form-control", id = "fecha-vencimiento", placeholder = "XX/XX/XXXX", @readonly = "true" })
+        @Html.ValidationMessageFor(m => m.FechaVencimiento, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(m => m.MedioPago, new { @class = "col-md-3 control-label" })
+    <div class="col-md-9">
+        @Html.TextBoxFor(m => m.MedioPago, new { @class = "form-control", @readonly = "true" })
+        @Html.ValidationMessageFor(m => m.MedioPago, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(m => m.Importe, new { @class = "col-md-3 control-label" })
+    <div class="col-md-9">
+        @Html.TextBoxFor(m => m.Importe, new { @class = "form-control", @readonly = "true" })
+        @Html.ValidationMessageFor(m => m.Importe, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(m => m.EstadoPago, new { @class = "col-md-3 control-label" })
+    <div class="col-md-9">
+        @Html.TextBoxFor(m => m.EstadoPago, new { @class = "form-control", @readonly = "true" })
+        @Html.ValidationMessageFor(m => m.EstadoPago, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        $("#Identificacion").on('input', function () {
+            $("#btn_ComprobanteSearch").addClass("boton-deshabilitado");
+            if ($("#Identificacion").val().length != 0) {
+                $("#btn_ComprobanteSearch")
+                    .removeClass("boton-deshabilitado")
+                    .off("click")
+                    .on('click', function () {
+                        const url = `${BASE_URL}MesaEntradas/GetComprobantePago?tramiteId=${$("#Identificacion").val()}&idTipoTasa=${$("#TipoTasa").val()}`;
+                        $.getJSON(url, (data) => {
+                            const comprobantes = JSON.parse(data.comprobante);
+                            if (comprobantes.length) {
+                                $("#fecha-liquidacion").val(comprobantes[0].fechaLiquidacion);
+                                $("#fecha-pago").val(comprobantes[0].fechaPago);
+                                const fechaVen = comprobantes[0].fechaVencimiento;
+                                if (fechaVen) {
+                                    $("#fecha-vencimiento").val(FormatFechaHora(fechaVen, false));
+                                } else {
+                                    $("#fecha-vencimiento").val(new Date(new Date().getFullYear(), 11, 31)
+                                        .toLocaleDateString("es-AR"));
+                                }
+                                $("#MedioPago").val(comprobantes[0].medioPago);
+                                $("#EstadoPago").val(comprobantes[0].estado);
+                                $("#Importe").val(comprobantes[0].importe);
+                                $("#TipoTramite").val(comprobantes[0].tipoTramite);
+                            } else {
+                                mostrarMensaje(2, "Interfaz con Rentas", "Comprobante no encontrado, cargar los datos manualmente.", function () {
+                                    $("#btn_ComprobanteSearch").val("").addClass("boton-deshabilitado");
+                                    $("#fecha-liquidacion").val("").removeAttr('readonly');
+                                    $("#fecha-pago").val("").removeAttr('readonly');
+                                    $("#fecha-vencimiento").val("").removeAttr('readonly');
+                                    $("#MedioPago").val("").removeAttr('readonly');
+                                    $("#EstadoPago").val("").removeAttr('readonly');
+                                    $("#Importe").val("").removeAttr('readonly');
+                                    $("#TipoTramite").val("").removeAttr('readonly');
+                                });
+                            }
+                        }).fail((resp) => {
+                            if (resp.status === 400) {
+                                mostrarMensaje(3, "Interfaz con Rentas", "No existe el comprobante de pago.", function () {
+                                    $("#fecha-liquidacion").val("").attr('readonly', 'readonly');
+                                    $("#fecha-pago").val("").attr('readonly', 'readonly');
+                                    $("#fecha-vencimiento").val("").attr('readonly', 'readonly');
+                                    $("#MedioPago").val("").attr('readonly', 'readonly');
+                                    $("#EstadoPago").val("").attr('readonly', 'readonly');
+                                    $("#Importe").val("").attr('readonly', 'readonly');
+                                    $("#TipoTramite").val("").attr('readonly', 'readonly');
+                                });
+                            } else {
+                                mostrarMensaje(2, "Interfaz con Rentas", "Interfaz inactiva, cargar los datos manualmente.", function () {
+                                    $("#btn_ComprobanteSearch").addClass("boton-deshabilitado");
+                                    $("#fecha-liquidacion").removeAttr('readonly');
+                                    $("#fecha-pago").removeAttr('readonly');
+                                    $("#fecha-vencimiento").removeAttr('readonly');
+                                    $("#MedioPago").removeAttr('readonly');
+                                    $("#EstadoPago").removeAttr('readonly');
+                                    $("#Importe").removeAttr('readonly');
+                                    $("#TipoTramite").removeAttr('readonly');
+                                });
+                            }
+                        });
+                    });
+            }
+        });
+
+        jQuery.validator.addMethod("alphanumeric", function (value, element) {
+            return this.optional(element) || /^[áéíóú\w\d\s\$\.]+$/gi.test(value);
+        });
+
+        jQuery.validator.addMethod('positiveNumber', function (value) {
+            return Number(value) > 0;
+        });
+
+        $("#divEdicionObjetoContainer").validate({
+            rules: {
+                TipoTasa: {
+                    required: true
+                },
+                TipoTramite: {
+                    required: true,
+                    alphanumeric: true
+                },
+                Identificacion: {
+                    required: true,
+                    regex: /^(?:[1-9][0-9]*)$/
+                },
+                FechaLiquidacion: {
+                    required: true
+                },
+                FechaPago: {
+                    required: true
+                },
+                FechaVencimiento: {
+                    required: true
+                },
+                MedioPago: {
+                    required: true,
+                    alphanumeric: true
+                },
+                Importe: {
+                    required: true,
+                    positiveNumber: true
+                },
+                EstadoPago: {
+                    required: true,
+                    alphanumeric: true
+                }
+            },
+            messages: {
+                TipoTasa: {
+                    required: "El campo es requerido"
+                },
+                TipoTramite: {
+                    required: "El campo es requerido",
+                    alphanumeric: "Debe tener cargado un valor alfanumérico"
+                },
+                Identificacion: {
+                    required: "El campo es requerido",
+                    regex: "Debe tener cargado un valor numérico"
+                },
+                FechaLiquidacion: {
+                    required: "El campo es requerido"
+                },
+                FechaPago: {
+                    required: "El campo es requerido"
+                },
+                FechaVencimiento: {
+                    required: "El campo es requerido"
+                },
+                MedioPago: {
+                    required: "El campo es requerido",
+                    alphanumeric: "Debe tener cargado un valor alfanumérico"
+                },
+                Importe: {
+                    required: "El campo es requerido",
+                    positiveNumber: "Debe tener cargado un valor numérico mayor a 0"
+                },
+                EstadoPago: {
+                    required: "El campo es requerido",
+                    alphanumeric: "Debe tener cargado un valor alfanumérico"
+                }
+            }
+        });
+
+        $("#fecha-liquidacion").datepicker(getDatePickerConfig({ disabled: true, defaultDate: new Date(), enableOnReadonly: false }))
+            .change(function () {
+                $(this).valid();
+            });
+
+
+        $("#fecha-pago").datepicker(getDatePickerConfig({ defaultDate: new Date(), enableOnReadonly: false }))
+            .change(function () {
+                $(this).valid();
+            });
+
+        $("#fecha-vencimiento").datepicker(getDatePickerConfig({ defaultDate: new Date(), enableOnReadonly: false }))
+            .change(function () {
+                $(this).valid();
+            });
+    });
+</script>

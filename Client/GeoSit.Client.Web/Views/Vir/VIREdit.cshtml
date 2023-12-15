@@ -1,0 +1,162 @@
+@model GeoSit.Data.BusinessEntities.Inmuebles.VIRInmueble
+@{
+    ViewBag.Title = "Detalle Mejoras VIR";
+    List<SelectListItem> lstEstados = ViewBag.Estados;
+    List<SelectListItem> lstUsos = ViewBag.Usos;
+    List<SelectListItem> lstTipoEdif = ViewBag.TipoEdif;
+}
+<link href="~/Content/dataTables.bootstrap.css" rel="stylesheet" />
+<link href="~/Content/mantenimientoParcelario.css" rel="stylesheet" />
+@if (Model.MejoraTipoValuacionVIR == "R")
+{
+    <div class="modal fade mensaje theme_new" id="modalVIRDetalle" tabindex="-2" role="dialog" aria-hidden="true" data-backdrop="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">@ViewBag.Title</h3>
+                    <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+                </div>
+                <div class="modal-body">
+                    <div id="MensajeAlerta" class="alert alert-warning alert-dismissible" role="alert">
+                        <p><strong>Parcela VIR Rural/Subrural - Sus mejoras no se editan</strong></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="modal fade theme_new" id="modalVIRDetalle" role="dialog" aria-hidden="true" data-backdrop="false" data-keyboard="false">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="scroll-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title">@ViewBag.Title</h3>
+                        <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+                    </div>
+                    <div class="modal-body virDetalle-body">
+                        <div class="body-content virDetalle-content">
+                            <h2 class="text-center" id="partidaInmobiliaria">@Model.Partida</h2>
+                            <div class="panel-group">
+                                <div class="panel remove-shadow">
+                                    <div class="panel-title">
+                                        <h3 class="title-border" style="color: black; border-bottom-width: 1px; border-bottom-style: solid;"><strong>Valuaci&oacute;n</strong></h3>
+                                    </div>
+                                    <div id="virDetallePanel" class="panel-body">
+                                        <div class="form-horizontal">
+                                            <div class="form-group col-xs-6">
+                                                <label class="col-xs-5 control-label text-right">Partida:</label>
+                                                <div class="col-xs-7">
+                                                    <input type="hidden" id="txtIdInmueble" value="@Model.InmuebleId" />
+                                                    @Html.TextBox("txtPartida", Model.Partida, new { @class = "form-control", @readonly = true })
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-xs-6">
+                                                <label class="col-xs-5 control-label text-right">Nomenclatura:</label>
+                                                <div class="col-xs-7">
+                                                    @Html.TextBox("txtNomenclatura", Model.Nomenclatura, new { @class = "form-control", @readonly = true })
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-xs-6">
+                                                <label class="col-xs-5 control-label text-right">Tipo de Val. VIR:</label>
+                                                <div class="col-xs-7">
+                                                    @Html.TextBox("txtTipoValuacion", Model.TipoParcela, new { @class = "form-control", @readonly = true })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel remove-shadow" id="tierra-panel">
+                                    <div class="panel-title">
+                                        <h3 class="title-border" style="margin-top: 10px; color: black; border-bottom-width: 1px; border-bottom-style: solid;"><strong>Tierra</strong></h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="form-horizontal">
+                                            <div class="form-group col-xs-6">
+                                                <label class="col-xs-5 control-label text-right">Sup. Tierra (graf):</label>
+                                                <div class="col-xs-7">
+                                                    @Html.TextBox("txtSupTierra", Model.SupTierraInmParcelaGrafica.ToString("0.00"), new { @class = "form-control", @readonly = true })
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-xs-6">
+                                                <label class="col-xs-5 control-label text-right">Unidad:</label>
+                                                <div class="col-xs-7">
+                                                    @Html.TextBox("txtUnidad", Model.UnidadSuperficieTierra, new { @class = "form-control", @readonly = true })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="panel remove-shadow" id="mejoras-panel">
+                                    <div class="panel-title">
+                                        <h3 class="title-border" style="margin-top: 10px; color: black; border-bottom-width: 1px; border-bottom-style: solid;"><strong>Mejoras</strong></h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="form-horizontal">
+                                            <div class="form-group col-xs-6">
+                                                <label class="col-xs-5 control-label text-right">Sup. Constr. (m2):</label>
+                                                <div class="col-xs-7">
+                                                    @Html.TextBox("txtSupCub", Model.MejoraSupCubierta, new { @class = "form-control" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-xs-6">
+                                                <label class="col-xs-5 control-label text-right">Sup. Semicub. (m2):</label>
+                                                <div class="col-xs-7">
+                                                    @Html.TextBox("txtSupSemiCub", Model.MejoraSupSemicubierta, new { @class = "form-control" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-xs-6">
+                                                <label class="col-xs-5 control-label text-right">Uso predominate:</label>
+                                                <div class="col-xs-7">
+                                                    @Html.DropDownList("lstUsos", lstUsos, "Seleccione un Uso", new { @class = "form-control", onchange = "CargarTipoPredominante(this.value)", onselectedindexchanged = "CargarTipoPredominante(this.value)" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-xs-6">
+                                                <label class="col-xs-5 control-label text-right">Tipo predominante:</label>
+                                                <div class="col-xs-7">
+                                                    @Html.DropDownList("lstTipoEdif", lstTipoEdif, "Seleccione un Tipo de Edificación", new { @class = "form-control" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-xs-6">
+                                                <label class="col-xs-5 control-label text-right">Fecha Construcción:</label>
+                                                <div class="col-xs-7">
+                                                    <input type="text" id="fechaConst" class="form-control" value="@Model.FechaVigenciaDesde.ToString("dd/MM/yyyy")" />
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-xs-6">
+                                                <label class="col-xs-5 control-label text-right">Estado:</label>
+                                                <div class="col-xs-7">
+                                                    @Html.DropDownList("lstEstados", lstEstados, "Seleccione un Estado", new { @class = "form-control" })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-lg-4 pull-right">
+                        <span id="btnGuardar" aria-hidden="true" data-placement="right" title="Guardar" data-original-title="Guardar" class="fa fa-floppy-o fa-2x black cursor-pointer"></span>
+                        @*<span id="btnDescartar" aria-hidden="true" data-placement="right" title="Cancelar" data-original-title="Cancelar" class="fa fa-undo fa-2x black cursor-pointer"></span>*@
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<script src="~/Scripts/jquery.dataTables.min.js"></script>
+<script src="~/Scripts/dataTables.bootstrap.js"></script>
+<script src="~/Scripts/jquery.form.js"></script>
+<script src="~/Scripts/lodash.js"></script>
+<script src="~/Scripts/VIR/VIRDetalle.js"></script>
+
+<script>
+    $(document).ready(function () {
+        virDetalle.init();
+    });
+</script>

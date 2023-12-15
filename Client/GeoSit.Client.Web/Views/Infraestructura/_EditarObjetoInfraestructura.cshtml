@@ -1,0 +1,191 @@
+﻿@model GeoSit.Data.BusinessEntities.ObrasPublicas.ObjetoInfraestructura
+
+<form id="FormEdit" action="@Url.Action("PostObjetoInfraestructura")" method="post">
+    <div class="panel-group">
+        <div class="section-position">
+            <div class='panel-heading bg-primary main-heading' style="pointer-events:none">
+                <a href="javascript:void(0)">
+                    <div class='panel-title'>
+                        Edición de Objeto de Infraestructura
+                    </div>
+                </a>
+            </div>
+            <div class="panel-body">
+                <div class="form-horizontal" style="margin:10px 15px 0;">
+                    <div class="form-group">
+                        <label class="control-label col-xs-3 text-right">Tipo</label>
+                        <div class="col-xs-9">
+                            @Html.HiddenFor(model => model.FeatID, new { @id = "FeatIdEditar" })
+                            @Html.DropDownListFor(model => model.SubtipoObjeto.ID_Tipo_Objeto, (ViewBag.TipoObjetoList as System.Collections.Generic.IEnumerable<SelectListItem>), string.Empty, new { id = "CmbTipoObjetoEditar", @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-xs-3 text-right">Sub Tipo</label>
+                        <div class="col-xs-9">
+                            @Html.DropDownListFor(model => model.ID_Subtipo_Objeto, (ViewBag.SubTipoObjetoList as System.Collections.Generic.IEnumerable<SelectListItem>), new { id = "CmbSubTipoObjetoEditar", @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-xs-3 text-right">Clase</label>
+                        <div class="col-xs-9">
+                            @Html.HiddenFor(model => model.ClassID)
+                            @Html.DropDownList("CmbClaseEditar", new SelectList(ViewBag.ClasesList, "Value", "Text", (ViewBag.Clase == null ? 1 : ViewBag.Clase)), new { id = "CmbClaseEditar", @class = "form-control", disabled = "true" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-xs-3 text-right">Nombre</label>
+                        <div class="col-xs-9">
+                            @Html.TextBoxFor(model => model.Nombre, new { @Id = "txtNombre", @class = "form-control margin-bottom", @required = "required" })
+                            @Html.ValidationMessageFor(model => model.Nombre, "Campo obligatorio", new { @id = "txtNombreVal", @style = "color:red;", @class = "hidden" })
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-xs-3 text-right">Descripci&oacute;n</label>
+                        <div class="col-xs-9">
+                            @Html.TextBoxFor(model => model.Descripcion, new { @Id = "txtDescripcion", @class = "form-control" })
+                            @Html.ValidationMessageFor(model => model.Descripcion, "Campo obligatorio", new { @id = "txtDescripcionVal", @style = "color:red;", @class = "hidden" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel-group">
+        <div class="section-position">
+            <div class='panel-heading bg-primary main-heading' style="pointer-events:none">
+                <a href="javascript:void(0)">
+                    <div class='panel-title'>
+                        Propiedades
+                    </div>
+                </a>
+            </div>
+            <div class="panel-body">
+                <div class="form-horizontal" style="margin:10px 15px 0;">
+                    @{
+                        if (Model.SubtipoObjeto.Esquema != null)
+                        {
+                            System.Xml.Schema.XmlSchema mEsquema = System.Xml.Schema.XmlSchema.Read(new StringReader(Model.SubtipoObjeto.Esquema), null);
+                            System.Xml.Schema.XmlSchemaSet mEsquemaSet = new System.Xml.Schema.XmlSchemaSet();
+                            mEsquemaSet.Add(mEsquema);
+                            mEsquemaSet.Compile();
+
+
+                            System.Xml.Schema.XmlSchemaElement rootElement = null;
+
+                            foreach (System.Collections.DictionaryEntry item in mEsquema.Elements)
+                            {
+                                rootElement = item.Value as System.Xml.Schema.XmlSchemaElement;
+                                break;
+                            }
+
+                            System.Xml.Schema.XmlSchemaComplexType innerContent = rootElement.ElementSchemaType as System.Xml.Schema.XmlSchemaComplexType;
+                            var innerContentsOfRoot = innerContent.Particle as System.Xml.Schema.XmlSchemaSequence;
+
+                            foreach (System.Xml.Schema.XmlSchemaElement item in innerContentsOfRoot.Items)
+                            {
+                                <div class="form-group">
+                                    <label class="control-label col-xs-3 text-right">@item.Name</label>
+                                    <div class="col-xs-9">
+                                        @{
+                                            System.Xml.Schema.XmlSchemaSimpleType moreInnerContent = item.ElementSchemaType as System.Xml.Schema.XmlSchemaSimpleType;
+                                            if (item.Name.TrimEnd().ToUpper() != "OBSERVACIONES")
+                                            {
+                                                if (((System.Xml.Schema.XmlSchemaSimpleTypeRestriction)(moreInnerContent.Content)).BaseTypeName.Name != "anySimpleType")
+                                                {
+                                                    IEnumerable<SelectListItem>
+                                                        enumeratedValues = mEsquema.Items.OfType<System.Xml.Schema.XmlSchemaSimpleType>
+                                                            ()
+                                                            .Where(s => (s.Content is System.Xml.Schema.XmlSchemaSimpleTypeRestriction)
+                                                            && s.Name == item.SchemaTypeName.Name)
+                                                            .SelectMany<System.Xml.Schema.XmlSchemaSimpleType, string>
+                                                                (c => ((System.Xml.Schema.XmlSchemaSimpleTypeRestriction)c.Content)
+                                                                .Facets.OfType<System.Xml.Schema.XmlSchemaEnumerationFacet>
+                                                                    ().Select(d => d.Value)).Select(i => new SelectListItem() { Value = i, Text = i });
+
+                                                    if (Model.Atributos != null)
+                                                    {
+                                                        @Html.DropDownListFor(model => model._Atributos[item.Name], new SelectList(enumeratedValues, "Value", "Text", Model._Atributos[item.Name]), new { @id = item.Name + "Id", @class = "form-control schema-property" })
+                                                    }
+                                                    else
+                                                    {
+                                                        @Html.DropDownListFor(model => model._Atributos[item.Name], enumeratedValues, new { @id = item.Name + "Id", @class = "form-control schema-property" })
+                                                    }
+                                                }
+                                                else
+                                                {
+                                                    if (item.SchemaTypeName.Name != "date")
+                                                    {
+                                                        @Html.TextBoxFor(model => model._Atributos[item.Name], new { @id = item.Name + "Id", @class = "form-control schema-property" })
+                                                    }
+                                                    else
+                                                    {
+                                                        <div class="input-group date">
+                                                            @Html.TextBoxFor(model => model._Atributos[item.Name], new { @id = item.Name + "Id", @class = "form-control classdatepicker schema-property", @placeholder = "dd/mm/yyyy" })
+                                                            <span class="input-group-addon">
+                                                                <span class="icon-th fa fa-calendar fa-lg cursor-pointer"></span>
+                                                            </span>
+                                                        </div>
+                                                    }
+
+                                                }
+                                            }
+                                        }
+                                    </div>
+                                </div>
+                            }
+                        }
+                    }
+                    <div class="form-group">
+                        <label class="control-label col-xs-3 text-right">Coordenadas</label>
+                        <div class="col-xs-9">
+                            <div class="input-group">
+                                <input type="text" value="@ViewBag.CoordenadasText" readonly="readonly" id="txtCoordenadas" class="form-control" />
+                                <span class="input-group-addon">
+                                    <span class="fa fa-lg fa-map-marker cursor-pointer black" aria-hidden="true" id="btn_MapaEditar"></span>
+                                </span>
+                                @Html.ValidationMessageFor(model => model.Descripcion, "Campo obligatorio", new { @id = "txtDescripcionVal", @style = "color:red;", @class = "hidden" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label col-xs-3 text-right">Observaciones</label>
+                        <div class="col-xs-9">
+                            @Html.TextAreaFor(model => model._Atributos["Observaciones"], new { @id = "txtObservacionesId", @rows = "5", @class = "form-control", @style = "height:initial; resize:none;" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @*<div class="section-position">
+                <div class="panel-body">
+                    <div class="form-horizontal" style="margin:10px 15px 0;">
+                        <div class="form-group">
+                            <label class="control-label col-xs-3 text-right">Coordenadas</label>
+                            <div class="col-xs-9">
+                                <div class="input-group">
+                                    <input type="text" value="@ViewBag.CoordenadasText" readonly="readonly" id="txtCoordenadas" class="form-control" />
+                                    <span class="input-group-addon">
+                                        <span class="fa fa-lg fa-map-marker cursor-pointer black" aria-hidden="true" id="btn_MapaEditar"></span>
+                                    </span>
+                                    @Html.ValidationMessageFor(model => model.Descripcion, "Campo obligatorio", new { @id = "txtDescripcionVal", @style = "color:red;", @class = "hidden" })
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-xs-3 text-right">Observaciones</label>
+                            <div class="col-xs-9">
+                                @Html.TextAreaFor(model => model._Atributos["Observaciones"], new { @id = "txtObservacionesId", @rows = "5", @class = "form-control", @style = "height:initial; resize:none;" })
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>*@
+    </div>
+</form>
+
+<script>
+    $(".classdatepicker").datepicker(getDatePickerConfig())
+        .on("changeDate", function () {
+            $(this).datepicker(".classdatepicker", $(this).datepicker("getDate"));
+        });
+</script>

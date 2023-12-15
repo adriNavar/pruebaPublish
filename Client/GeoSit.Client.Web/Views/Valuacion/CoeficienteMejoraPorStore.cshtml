@@ -1,0 +1,1025 @@
+﻿@model GeoSit.Client.Web.Models.ValuacionModel
+@{
+    ViewBag.Title = "Coeficiente de Mejora por Store";
+    ViewBag.Description = "";
+    ViewBag.MensajeEntrada = "";
+
+}
+    <link href="~/Content/valuacion.css" rel="stylesheet" />
+    <link href="~/Content/jquery.jscrollpane.css" rel="stylesheet" />
+    <link href="~/Content/dataTables.bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/formValidation.min.css" rel="stylesheet" />
+    <link href="~/Content/select2.css" rel="stylesheet" />
+    <link href="~/Content/select2-bootstrap.css" rel="stylesheet" />
+@{
+    var textocomp = "Comparación";
+    var tamaniomodal =  "width: 60%";
+    var tamanioA = "col-lg-3 col-xs-3 col-sm-3 col-md-3";
+    var tamanioB = "col-lg-3 col-xs-3 col-sm-3 col-md-3";
+    if (Model.CoeficienteStore.TipoParametro1 == "comparador" && Model.CoeficienteStore.TipoParametro2 == "comparador")
+    {
+        tamaniomodal = "width: 80%";
+        tamanioA = "col-lg-2 col-xs-2 col-sm-2 col-md-2";
+        textocomp = "Comp.";
+    }
+    else if (Model.CoeficienteStore.TipoParametro1 == "comparador" && (Model.CoeficienteStore.TipoParametro2 != "combo" && Model.CoeficienteStore.TipoParametro2 != "texto" && Model.CoeficienteStore.TipoParametro2 != "comparador") ||
+          Model.CoeficienteStore.TipoParametro2 == "comparador" && (Model.CoeficienteStore.TipoParametro1 != "combo" && Model.CoeficienteStore.TipoParametro1 != "texto" && Model.CoeficienteStore.TipoParametro1 != "comparador"))
+    {
+        tamaniomodal = "width: 60%";
+        tamanioA = "col-lg-4 col-xs-4 col-sm-4 col-md-4";
+        tamanioB = "col-lg-4 col-xs-4 col-sm-4 col-md-4";
+    }
+    else if ((Model.CoeficienteStore.TipoParametro1 != "combo" && Model.CoeficienteStore.TipoParametro1 != "texto" && Model.CoeficienteStore.TipoParametro1 != "comparador") ||
+        (Model.CoeficienteStore.TipoParametro2 != "combo" && Model.CoeficienteStore.TipoParametro2 != "texto" && Model.CoeficienteStore.TipoParametro2 != "comparador" ))
+    {
+        tamaniomodal = "";
+        tamanioA = "col-lg-6 col-xs-6 col-sm-6 col-md-6";
+        tamanioB = "col-lg-6 col-xs-6 col-sm-6 col-md-6";
+    }
+    else if ((Model.CoeficienteStore.TipoParametro1 != "comparador" && Model.CoeficienteStore.TipoParametro2 != "comparador") ||
+        (Model.CoeficienteStore.TipoParametro1 != "combo" && Model.CoeficienteStore.TipoParametro1 != "texto" && Model.CoeficienteStore.TipoParametro1 != "comparador") ||
+        (Model.CoeficienteStore.TipoParametro2 != "combo" && Model.CoeficienteStore.TipoParametro2 != "texto" && Model.CoeficienteStore.TipoParametro2 != "comparador"))
+    {
+        tamaniomodal = "";
+        tamanioA = "col-lg-4 col-xs-4 col-sm-4 col-md-4";
+        tamanioB = "col-lg-4 col-xs-4 col-sm-4 col-md-4";
+    }
+}
+
+@*Modal Contenido*@
+<div class="modal fade" id="myModal" tabindex="-100" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog" style="@tamaniomodal">
+        >
+        <div class="modal-content">
+            <div class="modal-header centrado" style="padding: 10px 0px 40px;">
+                <h4 class="modal-title col-lg-12 col-xs-12 col-sm-12 col-md-12" id="myModalLabel">@ViewBag.Title</h4>
+            </div>
+            <div class="modal-body   modal-body-scroll">
+                @using (Ajax.BeginForm("GrabaCoeficienteMejora", "Valuacion", new { ReturnUrl = ViewBag.ReturnUrl }, new AjaxOptions { }, new { id = "formCoeficientes", role = "form", novalidate = "" }))
+                {
+                    @Html.AntiForgeryToken()
+                    ViewBag.MensajeEntrada = Model.Mensaje;
+                    @Html.Hidden("model.IdFiltroParcela", Model.IdFiltroParcela)
+                    @Html.Hidden("model.TipoValuacionId", Model.TipoValuacionId)
+                    @Html.Hidden("model.MetadatoMejoraCoeficiente.IdMejoraCoeficiente", Model.MetadatoMejoraCoeficiente.IdMejoraCoeficiente)
+                    @Html.Hidden("model.TipoCoeficienteMejora.IdTipoCoeficienteMejora", Model.TipoCoeficienteMejora.IdTipoCoeficienteMejora)
+                   
+
+                    <div class="row " style="height:3em; padding: 0px 20px;">
+                        @if (Model.CoeficienteStore.TipoParametro1 == "comparador")
+                        {
+                            <div class="@tamanioA centrado h4">@textocomp</div>
+                        }
+                        @if (Model.CoeficienteStore.TipoParametro1 == "combo" || Model.CoeficienteStore.TipoParametro1 == "texto" || Model.CoeficienteStore.TipoParametro1 == "comparador")
+                        {
+                            <div class="@tamanioB centrado h4" style="white-space:nowrap">@ViewBag.NombreParametro1</div>
+                        }
+                        @if (Model.CoeficienteStore.TipoParametro2 == "comparador")
+                        {
+                            <div class="@tamanioA centrado h4">@textocomp</div>
+                        }
+                        @if (Model.CoeficienteStore.TipoParametro2 == "combo" || Model.CoeficienteStore.TipoParametro2 == "texto" || Model.CoeficienteStore.TipoParametro2 == "comparador")
+                        {
+                            <div class="@tamanioB centrado h4" style="white-space:nowrap">@ViewBag.NombreParametro2</div>
+                        }
+                        <div class="@tamanioA centrado h4">Valor</div>
+                    </div>
+
+                    <div class="row" style=" padding: 0px 20px;">
+                        @{
+                        var margensegundo = "";
+                        var margen = "";
+                        if (Model.CoeficienteStore.Parametro1.Count() > 0)
+                        {
+                            margen = "margin-top: 10px;";
+                        }
+                        }
+
+                        @if (Model.CoeficienteStore.TipoParametro1 == "combo")
+                        {
+                            <div class="@tamanioB BordeCuadro borde-superior borde-izquierdo borde-inferior" id="divParametro1" style="height: 100%; padding: 10px 10px;">
+                                @********valor 1********@
+
+                                @for (int i = 0; i < Model.CoeficienteStore.Parametro1.Count(); i++)
+                                {
+                                    var tabIndice = i + 1;
+                                    if (i > 0)
+                                    {
+                                        margensegundo = "margin-top: 10px;";
+                                    }
+                                    <select id="Parametro1_@i" class="form-control parametro1" name="model.CoeficienteStore.Parametro1" style="width: 100%; @margensegundo ">
+
+                                        @{foreach (SelectListItem item in ViewBag.listaParametro1)
+                                        {
+                                            if (item.Value == Model.CoeficienteStore.Parametro1[i])
+                                            {
+                                                <option value="@item.Value" selected>@item.Text</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@item.Value">@item.Text</option>
+                                            }
+                                        }
+                                        }
+                                    </select>
+                                }
+
+
+                                <select id="Parametro1_@Model.CoeficienteStore.Parametro1.Count()" class="form-control parametro1" name="model.CoeficienteStore.Parametro1" style="width:100%;  @margen">
+                                    @{foreach (SelectListItem item in ViewBag.listaParametro1)
+                                    {
+                                        <option value="@item.Value">@item.Text</option>
+                                    }
+                                    }
+                                </select>
+                            </div>
+                        }
+                        @if (Model.CoeficienteStore.TipoParametro1 == "comparador")
+                        {
+                            <div class="@tamanioA BordeCuadro borde-izquierdo borde-superior borde-inferior" id="divComparacion1" style="height: 100%; padding: 10px 10px;">
+
+                                @********valor comparacion********@
+                                @for (int i = 0; i < Model.CoeficienteStore.ValorComparacion1.Count(); i++)
+                                {
+                                    var comparador = long.Parse(Model.CoeficienteStore.ValorComparacion1[i]);
+                                    margensegundo = "";
+                                    if (i > 0)
+                                    {
+                                        margensegundo = "margin-top: 10px;";
+                                    }
+                                    <div class="container-fluid sin-padding">
+
+                                        <div class="col-lg-12 col-xs-12 col-sm-12 col-md-12 sin-padding" tabindex="1" style="@margensegundo">
+                                            <select class="form-control sin-padding divOpciones cmbcomparacion1" id="Comparacion1_@i" name="model.CoeficienteStore.ValorComparacion1">
+                                                @if (comparador == 1)
+                                                {
+                                                    <option value="1" selected>Menor a</option> }
+                                                else
+                                                {
+                                                    <option value="1">Menor a</option>}
+
+                                                @if (comparador == 2)
+                                                {
+                                                    <option value="2" selected>Mayor a</option> }
+                                                else
+                                                {
+                                                    <option value="2">Mayor a</option>
+                                                }
+
+                                                @if (comparador == 3)
+                                                {
+                                                    <option value="3" selected>Menor o igual a</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="3">Menor o igual a</option> }
+
+                                                @if (comparador == 4)
+                                                {
+                                                    <option value="4" selected>Mayor o igual a</option>}
+                                                else
+                                                {
+                                                    <option value="4">Mayor o igual a</option>}
+
+                                                @if (comparador == 5)
+                                                {
+                                                    <option value="5" selected>Igual a</option> }
+                                                else
+                                                {
+                                                    <option value="5">Igual a</option> }
+
+                                                @if (comparador == 6)
+                                                {
+                                                    <option value="6" selected>Entre</option> }
+                                                else
+                                                {
+                                                    <option value="6">Entre</option>}
+
+                                            </select>
+                                        </div>
+                                    </div>
+                                }
+                                <div class="container-fluid sin-padding">
+
+                                    <div class="col-lg-12 col-xs-12 col-sm-12 col-md-12 sin-padding " tabindex="1" style="@margensegundo">
+                                        <select class="form-control sin-padding divOpciones cmbcomparacion1" id="Comparacion1_@Model.CoeficienteStore.ValorComparacion1.Count()" name="model.CoeficienteStore.ValorComparacion1">
+                                            <option value="1">Menor a</option>
+                                            <option value="2" selected>Mayor a</option>
+                                            <option value="3">Menor o igual a</option>
+                                            <option value="4">Mayor o igual a</option>
+                                            <option value="5">Igual a</option>
+                                            <option value="6">Entre</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                            </div>
+                        }
+                        @if (Model.CoeficienteStore.TipoParametro1 == "texto" || Model.CoeficienteStore.TipoParametro1 == "comparador")
+                        {
+                            <div class="@tamanioB BordeCuadro borde-izquierdo borde-superior borde-inferior" id="divParametro1" style="height: 100%; padding: 10px 10px;">
+                                @for (int i = 0; i < Model.CoeficienteStore.Parametro1.Count(); i++)
+                                {
+                                    margensegundo = "";
+                                    if (i > 0)
+                                    {
+                                        margensegundo = "margin-top: 10px;";
+                                    }
+                                    if (Model.CoeficienteStore.ValorComparacion1[i] == "6")
+                                    {
+                                        @********valor 2********@
+                                        <div style="@margensegundo;  overflow:auto">
+                                            <input class="centrado form-control" id="Parametro2_@i" name="model.CoeficienteStore.Parametro1" onclick="" style="width:100%; display:none;  " type="text" value="@Model.CoeficienteStore.Parametro1[i]" maxlength="12" tabindex="1">
+                                            @********valor 2 entre********@
+                                            <input class="col-lg-6 col-xs-6 col-sm-6 col-md-6 sin-padding  centrado divOpciones form-control" id="Parametro1Desde_@i" name="model.CoeficienteStore.Parametro1Desde" onclick="" style="width:50%;    " type="text" value="@Model.CoeficienteStore.Parametro1Desde[i]" maxlength="12" tabindex="1">
+                                            <input class="col-lg-6 col-xs-6 col-sm-6 col-md-6 sin-padding centrado divOpciones form-control" id="Parametro1Hasta_@i" name="model.CoeficienteStore.Parametro1Hasta" style="width:50%;   " type="text" value="@Model.CoeficienteStore.Parametro1Hasta[i]" maxlength="12" tabindex="1">
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        @********valor 2********@
+                                        <div style="@margensegundo;  overflow:auto">
+                                            <input class="centrado form-control" id="Parametro1_@i" name="model.CoeficienteStore.Parametro1" onclick="" style="width:100%;   " type="text" value="@Model.CoeficienteStore.Parametro1[i]" maxlength="12" tabindex="1">
+                                            @********valor 2 entre********@
+                                            <input class="col-lg-6 col-xs-6 col-sm-6 col-md-6 sin-padding centrado divOpciones form-control" id="Parametro1Desde_@i" name="model.CoeficienteStore.Parametro1Desde" onclick="" style="width:50%; display:none;  " type="text" value="@Model.CoeficienteStore.Parametro1Desde[i]" maxlength="12" tabindex="1">
+                                            <input class="col-lg-6 col-xs-6 col-sm-6 col-md-6 sin-padding centrado divOpciones form-control" id="Parametro1Hasta_@i" name="model.CoeficienteStore.Parametro1Hasta" style="width:50%; display:none;  " type="text" value="@Model.CoeficienteStore.Parametro1Hasta[i]" maxlength="12" tabindex="1">
+                                        </div>
+                                    }
+                                }
+                                <div style="@margen ; overflow:auto">
+                                    <input class="centrado form-control" id="Parametro1_@Model.CoeficienteStore.Parametro1.Count()" name="model.CoeficienteStore.Parametro1" style="width:100%;  " type="text" value="" maxlength="12" tabindex="1">
+
+                                    <input class=" col-lg-6 col-xs-6 col-sm-6 col-md-6 sin-padding centrado divOpciones form-control" id="Parametro1Desde_@Model.CoeficienteStore.Parametro2Desde.Count()" name="model.CoeficienteStore.Parametro2Desde" style="width:50%; display:none;" type="text" value="" maxlength="12" tabindex="1">
+                                    <input class=" col-lg-6 col-xs-6 col-sm-6 col-md-6 sin-padding centrado divOpciones form-control" id="Parametro1Hasta_@Model.CoeficienteStore.Parametro2Hasta.Count()" name="model.CoeficienteStore.Parametro2Hasta" style="width:50%; display:none;" type="text" value="" maxlength="12" tabindex="1">
+                                </div>
+                            </div>
+                        }
+
+
+                        @********Parametro 2********@
+                        @if (Model.CoeficienteStore.TipoParametro2 == "combo")
+                        {
+                            <div class="@tamanioB BordeCuadro borde-superior borde-izquierdo borde-inferior" id="divParametro2" style="height: 100%; padding: 10px 10px;">
+                                @********valor 1********@
+
+                                @for (int i = 0; i < Model.CoeficienteStore.Parametro2.Count(); i++)
+                                {
+                                    margensegundo = "";
+                                    var tabIndice = i + 1;
+                                    if (i > 0)
+                                    {
+                                        margensegundo = "margin-top: 10px;";
+                                    }
+                                    <select id="Parametro1_@i" class="form-control parametro2" name="model.CoeficienteStore.Parametro1" style="width: 100%; @margensegundo ">
+
+                                        @{foreach (SelectListItem item in ViewBag.listaParametro2)
+                                        {
+                                            if (item.Value == Model.CoeficienteStore.Parametro2[i])
+                                            {
+                                                <option value="@item.Value" selected>@item.Text</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@item.Value">@item.Text</option>
+                                            }
+                                        }
+                                        }
+                                    </select>
+                                }
+
+
+                                <select id="Parametro2_@Model.CoeficienteStore.Parametro2.Count()" class="form-control parametro2" name="model.CoeficienteStore.Parametro2" style="width:100%;  @margen">
+                                    @{foreach (SelectListItem item in ViewBag.listaParametro2)
+                                    {
+                                        <option value="@item.Value">@item.Text</option>
+                                    }
+                                    }
+                                </select>
+                            </div>
+                        }
+                        @if (Model.CoeficienteStore.TipoParametro2 == "comparador")
+                        {
+                            <div class="@tamanioA BordeCuadro borde-izquierdo borde-superior borde-inferior" id="divComparacion2" style="height: 100%; padding: 10px 10px;">
+
+                                @********valor comparacion********@
+                                @for (int i = 0; i < Model.CoeficienteStore.ValorComparacion2.Count(); i++)
+                                {
+                                    var comparador = long.Parse(Model.CoeficienteStore.ValorComparacion2[i]);
+                                    margensegundo = "";
+                                    if (i > 0)
+                                    {
+                                        margensegundo = "margin-top: 10px;";
+                                    }
+                                    <div class="container-fluid sin-padding">
+
+                                        <div class="col-lg-12 col-xs-12 col-sm-12 col-md-12 sin-padding" tabindex="1" style="@margensegundo">
+                                            <select class="form-control sin-padding divOpciones cmbcomparacion2" id="Comparacion2_@i" name="model.CoeficienteStore.ValorComparacion2">
+                                                @if (comparador == 1)
+                                                {
+                                                    <option value="1" selected>Menor a</option> }
+                                                else
+                                                {
+                                                    <option value="1">Menor a</option>}
+
+                                                @if (comparador == 2)
+                                                {
+                                                    <option value="2" selected>Mayor a</option> }
+                                                else
+                                                {
+                                                    <option value="2">Mayor a</option>
+                                                }
+
+                                                @if (comparador == 3)
+                                                {
+                                                    <option value="3" selected>Menor o igual a</option>
+                                                }
+                                                else
+                                                {
+                                                    <option value="3">Menor o igual a</option> }
+
+                                                @if (comparador == 4)
+                                                {
+                                                    <option value="4" selected>Mayor o igual a</option>}
+                                                else
+                                                {
+                                                    <option value="4">Mayor o igual a</option>}
+
+                                                @if (comparador == 5)
+                                                {
+                                                    <option value="5" selected>Igual a</option> }
+                                                else
+                                                {
+                                                    <option value="5">Igual a</option> }
+
+                                                @if (comparador == 6)
+                                                {
+                                                    <option value="6" selected>Entre</option> }
+                                                else
+                                                {
+                                                    <option value="6">Entre</option>}
+
+                                            </select>
+                                        </div>
+                                    </div>
+                                }
+                                <div class="container-fluid sin-padding">
+
+                                    <div class="col-lg-12 col-xs-12 col-sm-12 col-md-12 sin-padding " tabindex="1" style="@margen; ">
+                                        <select class="form-control sin-padding divOpciones cmbcomparacion2" id="Comparacion2_@Model.CoeficienteStore.ValorComparacion2.Count()" name="model.CoeficienteStore.ValorComparacion2">
+                                            <option value="1">Menor a</option>
+                                            <option value="2" selected>Mayor a</option>
+                                            <option value="3">Menor o igual a</option>
+                                            <option value="4">Mayor o igual a</option>
+                                            <option value="5">Igual a</option>
+                                            <option value="6">Entre</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                            </div>
+                        }
+                        @if (Model.CoeficienteStore.TipoParametro2 == "texto" || Model.CoeficienteStore.TipoParametro2 == "comparador")
+                        {
+                            <div class="@tamanioB BordeCuadro borde-izquierdo borde-superior borde-inferior" id="divParametro2" style="height: 100%; padding: 10px 10px;">
+                                @for (int i = 0; i < Model.CoeficienteStore.Parametro2.Count(); i++)
+                                {
+                                    margensegundo = "";
+                                    if (i > 0)
+                                    {
+                                        margensegundo = "margin-top: 10px;";
+                                    }
+                                    if (Model.CoeficienteStore.ValorComparacion2[i] == "6")
+                                    {
+                                        @********valor 2********@
+                                        <div style="@margensegundo;  overflow:auto">
+                                            <input class="centrado form-control" id="Parametro2_@i" name="model.CoeficienteStore.Parametro2" onclick="" style="width:100%; display:none;  " type="text" value="@Model.CoeficienteStore.Parametro2[i]" maxlength="12" tabindex="1">
+                                            @********valor 2 entre********@
+                                            <input class="col-lg-6 col-xs-6 col-sm-6 col-md-6 sin-padding  centrado divOpciones form-control" id="Parametro2Desde_@i" name="model.CoeficienteStore.Parametro2Desde" onclick="" style="width:50%;    " type="text" value="@Model.CoeficienteStore.Parametro2Desde[i]" maxlength="12" tabindex="1">
+                                            <input class="col-lg-6 col-xs-6 col-sm-6 col-md-6 sin-padding centrado divOpciones form-control" id="Parametro2Hasta_@i" name="model.CoeficienteStore.Parametro2Hasta" style="width:50%;   " type="text" value="@Model.CoeficienteStore.Parametro2Hasta[i]" maxlength="12" tabindex="1">
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        @********valor 2********@
+                                        <div style="@margensegundo;  overflow:auto">
+                                            <input class="centrado form-control" id="Parametro2_@i" name="model.CoeficienteStore.Parametro2" onclick="" style="width:100%;" type="text" value="@Model.CoeficienteStore.Parametro2[i]" maxlength="12" tabindex="1">
+                                            @********valor 2 entre********@
+                                            <input class="col-lg-6 col-xs-6 col-sm-6 col-md-6 sin-padding  centrado divOpciones form-control" id="Parametro2Desde_@i" name="model.CoeficienteStore.Parametro2Desde" style="width:50%; display:none;  " type="text" value="@Model.CoeficienteStore.Parametro2Desde[i]" maxlength="12" tabindex="1">
+                                            <input class="col-lg-6 col-xs-6 col-sm-6 col-md-6 sin-padding centrado divOpciones form-control" id="Parametro2Hasta_@i" name="model.CoeficienteStore.Parametro2Hasta" style="width:50%; display:none;  " type="text" value="@Model.CoeficienteStore.Parametro2Hasta[i]" maxlength="12" tabindex="1">
+                                        </div>
+                                    }
+
+                                }
+                                <div style="@margen ; overflow:auto">
+                                    <input class="centrado form-control" id="Parametro2_@Model.CoeficienteStore.Parametro2.Count()" name="model.CoeficienteStore.Parametro2" style="width:100%;  " type="text" value="" maxlength="12" tabindex="1">
+
+                                    <input class=" col-lg-6 col-xs-6 col-sm-6 col-md-6 sin-padding centrado divOpciones form-control" id="Parametro2Desde_@Model.CoeficienteStore.Parametro2Desde.Count()" name="model.CoeficienteStore.Parametro2Desde" style="width:50%; display:none;" type="text" value="" maxlength="12" tabindex="1">
+                                    <input class=" col-lg-6 col-xs-6 col-sm-6 col-md-6 sin-padding centrado divOpciones form-control" id="Parametro2Hasta_@Model.CoeficienteStore.Parametro2Hasta.Count()" name="model.CoeficienteStore.Parametro2Hasta" style="width:50%; display:none;" type="text" value="" maxlength="12" tabindex="1">
+                                </div>
+                            </div>
+                        }
+                        <div class="@tamanioA BordeCuadro borde-izquierdo borde-superior borde-inferior borde-derecho" id="divModulos" style="height: 100%; padding: 10px 10px;">
+                            @********valor 3********@
+                            @for (int i = 0; i < Model.CoeficienteStore.Cantidad.Count(); i++)
+                            {
+                                margensegundo = "";
+                                if (i > 0)
+                                {
+                                    margensegundo = "margin-top: 10px;";
+                                }
+                                <input class="centrado form-control cantidad" id="Cantidad_@i" name="model.CoeficienteStore.Cantidad" style="width:100%; @margensegundo" type="text" value="@Model.CoeficienteStore.Cantidad[i]" maxlength="12" tabindex="1">
+                            }
+                            <input class="centrado form-control cantidad" id="Cantidad_@Model.CoeficienteStore.Cantidad.Count()" name="model.CoeficienteStore.Cantidad" onclick="AgregarCampo(@Model.CoeficienteStore.Cantidad.Count())" style="width:100%; @margen" type="text" value="" maxlength="12" tabindex="1">
+                        </div>
+
+                    </div>
+                }
+            </div>
+
+            @*BOTONES*@
+            <div class="modal-footer" id="Panel_Botones">
+
+                <img title="Confirmar" id="guardarModulo" src="~/Content/images/Valuacion/icons/blue/32/save.png" style="cursor: pointer; margin-right:10px;">
+
+                <img id="btnCancelarModulo" title="Cerrar" src="~/Content/images/Valuacion/icons/blue/32/cancelar.png" style="cursor:pointer;">
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- Modal Advertencia-->
+<div class="modal fade" id="ModalAdvertencia" tabindex="-2" role="dialog" aria-labelledby="TituloAdvertencia" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <input type="hidden" id="TipoAdvertencia" value="" />
+                <h4 class="modal-title col-lg-11 col-xs-11 col-sm-11 col-md-11" id="TituloAdvertencia" style="color:#000000;">Titulo</h4>
+                <br />
+            </div>
+            <div class="modal-body">
+                <div id="MensajeAlerta" class="alert alert-warning alert-dismissible" role="alert">
+                    <strong>Atención!</strong><br />
+                    <p id="DescripcionAdvertencia">Está a punto de DESACTIVAR al usuario Perez, Juan <br />Está seguro de continuar?</p>
+                </div>
+            </div>
+            <div class="modal-footer" style="background-color:#ffffff;" id="Panel_Botones">
+                <img id="btnAdvertenciaOK" data-dismiss="modal" class="" title="Aceptar" src="~/Content/images/Seguridad/icons/blue/32/checkbox.png" style="cursor:pointer;">&ensp;&ensp;
+                <img id="btnCancelarAdvertencia" data-dismiss="modal" title="Cancelar" src="~/Content/images/Seguridad/icons/blue/32/cancelar.png" style="cursor:pointer;">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Información-->
+<div class="modal fade" id="ModalInfo" tabindex="-3" role="dialog" aria-labelledby="TituloInfo" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <input type="hidden" id="TipoInformacion" value="" />
+                <h4 class="modal-title col-lg-11 col-xs-11 col-sm-11 col-md-11" id="TituloInfo" style="color:#000000;">Titulo</h4>
+                <br />
+            </div>
+            <div class="modal-body">
+                <div id="MensajeInfo" class="alert alert-success alert-dismissible" role="alert">
+                    <strong>Atención!</strong><br />
+                    <p id="DescripcionInfo">Descripcion de la informacion</p>
+                </div>
+            </div>
+            <div class="modal-footer" style="background-color:#ffffff;" id="Panel_Botones">
+                <img id="btnCancelarInfo" data-dismiss="modal" title="Cancelar" src="~/Content/images/Seguridad/icons/blue/32/checkbox.png" style="cursor:pointer;">
+            </div>
+        </div>
+    </div>
+</div>
+
+    <script src="~/Scripts/jquery.dataTables.js"></script>
+    <script src="~/Scripts/formValidation.min.js"></script>
+    <script src="~/Scripts/bootstrapValidation.min.js"></script>
+    <script src="~/Scripts/select2.js"></script>
+
+    <script src="~/Scripts/jquery.inputmask.js" type="text/javascript"></script>
+    <script src="~/Scripts/jquery.inputmask.regex.extensions.js" type="text/javascript"></script>
+    <script src="~/Scripts/jquery.inputmask.numeric.extensions.js" type="text/javascript"></script>
+    <script src="~/Scripts/jquery.form.js"></script>
+
+    <script>
+
+    function AgregarCampo(Index) {
+
+        var indexTab = Index + 1;
+
+        //$("#Parametro1_" + Index).prop('onclick', null).off('click');
+        //$("#Parametro2_" + Index).prop('onclick', null).off('click');
+        //$("#Parametro2Desde_" + Index + "").prop('onclick', null).off('click');
+        $("#Cantidad_" + Index).prop('onclick', null).off('click');
+        Index++;
+        indexTab++;
+
+
+
+        @if (Model.CoeficienteStore.TipoParametro1 == "combo") {
+                    <text>
+        var OptionsParametro1 = "";
+        </text>
+
+            foreach (SelectListItem item in ViewBag.listaParametro1){
+                    <text>
+        OptionsParametro1 += '<option value="@item.Value">@item.Text</option>';
+        </text>
+            }
+                    <text>
+        var Parametro1 = '<select id="Parametro1_' + Index + '" name="model.CoeficienteStore.Parametro1" class="form-control" style="width:100%; margin-top: 10px;">';
+        Parametro1 += OptionsParametro1;
+        Parametro1 += '</select>';
+        </text>
+            } else {
+
+                  if (Model.CoeficienteStore.TipoParametro1 == "comparador") {
+                       <text>
+        var campoInput2a = '<div class="container-fluid sin-padding" style="margin-top: 10px;" tabindex = "' + indexTab + '">' +
+       '<div class="col-lg-12 col-xs-12 col-sm-12 col-md-12 sin-padding ">' +
+       '<select class="form-control sin-padding divOpciones cmbcomparacion1" id="Comparacion1_' + Index + '" name="model.CoeficienteStore.ValorComparacion1">' +
+       '<option value="1">Menor a</option>' +
+       '<option value="2">Mayor a</option>' +
+       '<option value="3">Menor o igual a</option>' +
+       '<option value="4">Mayor o igual a</option>' +
+       '<option value="5">Igual a</option>' +
+       '<option value="6">Entre</option>' +
+       '</select>' +
+       '</div>' +
+       '</div>';
+
+        $("#divComparacion1").append(campoInput2a);
+        </text>
+                }
+                      <text>
+        var Parametro1 = '<div style=" margin-top: 10px; overflow:auto"> <input class="centrado form-control" id="Parametro1_' + Index + '" name="model.CoeficienteStore.Parametro1" style="width:100%; " type="text" value="" maxlength="12" tabindex = "' + indexTab + '" >' +
+        '<input class="col-lg-6 col-xs-6 col-sm-6 col-md-6 sin-padding centrado divOpciones form-control" id="Parametro1Desde_' + Index + '" name="model.CoeficienteStore.Parametro1Desde"  style="width:50%; display:none" type="text" value="" maxlength="12" tabindex = "' + indexTab + '" >' +
+        '<input class="col-lg-6 col-xs-6 col-sm-6 col-md-6 sin-padding centrado divOpciones form-control" id="Parametro1Hasta_' + Index + '" name="model.CoeficienteStore.Parametro1Hasta" style="width:50%; display:none" type="text" value="" maxlength="12" tabindex = "' + indexTab + '" > </div>';
+        </text>
+                }
+
+        var campoInput1 = Parametro1;
+
+        @if (Model.CoeficienteStore.TipoParametro2 == "combo") {
+                        <text>
+        var OptionsParametro2 = "";
+        </text>
+
+                        foreach (SelectListItem item in ViewBag.listaParametro2)
+                        {
+                            <text>
+        OptionsParametro2 += '<option value="@item.Value">@item.Text</option>';
+        </text>
+                        }
+
+                   <text>
+        var Parametro2 = '<select id="Parametro1_' + Index + '" name="model.CoeficienteStore.Parametro1" class="form-control" style="width:100%; margin-top: 10px;">';
+        Parametro2 += OptionsParametro2;
+        Parametro2 += '</select>';
+        </text>
+                    }else{
+
+                    if (Model.CoeficienteStore.TipoParametro2 == "comparador") {
+                        <text>
+        var campoInput2 = '<div class="container-fluid sin-padding" style="margin-top: 10px;" tabindex = "' + indexTab + '">' +
+              '<div class="col-lg-12 col-xs-12 col-sm-12 col-md-12 sin-padding ">' +
+              '<select class="form-control sin-padding divOpciones cmbcomparacion2" id="Comparacion2_' + Index + '" name="model.CoeficienteStore.ValorComparacion2">' +
+              '<option value="1">Menor a</option>' +
+              '<option value="2">Mayor a</option>' +
+              '<option value="3">Menor o igual a</option>' +
+              '<option value="4">Mayor o igual a</option>' +
+              '<option value="5">Igual a</option>' +
+              '<option value="6">Entre</option>' +
+              '</select>' +
+              '</div>' +
+              '</div>';
+        $("#divComparacion2").append(campoInput2);
+        </text>
+
+                    }
+                        <text>
+        var Parametro2 = '<div style=" margin-top: 10px; overflow:auto"> <input class="centrado form-control" id="Parametro2_' + Index + '" name="model.CoeficienteStore.Parametro2" style="width:100%; " type="text" value="" maxlength="12" tabindex = "' + indexTab + '" >' +
+        '<input class="col-lg-6 col-xs-6 col-sm-6 col-md-6 sin-padding centrado divOpciones form-control" id="Parametro2Desde_' + Index + '" name="model.CoeficienteStore.Parametro2Desde"  style="width:50%; display:none" type="text" value="" maxlength="12" tabindex = "' + indexTab + '" >' +
+        '<input class="col-lg-6 col-xs-6 col-sm-6 col-md-6 sin-padding centrado divOpciones form-control" id="Parametro2Hasta_' + Index + '" name="model.CoeficienteStore.Parametro2Hasta" style="width:50%; display:none" type="text" value="" maxlength="12" tabindex = "' + indexTab + '" > </div>';
+
+        </text>
+                }
+
+        var campoInput3 = Parametro2;
+        var campoInput4 = '<input class="centrado form-control" id="Cantidad_' + Index + '" name="model.CoeficienteStore.Cantidad" style="width:100%; margin-top: 10px;" type="text" value="" onclick="AgregarCampo(' + Index + ')" maxlength="12" tabindex = "' + indexTab + '" onkeypress="javascript:VerificaAgregarCampo(event,this)">';
+
+        $("#divParametro1").append(campoInput1);
+        $("#divParametro2").append(campoInput3);
+        $("#divModulos").append(campoInput4);
+
+        @if (Model.CoeficienteStore.TipoParametro1 == "comparador") {
+            <text>
+        $("#Comparacion1_" + Index + "").change(function () {
+
+            if ($("#Comparacion1_" + Index + "").val() == 6) {
+
+                $("#Parametro1_" + Index + "").hide();
+                $("#Parametro1Desde_" + Index + "").show();
+                $("#Parametro1Hasta_" + Index + "").show();
+
+            } else {
+
+                $("#Parametro1_" + Index + "").show();
+                $("#Parametro1Desde_" + Index + "").hide();
+                $("#Parametro1Hasta_" + Index + "").hide();
+
+            }
+        });
+        $("#Parametro1_" + Index + "").inputmask('Regex', { regex: "([0-9]|[A-Z]|[a-z]){12}" });
+        $("#Parametro1Desde_" + Index + "").inputmask('Regex', { regex: "([0-9]|[A-Z]|[a-z]){12}" });
+        $("#Parametro1Hasta_" + Index + "").inputmask('Regex', { regex: "([0-9]|[A-Z]|[a-z]){12}" });
+        </text>
+        }else if(Model.CoeficienteStore.TipoParametro1 == "combo"){
+          <text>
+        $("#Parametro1_" + Index + "").select2({});
+        </text>
+      }
+        @if (Model.CoeficienteStore.TipoParametro2 == "comparador") {
+             <text>
+        $("#Comparacion2_" + Index + "").change(function () {
+
+            if ($("#Comparacion2_" + Index + "").val() == 6) {
+
+                $("#Parametro2_" + Index + "").hide();
+                $("#Parametro2Desde_" + Index + "").show();
+                $("#Parametro2Hasta_" + Index + "").show();
+
+            } else {
+
+                $("#Parametro2_" + Index + "").show();
+                $("#Parametro2Desde_" + Index + "").hide();
+                $("#Parametro2Hasta_" + Index + "").hide();
+
+            }
+        });
+        $("#Parametro2_" + Index + "").inputmask('Regex', { regex: "([0-9]|[A-Z]|[a-z]){12}" });
+        $("#Parametro2Desde_" + Index + "").inputmask('Regex', { regex: "([0-9]|[A-Z]|[a-z]){12}" });
+        $("#Parametro2Hasta_" + Index + "").inputmask('Regex', { regex: "([0-9]|[A-Z]|[a-z]){12}" });
+        </text>
+        }
+        else if (Model.CoeficienteStore.TipoParametro2 == "combo")
+        {
+          <text>
+        $("#Parametro2_" + Index + "").select2({});
+        </text>
+      }
+
+
+        //$("#Parametro2Desde_" + Index + "").inputmask('decimal', { digits: 1, rightAlign: false, radixPoint: '.' });
+        //$("#Parametro2Hasta_" + Index + "").inputmask('decimal', { digits: 1, rightAlign: false, radixPoint: '.' });
+        //$("#Parametro2_" + Index + "").inputmask('decimal', { digits: 1, rightAlign: false, radixPoint: '.' });
+        $("#Cantidad_" + Index + "").inputmask('decimal', { digits: 2, rightAlign: false, radixPoint: '.' });
+
+    }
+
+    function VerificaAgregarCampo(event, obj) {
+
+        var char = event.which || event.keyCode;
+        var Cantidad = $("#divModulos input").length;
+
+        if (char == 9 && $(obj).prop("tabindex") == Cantidad) {
+
+            AgregarCampo($(obj).prop("tabindex") - 1);
+
+            if ($("#divParametro1").hasClass('panel-desactivado')) {
+
+                $("#Parametro2Desde_" + (Cantidad - 1)).focus();
+
+            } else {
+
+                $("#Cantidad_" + (Cantidad - 1)).focus(); // no toma el foco en Parametro1_
+
+            }
+        }
+    }
+
+
+    $(window).resize(ajustamodal);
+    function ajustamodal() {
+        var altura = $(window).height() - 190; //value corresponding to the modal heading + footer
+        $(".modal-body-scroll").css({ "height": altura, "overflow-y": "auto" });
+    }
+
+    $(document).ready(function () {
+
+        
+        hideLoading();
+        $(".modal-backdrop").remove();
+        ajustamodal();
+        MostrarMensaje()
+
+        $('#myModal').modal('show');
+        //  $("#myModal").draggable();
+
+        $("#btnCancelarModulo").click(function () {
+            $("#formCoeficientes").attr("Action", "@Url.Action("ABMPadronTemporal", "Valuacion")");
+            @*$("#formCoeficientes").attr("Action", "@Url.Action("Index", "Home")");*@
+            showLoading();
+            $("#formCoeficientes").submit();
+            
+        });
+
+        $("#guardarModulo").click(function () {
+
+            var cantidad = $("#divModulos input").length;
+
+            if (cantidad > 1) {
+                cantidad = cantidad - 1;
+            }
+
+            for (var i = 0; i < cantidad; i++) {
+
+                //if ($("#Comparacion2_" + i).val() == 6) {
+
+
+                //    if ((($("#Parametro1_" + i).val() == "") || !($("#Parametro2Desde_" + i).val() == "" && $("#Parametro2Hasta_" + i).val() == "" && $("#Cantidad_" + i).val() == "") && !($("#Parametro2Desde_" + i).val() != "" && $("#Parametro2Hasta_" + i).val() != "" && $("#Cantidad_" + i).val() != ""))) {
+
+                //        var msj = "Todos los campos son obligatorios<br>Debe completarlos para poder grabar.";
+                //        $('#TituloAdvertencia').html("Advertencia - Grabar")
+                //        $('#DescripcionAdvertencia').html(msj)
+                //        $('#TipoAdvertencia').val('GrabarError')
+                //        $('#ModalAdvertencia').modal('show');
+                //        return false;
+                //    }
+
+
+                //} else {
+
+                //    if (($("#Parametro1_" + i).val() == "") || (!($("#Parametro2_" + i).val() == "" && $("#Cantidad_" + i).val() == "") && !($("#Parametro2_" + i).val() != "" && $("#Cantidad_" + i).val() != ""))) {
+
+                //        var msj = "Todos los campos son obligatorios<br>Debe completarlos para poder grabar.";
+                //        $('#TituloAdvertencia').html("Advertencia - Grabar")
+                //        $('#DescripcionAdvertencia').html(msj)
+                //        $('#TipoAdvertencia').val('GrabarError')
+                //        $('#ModalAdvertencia').modal('show');
+                //        return false;
+                //    }
+
+                //}
+
+                //if (i > 0) {
+
+
+                for (var j = 0 ; j < cantidad; j++) {
+                    if (i != j) {
+                        //"1" Menor a
+                        //"2" Mayor a
+                        //"3" Menor o igual a
+                        //"4" Mayor o igual a
+                        //"5" Igual a
+                        //"6" Entre
+                        if ($("#Comparacion2_" + i).val() == 6) {
+                            if (parseFloat($("#Parametro2Desde_" + i).val()) > parseFloat($("#Parametro2Hasta_" + i).val())) {
+                                var msj = "El valor \"DESDE\" no puede ser superior al valor \"HASTA\".";
+                                $('#TituloAdvertencia').html("Advertencia - Grabar")
+                                $('#DescripcionAdvertencia').html(msj)
+                                $('#TipoAdvertencia').val('GrabarError')
+                                $('#ModalAdvertencia').modal('show');
+                                return false;
+                            }
+
+                            if (($("#Parametro1_" + i).val() == $("#Parametro1_" + j).val()) && ($("#Parametro2Desde_" + i).val() == $("#Parametro2Desde_" + j).val()) && ($("#Parametro2Hasta_" + i).val() == $("#Parametro2Hasta_" + j).val()) && ($("#Cantidad_" + i).val() == $("#Cantidad_" + j).val())) {
+
+                                var msj = "Las filas no pueden contener los mismos valores.<br>Por favor, ingréselos nuevamente.";
+                                $('#TituloAdvertencia').html("Advertencia - Grabar")
+                                $('#DescripcionAdvertencia').html(msj)
+                                $('#TipoAdvertencia').val('GrabarError')
+                                $('#ModalAdvertencia').modal('show');
+                                return false;
+                            }
+                            if ($("#Parametro2_" + j).is(":visible")) {
+                                if (($("#Parametro1_" + i).val() == $("#Parametro1_" + j).val()) && (parseFloat($("#Parametro2Desde_" + i).val()) <= parseFloat($("#Parametro2_" + j).val())) && (parseFloat($("#Parametro2Hasta_" + i).val()) >= parseFloat($("#Parametro2_" + j).val()))) {
+
+                                    var msj = "Hay solapamiento de rangos para la misma Parametro1.<br>Por favor, ingréselos nuevamente.";
+                                    $('#TituloAdvertencia').html("Advertencia - Grabar")
+                                    $('#DescripcionAdvertencia').html(msj)
+                                    $('#TipoAdvertencia').val('GrabarError')
+                                    $('#ModalAdvertencia').modal('show');
+                                    return false;
+                                }
+                            } else {
+                                if (($("#Parametro1_" + i).val() == $("#Parametro1_" + j).val()) && ((parseFloat($("#Parametro2Desde_" + i).val()) <= parseFloat($("#Parametro2Desde_" + j).val())) && (parseFloat($("#Parametro2Hasta_" + i).val()) >= parseFloat($("#Parametro2Desde_" + j).val()))) || (($("#Parametro1_" + i).val() == $("#Parametro1_" + j).val()) &&(parseFloat($("#Parametro2Desde_" + i).val()) <= parseFloat($("#Parametro2Hasta_" + j).val())) && (parseFloat($("#Parametro2Hasta_" + i).val()) >= parseFloat($("#Parametro2Hasta_" + j).val())))) {
+
+                                    var msj = "Hay solapamiento de rangos para la misma Parametro1.<br>Por favor, ingréselos nuevamente.";
+                                    $('#TituloAdvertencia').html("Advertencia - Grabar")
+                                    $('#DescripcionAdvertencia').html(msj)
+                                    $('#TipoAdvertencia').val('GrabarError')
+                                    $('#ModalAdvertencia').modal('show');
+                                    return false;
+                                }
+
+                            }
+                        } else if ($("#Comparacion2_" + i).val() == 1) {
+                            if (($("#Parametro1_" + i).val() == $("#Parametro1_" + j).val()) && (parseFloat($("#Parametro2_" + i).val()) > parseFloat($("#Parametro2_" + j).val()))) {
+
+                                var msj = "Hay solapamiento de valores para la misma Parametro1.<br>Por favor, ingréselos nuevamente.";
+                                $('#TituloAdvertencia').html("Advertencia - Grabar")
+                                $('#DescripcionAdvertencia').html(msj)
+                                $('#TipoAdvertencia').val('GrabarError')
+                                $('#ModalAdvertencia').modal('show');
+                                return false;
+                            }
+                        } else if ($("#Comparacion2_" + i).val() == 2) {
+                            if (($("#Parametro1_" + i).val() == $("#Parametro1_" + j).val()) && (parseFloat($("#Parametro2_" + i).val()) < parseFloat($("#Parametro2_" + j).val()))) {
+
+                                var msj = "Hay solapamiento de valores para la misma Parametro1.<br>Por favor, ingréselos nuevamente.";
+                                $('#TituloAdvertencia').html("Advertencia - Grabar")
+                                $('#DescripcionAdvertencia').html(msj)
+                                $('#TipoAdvertencia').val('GrabarError')
+                                $('#ModalAdvertencia').modal('show');
+                                return false;
+                            }
+                        }
+                        else if ($("#Comparacion2_" + i).val() == 3) {
+                            if (($("#Parametro1_" + i).val() == $("#Parametro1_" + j).val()) && (parseFloat($("#Parametro2_" + i).val()) >= (parseFloat($("#Parametro2_" + j).val()) + parseFloat(0.01)))) {
+
+                                var msj = "Hay solapamiento de valores para la misma Parametro1.<br>Por favor, ingréselos nuevamente.";
+                                $('#TituloAdvertencia').html("Advertencia - Grabar")
+                                $('#DescripcionAdvertencia').html(msj)
+                                $('#TipoAdvertencia').val('GrabarError')
+                                $('#ModalAdvertencia').modal('show');
+                                return false;
+                            }
+                        }
+                        else if ($("#Comparacion2_" + i).val() == 4) {
+                            if (($("#Parametro1_" + i).val() == $("#Parametro1_" + j).val()) && (parseFloat($("#Parametro2_" + i).val()) <= (parseFloat($("#Parametro2_" + j).val()) + parseFloat(0.01)))) {
+
+                                var msj = "Hay solapamiento de valores para la misma Parametro1.<br>Por favor, ingréselos nuevamente.";
+                                $('#TituloAdvertencia').html("Advertencia - Grabar")
+                                $('#DescripcionAdvertencia').html(msj)
+                                $('#TipoAdvertencia').val('GrabarError')
+                                $('#ModalAdvertencia').modal('show');
+                                return false;
+                            }
+                        }
+                        else if ($("#Comparacion2_" + i).val() == 5) {
+                            if (($("#Parametro1_" + i).val() == $("#Parametro1_" + j).val()) && ($("#Parametro2_" + i).val() == $("#Parametro2_" + j).val())) {
+
+                                var msj = "Hay solapamiento de valores para la misma Parametro1.<br>Por favor, ingréselos nuevamente.";
+                                $('#TituloAdvertencia').html("Advertencia - Grabar")
+                                $('#DescripcionAdvertencia').html(msj)
+                                $('#TipoAdvertencia').val('GrabarError')
+                                $('#ModalAdvertencia').modal('show');
+                                return false;
+                            }
+                        }
+                        else {
+                            if (($("#Parametro1_" + i).val() == $("#Parametro1_" + j).val()) && (parseFloat($("#Parametro2_" + i).val()) == parseFloat($("#Parametro2_" + j).val()))) {
+
+                                var msj = "Hay solapamiento de valores para la misma Parametro1.<br>Por favor, ingréselos nuevamente.";
+                                $('#TituloAdvertencia').html("Advertencia - Grabar")
+                                $('#DescripcionAdvertencia').html(msj)
+                                $('#TipoAdvertencia').val('GrabarError')
+                                $('#ModalAdvertencia').modal('show');
+                                return false;
+                            }
+                        }
+                    }
+                }
+            }
+
+            var msj = "Está a punto de GRABAR los valores ingresado<br>¿Está seguro de continuar?";
+            $('#TituloAdvertencia').html("Advertencia - Grabar")
+            $('#DescripcionAdvertencia').html(msj)
+            $('#TipoAdvertencia').val('Grabar')
+            $('#ModalAdvertencia').modal('show')
+
+        });
+
+        $("#btnAdvertenciaOK").click(function () {
+
+            if ($('#TipoAdvertencia').val() == 'Grabar') {
+                showLoading();
+                $("#formCoeficientes").submit();
+            }
+        });
+
+        $("#btnCerrarAdvertencia").click(function () {
+            $('#ModalAdvertencia').modal('hide');
+        });
+
+
+        ////$("#Parametro1_0").inputmask('Regex', { regex: "([0-9]|[A-Z]|[a-z]){12}" });
+        //$("#Parametro2Desde_0").inputmask('decimal', { digits: 1, rightAlign: false, radixPoint: '.' });
+        //$("#Parametro2Hasta_0").inputmask('decimal', { digits: 1, rightAlign: false, radixPoint: '.' });
+        //$("#Parametro2_0").inputmask('decimal', { digits: 1, rightAlign: false, radixPoint: '.' });
+        $(".cantidad").inputmask('decimal', { digits: 2, rightAlign: false, radixPoint: '.' });
+
+
+
+        @if (Model.CoeficienteStore.TipoParametro2 == "comparador") {
+            <text>
+        $(".cmbcomparacion2").change(function () {
+
+            var indice = $(this).attr('id').substr(13, 13);
+            if ($(this).val() == 6) {
+
+                $("#Parametro2_" + indice).hide();
+
+                $("#Parametro2Desde_" + indice).show();
+                $("#Parametro2Hasta_" + indice).show();
+
+            } else {
+
+                $("#Parametro2Desde_" + indice).hide();
+                $("#Parametro2Hasta_" + indice).hide();
+                $("#Parametro2_" + indice).show();
+
+            }
+
+        });
+        $("#Parametro2_0").inputmask('Regex', { regex: "([0-9]|[A-Z]|[a-z]){12}" });
+        $("#Parametro2Desde_0").inputmask('Regex', { regex: "([0-9]|[A-Z]|[a-z]){12}" });
+        $("#Parametro2Hasta_0").inputmask('Regex', { regex: "([0-9]|[A-Z]|[a-z]){12}" });
+        </text>
+        }
+        else if (Model.CoeficienteStore.TipoParametro2 == "combo")
+        {
+          <text>
+        $(".parametro2").select2({});
+        </text>
+      }
+        @if (Model.CoeficienteStore.TipoParametro1 == "comparador") {
+            <text>
+        $(".cmbcomparacion1").change(function () {
+
+            var indice = $(this).attr('id').substr(13, 13);
+            if ($(this).val() == 6) {
+
+                $("#Parametro1_" + indice).hide();
+
+                $("#Parametro1Desde_" + indice).show();
+                $("#Parametro1Hasta_" + indice).show();
+
+            } else {
+
+                $("#Parametro1Desde_" + indice).hide();
+                $("#Parametro1Hasta_" + indice).hide();
+                $("#Parametro1_" + indice).show();
+
+            }
+
+        });
+        $("#Parametro1_0").inputmask('Regex', { regex: "([0-9]|[A-Z]|[a-z]){12}" });
+        $("#Parametro1Desde_0").inputmask('Regex', { regex: "([0-9]|[A-Z]|[a-z]){12}" });
+        $("#Parametro1Hasta_0").inputmask('Regex', { regex: "([0-9]|[A-Z]|[a-z]){12}" });
+
+        </text>
+    }
+        else if (Model.CoeficienteStore.TipoParametro1 == "combo")
+        {
+            <text>
+        $(".parametro1").select2({});
+        </text>
+        }
+
+        $("#formCoeficientes").ajaxForm({
+            beforeSubmit: function (arr, $form, options) {
+                showLoading();
+                $("#myModal").modal('hide');
+                return true; //it will continue your submission.
+            },
+            success: function (data) {
+                //levantar modal
+                $("#contenido").empty();
+                $("#contenido").html(data);
+            },
+            error: function () {
+                alert("error");
+            }
+        });
+
+        hideLoading();
+
+        $("#formCoeficientes").submit(function (evt) {
+            /*evita el doble submit*/
+            evt.preventDefault();
+            evt.stopImmediatePropagation();
+            return false;
+        });
+    });
+
+    function MostrarMensaje() {
+
+        var MensajeEntrada = '@ViewBag.MensajeEntrada'
+        if (MensajeEntrada != null && MensajeEntrada != '') {
+            if (MensajeEntrada == "OK") {
+                $('#TituloInfo').html("Información - Tierra por Store")
+                $('#DescripcionInfo').html("Los datos han sido guardados satisfactoriamente.")
+                $('#TipoInformacion').val('GrabacionOK')
+                $("#ModalInfo").modal('show');
+            }
+
+        }
+    }
+
+
+    </script>
+

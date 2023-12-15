@@ -1,0 +1,35 @@
+﻿<div class='panel-heading bg-primary-2 cursor-pointer' role='tab' id='heading{{grupo.Nombre | lowercase}}'>
+    <div class="roundChkBox grpChkBox">
+        <input type="checkbox" id="grupo{{grupo.Nombre | lowercase}}" ng-model="selected" ng-change="toggleGroupSelection()" data-collapse="collapse{{grupo.Nombre | lowercase}}" />
+        <label for="grupo{{grupo.Nombre | lowercase}}"></label>
+    </div>
+    <a data-toggle='collapse' data-parent='#accordion' href='#collapse{{grupo.Nombre | lowercase}}' aria-expanded='false'
+       aria-controls='collapse{{grupo.Nombre | lowercase}}' class="{{ !openGroup ? 'collapsed' : ''}}">
+        <div class='panel-title'>
+            <div class="buscador-01">
+                {{grupo.Nombre | searchGroupHeader | capitalize}}
+
+            </div>
+            <div class="buscador-02">
+                <span class='badge' title='{{totalRegistros}}'>{{grupo.Cantidad}}</span>
+            </div>
+            <div class="buscador-03">
+                <div class="icons-group">
+                    <i ng-click="verEnMapa($event)" class="fa fa-map-marker"></i>
+                    <i class="arrow-head fa"></i>
+                </div>
+            </div>
+
+
+
+        </div>
+        <div class="clearfix"></div>
+    </a>
+</div>
+<input type="hidden" value="{{ groupsTotal }}" />
+<div id='collapse{{grupo.Nombre | lowercase}}' class='panel-collapse collapse {{ !openGroup ? "" : "in"}}'
+     role='tabpanel' aria-labelledby='heading{{grupo.Nombre | lowercase}}'>
+    <div class="panel-body {{grupo.Nombre | lowercase}}" data-ng-model="elem" data-ng-repeat="elem in grupo.Items">
+        <div data-result-type tipo='grupo.Nombre' pattern="pattern" permisos="permisos"></div>
+    </div>
+</div>

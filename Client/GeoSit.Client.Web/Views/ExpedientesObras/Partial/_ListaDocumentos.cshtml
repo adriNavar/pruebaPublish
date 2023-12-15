@@ -1,0 +1,12 @@
+﻿@model IEnumerable<GeoSit.Data.BusinessEntities.ObrasParticulares.DocumentoExpedienteObra>
+
+@foreach (var e in Model)
+{
+    <tr>
+        <td class="hide">@e.DocumentoId</td>
+        <td>@e.TipoDocumento</td>
+        <td>@e.Descripcion</td>
+        <td>@e.Fecha</td>
+        <td>@e.Observaciones</td>
+    </tr>
+}

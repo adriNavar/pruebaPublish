@@ -1,0 +1,111 @@
+﻿<link href="~/Content/dataTables.bootstrap.css" rel="stylesheet" />
+<link href="~/Content/css/select2.css" rel="stylesheet" />
+<link href="~/Content/select2-bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/SliderBar/jquery-ui-slider-pips.css" rel="stylesheet" />
+<link href="~/Content/SliderBar/prism.css" rel="stylesheet" />
+<link href="~/Content/bootstrap-fileinput/css/fileinput.min.css" rel="stylesheet" />
+<link href="~/Content/Ploteo.css" rel="stylesheet" />
+
+<div class="modal fade" id="ploteadorModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div id="contenido-ploteador">
+                <div id="btnCerrar" class="modal-header">
+                    <h3 class="modal-title col-lg-11 col-xs-11 col-sm-11 col-md-11" id="lblModalDomicilio">@Resources.Recursos.DispatcherPloteos</h3>
+                    <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer" style="padding-top:3px;" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+                </div>
+                <div class="modal-body ploteador-body">
+                    @if (ViewBag.VieneDeColeccion)
+                    {
+                        <input type="hidden" id="idColeccionPrecargada" value="@ViewBag.idColeccion">
+                    }
+                    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                        <div class="left-scrollable-panel">
+                            <div class="panel-group accordion grupos-plantillas" id="accordion-ploteador">
+                                @{ var collapseIdName = "collapseName";
+                                 var sectionID = "plantillaType";
+                                 var dynamicIdIncrementer = 1;
+                                }
+                                @foreach (var grupo in ViewBag.Categorias)
+                                {
+                                    dynamicIdIncrementer = dynamicIdIncrementer + 1;
+                                    collapseIdName = collapseIdName + dynamicIdIncrementer;
+                                    sectionID = sectionID + dynamicIdIncrementer;
+                                    <div id="@sectionID" class="section-position-ploteador">
+                                        <div class='panel-heading bg-primary main-heading'>
+                                            <a data-toggle="collapse"
+                                               data-parent="#accordion"
+                                               href="#@collapseIdName"
+                                               aria-expanded='false'
+                                               aria-controls='#@collapseIdName'
+                                               class="collapsed">
+                                                <div class='panel-title'>
+                                                    @grupo.Nombre
+                                                    <i class="fa"></i>
+                                                </div>
+                                            </a>
+
+                                        </div>
+                                        <div id="@collapseIdName" class="panel-collapse collapse in">
+                                            @*<div class="panel panel-primary panel-tipo-plantilla">*@
+                                            <div class="panel-body">
+                                                <div id="@grupo.Nombre">
+                                                    <ul id="grLisColecciones" class="list-group">
+                                                        @foreach (var plantilla in grupo.Plantillas)
+                                                        {
+                                                            <li class="list-group-item cursor-pointer" onclick="cargarPlantilla('@(Url.Action(grupo.Action, "Ploteo") + "/" + plantilla.IdPlantilla)', @plantilla.IdPlantilla, @grupo.IdTipo)">@plantilla.Nombre</li>
+                                                        }
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            @*</div>*@
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8">
+                        <div class="right-scrollable-panel" style="padding-right:15px;">
+                            <div id="configuracion-ploteo"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button id="btnGenerar" type="button" class="btn btn-primary">Generar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Popup-->
+<div class="modal fade" id="ploteo-error-modal" tabindex="-2" role="dialog" aria-labelledby="TituloAdvertenciaPloteo" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title col-lg-11 col-xs-11 col-sm-11 col-md-11" id="TituloAdvertenciaPloteo">Atención!</h3>
+                <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer" style="padding-top:3px;" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+            </div>
+            <div class="modal-body">
+                <div id="MensajeAlertaPloteo" class="alert alert-danger alert-dismissible" role="alert">
+                    <strong>Mensaje de error</strong><br>
+                    <p id="mensaje-error-ploteo"></p>
+                </div>
+            </div>
+            <div class="modal-footer" style="background-color: #ffffff;">
+                <span aria-hidden="true" data-dismiss="modal" data-placement="right" title="Aceptar" data-original-title="Aceptar" class="fa fa-check-circle light-blue fa-3x cursor-pointer"></span>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<script type="text/javascript" src="~/Scripts/jquery.dataTables.js"></script>
+<script type="text/javascript" src="~/Scripts/select2.min.js"></script>
+<script src="~/Scripts/SliderBar/jquery-ui-slider-pips.js"></script>
+<script src="~/Scripts/SliderBar/prism.js"></script>
+<script src="~/Scripts/SliderBar/jquery.range.js"></script>
+<script type="text/javascript" src="~/Scripts/fileinput.es.js"></script>
+<script type="text/javascript" src="~/Scripts/Ploteo/main.js"></script>

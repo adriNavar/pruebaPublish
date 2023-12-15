@@ -1,0 +1,81 @@
+﻿#myModalParamsGenerales .accordion-section .container {
+    width: 100%;
+}
+
+    #myModalParamsGenerales .accordion-section .container span.advise-message {
+        font-size: .85em;
+        color: #31708f;
+    }
+
+    #myModalParamsGenerales .accordion-section .container > div.row {
+        margin: 0;
+        padding: 30px 0;
+    }
+
+        #myModalParamsGenerales .accordion-section .container > div.row:not(:last-of-type) {
+            border-bottom: solid 1px rgb(127,127,127);
+        }
+
+    #myModalParamsGenerales .accordion-section .container > div:first-child {
+        padding: 10px 0;
+    }
+
+    #myModalParamsGenerales .accordion-section .container > div > div:first-child {
+        padding-left: 0;
+    }
+
+    #myModalParamsGenerales .accordion-section .container > div > div:last-child:not(.inline) {
+        padding-right: 0;
+    }
+
+    #myModalParamsGenerales .accordion-section .container > div > div:last-child .section {
+        padding: 15px 0;
+    }
+
+    #myModalParamsGenerales .accordion-section .container > div > div:last-child:not(.inline) .section > input + span,
+    #myModalParamsGenerales .accordion-section .container > div > div:last-child a + span,
+    .slider-container + span {
+        font-size: .85em;
+    }
+
+#myModalParamsGenerales .accordion .panel-collapse a[data-checked] {
+    display: block;
+    width: 0;
+    cursor: pointer;
+}
+
+    #myModalParamsGenerales .accordion .panel-collapse a[data-checked] i.fa {
+        font-size: 2em;
+        color: rgb(75,175,255);
+        margin: 6px 0;
+        cursor: pointer !important;
+    }
+
+        #myModalParamsGenerales .accordion .panel-collapse a[data-checked] i.fa:after {
+            content: '\f205';
+        }
+
+#myModalParamsGenerales .accordion .panel-collapse a[data-checked='0'] i.fa {
+    color: rgba(127,127,127,.75);
+    transform: rotate(180deg);
+    margin: 5px 0 7px 0;
+}
+
+#myModalParamsGenerales .accordion .panel-collapse .inline a {
+    display: inline-block;
+}
+
+    #myModalParamsGenerales .accordion .panel-collapse .inline a + span {
+        position: absolute;
+        margin-left: 35px;
+        margin-top: 11px;
+    }
+
+.slider-container.margin-bottom {
+    margin-bottom: 20px;
+}
+
+#collapseLimitesPasswd .container > div.row:last-of-type {
+    padding-bottom: 0;
+    border-bottom: none;
+}

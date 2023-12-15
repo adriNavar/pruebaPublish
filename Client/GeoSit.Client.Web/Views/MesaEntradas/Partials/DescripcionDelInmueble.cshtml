@@ -1,0 +1,36 @@
+﻿@model GeoSit.Client.Web.ViewModels.DescripcionDelInmueble
+
+@Html.Partial("Partials/ObjetoEspecificoBaseView", new GeoSit.Client.Web.ViewModels.ObjetoEspecificoViewModel { Guid = Model.Guid, IdTramiteEntrada = Model.IdTramiteEntrada })
+
+<label style="width: 100%; color: #a3a99b; font-style: italic;">
+    Descripción del inmueble
+</label>
+
+<div class="form-group">
+    @Html.LabelFor(m => m.Descripcion, new { @class = "col-md-2 control-label" })
+    <div class="col-md-10">
+        @Html.TextAreaFor(m => m.Descripcion, new { @class = "form-control visibleArbolObjetos", placeholder = "Descripción detallada de los lados, ángulos internos, linderos, superficie, rumbo y demás información necesaria para la confección del Certificado Catastral.", @style = "height: 150px" })
+        @Html.ValidationMessageFor(m => m.Descripcion, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+
+@*TODO: Este script debe eliminarse cuando funcione jquery.validation.unobtrusive*@
+<script>
+    $(document).ready(function () {
+        $("#divEdicionObjetoContainer").validate({
+            rules: {
+                Descripcion: {
+                    required: true,
+                    regex: /^[A-Za-z0-9\d\-_/\s]+$/g
+                }
+            },
+            messages: {
+                Descripcion: {
+                    required: "El campo es requerido",
+                    regex: "Debe tener cargado un valor alfanumérico"
+                }
+            }
+        });
+    });
+</script>

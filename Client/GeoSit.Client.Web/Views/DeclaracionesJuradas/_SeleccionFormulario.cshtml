@@ -1,0 +1,70 @@
+﻿@model GeoSit.Client.Web.Models.SeleccionFormularioModel
+@{
+    ViewBag.Title = "Seleccionar DDJJ";
+}
+
+<link href="~/Content/DeclaracionesJuradas.css" rel="stylesheet">
+
+<div id="urlActionGetFormularioVersiones" data-request-url="@Url.Action("GetFormularioVersiones", "DeclaracionesJuradas")"></div>
+
+@Html.AntiForgeryToken()
+<div class="modal fade theme_new seguridad" id="modalSeleccionFormulario" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="scroll-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">@ViewBag.Title</h3>
+                    <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+                </div>
+                <div class="modal-body seleccion-form-body">
+                    @using (Ajax.BeginForm("GetFormulario", "DeclaracionesJuradas", new AjaxOptions() { OnSuccess = "seleccionFormulario.onSuccess(data, status, xhr)", OnFailure = "seleccionFormulario.onFailure(xhr, status, error)", HttpMethod = "Post" }, new { @id = "formSeleccionFormulario" }))
+                    {
+                        <div class="body-content seleccion-form-content">
+                            @Html.HiddenFor(x => x.IdUnidadTributaria)
+                            @Html.HiddenFor(x => x.PartidaInmobiliaria)
+                            @Html.HiddenFor(x => x.IdClaseParcela)
+                            @Html.HiddenFor(x => x.Versiones)
+                            @Html.HiddenFor(x => x.IdVersion)
+                            @Html.HiddenFor(x => x.IdTramite)
+                            @Html.HiddenFor(x => x.Poligono)
+                            @Html.HiddenFor(x => x.UnidadesTributariasOrigen)
+                            @Html.HiddenFor(x => x.IdLocalidad)
+                            <div class="panel remove-margin remove-shadow">
+                                <div class="panel-body">
+                                    <div class="form-horizontal">
+                                        <div class="form-group">
+                                            <label class="col-xs-5 control-label text-right">Formulario a presentar</label>
+                                            <div class="col-xs-7">
+                                                @Html.DropDownListFor(x => x.FormularioSeleccionado, Model.Formularios, "- Seleccionar Formulario -", new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group" id="rowVersion" style="display:none">
+                                            <label class="col-xs-5 control-label text-right">Versi&oacute;n del formulario</label>
+                                            <div class="col-xs-7">
+                                                @Html.DropDownList("VersionSeleccionada", new List<SelectListItem>(), "- Seleccionar Versión -", new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+                <div class="modal-footer">
+                    <div class="col-lg-4 pull-right">
+                        <span id="btnCheck" aria-hidden="true" data-placement="right" title="Guardar" data-original-title="Guardar" class="fa fa-check fa-2x black boton-deshabilitado cursor-pointer"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/jquery.form.js"></script>
+<script src="~/Scripts/DeclaracionesJuradas/SeleccionFormulario.js"></script>
+
+<script>
+    $(document).ready(function () {
+        seleccionFormulario.init();
+    });
+</script>

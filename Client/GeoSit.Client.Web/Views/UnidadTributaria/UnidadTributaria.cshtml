@@ -1,0 +1,169 @@
+﻿@using GeoSit.Client.Web.Controllers
+@model GeoSit.Data.BusinessEntities.Inmuebles.UnidadTributaria
+
+@{
+    ViewBag.Title = "Unidad Tributaria";
+}
+<link href="~/Content/unidad-tributaria.css" rel="stylesheet" />
+
+<div class="modal fade theme_new" id="modal-window-unidad-tributaria" tabindex="-1" data-backdrop="static" role="dialog" aria-labelledby="modal-windowLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="scroll-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="lblModalunidad-tributaria">@ViewBag.Title</h3>
+                    <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+                </div>
+                <div class="modal-body unidad-tributaria-body">
+                    <div class="body-content">
+                        <div id="alert-danger" class="alert alert-danger">
+                            <button id="alert-close" type="button" class="close" aria-hidden="true">&times;</button>
+                            <p></p>
+                        </div>
+                        <div class="panel-group remove-margin">
+                            <div class="panel remove-shadow">
+                                <div class='panel-body'>
+                                    <form id="datos-form" class="form-horizontal">
+                                        @Html.HiddenFor(model => model.PorcientoCopropiedadTotal)
+                                        @Html.HiddenFor(model => model.CodigoMunicipal)
+                                        @Html.HiddenFor(model => model.UnidadFuncional)
+                                        @Html.HiddenFor(model => model.UnidadTributariaId)
+
+                                        <div class="form-group">
+                                            <label class="control-label col-xs-4 text-right">Jurisdicci&oacute;n</label>
+                                            <div class="col-xs-8">
+                                                @Html.DropDownListFor(model => model.JurisdiccionID, (List<SelectListItem>)ViewData["Jurisdicciones"], new { @class = "form-control", @disabled = "disabled" })
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label col-xs-4 text-right">Partida</label>
+                                            <div class="col-xs-8">
+                                                <div class="input-group">
+                                                    @Html.TextBoxFor(model => model.CodigoProvincial, new { @class = "form-control uppercase", @readonly = "readonly" })
+                                                    <span class="input-group-btn">
+                                                        <button id="btnGenerarPartida" class="btn btn-default" type="button" title="Generar Partida Automática"><i class="fa fa-lg fa-gears cursor-pointer"></i></button>
+                                                        <button id="btnToggleModoGeneracionPartida" class="btn btn-default" type="button" title="Activar Partida Manual"><i class="fa fa-lg fa-pencil cursor-pointer" style="display:inline-block"></i><i class="fa fa-lg fa-times cursor-pointer" style="display:none"></i></button>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label col-xs-4 text-right">Tipo</label>
+                                            <div class="col-xs-8">
+                                                @Html.DropDownListFor(model => model.TipoUnidadTributariaID, (List<SelectListItem>)ViewData["TiposUnidadTributaria"], new { @class = "form-control", id = "cboTipoUT" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-xs-4 text-right">Vigencia</label>
+                                            <div class="col-xs-8">
+                                                @if (Model.UnidadTributariaId > 0 && !SeguridadController.ExisteFuncion(@Resources.Seguridad.ModificarSuperficieVigencia))
+                                                {
+                                                    @Html.TextBoxFor(model => model.Vigencia, new { @class = "form-control ut-fecha-vigencia", @Value = (Model.Vigencia.HasValue ? Model.Vigencia.Value.ToString("dd/MM/yyyy") : string.Empty), placeholder = "dd/mm/aaaa", @readonly = "true" })
+                                                }
+                                                else
+                                                {
+                                                    @Html.TextBoxFor(model => model.Vigencia, new { @class = "form-control ut-fecha-vigencia", @Value = (Model.Vigencia.HasValue ? Model.Vigencia.Value.ToString("dd/MM/yyyy") : string.Empty), placeholder = "dd/mm/aaaa" })
+                                                }
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-xs-4 text-right">Piso</label>
+                                            <div class="col-xs-8">
+                                                @Html.TextBoxFor(model => model.Piso, new { @class = "form-control" })
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label col-xs-4 text-right">Unidad</label>
+                                            <div class="col-xs-8">
+                                                @Html.TextBoxFor(model => model.Unidad, new { @class = "form-control" })
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label col-xs-4 text-right">Superficie</label>
+                                            <div class="col-xs-8">
+                                                @{
+                                                    string formatoSuperficie = ViewData["TipoParcelaId"].ToString() == "1" ? "{0:0.00}" : "{0:0.0000}";
+                                                    string formatoStep = ViewData["TipoParcelaId"].ToString() == "1" ? "0.01" : "0.0001";
+
+                                                    if (Model.UnidadTributariaId > 0 && !SeguridadController.ExisteFuncion(@Resources.Seguridad.ModificarSuperficieVigencia))
+                                                    {
+                                                        @Html.TextBoxFor(model => model.Superficie, formatoSuperficie, new { @type = "number", @min = "0", @step = formatoStep, @class = "form-control", @readonly = "readonly" })
+                                                    }
+                                                    else
+                                                    {
+                                                        @Html.TextBoxFor(model => model.Superficie, formatoSuperficie, new { @type = "number", @min = "0", @step = formatoStep, @class = "form-control" })
+                                                    }
+                                                }
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label col-xs-4 text-right">ID según Plano</label>
+                                            <div class="col-xs-8">
+                                                @Html.TextBoxFor(model => model.PlanoId, new { @class = "form-control" })
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <label class="control-label col-xs-4 text-right">% de Copropiedad</label>
+                                            <div class="col-xs-8">
+                                                @Html.TextBoxFor(model => model.PorcentajeCopropiedad, new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-xs-4 text-right">Vigencia VEP Desde</label>
+                                            <div class="col-xs-8">
+                                                @Html.TextBoxFor(model => model.FechaVigenciaDesde, new { @class = "form-control ut-fecha", @Value = (Model.FechaVigenciaDesde.HasValue ? Model.FechaVigenciaDesde.Value.ToString("dd/MM/yyyy") : string.Empty), @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-xs-4 text-right">Vigencia VEP Hasta</label>
+                                            <div class="col-xs-8">
+                                                @Html.TextBoxFor(model => model.FechaVigenciaHasta, new { @class = "form-control ut-fecha", @Value = (Model.FechaVigenciaHasta.HasValue ? Model.FechaVigenciaHasta.Value.ToString("dd/MM/yyyy") : string.Empty), @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-xs-4 text-right">Fecha de Alta</label>
+                                            <div class="col-xs-8">
+                                                @Html.HiddenFor(model => model.FechaAlta)
+                                                <input type="text" readonly="readonly" class="form-control" value="@Model.FechaAlta.Value.ToString("dd/MM/yyyy")" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-xs-4 text-right">Fecha de Baja</label>
+                                            <div class="col-xs-8">
+                                                @Html.TextBoxFor(model => model.FechaBaja, new { @class = "form-control", @Value = (Model.FechaBaja.HasValue ? Model.FechaBaja.Value.ToString("dd/MM/yyyy") : string.Empty), @readonly = "readonly" })
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-xs-4 text-right">Observaciones</label>
+                                            <div class="col-xs-8">
+                                                @Html.TextAreaFor(model => model.Observaciones, new { @class = "form-control", rows = "6" })
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @if (!Model.FechaBaja.HasValue)
+                {
+                    <div class="modal-footer">
+                        <div class="pull-right col-xs-4">
+                            <span aria-hidden="true" data-placement="right" title="Guardar" data-original-title="Guardar" id="btnGrabarUT" class="fa fa-save fa-2x black cursor-pointer"></span>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/formValidation.min.js"></script>
+<script src="~/Scripts/bootstrapValidation.min.js"></script>
+<script src="~/Scripts/UnidadesTributarias/main.js"></script>

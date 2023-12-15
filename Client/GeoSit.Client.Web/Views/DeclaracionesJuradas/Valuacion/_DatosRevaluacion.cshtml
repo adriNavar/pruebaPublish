@@ -1,0 +1,47 @@
+﻿@using GeoSit.Client.Web.Controllers;
+@{
+    ViewBag.Title = "Datos de la Revaluación";
+}
+
+@Html.AntiForgeryToken()
+<div class="modal fade theme_new" id="modalRevaluacion" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div id="scroll-content-revaluacion" class="scroll-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">@ViewBag.Title</h3>
+                    <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+                </div>
+                <div class="modal-body revaluacion-body">
+                    <div class="row revaluacion-content">
+                        <div class="col-xs-12">
+                            <div class="row" style="margin-top:20px">
+                                <div class="form-group col-xs-12" style="display: flex; align-items: center">
+                                    <label class="col-xs-5 control-label">Fecha</label>
+                                    <div class="col-xs-7">
+                                        @Html.TextBox("Fecha", DateTime.Now.ToString("dd/MM/yyyy"), "{0:dd/MM/yyyy HH:mm:ss}", new { @class = "form-control", @readonly = true })
+                                    </div>
+                                </div>
+                            </div> 
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <div class="col-lg-4 pull-right">
+                    <span id="btnValuar" aria-hidden="true" data-placement="right" title="Valuar" data-original-title="Valuar" class="btn btn-default cursor-pointer">Valuar</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/DeclaracionesJuradas/DatosRevaluacion.js"></script>
+
+<script>
+    $(document).ready(function () {
+        datosRevaluacion.init();
+    });
+</script>

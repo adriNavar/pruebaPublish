@@ -1,0 +1,23 @@
+﻿@model AtributoTA
+@using GeoSit.Data.BusinessEntities.Mantenimiento;
+@{
+    string numericDecimal = "false";
+    long numericDecimalPlaces = 0;
+    if (Model.Id_Tipo_Dato != AtributoTA.TipoInteger
+        && Model.Id_Tipo_Dato != AtributoTA.TipoLong)
+    {
+        numericDecimal = "true";
+        if (Model.Escala != null)
+        {
+            numericDecimalPlaces = (long)Model.Escala;
+        }
+    }
+
+    var data = "data-numeric='numeric' data-numeric-decimal=" + numericDecimal + " data-numeric-decimal-places=" + numericDecimalPlaces;
+}
+<div class="form-group clearfix">
+    <label class="control-label col-xs-4 text-right">@Model.Nombre @(Model.Es_Obligatorio ? "*" : "")</label>
+    <div class="col-xs-8">
+        <input name="Parametros[@Model.Campo]" type="text" maxlength="@Model.Precision.ToString()" value="@Model.Valor" @data class="form-control margin-bottom" @(Model.Es_Obligatorio ? "required=\"required\"" : "") />
+    </div>
+</div>

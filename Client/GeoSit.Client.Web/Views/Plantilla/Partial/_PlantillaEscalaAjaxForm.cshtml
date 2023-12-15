@@ -1,0 +1,13 @@
+﻿@model GeoSit.Client.Web.Models.ViewPlantillaEscala
+
+@Html.TextBoxFor(model => model.IdPlantillaEscala, new { @type = "hidden" })
+
+<div class="form-group">
+    <label class="control-label col-xs-3">Escala</label>
+    <div class="col-xs-9">
+        @Html.TextBoxFor(model => model.Escala, new { @id = "escala", @class = "form-control" })
+    </div>
+</div>
+
+<span title="Cancelar" data-original-title="Cancelar" class="fa fa-2x fa-times-circle pull-right black cursor-pointer hidden" aria-hidden="true" id="escala-cancel" data-toggle="tooltip" data-placement="top"></span>
+<span title="Aceptar" data-original-title="Aceptar" class="fa fa-2x fa-check-circle pull-right black cursor-pointer hidden" id="escala-submit" data-toggle="tooltip" data-placement="top"></span>

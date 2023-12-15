@@ -1,0 +1,56 @@
+﻿@model GeoSit.Client.Web.Models.ReporteParcelarioModels
+
+<div class="modal fade theme_new" id="modal-window-informe-tramites" tabindex="-1" data-backdrop="static" role="dialog" aria-labelledby="modal-windowLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="scroll-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Reporte Parcelario</h3>
+                    <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+                </div>
+                <div class="modal-body">
+                    <div id="body-content" class="body-content">
+                        <div class="col-xs-12" style="align-content:center">
+                            <div class="form-group">
+                                <input type="button" class="boton-buscar" id="GeneraReporte" value="Generar Reporte" onclick="exportarExcel('@Model.idMunicipio')" /> @*@Model.idMunicipio*@
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="col-xs-4 pull-right">
+                            <span id="aceptar-informe-tramites" aria-hidden="true" aria-controls="button" data-placement="right" title="Aceptar" data-original-title="Aceptar" class="fa fa-check-circle black fa-2x cursor-pointer"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Información-->
+<div class="modal fade" id="ModalInfoEstado" tabindex="-3" role="dialog" aria-labelledby="TituloInfo" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="TituloInfoEstado">Titulo</h3>
+            </div>
+            <div class="modal-body">
+                <div id="MensajeInfoEstado" class="alert alert-info alert-dismissible" role="alert">
+                    <h5 style="border:none;"><strong>Atención!</strong></h5>
+                    <p id="DescripcionInfoEstado">Descripcion de la informacion</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <span id="btnAceptarAlert" aria-hidden="true" data-dismiss="modal" data-placement="right" title="Aceptar" data-original-title="Aceptar" class="fa fa-check-circle light-blue fa-3x cursor-pointer"></span>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+</script>
+
+<script type="text/javascript" src="~/Scripts/bootstrap-datetimepicker/js/locales/bootstrap-datetimepicker.es.js" charset="UTF-8"></script>
+<script type="text/javascript" src="~/Scripts/jquery.numeric.min.js"></script>
+<script type="text/javascript" src="~/Scripts/Reportes/ReporteParcelario.js"></script>
+<script type="text/javascript" src="~/Scripts/buttons.flash.min.js"></script>
+<script type="text/javascript" src="~/Scripts/buttons.html5.min.js"></script>

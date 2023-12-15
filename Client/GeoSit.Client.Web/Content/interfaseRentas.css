@@ -1,0 +1,25 @@
+﻿#rnt_winLogInterfaseRentas .modal-dialog {
+    max-width: 1500px;
+    min-width: 500px;
+    width: 90%;
+}
+
+#rnt_pnlReprocessProgress {
+    display: none;
+}
+
+#rnt_btnReprocesarTodo,
+#rnt_btnReprocesarSeleccion {
+    min-width: 200px;
+    height: 40px;
+}
+
+.dt-body-center {
+    text-align: center;
+}
+
+.dt-header-center {
+    text-align: center !important;
+    padding-right: 15px !important;
+    padding-left: 15px !important;
+}

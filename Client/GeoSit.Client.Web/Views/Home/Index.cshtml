@@ -1,0 +1,397 @@
+﻿@using GeoSit.Client.Web.Controllers
+@using GeoSit.Client.Web.Models
+@model Usuario
+@helper MenuTree(MenuItemModels menu, int level)
+{
+    if (menu.SubMenuList == null)
+    {
+        return;
+    }
+    foreach (var child in menu.SubMenuList)
+    {
+        if (child.Icono == "hide")
+        {
+            continue;
+        }
+        string classLevel = (level == 1 ? "first-level" : "second-level");
+        if (child.SubMenuList != null)
+        {
+            <li>
+                <a href="#" class="@classLevel">@child.Nombre</a>
+                <ul class="">
+                    @MenuTree(child, 2)
+                </ul>
+            </li>
+        }
+        else
+        {
+            if (child.TipoAccion == 1)
+            {
+                <li><a href="@Url.Action("", "")@child.Accion" class="@classLevel">@child.Nombre</a></li>
+            }
+            else
+            {
+                if (child.TipoAccion == 2)
+                {
+                    <li><a href="#" class="@classLevel" onclick="javascript:loadView('@Url.Action("", "")@child.Accion') ">@child.Nombre</a></li>
+                }
+                else if (child.TipoAccion == 4)
+                {
+                    <li><a href="#" class="@classLevel" onclick="javascript:@child.Accion;"> @child.Nombre</a></li>
+                }
+                else
+                {
+                    <li><a href="@child.Accion" class="@classLevel" target="_blank"> @child.Nombre</a></li>
+                }
+            }
+        }
+    }
+}
+
+@section styles
+{
+    <link href="~/Content/ol.css" rel="stylesheet" />
+    <link href="~/Content/mapa.css" rel="stylesheet" />
+    <link href="~/Content/jquery-ui.css" rel="stylesheet" />
+    <link href="~/Content/searchform.css" rel="stylesheet" />
+    <link href="~/Content/dataTables.bootstrap.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap-datepicker.min.css" rel="stylesheet" />
+    <link href="~/Content/accordian-menu.css" rel="stylesheet" />
+    <link href="~/Content/theme_new.css" rel="stylesheet" />
+    <link href="~/Content/custom.css" rel="stylesheet" />
+
+    <style>
+        #modalInfoProvisoria [role="alert"]:not(:last-of-type) {
+            margin-bottom: 10px;
+        }
+
+        #modalInfoProvisoria [role="alert"] > p {
+		    font-size: 14px;
+            margin: 0 0 0 140px;
+			text-align: justify;
+            width: calc(100% - 340px);
+        }
+@*
+            #modalInfoProvisoria [role="alert"] > p:last-child {
+				margin-left: 0;
+				width: 100%;
+            }
+*@
+            #modalInfoProvisoria [role="alert"] > p:not(:first-of-type) {
+			    margin-top:8px;
+            }
+
+		#modalInfoProvisoria [role="alert"] > img.qr {
+			top: 55px;
+            height: 125px;
+			position: absolute;
+        }
+
+		#modalInfoProvisoria [role="alert"] > img:not(.qr) {
+			height: 170px;
+            top: 40px;
+            position: absolute;
+            right: 20px;
+        }
+    </style>
+}
+<section id="container" data-ng-app="app">
+    <!-- **********************************************************************************************************************************************************
+    TOP BAR
+    *********************************************************************************************************************************************************** -->
+    <!--header start-->
+    <header class="header black-bg n-header">
+        <div class="sidebar-toggle-box" onmouseup="hideSearchBlur()">
+            <div class="fa fa-bars n-bar" data-placement="right" data-original-title="Menu"></div>
+        </div>
+        <!--logo start-->
+        <a class="logo"><img src="~/Content/images/logo.png"/></a>
+        <!--logo end-->
+        <div class="nav search-bar-row" id="top_menu" data-ng-controller="searchCtrl">
+            <!--  notification start -->
+            <div id="search-bar" class="nav">
+                <div class="search-input input-group">
+                    <form>
+                        <input autocomplete="off" data-search="searchByText();" data-ng-model="texto" id="search-pattern" class="form-control n-search" placeholder="Buscar..." type="text" />
+                    </form>
+                    <div class="input-group-btn">
+                        <button data-ng-click="searchByText();" name="search" class="btn btn-default" id="search-btn"><span class="icon-search-header"></span></button>
+                        <button data-ng-click="eraseSearch()" class="btn btn-default" id="erase-search-btn"><span class="icon-delete-header"></span></button>
+                        <button data-ng-click="collapseSearch();" class="btn btn-default" id="collapse-search-btn"><span class="icon-arrow-header"></span></button>
+                    </div>
+                </div>
+                <div id="search-results" class="panel panel-primary collapse" aria-expanded="false" style="background:none">
+                    <div class="row">
+                        <div id="message">
+                            <span data-ng-bind="mensaje"></span>
+                            <a class="reset-search-btn fa pull-right " href="#" data-placement="right" ng-show="resultados.length">
+                                <i class="fa-file-excel-o tooltips boton-nav-2" data-placement="top" title="Exportar Objetos Seleccionados" ng-click="exportarObjetosExcel($event)" ng-show="resultados.length"></i>
+                                <i class="fa-th-large tooltips boton-nav-2" data-placement="top" title="Generar Colección" ng-click="generarColeccion($event)" ng-show="resultados.length"></i>
+                            </a>
+                        </div>
+                        <div id="accordion" class="results">
+                            <div data-result-group="ngSearchFinished" data-ng-repeat="grupo in resultados" permisos="permisos" pattern="pattern" limite="limite" grupo="grupo">
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @{Html.RenderPartial("~/Views/DetalleObjeto/Detalle.cshtml", new DetalleObjetoConfig("main", true, false/*SeguridadController.ExisteFuncion(Resources.Seguridad.EdicionAtributos)*/, true, true));}
+            <!--  notification end -->
+        </div>
+        <div class="top-menu" onmouseup="hideSearchBlur()" id="menu1">
+            <button class="btn btn-flat help-btn icon-help-header no-mobile" onclick="javascript:loadView('@Url.Action("DatosAyudaLinea","AyudaLinea")')" title="Más información" data-toggle="modal" data-target="#modal-window">
+            </button>
+
+            <div id="profile-menu" class="dropdown">
+                <a id="dLabel" role="button" data-toggle="dropdown" class="btn btn-user" data-target="#" href="#" aria-expanded="true">
+                    <span class="pull-left glyphicon glyphicon-chevron-down"></span>
+                    <span class="no-mobile">@SeguridadController.GetUsuarioActivo()</span>
+                    <img src="~/Content/images/ui-sam.jpg" />
+                </a>
+
+                <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+                    <div class="container-arrow arrow-white"></div>
+                    <li class="mobile">
+                        <a href="#" onclick="javascript:loadView('@Url.Action("DatosAyudaLinea","AyudaLinea")')" tabindex="-1"><i class="fa fa-question-circle"></i>Ayuda</a>
+                    </li>
+                    <li>
+                        <a href="#" onclick="javascript:loadView('@Url.Action("UsuarioCambiarPassword","Account")')" tabindex="-1"><i class="fa fa-unlock-alt"></i>Cambiar contraseña</a>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <a href="~/Account/LogOff" tabindex="-1"><i class="fa fa-sign-out"></i>Salir</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </header>
+    <!--header end-->
+    <!-- **********************************************************************************************************************************************************
+    MAIN SIDEBAR MENU
+    *********************************************************************************************************************************************************** -->
+    <!--sidebar start-->
+
+    <div class="main-menu-container">
+        <div id="accordian">
+            <ul>
+                @foreach (var menuItem in ViewBag.Menu)
+                {
+                    if (menuItem.Icono == "hide")
+                    {
+                        continue;
+                    }
+                    <li>
+                        @if (menuItem.TipoAccion == 3)
+                        {
+                            <h3><a href="@menuItem.Accion" target="_blank">@menuItem.Nombre.ToUpper()</a></h3>
+                        }
+                        else
+                        {
+                            <h3><a href="#">@menuItem.Nombre.ToUpper()</a></h3>
+                            <ul>
+                                @MenuTree(menuItem, 1)
+                            </ul>
+                        }
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+    <!--sidebar end-->
+    <!-- **********************************************************************************************************************************************************
+    MAIN CONTENT
+    *********************************************************************************************************************************************************** -->
+    <!--main content start-->
+    <section id="main-content">
+        <section class="wrapper">
+            <div id="map-container">
+                <div id="map"></div>
+            </div>
+
+            <!-- loader -->
+            <div class="loading-status-ui"><div class="loader"></div></div>
+            <div class="loading-status-ui-backdrop"></div>
+
+            <!-- Modal -->
+            <div id="contenido"></div>
+        </section>
+    </section>
+</section>
+<div class="modal fade theme_new mensaje" id="ModalInputGenerico" tabindex="-3" role="dialog" aria-labelledby="TituloModalInputGenerico" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="TituloModalInputGenerico">Titulo</h3>
+                <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+            </div>
+            <div class="modal-body">
+                <div id="MensajeInputGenerico" class="alert alert-dismissible remove-padding" role="alert">
+                    <input id="txtInputGenerico" type="text" placeholder="input generico..." class="form-control">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-xs-4 pull-right">
+                    <span id="btnAceptarInputGenerico" aria-hidden="true" data-placement="right" title="Aceptar" data-original-title="Aceptar" class="fa fa-check-circle light-blue fa-3x cursor-pointer"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade theme_new mensaje" id="ModalErrorGenerico" tabindex="-3" role="dialog" aria-labelledby="TituloModalErrorGenerico" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="TituloModalErrorGenerico">Titulo</h3>
+                <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+            </div>
+            <div class="modal-body">
+                <div id="MensajeErrorGenerico" class="alert alert-dismissible" role="alert">
+                    <p id="DescripcionMensajeErrorGenerico">Descripcion de la informacion</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@if ((bool)ViewBag.ShowTempDataWarning)
+{
+    <div class="modal fade theme_new mensaje" id="modalInfoProvisoria" tabindex="-3" role="dialog" aria-labelledby="TituloModalErrorGenerico" aria-hidden="true" data-backdrop="static">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Bienvenido</h3>
+                    <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+                </div>
+                <div class="modal-body">
+                    <div class="alert alert-success" role="alert">
+                        <img class="qr" src="~/Content/images/mobileqr.png" />
+                        <img src="~/Content/images/celus.png" />
+                        <p>
+                            ¡Atenci&oacute;n! Se encuentra disponible una nueva versi&oacute;n web mobile del m&oacute;dulo de consultas del Sistema de Gesti&oacute;n Catastral. Para acceder, escanee este c&oacute;digo QR desde cualquier dispositivo m&oacute;vil y acceda a la aplicaci&oacute;n con su mismo usuario y clave.
+                        </p>
+                        <p>
+                            Ya puede buscar, navegar, visualizar las mensuras y toda la informaci&oacute;n catastral disponible en la web, ahora tambi&eacute;n desde su tel&eacute;fono o tableta.
+                        </p>
+                        <p>
+                            Ante cualquier inquietud, por favor comu&iacute;quese con el Departamento de Sistemas a <a href="mailto:sistemas.catastroctes@gmail.com">sistemas.catastroctes@gmail.com</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+<div class="modal fade theme_new mensaje" id="modalVideoIFrame" tabindex="-3" role="dialog" aria-labelledby="TituloModalIframe" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="TituloModalIframe">Tutoriales - Introducción</h3>
+                <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+            </div>
+            <div class="modal-body">
+                <div id="YTPlayer"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts
+{
+    <script src="~/Scripts/moment.min.js"></script>
+    <script src="~/Scripts/moment-with-locales.js" type="text/javascript"></script>
+
+    <script src="~/Scripts/angular.min.js"></script>
+    <script src="~/Scripts/ui-bootstrap-tpls-0.12.0.min.js"></script>
+    <script src="~/Scripts/proj4.js"></script>
+    <script src="~/Scripts/ol.js"></script>
+    <script src="~/Scripts/composer.js"></script>
+    <!--custom scroll-->
+    <script src="~/Scripts/jquery.scrollTo.min.js"></script>
+    <script src="~/Scripts/jquery.nicescroll.js" type="text/javascript"></script>
+    <!--accordion-->
+    <script type='text/javascript' src='~/Scripts/jquery.dcjqaccordion.2.7.js'></script>
+    <!--common script-->
+    <script src="~/Scripts/Mapas/MapaOSM.js"></script>
+    <script src="~/Scripts/Mapas/polyline.js"></script>
+    <!--custom scroll-->
+    <script src="~/Scripts/jquery.dataTables.js"></script>
+    <script src="~/Scripts/dataTables.bootstrap.js"></script>
+    <script src="~/Scripts/bootstrap-datepicker.min.js"></script>
+    <script src="~/Scripts/locales/bootstrap-datepicker.es.min.js"></script>
+    <script src="~/Scripts/Negocio/app.js"></script>
+    <script src="~/Scripts/Negocio/seguridadresource.js"></script>
+    <script src="~/Scripts/Negocio/searchresults.js"></script>
+    <script src="~/Scripts/Negocio/Directives/Search/resultTypes.js"></script>
+    <script src="~/Scripts/Negocio/Directives/Search/resultGroup.js"></script>
+    <script src="~/Scripts/Negocio/Directives/autocomplete.js"></script>
+    <script src="~/Scripts/Negocio/Filters/hightlight.js"></script>
+    <script src="~/Scripts/Negocio/Filters/searchGroupHeader.js"></script>
+    <script src="~/Scripts/Negocio/Filters/capitalize.js"></script>
+    <script src="~/Scripts/Negocio/Services/security.js"></script>
+    <script src="~/Scripts/Negocio/Controllers/searchCtrl.js"></script>
+    <script src="~/Scripts/accordian-menu.js"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=@(ViewBag.GoogleApiKey)"></script>
+    <script>
+
+        var tag = document.createElement('script');
+
+        tag.src = "https://www.youtube.com/iframe_api";
+        var firstScriptTag = document.getElementsByTagName('script')[0];
+        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+        var YTPlayer;
+        function onYouTubeIframeAPIReady() {
+            YTPlayer = new YT.Player('YTPlayer', {
+                playerVars: { 'autoplay': 1 },
+                events: {
+                    'onReady': onPlayerReady
+                }
+            });
+        }
+
+        function onPlayerReady() {
+            YTPlayer.setVolume(100);
+            YTPlayer.playVideo();
+        }
+
+        @if ((bool)ViewBag.ShowTempDataWarning)
+        {
+        <text>
+
+        $(document).ready(function () {
+            $("#modalInfoProvisoria").one("shown.bs.modal", function () {
+                $("a[video]", this).on("click", function (evt) {
+                    $("#modalVideoIFrame")
+                        .one("hide.bs.modal", function () { YTPlayer.stopVideo(); })
+                        .one("show.bs.modal", function () {
+                            $("iframe", this).hide();
+                        })
+                        .one("shown.bs.modal", function () {
+                        var titulo = $(evt.target).html(),
+                            width = $(".modal-body", this).width(),
+                            height = width * .5625;
+                        YTPlayer.loadVideoById($(evt.target).attr("video"));
+                        $("iframe", this)
+                            .attr("title", titulo)
+                            .attr("height", height)
+                            .attr("width", width)
+                            .show();
+                        $("#TituloModalIframe", this).html("Tutorial - " + titulo)
+                    }).modal("show");
+                });
+            }).modal("show");
+        });
+        </text>
+        }
+        moment.locale("es");
+        var APP_SRID = '@(ViewBag.SRID.Code??"EPSG:4326")';
+        @if (ViewBag.SRID.Definition != null)
+        {
+        <text>
+        proj4.defs(APP_SRID,'@Html.Raw(ViewBag.SRID.Definition)');
+        ol.proj.proj4.register(proj4);
+        </text>
+        }
+    </script>
+}

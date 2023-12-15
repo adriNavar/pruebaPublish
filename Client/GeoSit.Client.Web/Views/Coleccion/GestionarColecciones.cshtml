@@ -1,0 +1,110 @@
+﻿@model GeoSit.Client.Web.Models.ColeccionListaModels
+
+<link href="~/Content/dataTables.bootstrap.css" rel="stylesheet" />
+<link href="~/Content/Coleccion/Coleccion.css" rel="stylesheet" />
+
+<div class="modal fade theme_new" id="modal-window-coleccion" data-backdrop="static" data-keyboard="false" role="dialog" tabindex="-1" aria-labelledby="lblModalDomicilio" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Administración de Colecciones</h3>
+                <div class="pull-right">
+                    <span id="minimizar" data-action="minimizar" aria-hidden="true" class="fa fa-chevron-up fa-2x white cursor-pointer" aria-label="Minimizar" title="Minimizar"></span>
+                    <span id="salir" aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer" style="margin-left:15px;" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="row form-group" style="margin: 7px 0 0 10px;">
+                    <div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
+                        <div class="input-group filtro-input">
+                            <input type="text" value="" class="form-control" data-orden-tipo="0" id="filtro-coleccion" name="filtro-coleccion" placeholder="Filtrar">
+                            <span class="input-group-addon">
+                                <span id="clearSearch" title="Limpiar" class="glyphicon glyphicon-erase cursor-pointer pull-left" aria-hidden="true"></span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="colecciones-borrar-unir-importar">
+                        <button id="borrarColecciones" onclick="borrarColecciones(this, event)" class=" btn btn-default">Borrar</button>
+                        <button id="unirColeccion" class="btn btn-default">Unir</button>
+                        <button id="importarColeccion" class="btn btn-default">Importar</button>
+                    </div>
+
+                </div>
+                <div style="padding-top:5px;padding-left:25px;">
+                    <button class="btn btn-default" onclick="seleccionarTodas(this, event)"><span id="seleccionarTodas" name="check-coleccion-all" class="fa fa-square"></span> Seleccionar todas</button>
+                    <button class="btn btn-default ordenar" data-orden-tipo="1">Ord. por Nombre</button>
+                    <button class="btn btn-default ordenar" data-orden-tipo="2">Ord. por Fecha</button>
+                </div>
+                <div class="coleccion-body">
+                    <div class="coleccion-content" style="margin-top: 15px;">
+                        @{ Html.RenderPartial("~/Views/Coleccion/Colecciones.cshtml", Model); }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Información-->
+<div class="modal fade theme_new mensaje" id="ModalInfoColeccion" tabindex="-3" role="dialog" aria-labelledby="TituloInfo" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="TituloInfoColeccion">Titulo</h3>
+                <span id="btnCancelarAlert" aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+            </div>
+            <div class="modal-body">
+                <div id="MensajeInfoColeccion" class="alert alert-info alert-dismissible" role="alert">
+                    <p id="DescripcionInfoColeccion">Descripcion de la informacion</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-xs-4 pull-right">
+                    <span id="btnAceptarAlert" aria-hidden="true" data-dismiss="modal" data-placement="right" title="Aceptar" data-original-title="Aceptar" class="fa fa-check-circle light-blue fa-3x cursor-pointer"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Información-->
+<div class="modal fade theme_new mensaje" id="ModalAltaUniraColeccion" tabindex="-3" role="dialog" aria-labelledby="TituloInfo" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="TituloModalAltaUniraColeccion"></h3>
+                <span id="btnCancelarNuevaColeccion" aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+            </div>
+            <div class="modal-body">
+                <div id="MensajeColeccionesSeleccionadas">
+                    <h5 id="colecciones-seleccionadas"></h5>
+                </div>
+                <div id="MensajeInputColeccion" style="padding: 20px 0; display: none;">
+                    <input id="nombreColeccion" type="text" placeholder="Nombre de la Colección" autocomplete="off" class="form-control">
+                    <input type="hidden" id="tipoAccion" value="" />
+                    <input type="hidden" id="idColeccion" value="" />
+                    <input type="hidden" id="idComponente" value="" />
+                    <input type="hidden" id="idObjeto" value="" />
+                </div>
+                <div id="SeleccionArchivo" style="display: none;">
+                    <div class="input-group">
+                        <input type="text" class="form-control" readonly />
+                        <span class="input-group-btn">
+                            <span class="btn btn-primary btn-file">
+                                Examinar <input type="file" accept=".csv">
+                            </span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-xs-4 pull-right">
+                    <span id="btnAceptarNuevaColeccion" aria-hidden="true" data-dismiss="modal" data-placement="right" title="Aceptar" data-original-title="Aceptar" class="fa fa-check-circle light-blue fa-3x cursor-pointer"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="~/Scripts/jquery.dataTables.js"></script>
+<script type="text/javascript" src="~/Scripts/Coleccion/GestionarColecciones.js"></script>

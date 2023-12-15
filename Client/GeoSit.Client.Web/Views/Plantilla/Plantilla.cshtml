@@ -1,0 +1,299 @@
+﻿@using GeoSit.Client.Web.Controllers;
+
+<link href="~/Content/dataTables.bootstrap.css" rel="stylesheet" />
+<link href="~/Content/bootstrap-switch.css" rel="stylesheet" />
+<link href="~/Content/pick-a-color-1.2.3.min.css" rel="stylesheet" />
+<link href="~/Content/bootstrap-fileinput/css/fileinput.min.css" rel="stylesheet" />
+<link href="~/Content/css/select2.css" rel="stylesheet" />
+<link href="~/Content/select2-bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/SliderBar/jquery-ui-slider-pips.css" rel="stylesheet" />
+<link href="~/Content/SliderBar/prism.css" rel="stylesheet" />
+<link href="~/Content/formValidation.min.css" rel="stylesheet" />
+<link href="~/Content/SliderBar/jquery.range.css" rel="stylesheet" />
+<link href="~/Content/theme_new.css" rel="stylesheet" />
+<link href="~/Content/plantilla.css" rel="stylesheet" />
+
+<div class="modal fade theme_new" id="plantillaModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div id="scroll-content-plantillas" class="scroll-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">@Resources.Recursos.AdministracionPloteosPredefinidos</h3>
+                    <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+                </div>
+                <div class="modal-body plantilla-body">
+                    <div class="plantilla-content body-content" style="height:100%">
+                        <div class="panel-group accordion plantilla-datos" id="accordion-plantilla">
+                            <div class="plantilla-listado" style="margin-bottom: 10px; margin-top: 0;">
+                                <div class='panel-collapse collapse in main-collapse'>
+                                    <div class="panel-body" id="plantillas-panel-body">
+                                        <div class="row">
+                                            <div class="col-xs-offset-1 col-xs-9">
+                                                <div class="input-group">
+                                                    <input type="text" id="search" class="form-control search-filter" placeholder="Filtro">
+                                                    <div class="input-group-addon cursor-pointer">
+                                                        <span data-placement="left" title="Borrar" data-original-title="Borrar" id="search-clear" class="fa-lg fa fa-trash black cursor-pointer" aria-hidden="true" data-toggle="tooltip"></span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-2">
+                                                <span id="plantilla-import" data-placement="left" title="Importar" data-original-title="Importar" class="fa fa-download fa-2x black cursor-pointer boton-deshabilitado btn-file pull-right" aria-hidden="true" data-toggle="tooltip">
+                                                    <input type="file" accept=".txt">
+                                                </span>
+                                                <span id="plantilla-insert" data-placement="left" title="Agregar" data-original-title="Agregar" class="fa fa-plus-circle fa-2x black cursor-pointer boton-deshabilitado pull-right" aria-hidden="true" data-toggle="tooltip"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="accordionPublicas">
+                                <div id="div-plantilla-publicos" class="section-position">
+                                    <div class='panel-heading bg-primary main-heading' id='headingListado'>
+                                        <a data-toggle='collapse' data-parent='#accordionPublicas' href='#collapseListado' aria-expanded='false'
+                                           aria-controls='collapseListado' class="collapsed">
+                                            <div class='panel-title'>
+                                                Listado de plantillas
+                                                <i class="fa"></i>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div class='panel-collapse collapse main-collapse' id='collapseListado' aria-labelledby='headingListado'>
+                                        <div class="panel-body">
+                                            <div class="resultados col-xs-11">
+                                                <table id="tabla-plantillas" class="table table-striped table-bordered table-responsive">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="hide"></th>
+                                                            <th>Categoría</th>
+                                                            <th>Nombre</th>
+                                                            <th>Hoja</th>
+                                                            <th>Orientación</th>
+                                                            <th>Componente Principal</th>
+                                                            <th>Visibilidad</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>
+                                                <div id="plantilla-partial"></div>
+                                            </div>
+                                            <div class="resultados col-xs-1" id="plantilla-controls">
+                                                <dl>
+                                                    <dt><span id="plantilla-export" class="fa fa-upload fa-2x black cursor-pointer boton-deshabilitado" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Exportar Plantilla"></span></dt>
+
+                                                    @if (SeguridadController.ExisteFuncion(Resources.Seguridad.BajadePlantilla))
+                                                    {
+                                                        <dt><span id="plantilla-delete" class="fa fa-minus-circle fa-2x black cursor-pointer boton-deshabilitado" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Baja de Plantilla"></span></dt>
+                                                    }
+                                                    @if (SeguridadController.ExisteFuncion(Resources.Seguridad.ModificarPlantilla))
+                                                    {
+                                                        <dt><span id="plantilla-edit" class="fa fa-pencil fa-2x black cursor-pointer boton-deshabilitado" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Modificar Plantilla"></span></dt>
+                                                    }
+
+                                                    <dt><span id="plantilla-copy" class="fa fa-files-o fa-2x black cursor-pointer boton-deshabilitado" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Copiar Plantilla"></span></dt>
+
+                                                    @if (SeguridadController.ExisteFuncion(Resources.Seguridad.DespublicarPlantilla) && SeguridadController.ExisteFuncion(Resources.Seguridad.PublicarPlantilla))
+                                                    {
+                                                        <dt><span id="plantilla-publicar" class="fa fa-lock fa-2x black cursor-pointer boton-deshabilitado" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Cambiar visibilidad"></span></dt>
+                                                    }
+                                                </dl>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div id="div-detalle-plantilla" class="section-position">
+                                <div class='panel-heading bg-primary main-heading panel-deshabilitado' role='region' id='headingPlantillaInfo'>
+                                    <a data-toggle='collapse' data-parent='#accordion-plantilla' href='#collapsePlantillaInfo' aria-expanded='false'
+                                       aria-controls='collapsePlantillaInfo' class="collapsed">
+                                        <div class='panel-title'>
+                                            Detalle de la Plantilla
+                                            <i class="fa"></i>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class='panel-collapse collapse main-collapse' id='collapsePlantillaInfo' aria-labelledby='headingPlantillaInfo'>
+                                    <div class=" panel-body">
+                                        @using (Ajax.BeginForm("Save", "Plantilla", null, new AjaxOptions() { HttpMethod = "POST" }, new { id = "plantilla-form", enctype = "multipart/form-data", @class = "form-horizontal" }))
+                                        {
+
+                                        }
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div id="div-capas-plantilla" class="section-position">
+                                <div class='panel-heading bg-primary main-heading panel-deshabilitado' role='region' id='headingPlantillaLayers'>
+                                    <a data-toggle='collapse' data-parent='#accordion-plantilla' href='#collapsePlantillaLayers' aria-expanded='false'
+                                       aria-controls='collapsePlantillaLayers' class="collapsed">
+                                        <div class='panel-title'>
+                                            Capas<i class="fa"></i>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class='panel-collapse collapse main-collapse' id='collapsePlantillaLayers' aria-labelledby='headingPlantillaLayers'>
+                                    <div class="panel-body" id="layers-panel-body">
+                                        <div class="col-xs-11">
+                                            <table id="tabla-layers" class="table table-striped table-bordered table-responsive">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="hide"></th>
+                                                        <th>Nombre</th>
+                                                        <th>Componente</th>
+                                                        <th>Categoría</th>
+                                                        <th>Orden</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
+                                        <div class="col-xs-1" id="layer-controls">
+                                            <dl>
+                                                <dt><span id="layer-insert" class="fa fa-plus-circle fa-2x black cursor-pointer" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Agregar"></span></dt>
+                                                <dt><span id="layer-delete" class="fa fa-minus-circle fa-2x black cursor-pointer boton-deshabilitado" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Eliminar"></span></dt>
+                                                <dt><span id="layer-edit" class="fa fa-pencil fa-2x black cursor-pointer boton-deshabilitado" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Editar"></span></dt>
+                                            </dl>
+                                        </div>
+                                    </div>
+
+                                    <div class="panel-body" id="layer-panel-body">
+                                        @using (Ajax.BeginForm("Save", "Layer", null, new AjaxOptions { HttpMethod = "POST" }, new { id = "plantilla-layer-form", enctype = "multipart/form-data", @class = "form-horizontal" }))
+                                        {
+
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="div-textos-plantilla" class="section-position">
+                                <div class='panel-heading bg-primary main-heading panel-deshabilitado' role='region' id='headingPlantillaTextos'>
+                                    <a data-toggle='collapse' data-parent='#accordion-plantilla' href='#collapsePlantillaTextos' aria-expanded='false'
+                                       aria-controls='collapsePlantillaTextos' class="collapsed">
+                                        <div class='panel-title'>
+                                            Textos<i class="fa"></i>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class='panel-collapse collapse main-collapse' id='collapsePlantillaTextos' aria-labelledby='headingPlantillaTextos'>
+                                    <div class="panel-body" id="textos-panel-body">
+                                        <div class="col-xs-11">
+                                            <table id="tabla-textos" class="table table-striped table-bordered table-responsive" style="width: 100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="hide"></th>
+                                                        <th>Tipo</th>
+                                                        <th>Origen</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
+                                        <div class="col-xs-1" id="texto-controls">
+                                            <dl>
+                                                <dt><span id="texto-insert" class="fa fa-plus-circle fa-2x black cursor-pointer" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Agregar"></span></dt>
+                                                <dt><span id="texto-delete" class="fa fa-minus-circle fa-2x black cursor-pointer boton-deshabilitado" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Eliminar"></span></dt>
+                                                <dt><span id="texto-edit" class="fa fa-pencil fa-2x black cursor-pointer boton-deshabilitado" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Editar"></span></dt>
+                                            </dl>
+                                        </div>
+                                    </div>
+                                    <div class="panel-body" id="texto-panel-body">
+                                        @using (Ajax.BeginForm("Save", "PlantillaTexto", null, new AjaxOptions { HttpMethod = "POST" }, new { id = "plantilla-texto-form", @enctype = "multipart/form-data", @class = "form-horizontal" }))
+                                        {
+
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="div-detalle-plantilla" class="section-position">
+                                <div class='panel-heading bg-primary main-heading panel-deshabilitado' role='region' id='headingPlantillaEscalas'>
+                                    <a data-toggle='collapse' data-parent='#accordion-plantilla' href='#collapsePlantillaEscalas' aria-expanded='false'
+                                       aria-controls='collapsePlantillaEscalas' class="collapsed">
+                                        <div class='panel-title'>
+                                            Escalas<i class="fa"></i>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class='panel-collapse collapse main-collapse' id='collapsePlantillaEscalas' aria-labelledby='headingPlantillaEscalas'>
+                                    <div class="panel-body" id="escalas-panel-body">
+                                        <div class="col-xs-11">
+                                            <table id="tabla-escalas" class="table table-striped table-bordered table-responsive">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="hide"></th>
+                                                        <th>Escala</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
+                                        <div class="col-xs-1" id="escala-controls">
+                                            <dl>
+                                                <dt><span id="escala-insert" class="fa fa-2x fa-plus-circle cursor-pointer" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Agregar"></span></dt>
+                                                <dt><span id="escala-delete" class="fa fa-2x fa-minus-circle cursor-pointer boton-deshabilitado" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Eliminar"></span></dt>
+                                                <dt><span id="escala-edit" class="fa fa-2x fa-pencil cursor-pointer boton-deshabilitado" aria-hidden="true" data-toggle="tooltip" data-placement="top" title="Editar"></span></dt>
+                                            </dl>
+                                        </div>
+                                    </div>
+
+                                    <div class="panel-body" id="escala-panel-body">
+                                        @using (Ajax.BeginForm("Save", "PlantillaEscala", null, new AjaxOptions { HttpMethod = "POST" }, new { id = "plantilla-escala-form", enctype = "multipart/form-data", @class = "form-horizontal" }))
+                                        {
+
+                                        }
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="modal-footer" id="footer-plantillas">
+                    <div class="col-xs-4 pull-right">
+                        <span aria-hidden="true" aria-controls='button' data-placement="right" title="Guardar" data-original-title="Guardar" id="save-all" class="fa fa-save fa-2x black cursor-pointer boton-deshabilitado"></span>
+                        <span aria-hidden="true" aria-controls='button' data-placement="right" title="Cancelar" data-original-title="Cancelar" id="cancel-all" class="fa fa-undo fa-2x black cursor-pointer boton-deshabilitado"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade theme_new mensaje" id="confirmModalPlantilla" tabindex="-2" role="dialog" aria-labelledby="TituloAdvertenciaPlantilla" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog" style="width: 570px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <input type="hidden" id="TipoAdvertenciaPlantilla" value="">
+                <h3 class="modal-title" id="TituloAdvertenciaPlantilla">Titulo</h3>
+                <span aria-hidden="true" class="fa fa-close white fa-2x cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+            </div>
+            <div class="modal-body">
+                <div id="MensajeAlertaPlantilla" class="alert alert-warning alert-dismissible" role="alert" style="width: 545px;">
+                    <p id="DescripcionAdvertenciaPlantilla">
+                        Está a punto de DESACTIVAR al usuario Perez, Juan <br>Está seguro de continuar?
+                    </p>
+                </div>
+            </div>
+            <div class="modal-footer" id="botones-modal-confirm">
+                <div class="col-xs-4 pull-right">
+                    <span id="btnAdvertenciaOKPlantilla" aria-hidden="true" data-dismiss="modal" data-placement="right" title="Aceptar" data-original-title="Aceptar" class="fa fa-check-circle light-blue fa-3x cursor-pointer"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/jquery.dataTables.min.js"></script>
+<script src="~/Scripts/dataTables.bootstrap.js"></script>
+<script src="~/Scripts/bootstrap-colorpicker.js"></script>
+<script src="~/Scripts/tinycolor-0.9.15.min.js"></script>
+<script src="~/Scripts/pick-a-color-1.2.3.mt.js"></script>
+<script src="~/Scripts/fileinput.es.js"></script>
+<script src="~/Scripts/select2.min.js"></script>
+<script src="~/Scripts/SliderBar/jquery-ui-slider-pips.js"></script>
+<script src="~/Scripts/SliderBar/prism.js"></script>
+<script src="~/Scripts/SliderBar/jquery.range.js"></script>
+<script src="~/Scripts/jquery.form.js"></script>
+<script src="~/Scripts/formValidation.min.js"></script>
+<script src="~/Scripts/bootstrapValidation.min.js"></script>
+<script src="~/Scripts/Plantilla/main.js"></script>

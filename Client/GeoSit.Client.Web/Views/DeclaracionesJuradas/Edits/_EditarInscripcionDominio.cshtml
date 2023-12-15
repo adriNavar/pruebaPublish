@@ -1,0 +1,73 @@
+﻿@model GeoSit.Client.Web.Models.InscripcionDominioModel
+@{
+    if (Model.IdDominio > 0)
+    {
+        ViewBag.Title = "Edición de Inscripción de dominio";
+    }
+    else
+    {
+        ViewBag.Title = "Crear nueva Inscripción de dominio";
+    }
+}
+<link href="~/Content/dominio.css" rel="stylesheet" />
+
+<div class="modal fade theme_new" id="modalEditarDominio" role="dialog" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="scroll-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">@ViewBag.Title</h3>
+                    <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+                </div>
+                <div class="modal-body dominio-body">
+                    <div id="dominio-content" class="dominio-content body-content">
+                        <div class="panel remove-shadow remove-margin">
+                            <div class="panel-title">
+                                <h4 class="title-border"><strong>Datos de la inscripci&oacute;n</strong></h4>
+                            </div>
+                            <div class="panel-body titular-datos">
+                                <form id="ddjj-dominio-form" class="form-horizontal">
+                                    @Html.HiddenFor(model => model.IdDominio)
+                                    @Html.HiddenFor(model => model.IdDeclaracionJurada)
+                                    @Html.HiddenFor(model => model.IsDeleted)
+                                    @Html.HiddenFor(model => model.IdTipoInscripcion, new { @id = "IdTipoInscripcionValue" })
+                                    <div class="form-group">
+                                        <label class="col-xs-4 text-right control-label">Tipo</label>
+                                        <div class="col-xs-8">
+                                            <select id="IdTipoInscripcion" class="form-control">
+                                                @foreach (var item in Model.TipoInscripciones)
+                                                {
+                                                    <option value="@item.TipoInscripcionID" regexp="@item.ExpresionRegular">@item.Descripcion</option>
+                                                }
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-xs-4 text-right control-label">N&uacute;mero</label>
+                                        <div class="col-xs-8">
+                                            @Html.TextBoxFor(model => model.Inscripcion, new { @class = "form-control", @placeholder = "Formato: Libre" })
+                                            <label id="labelNumero"></label>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-xs-4 text-right control-label">Fecha</label>
+                                        <div class="col-xs-8">
+                                            @Html.TextBoxFor(model => model.FechaHora, new { @class = "form-control" })
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-xs-4 pull-right">
+                        <span aria-hidden="true" data-placement="right" title="Guardar" data-original-title="Guardar" id="btnGuardarDominio" class="fa fa-save fa-2x black cursor-pointer"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/DeclaracionesJuradas/Edits/EditarInscripcionDominio.js"></script>

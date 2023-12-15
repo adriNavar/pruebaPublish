@@ -1,0 +1,1258 @@
+[33ma760585b6[m[33m ([m[1;36mHEAD -> [m[1;32mBranchGeoSITMCorrientesTrionIT[m[33m, [m[1;31morigin/BranchGeoSITMCorrientesTrionIT[m[33m)[m Valuaciones
+[33m8ae0752ea[m Ajuste general de clases y aforo. Ya se encuentra funcionando en esta versiòn.
+[33m3fe8c19f6[m[33m ([m[1;32mlist[m[33m)[m Revaluacion / Aplicacion de decreto
+[33m06479df2e[m Valuaciones
+[33mcca9f759f[m Valuaciones
+[33mc5c15a32d[m Valuaciones
+[33mad1ff074f[m Correcciones
+[33m04bb72718[m Valuaciones
+[33m36b12fa2c[m El mapeo de MedidasLineales de clases no mapeaba correctamente por el tipo de datos en ValorMetros y ValorAforo. Lo que se hizo fue ajustar eso para que se puedan mapear los datos. Se ajustó en todos los cálculo float por double. Se agregaron los algoritmos de todo lo que armado de clase y medidas lineales.
+[33mb9190fe17[m Integración de caracteristicas para Formulario E1 y E2
+[33m05bd6f6fe[m Valuaciones
+[33mceb87be09[m Merge con BranchGeoSITMCorrientesTrionIT.
+[33m98e6fc7de[m Ajustes Varios (estilos y js) a formularios de valuacion y usabilidad del mapa prueba de concepto del paquete Fare.Xeger
+[33meeb2e412f[m Valuaciones
+[33m09a6f8ee6[m Correcciones Valuaciones
+[33mfd876df7a[m Correcciones
+[33m6428b8e6e[m Correcciones
+[33m1f17a7817[m 
+[33mbf528984d[m Correcciones
+[33m93ce5e82d[m Correcciones
+[33mbba6977af[m Correcciones Dominios, Titulares y Domicilios
+[33mba03a0b05[m Merge Manual BranchGeoSITMDemoEF por ajuste en Mapas Tematicos
+[33m01048c06b[m Visor Interno de PDF
+[33m54405ebc4[m Correcciones
+[33m14835feb7[m Merge con BranchGeoSITMCorrientesJF
+[33m85f907a6b[m Merge  con BranchGeoSITMCorrientesTrionIT. Ajustes a Informe de Objetos de Infraestructura Agregado de logica para obtencion de distancias entre 2 geometrías en GeometryFieldBuilder
+[33mcda12dece[m Informe Expediente Obra Detallado + arreglo en un botón
+[33mee030a7d9[m ajustes a Datos de Infraestructura, Registro de Inspectores, Informes varios y otras cosas
+[33ma0c28e184[m Valuaciones
+[33m2495da176[m Valuaciones
+[33mdfa2f1f98[m Merge con BranchGeoSITMCorrientesJS
+[33ma97a7c897[m ajustes de estilos  por nueva interfaz y ajustes varios
+[33me03be0b56[m Cambio de nombre en funciones generales y modales
+[33mcf7035d64[m ocultar inspecciones y relaciones
+[33m25eabb7dd[m cambios de estilo
+[33mf21cc9b78[m Merge con BranchGeoSITMCorrientesJS
+[33m1d7a40838[m Ajustes Funciones Municipales
+[33m025f46079[m cambios excel
+[33m82e7a94cc[m Ajustes al detalle de objeto y vuelvo a agregar el template de manzana, por algun motivo se borro en el commit anterior.
+[33m55593324e[m ajustes varios Mapas Temáticos, estilos, mapa y buscador general
+[33mf98b04b1e[m actualizacion de estilos
+[33m1a4be22c3[m Valuaciones
+[33mafd99bc48[m Merge BranchGeoSITMCorrientesJF y ajustes a mapa
+[33mcb9a51a8e[m ajustes a modulos de obras particulares, mapa, informes y emprolijamientos varios. lo referente a formularios de DDJJ lo modifiqué provisoriamente hasta que me pasen la version final
+[33m3267efff4[m Arreglos varios (Planeamiento - Informes)
+[33m74d33c005[m Formulario E1/E2, ReadOnly
+[33mb9725b4f9[m Formulario E1/E2
+[33m7335d5211[m Agrego clases para Formulario E1/E2
+[33m98ee24ce3[m Informe de Situacion de Partida Inmobiliaria
+[33m0662d1585[m Formulario Sor y U: Validaciones y grabado
+[33m9ea1bf45f[m Ajustes sobre los dropdown que no eran seleccionador al momento de editar un DDJJ Sor, las caracteristicas del Rubro 5y6 no se seleccionaban.
+[33m8c19c0f80[m Formulario Sor Caracteristicas
+[33mb2af5be26[m Formulario U y Sor
+[33m82a098045[m Actualizacion buscador generico, cambios menores
+[33md4df4a556[m Formulario U
+[33md4d406851[m Ajustes Rubro 5y6
+[33m32c6e3a7f[m Arreglos varios
+[33m848298468[m Formulario U
+[33m3386e645a[m Formulario Sor
+[33m54b918186[m vuelvo a consumir consumir la configuracion principal del mapa despues de modificaciones a estilos
+[33m0b7cdcc06[m Agregado de reportes en el buscador general (unidades tributarias) y segurizacion de los mismos. Ajuste a estilos de layers para el mapa Merge BranchGeoSITMCorrientesJF
+[33m5814d5035[m Formulario Sor
+[33m0f7585a57[m boton para generar reporte de bienes registrados
+[33mba7bd091e[m Validacion Sor
+[33m8ad7229d1[m Formulario Sor
+[33me823ba991[m Update Dominios y Titulares
+[33m9c707ab59[m Update API
+[33m2ac4ee106[m Actualizacion API
+[33m0492b75a7[m Merge branch 'BranchGeoSITMCorrientesTrionIT' into BranchGeoSITMCorrientesES
+[33m3845d1f15[m Merge BranchGeoSITMCorrientesJS
+[33mc4c35ab3a[m Merge con BranchGeoSITMCorrientesJF
+[33mab3de14dd[m Agrego BASE_URL en las rutas
+[33ma34067d81[m Agrego BASE_URL en las rutas
+[33m2319b8d69[m Se ajusto unas referencias que estaban faltando para el FormularioE2
+[33m675e9ea58[m Linkeo Valuaciones a la pantalla de MantenimientoParcelario
+[33m9d4fc504f[m Informe Observaciones 2-9-20
+[33m6cc9bbb34[m Declaraciones Juradas API
+[33m1a2528931[m Merge con BranchGeoSITMCorrientesTrionIT
+[33mf3dfddc78[m Se realizó un merge en los fuentes para la entrega. Los cambios subidos fueron en Formularios E y lo que es valuaciones.
+[33m456360fe9[m Formularios SoR y U
+[33me78bf0f56[m Formulario SoR y U
+[33m737f4e7bf[m Ajustes a Mesa de Entradas, buscador genérico, abm personas, abm domicilios bibliotecas MT y BA
+[33mf66f1c395[m Se subieron los formularios de  Valuación y se ajustó formulario E1yE2
+[33m6659a86f7[m Informe Bienes Registrados + Arreglos
+[33m35fb452c9[m Formularios SoR y U
+[33ma9491e000[m ABM Propietarios y Domicilios
+[33m00c3e6f81[m Validaciones Formulario SoR
+[33m015bb7e4b[m Agrego container para formulario ddjj
+[33m932e4651b[m Formulario SoR y correcciones menores
+[33m292bdcdb0[m Se agregaron los formularios E1 y E2 junto a toda su estructura
+[33m0fffb7ced[m Mantenimiento parcelario
+[33m200ad45d9[m Formularios U y SoR
+[33m1766c1e0b[m Declaraciones Juradas. Muevo scripts a archivos independientes
+[33md3134da2d[m Formularios U y SoR
+[33mb5e448414[m Declaraciones Juradas
+[33m775e4f5d8[m[33m ([m[1;31morigin/MASTER_GeoSITMCorrientes[m[33m)[m Ajustes  a Ploteo y cosas varias
+[33ma83791e4f[m Merge con BranchGeoSITMCorrientesJF. ajustes varios.
+[33me9e4a25e4[m ajustes a templates de buscador y parser de opcion DBSRID
+[33m2dc6d7832[m Informe Personas, Propiedad y Titualares
+[33mea965f334[m Ajustes y correcciones a Mapa Tematico, Busqueda Avanzada, Colecciones, Buscador General
+[33m89d42f0ea[m ajustes varios a seguridad, mapa temático, búsqueda avanzada, administrador plantillas y emprolijamientos varios
+[33me3ba00e1b[m este commit sólo es para poder ver un quilombo de mi pc, NO CLONAR DESDE ESTE COMMIT
+[33mf944fe371[m ajustes a ploteo x integración con OpenLayers, configuración de ejidos y trámites para el buscador y opciones de menu contextual para "última BA" y "último MT"
+[33m9b77fe957[m Arreglos en Administrador de Plantillas
+[33mc3a9a2275[m Merge BranchGeoSITMCorrientesJS por migración de Ploteo
+[33mfb15358cb[m Mapa Temático y ajustes varios
+[33m2a6caf69a[m Lanzador de Ploteos
+[33mcf285d13c[m[33m ([m[1;31morigin/BranchGeoSITMCorrientesRA[m[33m)[m Merge con BranchGeoSITMCorrientesRA
+[33m97cd70d8d[m Básicamente Mapa Temático, pero como toca de todo un poco, aproveché para algunos otros ajustes
+[33m3a2108918[m Mesa de Entradas - Ajustes en Listado General de Tramites. Edicion de Tramites: Cuando es operacion="Consulta" no presenta el mensaje de confirmacion al cerrar form.
+[33m130b82169[m Mesa de Entradas - Listado General de Tramites, Requisitos Obligatorios, Ventana confirmacion, Apertura del Libro Diario, Cierre del Libro Diario, Consultar Tramite. Correccion Errores: DGCYC-254, DGCYC-255, DGCYC-260, DGCYC-265, DGCYC-266, DGCYC-268, DGCYC-270, DGCYC-271, DGCYC-281
+[33m4d011134f[m Administración de Plantillas 4-20-20
+[33m493527306[m merge BranchGeoSITMCorrientesRA temas de mesa entrada, remitos e impresiones varias
+[33m7abbeb4cb[m Generacion de Remito. Reimpresion de Remito.
+[33m0f82c2975[m ajustes por merge
+[33m7d9dd671d[m merge BranchGeoSITMCorrientesJF
+[33md4f3845d6[m Avances Búsqueda Avanzada 25-03
+[33m8c37d5dc5[m Merge BranchGeoSITMCorrientesRA
+[33m77b84388e[m ajustes estéticos y funcionales al módulo de seguridad
+[33me3d7fd800[m Mesa de Entradas - Edicion y Reportes: Caratula Expediente e Informe Detallado
+[33m537c85f3f[m Avances Búsqueda Avanzada
+[33m228173d00[m Merge BranchGeoSITMCorrientesRA
+[33m45a1f9a7e[m ajustes para soportar diferentes dbms. por ahora sólo soporta Oracle y PostgreSQL
+[33m02c81544b[m Mesa Entradas: Bandeja de Tramites
+[33m505f26325[m Merge con Branch de Jessica parte 2
+[33m550c8221a[m Merge con Branch de Jessica y reemplazo de opciones del niceScroll por funcion generica
+[33m809428796[m Colecciones y Tablas Parametricas
+[33m40c9855a8[m Se reescribe componente de mapa OSM ajustándolo con funciones hechas previamente para la cooperativa de trelew (CST) y el Catastro de Córdoba. Ajustes mínimos al código del buscador
+[33m5a4a64409[m limpieza inicial de proyectos, migracion de framework y algunos ajustes de código... sí, no puedo con mi genio
+[33m2a1ed2380[m[33m ([m[1;31morigin/Branch_GeoSIT_MT_Ploteo[m[33m)[m Ingracion de Mapa Temático y Ploteo
+[33mc77619247[m Commit varios
+[33m7c571e11e[m Merge branch 'BranchLucianoBouchard'
+[33m9923623a6[m Tramite Kontaktar Service
+[33m8c74c87f6[m[33m ([m[1;31morigin/BranchLucianoBouchard[m[33m)[m Merge branch 'BranchLucianoBouchard' of http://gitlab.gsystems.com.ar/global/geosit.git
+[33m676919768[m Ajustes en Interfase con Sistema Tributario.
+[33m0dd4d2134[m Tramites Permiso Edicion Finalizado / Infraestructura Bug
+[33m86ebfb86a[m Last Changes
+[33m149fafd0c[m Agregar filtro a Funcion Permiso
+[33m5999ff891[m Tramites Secciones Permisos  Fix Bug
+[33m358aa82dd[m Mantenimiento Infraestructura Fix Bug
+[33m1c9941f49[m Tramites Secciones Permisos Update 5
+[33m7435cc896[m Tramites Secciones Permisos Update 4
+[33mdf3909908[m Tramites Secciones Permisos Update 3
+[33m1256d22ba[m Tramite Seccion Permisos Update 2
+[33m12eb8e424[m Tramite Boton Visual
+[33m358c0d991[m Matenedor Objetos Infraestructura - Date input idValor
+[33mde8a9136c[m Tablas Auxiliares Actualizacion GisRio
+[33mfa747c2c1[m Infraestructura Informe Nombre / Descripcion
+[33mc6c5229bd[m Mantenimiento Datos Infraestructura Buscador xsd
+[33m2f416f7b0[m Fix: Documentos Visualizar / Expediente de Obra - Domicilio Primario
+[33m4bb7a3612[m Solr Reindex - Mensaje
+[33m88b5d25b7[m Actualizacion Documentos / EO-INSP Relacion
+[33mad21cafdb[m Infraestructura: Filtrar por Nombre o Descripcion / Documentos: Agregar boton "ver" en cada formulario
+[33mca36791c4[m Tramites Fix Bugs / SIGEMI Fix
+[33m4d022d4a4[m Actas/Tramites Bugs
+[33mc2f35b0b2[m Ordernar Elementos Objetos
+[33m80f911d6d[m Merge branch 'BranchIntegracion'
+[33m22f49978b[m[33m ([m[1;31morigin/BranchIntegracionBrian[m[33m)[m Merge branch 'BranchIntegracionBrian'
+[33mc7957925f[m Atributos Zonas Fix Bugs
+[33m8474f5257[m Brian: validacion de numero expediente/legajo en formulario de informe de expediente de obra.
+[33m6c12ff8b7[m Merge branch 'BranchIntegracion'
+[33mb1bfff4f6[m Merge branch 'BranchIntegracionBrian'
+[33mbc1b5e596[m Brian: modificacion reporte para unidades tributarias no asignadas
+[33m78355c886[m Quitar condicion Supercifies - EO
+[33m2127d5fc6[m Brian: validacion unidades tributarias en tramites. Generacion de reportes.
+[33m37cfba1a9[m Valuacion Fix
+[33md2a12ff96[m Merge branch 'BranchLucianoBouchard'
+[33m69834cfa1[m Corrección en Interfase con Sistema Tributario.
+[33me07790d0e[m Actas Fix
+[33me114e5c1f[m commit por problemas de referencia de archivos borrados
+[33m92bb63cd8[m Merge branch 'BranchIntegracion'
+[33mfd7f7546a[m Correcciones en Interfase con Sistema de Rentas y Mantenimiento Parcelario.
+[33m1fa835bb9[m Fix Actas / Merge LucianoBouchard
+[33m5e8aab3a0[m Merge Branch Bouchard / Actas & Certificados Fix
+[33mfd489ce72[m Carga de zona tributaria en el Mantenimiento Parcelario y ajustes en Copia de Parcelas.
+[33mb9321ce8e[m Merge branch 'BranchLucianoBouchard'
+[33m9da2f876a[m Interfases con DGCeIT y Sistema Tributario: Selección de Titulares y Copia de Parcelas.
+[33m65847fd22[m Actas - Unidad Tributaria GetDomicilio
+[33m17a9fa9eb[m Fix Actas
+[33mce9c0a469[m Cambios en Interfase con DGCeIT y Sistema Tributario.
+[33m85df17c8b[m Buscador General(Tramites) - 7161 - 7162 -7163 - 7164 - 7165 - Seguridad
+[33ma5c021701[m Quitar Interface Hardcodeado/Fix Valuacion UT bug
+[33mb70cb826f[m Fix MapaOSM
+[33m66b776b85[m MapaOSM fix zoom
+[33m95498aa27[m Merge lbouchard
+[33m774c28880[m Merge lbouchard 1 / Fix Bugs
+[33madeb79ecd[m Actualización de webservices del Sistema de Rentas.
+[33mfe7b6a75a[m Incorporación de Parámetros de Configuración.
+[33m69637bd3c[m Merge branch 'BranchIntegracion' of http://gitlab.gsystems.com.ar/global/geosit.git
+[33m7ca545cd3[m 6524
+[33maf7f70f5b[m Merge branch 'BranchIntegracion' of http://gitlab.gsystems.com.ar/global/geosit.git
+[33m0cb16e18e[m 6533-6946-6898(reabierto)
+[33m33fd1ed83[m Commit pequeños cambios
+[33m7c463d880[m 6511-7134(reabiertos)
+[33mbb8ffd703[m Merge branch 'BranchIntegracion' of http://gitlab.gsystems.com.ar/global/geosit.git
+[33m795991da9[m 6899(reabierto)-7107
+[33me14e1fa18[m Merge branch 'BranchIntegracion' of http://gitlab.gsystems.com.ar/global/geosit.git
+[33m1ee5539c9[m 6498 - 7153 - 6889 - 6532 - 6547 - 6823
+[33m634eb0cc5[m 7107-7134-6710-6544-6953(reabierto)
+[33mcb115dff7[m 6515-6930-6899
+[33mf8d9193a5[m Merge branch 'BranchIntegracion' of http://gitlab.gsystems.com.ar/global/geosit.git
+[33mab9dc473a[m 6422 - 6503 - 6502
+[33m2d4cbca96[m 6511-6937-6953-6577-5213-6854
+[33m4a5be704b[m 6951 - 6564 - 6612 - 6922 - 6911 - 6864 - 6899 - 7127 - 6612 - 7096 - 6576 - 6823
+[33m5ee3be287[m[33m ([m[1;31morigin/BranchJLorenzo[m[33m)[m 7136 - 7135 - 6931 - 6927 - 6924 - 6906 - 6905 - 6904 - 6902 - 6899 - 6925 - 6914 - 6850 - 6913 - 6912 - 6542 - 6948 - 6934
+[33m5171db06b[m Interfase con Sistema de Rentas.
+[33m0df389e9b[m 6895 - 6919 - 6918 - 6535 - 6534
+[33m4d211d7c1[m Mejora Interfaz
+[33mc87673b16[m[33m ([m[1;31morigin/BranchLucianoBuscaglia[m[33m)[m Interfaz Mejora
+[33mf69b7091c[m Mantis 7128 - 7107 - 7102 - 6994 - 6998 - 7109 - 7127 - 7114 - 7108 -7109 -7127 - 7114 - 7108 - 7107 - 7127
+[33m3fbf057a9[m Correccion Bug abmTipoTramite (EdgardoMendoza)
+[33m263f65480[m Commit WebConfig
+[33m13e105f7b[m Commit Cambios Web Config
+[33mccf6e8366[m Correccion Bugs y Agregar Filtro UT en Tramites
+[33mf8a96cd83[m Commit Cambios Ernesto
+[33m4ccea50b6[m Merge BranchLucianoBuscaglia
+[33m37c2b11cb[m Valuacion
+[33m8757658cd[m WebConfig Actualizado
+[33m4a0c7d421[m Commit
+[33m29b3cc37e[m Commit
+[33mc745f3538[m 7009
+[33m21882f3ca[m Commit Bugs Municipios
+[33mbc3f2a008[m Bug ABM Domicilios desde Expedientes de Obra
+[33m7f5506f86[m Merge branch 'BranchLucianoBuscaglia' of http://gitlab.gsystems.com.ar/global/geosit.git
+[33m67e21f542[m 7091
+[33me69eaed2e[m mas detalles
+[33m32076a908[m Merge
+[33m6ce283064[m retoques epuyen
+[33m73ad04921[m Correcciones implementaciones comarcal
+[33m9a6ac1c0e[m 7091.2
+[33mfe23e285e[m 7091.1
+[33ma02f09fc6[m 7091
+[33m1cc6b11f8[m Pequeños Detalles (Ya por fin solucionado)
+[33mc87e527de[m 6959 2/2
+[33m7299a27c9[m 6959 1/2
+[33m833ba430b[m 6511
+[33m56eeda425[m 6959
+[33m445e09908[m correcciones y primeros cambios de servicios comarcal , pgdeep
+[33mbe2addf02[m Merge branch 'BranchLucianoBuscaglia' of http://gitlab.gsystems.com.ar/global/geosit.git
+[33m0b1c18881[m 6576
+[33m3f57b774b[m Merge con LBuscaglia
+[33m0ff7410e1[m cambios , correcciones y otras yerbas.
+[33m67ed6b950[m Mantis - 7000
+[33m33445e008[m Mantis: 7056
+[33md19cf9e38[m Merge remote-tracking branch 'origin/BranchLucianoBuscaglia' into BranchIntegracion
+[33m9544d4236[m commit
+[33m73ef3f7f4[m Mantis: 7024 - 6999
+[33m92af072ec[m Mantis 7024
+[33m03b3486bf[m Merge remote-tracking branch 'origin/BranchLucianoBuscaglia' into BranchIntegracion
+[33m3f0baec1c[m ultimas correcciones de bugs
+[33m3d6816528[m Mantis: 7047 - 7048
+[33mbde76f1cc[m[33m ([m[1;31morigin/BranchBuscaglia[m[33m)[m Merge remote-tracking branch 'origin/BranchLucianoBuscaglia' into BranchIntegracion
+[33m2f78572bd[m mas correccion de mantis
+[33m8a697c785[m Mantis 6728
+[33m5b607f177[m Merge remote-tracking branch 'origin/BranchLucianoBuscaglia' into BranchIntegracion
+[33m634c1b624[m ultimas correcciones
+[33m2dca2eab0[m Commit en cambios informes inpecciones por tipo
+[33ma0e8b6de4[m AbmDocumento Schema
+[33m9d557786a[m Correcciones integracion.
+[33m25116265f[m Arreglos ABM documentos DB/Server
+[33m855dc2777[m mas opciones de BBDD en WC
+[33m49e2f1cae[m Error al resolver el nombre de maquina
+[33m7a77543df[m Merge remote-tracking branch 'origin/BranchBuscaglia' into BranchIntegracion
+[33m956d61488[m correcciones de mantis y conf
+[33m3adbfc839[m Commit - Mantis: 6520 (Completo)
+[33m67d19a816[m Merge branch 'BranchIntegracion' into BranchBuscaglia
+[33m52efea591[m Commit
+[33m05fe65aa6[m Cambios tramites
+[33m9d558d85c[m Merge branch 'BranchIntegracion'
+[33m61a4275cf[m Commit Mantis 6520
+[33mde5c97e93[m Merge Buscaglia
+[33m91bc92c29[m correciones en auditoria.
+[33m17ba3e6e3[m Merge remote-tracking branch 'origin/Moissane' into BranchIntegracion
+[33mb3c64c132[m Commit Mantis arreglo
+[33mc9f781f06[m Integracion ESalas
+[33m3de024c03[m Integracion LBuscaglia
+[33mb513dbd53[m Integracion LMaspero
+[33m9bd5f8012[m Commit Mantis : 6426 - 6419
+[33m2d86f4868[m[33m ([m[1;31morigin/BranchTWAIntegracion[m[33m)[m correciones
+[33m24d78bb58[m Commit Mantis  - 6476 - 5997 - 6724 - 6779 -
+[33md766ad738[m correcciones masivas en la navegacion
+[33m9bfdba7f6[m correccion de mantis de atributo zona
+[33m138bff5fe[m mantis
+[33mb1a214df6[m Correccion mantis 0006837/0006837/0006763
+[33m29614f4b6[m Correccion de mantis
+[33mbfe3574f1[m[33m ([m[1;31morigin/BranchMaspero[m[33m)[m Mantis 6835 resuelto.
+[33mebe75c079[m Mantis Resueltos: * 5438 * 6749 * 6811 * 6799 * 6788 * Bug comunicado por Edgardo y Javier (sin mantis) * Bug incluido en el mantis 6520
+[33meebabbe90[m Mantis : 6724 - Corregir Bug
+[33mc251c8bfd[m mantis 0006447
+[33m1e9f9703f[m nueva implementacion de registros de auditoria.
+[33m5325069b6[m[33m ([m[1;31morigin/BranchErnestoOficial[m[33m)[m Cambio en interfaces. Se agrega filtro de FechaBaja a la carga de Unidades Tributarias
+[33ma24ebae1e[m Commit Correccion Mantis: 5262, 6476 , 5997
+[33m6605d352a[m correccion en validacion de nro de expediente de abm alfanumerico
+[33mfcf74a874[m Merge branch 'BranchErnestoOficial' of http://gitlab.gsystems.com.ar/global/geosit.git
+[33m8dc0c79d6[m Cambio forma de busqueda de Solr
+[33mf33976c42[m Merge BranchTWAIntegracion
+[33me1cf60879[m Merge branch 'BranchTWAIntegracion'
+[33md7907f703[m cambio en rutas de publicacion
+[33m458ab52ca[m correcciones en la entidad tipo division.
+[33m8deba3ba0[m[33m ([m[1;31morigin/Moissane[m[33m)[m Incidencias  0006687, 0006733,  0006730 y 0006731 fueron resueltas
+[33m7455ffce4[m correciones en la generacion de reporte
+[33m3c8df7155[m correcciones en reportes de interfaces.
+[33md26e4098c[m Merge BranchTWAIntegracion
+[33m5756483ad[m boton de valuaciones en mantenedor
+[33me7adf788b[m Merge BranchMoissane
+[33m106b61e69[m Commit BranchBuscaglia
+[33m46f7821ca[m Commit AtributosZona volviendo arreglar Mantis
+[33meccc40c51[m Quito Referencia de la WebApi en el proyecto Logging
+[33m583e497f3[m Commit Ajuste Final
+[33mb27e7dfc4[m Correccion Mantis
+[33me7cafadc1[m integracion visual de seguridad , correcciones en valuaciones y en la navegacion
+[33me0a31d9c5[m integracion Grafica Seguridad
+[33m60fb0e4ff[m Cambios Post Merge. Necesito cambiar de entorno y aun no validé estos cambios
+[33m0b9915923[m Merge branch 'BranchMaspero'
+[33mc7788bccf[m Cambio en url de mapa web.config cliente
+[33m4c3b9d658[m HorasTotal de InspeccionesController fue redondeada a 2 cifras descimales
+[33m80bbb96a1[m Arreglo de mantis de IDs: 5079, 5213, 5265, 5543, 6510, 6706, 6729, 6734.
+[33m7fbf3cc34[m Re bonito
+[33m4d390a004[m Configuration
+[33md0102aabe[m Cambios en Valuaciones , correciones en TA , mantis etc.
+[33m1274f2b1e[m merge BranchRaul (ultimo merge previo recorte para AySA)
+[33m5267ef835[m cambio al connectionstring
+[33m2b165c78a[m Merge branch 'BranchRaul' of http://gitlab.gsystems.com.ar/global/geosit.git
+[33m26ddebd3a[m Mapas Tematicos - Mantis al 28-03
+[33me4d92dd01[m 6603 Ocultar sección Actas en solapa Identificación
+[33m7e0f744e5[m 6391 ingresar parcelas con diferentes formatos
+[33mf7e1d1888[m Correccion Bugs
+[33md98bddea4[m Merge Branch Interfacces
+[33m2e6237523[m tareas 0006391, 0005929, 0006157
+[33mb7fdefe79[m Objetos Infraestructura para OSM y Actualizacion de Solr desde ABM Alfa
+[33m1acd135eb[m last commit
+[33m546030f47[m Mapas Tematicos - Mantis varios
+[33m92c1ab9dc[m Se cambia la cadena de conexion para la bd gis_aysa
+[33m07aa5bd20[m Mapas Tematicos - Zoom al Result del MT
+[33m8cc6703b6[m Aplicaciones Comerciales
+[33m846405fb6[m pre merge
+[33m0fec73910[m[33m ([m[1;31morigin/BranchJAInterfaces[m[33m)[m Interfase DGCeIT - Ajax de las grillas y submit
+[33mf49503719[m beta ultima modificacion interfaces
+[33m97b782126[m Merge branch 'BranchErnestoOficial'
+[33m1ae4833d2[m Merge Branch Hugo
+[33m48afafbb3[m Cambios en busqueda (parcela-partida) - Interfase DGCeIT
+[33ma6c978ab6[m Merge BranchRaul
+[33m6d66fb72b[m Merge Branch Interfaces (BranchTWAIntegracion)
+[33mcbf9287f5[m[33m ([m[1;31morigin/BranchExiSoft[m[33m)[m Merge BranchExisoft
+[33mc306e5fa0[m Merge branch 'BranchErnestoOficial'
+[33mbc7bae854[m Merge branch 'BranchAndresVilla' y cosas de mantenimiento e infraestructura
+[33m0f4c7a54a[m Version integrada y revisada de interfaz de rentas
+[33mb4abe8808[m cambio de path de deploy
+[33m5a1a9f9be[m[33m ([m[1;31morigin/BranchLuciana[m[33m)[m merge branch moissane
+[33m0c43b0d29[m Informe actas cambio esquema
+[33ma36005509[m Merge branch 'BranchLuciana'
+[33m4ef4c39ac[m Bugfixing
+[33mc20424cd4[m resolucion de mantis
+[33m78f8f7d0a[m resolucion de mantis
+[33m6a3fe66f4[m cambios varios en valuaciones y en seguridad
+[33m9910dc818[m Correcciones informes
+[33m32666f19c[m Correcciones de reportes (expediente obras y atributos zona)
+[33mcf8374de4[m Correcciones
+[33m0d15d2f50[m Se corrigen bugs de ultimos 4 reportes
+[33m33c606b27[m Merge remote-tracking branch 'origin/BranchJAInterfaces' into BranchTWAIntegracion
+[33mbfbe04df5[m Mantis Domicilio_documento_tramites
+[33m0c162ccba[m resolucion de mantis
+[33m46fc18c70[m Consulta SIGEMI - Ajustes en la tabla de servicios
+[33m6b88382af[m Merge remote-tracking branch 'origin/BranchJAInterfaces' into BranchTWAIntegracion
+[33me60d19d9f[m estilos
+[33m15322ebe2[m Consulta SIGEMI - Ajustes de pantalla
+[33md73db7990[m Merge remote-tracking branch 'origin/BranchJAInterfaces' into BranchTWAIntegracion
+[33m4dba8ba96[m csproj
+[33m873c38f22[m Consulta SIGEMI - Inmuebles   Cambios generales, vista en chrome y tabla creada (servicios)
+[33ma9a858ed8[m Informe Acta Vencida js
+[33m6ae9c3293[m Mantis 6065
+[33m954a433ff[m Merge Branch Moissane
+[33mf54582d2c[m Mapas Tematicos - App Comerciales - Mantis
+[33m6368670de[m Interfaces - Consulta SIGEMI
+[33m0659450a1[m Merge BranchCN
+[33m1442e4219[m Merge remote-tracking branch 'origin/BranchJAInterfaces' into BranchTWAIntegracion
+[33m8d487f4a2[m Commit
+[33md699608ea[m Cambios generales - Interfaces
+[33m08c95302d[m Cambios generales en diseño de pantalla - Interfaces
+[33ma2b793e03[m Pedido de Cambios Reporte Expediente Obras (Se cambia origen de datos de campos observaciones)
+[33mf2d341b90[m Aplicaciones Comerciales MT
+[33m424c285d6[m Se modifican la ubicacion de Reportes
+[33m07a30983b[m GetPlanoDetalle en AysaService
+[33m2f1e115b2[m Mapas Tematicos - Aplicaciones Comerciales - Inicio
+[33m757a6fd5f[m mantis terminados
+[33m156e6fd0a[m Limpieza de codigo
+[33m90ad13153[m Cambio de ubicacion de archivos
+[33m563c30a55[m Version 1 cuatro reportes
+[33m248866416[m Interfaces - Correccion Mantis
+[33m4e31597f4[m Merge
+[33m1a5acc3f5[m Se aplica Validaciones en los reportes
+[33mb22df86f2[m[33m ([m[1;31morigin/BranchCN[m[33m)[m correccion mantis
+[33mb59912032[m Modificaciones menores - Interfaces
+[33ma8b7e4abe[m Merge BranchMoissane
+[33maf68550d3[m Mantis 6173
+[33mdaec08d94[m Bugfixing Actas + Inspecciones + Registro de inspectores
+[33md180128b9[m Modificacion de filtros de columnas del reporte
+[33m02109cf78[m Reporte Objeto de infraestructura version funcional
+[33m8910cb7b7[m Correcciones varias - Diseño de pantalla
+[33mb70280883[m[33m ([m[1;31morigin/BranchHugo[m[33m)[m Modulo de Ploteo - Objeto Base Puntual y fechaBaja null - Ajustes varios
+[33mf2e23b1c5[m mantis tramite
+[33mcf3c56582[m Merge
+[33m3f32af9c5[m Cambios y correcciones
+[33m8487704c6[m Dispatcher y Modulo de Ploteo - Ajustes Varios
+[33mc262a9877[m mantis expe y mant
+[33mfd6fbf451[m Cambios pantalla informe de objetos de infraestructura
+[33m83373aa55[m Actualizacion de padrones (cambios generales)
+[33m1b6763f94[m Taggeador para OpenLayers
+[33ma39556d8f[m mantis corregidos
+[33m8a0d44fa1[m Mejora en el log
+[33mb8f4f90f0[m Acta repository cambios en consulta
+[33mee73f6b70[m Bugfixing
+[33m58b3dfe73[m Modificaciones Reporte Atributos Por Zonas
+[33mbd55fa298[m Actualizacion Padrones
+[33ma12552b6a[m correccion despues de revision en preliminares
+[33mb27052174[m merge ja
+[33mb4d8b0e1f[m Mayor changes interfaces
+[33m16c868583[m Cambios en las grillas (actulizacion de padron)
+[33m8ceb76528[m Dispatcher - Ultimo Hugo
+[33m901101d86[m Mejora Tabla Temp
+[33maaa6a6937[m Merge remote-tracking branch 'origin/BranchTWAIntegracion' into BranchJAInterfaces
+[33mb3348e0c6[m Modificacion vista Atributos Zonas
+[33m57af3a6d2[m Merge remote-tracking branch 'origin/BranchTWAIntegracion' into BranchJAInterfaces
+[33m3aa7a99f7[m Actualizacion de Padrones (modal informacion)
+[33mf5662fe58[m Commit Tabla de trabajo
+[33mdbe8aeb94[m mantis de ABM Expedientes de Obra
+[33m5317127ed[m CS faltante
+[33m15426c1bf[m se soluciona parte del merge con informe acta
+[33m1bbcfe173[m mantis de ABM Expedientes de Obra
+[33m479aea5d3[m CU 001 y correccion de arquitectura
+[33ma2cdc4689[m Arreglo del Merge
+[33m10cd46396[m Merge remote-tracking branch 'origin/BranchJAInterfaces' into BranchTWAIntegracion
+[33m5295d37dd[m Merge
+[33m048d68712[m Lista de Resultados (dibujar grilla)
+[33m9d91c23d4[m reconfiguracion del web.config para acceso externo a la db
+[33mc0c6d8ee6[m Merge branch BranchExiSoft (Reportes Varios)
+[33mf3b8cd544[m Mantis 5190
+[33m8ea5486eb[m Model XML y cambios generales
+[33m228f9533f[m ajuste backdrop
+[33m4dd0f56d4[m loading con backdrop
+[33mceab279cc[m Aysa SAR CU 03.01.004 y 03.01.007
+[33m71fc7aa10[m mantenedor parcelario mantis
+[33m909009122[m Merge BranchLuciana y Correcciones de Interaccion ExpedienteObra-Inspecciones
+[33m39ba8da4a[m commit parcial
+[33mcd67c0f2b[m matenedor parcelario mantis
+[33m5d46bc1d0[m Validaciones Pantalla de Reporte Estado Tramite
+[33m9f80eddeb[m parametro en Webconf
+[33m7bf0f73e1[m Cambio en Informe Expediente de Obras
+[33m1460e17b3[m Ajustes a Seccion de Cuentas del Buscador General (AySA)
+[33md0989d482[m Se agrega archivos
+[33mc3b01fee0[m Creacion de Reporte Estado de Tramite
+[33m3b69e3574[m Mantis Tramites y cnfiguracion
+[33m35e904d32[m agregado de metodo faltante para una de las opciones de recuperar contraseña
+[33m6e1c64e5d[m Merge Branch Moissane
+[33m6b0cccdf3[m mantenedor parcelario mantis
+[33mb5fe993ef[m Merge Branch Andres
+[33m25f01dc39[m cambios valuaciones solicitados para trelew
+[33m912e4d4fd[m Correcciones en Tagueador (Mantis' varios que le informearon a Raul)
+[33m6445cbfa9[m Mantis Configuración de trámites
+[33m020580937[m Se corrigen bugs reportados
+[33m29a929917[m Modificacion Reporte Parcelario
+[33mf21874dc0[m Version Pendiente de Test Informe Actas Vencida
+[33m438562747[m Mantis Tramites y certificados
+[33m61420de7f[m Merge branch 'BranchMoissane'
+[33m3ee8bb717[m Nueva Version Dlls
+[33m286283595[m Merge branch 'BranchErnestoOficial' of http://gitlab.gsystems.com.ar/global/geosit into BranchErnestoOficial
+[33mcba965f23[m Actualizacion de Version
+[33m2b934b6c6[m Actualiza Version
+[33md7e27802e[m Actualiza Version
+[33ma991d1968[m Sar Logic Mantis Bugfixing
+[33m207bcecbb[m Actualiza Version
+[33mbb7eebe06[m Actualiza Version
+[33md1355704c[m Merge Branch Exisoft (Reportes)
+[33mc0748686d[m continuo con mantis de mant parcelario
+[33mc3d12e32f[m Cambios Visualizacin Pdf
+[33m0e2c4241d[m Mejoras en el Login
+[33m743e4a073[m Ser termina primera parte de Reporte Acta
+[33m8b1d692d5[m Untracked reportes - alta tramites
+[33m9dc2c6789[m Se mustran datos reales en el reporte
+[33m2c50f3cc0[m Mantis Configuracion de Tramites
+[33m59c295982[m Merge BranchRaul (Asociacion Parcelas Alfa-Grafico
+[33m2460d295f[m Creacion reportes de  Actas Vencidas
+[33m75c362e5a[m Merge branch 'Moissane' of http://gitlab.gsystems.com.ar/global/geosit.git
+[33mc6db8ac45[m despues del merge de mi branch
+[33m79d322c34[m Merge BranchMoissane y Encriptacion de passwords del lado de UI
+[33m47975a2c6[m Acceso a Datos Reportes Acta Vencida, Vista Actas vencida y Tramites
+[33mb7d212eff[m Correcciones y cambios . MD5 para usuarios
+[33ma8c66bb55[m porciento copropiedad de UT
+[33mfb0a96a0d[m Mapas Tematicos - Ajustes Varios
+[33m71b298fb6[m Mantis tramites
+[33m8718f2b46[m Mantenedor Parcelario algunos mantis resueltos
+[33m12d28ad2e[m Integracion Mapas Secundarios con OSM (Objetos Infraestructura)
+[33md1f9f05be[m Interfaces -  DGCeIT (parte 2)
+[33m0a404e7bd[m Vista Reporte Acta vencidas
+[33me3a18eac9[m Certificados y tramites
+[33ma44ab9011[m Interfaces -  DGCeIT
+[33m2d327644a[m alfanumerico parcelas mantis resueltos
+[33mda6fa9b36[m Se Agrega columna DNI a vista Informe de Inspeccion Por Periodos
+[33m40a51f94d[m recuperar pass y ldap
+[33m050325bcf[m Tagueador
+[33m7e8c73ffc[m Varios Cambios
+[33m82ac19d2e[m Merge fase uno Interfaces JA
+[33m9e9188ad1[m Interfaces - Actualización de Padrones
+[33m53084dc7c[m Seguridad MantenedorParcelario,ABMDomicio,ABMDocumento
+[33m945496657[m Merge interfaces PC
+[33m915075dd0[m ignore valuacion errores .txt
+[33mb2513d480[m correcciones de tablas aux y valuaciones
+[33m5992659ea[m seguridad menu
+[33m3ab733791[m tramites
+[33mac167149d[m tramites(reporte)
+[33m6ef3b4ee8[m seguridad proof concept
+[33mf8264377c[m Version Final tres Reportes
+[33m65e2b43b5[m Merge remote-tracking branch 'origin/BranchDB' into BranchCN
+[33m226ef385a[m actualizacion de la utilizacion de PLs
+[33m2485a4b7b[m[33m ([m[1;31morigin/BranchDB[m[33m)[m resolucion mantis 5606
+[33m0d9eead58[m Actualizaciones de Configs
+[33m8fee9aa7b[m Merge Branch Raulo
+[33m072c1ed34[m arreglo Reporte periodos
+[33m0e8b6ba69[m merge
+[33m93ec4a282[m Correcciones valuaciones , cambios e integraciones varias
+[33mbe2a672e4[m Merge BranchLuciana
+[33md1aee27d1[m ajuste en los iconos de las secciones de manzana, Parcela y UT del buscador principal
+[33m2ee0600de[m BranchMergeErnesto
+[33m1685f8bf2[m 0005889 - 0005888
+[33mff3d508df[m 0005883
+[33m75fd4e2ec[m Incidencias 0005892 - 0005890
+[33me1bd5a584[m 0005892, 0005890
+[33m29b102883[m se arreglan los bugs reportados el 2015-11-19
+[33mdaca226bb[m Se arregla bug, se cierra el formulario principal para seguir consultando
+[33mcf4f03b62[m Mantis Tagleador
+[33m73d6a2fd1[m Merge remote-tracking branch 'origin/BranchDB' into BranchCN
+[33mecdc7644c[m Solucion Mantis 5606 - Campos XML
+[33mb8a3dd789[m Se cambia Formato Hora reporte Inspeccion por periodo
+[33m3304379a7[m reportes terminados
+[33meee4325df[m se treminan los bugs de los tres reportes
+[33m3d1d34bb6[m correcciones en valuaciones
+[33m46c34bc54[m Informe Por Periodo Corregido
+[33m4d8706634[m Validaciones Pantallas
+[33m6bcdfa31d[m Merge remote-tracking branch 'origin/BranchDB' into BranchCN
+[33md10fe3e0a[m commit con merge
+[33m3b9e830f6[m Sollucion Mantis 5593 y 5594
+[33mdecced3d2[m Correcion de Bugs de Primer Reporte
+[33m6632bc7d1[m Merge remote-tracking branch 'origin/BranchCN' into BranchDB
+[33m7eda55923[m Solucion Mantis 5431
+[33m1eed2ac43[m Correcciones varias
+[33mf577d1079[m Correccion en las vistas y manejo de errores de los reportes.
+[33m1dd4e0ad3[m Modificacion
+[33me4ca2d80b[m Version Congelada al 13112015
+[33m9dad0e7b2[m Tagleador
+[33m0eb1586ee[m no message
+[33m70b43e8f6[m Merge Alta Afanumerica de Parcelas
+[33m9c6829bfb[m Modificaciones, aun pendientes
+[33m6e3057787[m Cambios por problemas de Merge y Cambios por correcciones
+[33mdd2217022[m Modificaciones
+[33mb2b0c4122[m buscador de manzanas  modificacion
+[33m55ed21df1[m Merge branch 'BranchExiSoft' of http://gitlab.gsystems.com.ar/global/geosit into BranchExiSoft
+[33m8c35d8c55[m Reporte de expediente de obra
+[33m246d8618d[m Acoplar UI alfanumerico con UI app
+[33me2871e4e2[m Filtros de Padron
+[33ma87207ad6[m Alfanumerico de Parcelas integrado
+[33mff7061a22[m Iconos y parametros de busqueda donde usa el buscador generico
+[33m94867f9f6[m Actualizacion de configuracion de settings
+[33mdafd4d8ee[m Merge branch 'BranchCN' of http://gitlab.gsystems.com.ar/global/geosit.git
+[33ma47c40c47[m Relaciones
+[33m6b2c49f0e[m Merge General Andres, Luciana, Moissane (Mantenedor Parcelario)
+[33m6fb4cbc3e[m Merge remote-tracking branch 'origin/BranchDB' into BranchCN
+[33m322f1746b[m Solucion Mantis 5392
+[33m5035682ac[m arreglos UI y eliminar clase SuperficieExpedienteObra
+[33m2c0402a8f[m Integracion ABM Personas
+[33mdee778216[m Merge Branch Andres
+[33mfaaca93fc[m[33m ([m[1;31morigin/BranchJA[m[33m)[m Merge remote-tracking branch 'origin/BranchDB' into BranchCN
+[33m047e24e0b[m Solucion de MANTIS 5172 y 5516
+[33m8e2f4821c[m Version Inicial Nuevo desarrollo
+[33m673e5216a[m Merge remote-tracking branch 'origin/BranchCN' into BranchDB
+[33m1226cf623[m Merge branch 'BranchExiSoft' of http://gitlab.gsystems.com.ar/global/geosit into BranchExiSoft
+[33m88dad08eb[m no message
+[33m40222d843[m Cambio Controlador ExpedienteObras
+[33mbe20c477a[m Validacion de pantalla de Reporte Expediente Obras
+[33m17a8197c7[m mantenedor parcelario
+[33m29cd72177[m Merge Branch Cristian y Luciana (Interaccion con el Mapa)
+[33m58b96e7ad[m Commit
+[33m69031939c[m para merge final
+[33m60168f4a7[m Merge branch 'BranchCN' of http://gitlab.gsystems.com.ar/global/geosit into BranchCN
+[33mb5d02ce55[m cambios y correcciones.
+[33mb2d895484[m Estilos
+[33m4622ba178[m Mantenimiento parcelario tareas
+[33ma3ca7e190[m Ventana de consulta del reporte de Inspecciones por periodo
+[33md9eddc42c[m DesarrolloInterfaces-Rentas
+[33m6c565175e[m Reporte inspeccion por periodos
+[33m912de2f3b[m Reporte Informe de expediente de obra. Agregue tambien la entidad Padron al modelo de datos que no existia.
+[33mb9d77a7a4[m Generacion PDF
+[33m86630e605[m Mapas Tematicos - Pendientes y Bugs al 26/10
+[33m4a4415ec7[m[33m ([m[1;31morigin/BranchDaniela[m[33m)[m merge resuelto
+[33m9d0d3fb0c[m mantenimiento parcelario moissane
+[33maec48bca8[m Parcela Datos Generales: mapeo y guadado de datos
+[33m6a8fe6b9a[m 0005548
+[33mead95947c[m Validaciones parcela nomenclaturas. y visualizacion de valuaciones por parametro
+[33mf7d2589d3[m Merge branch 'BranchCN' of http://gitlab.gsystems.com.ar/global/geosit.git
+[33md550bf7f0[m 0005697
+[33m23d889bc9[m 0005698
+[33mfca0dc64e[m Mapas Tematicos - Pendientes y Bugs al 27/10
+[33m389259923[m merge
+[33m647c6e04a[m correcciones
+[33m5686e41df[m 0005726
+[33ma2a673a06[m 0005694, 0005693, 0005692, 0005378, 0005423, 0005695
+[33m8863b29dd[m 0005730
+[33mb530c077b[m 0005707, 0005397
+[33mdfb380961[m 0005701
+[33mfd356e224[m 0005399, 0005701, 0005704, 0005702
+[33m43993fec7[m Merge
+[33m0a8aefc60[m Correcciones Auditoria y Valuaciones
+[33m84e9a4884[m Consulta y vista de la valuacion de la parcela
+[33me938b772f[m Reporte Expediente Obra funcionando con datos de bases de datos
+[33m6bcedf70a[m Tablas Auxiliares - Mantis 5592
+[33mf39d9ffc7[m Creacion de informe Expediente Obra, sin conexion a bases de datos
+[33m179cadf02[m Correccion de Controllers por cambio en la web api (surgido por integracion) y menu principal (para usar campos entityid de solr)
+[33m67d480e25[m Arreglo de Problema para guardado anidado de Unidades Tributarias y Domicilios/Documentos
+[33m28ec746e4[m Archivos Faltantes
+[33m19fb63e21[m Merge Branch Daniela
+[33mea7e5dd28[m merge con JA
+[33m86f94466c[m correcciones
+[33mab0b0c418[m Tablas Auxiliares - Mantis 5606 (enumeración)
+[33m27e3edfc7[m Mapas Tematicos - Pendientes y Bugs al 16/10
+[33m4ca12bb03[m Mayor Merge commit
+[33mf15ca2f11[m Merge Branch Brian (Moissane)
+[33m0b3777bdc[m Tablas Auxiliares - Mantis 5599 5601 5607 5590 5577
+[33m98aa3c210[m Tablas Auxiliares - Mantis 5596 5602 5604 5605 5603
+[33me3efffac1[m Commit
+[33m24d2b417a[m Tablas Auxiliares - Mantis 5490 5491 5492 5572 5575 5591 5598 5600
+[33m94992e924[m correccion en nomenclaturas
+[33m796d93d00[m abm unidades tributarias
+[33m3dbf553cd[m reportes funcionando
+[33m3b0293e46[m Mapas Tematicos - Pendientes y Bugs al 07/10 16hs
+[33mecea84917[m Mapas Tematicos - Pendientes y Bugs al 07/10
+[33m464d768a4[m Commit parcial
+[33me1e5328c8[m Se quitó referencia a GEOSIT_DEV explicito en una consulta
+[33m5b12eb364[m Mapas Tematicos - Pendientes y Bugs al 05/10
+[33mef905b53e[m Tablas Auxiliares - Cambios Generales
+[33m08ff2ffc9[m Agregado de Templates para el Buscador Principal
+[33m7a528232a[m Merge remote-tracking branch 'origin/BranchCN' into BranchJA
+[33m30ff9e711[m Tablas Auxiliares - ABM
+[33m5b5834a2c[m Mapas Tematicos - Pendientes y Bugs al 02/10
+[33m6e5f8ab25[m Merge branch 'BranchCN' of http://gitlab.gsystems.com.ar/global/geosit into BranchCN
+[33m29e8cd9c3[m Merge remote-tracking branch 'origin/BranchJA' into BranchCN
+[33mf6ef5203d[m Major Update
+[33mb7875f878[m Tablas Auxiliares - ABM (parte 3)
+[33me615ec264[m Mapas Tematicos - Pendientes y Bugs al 01/10
+[33mcdbb3bcd5[m Incidencias Vs
+[33ma9975df45[m correcciones
+[33mfcea926ff[m Tablas Auxiliares - ABM (parte 2)
+[33mbcc7e9980[m Merge branch 'BranchCN' of http://gitlab.gsystems.com.ar/global/geosit into BranchCN
+[33md6001f975[m modificacion rank objeto cant
+[33mfa9cb8b39[m 0005548
+[33ma393e41ab[m 0005551
+[33mdb8c8753f[m 0005553
+[33m6096816e7[m Cambio x Nombre de Tabla ParametroGeneral y Logica (por debug) de Carga de bibliotecas de mapa tematico
+[33m84920a171[m merge branch moissane/brian
+[33m87d45266e[m Cambios Incidencias
+[33me4fc0f3b9[m Mapas Tematicos - Pendientes y Bugs al 29/09
+[33m9c9335b3c[m Merge remote-tracking branch 'origin/BranchCN' into BranchJA
+[33mb09c1e33a[m Tablas Auxiliares - ABM (parte 1)
+[33m6b0dd8ce9[m Merge branch 'BranchCN' of http://gitlab.gsystems.com.ar/global/geosit.git
+[33mf92fd3162[m Correciones , tablas , usuarios , Etc.
+[33ma8f884505[m Solucion de MANTIS 5221-5285-5431-5493
+[33m3f705729d[m 0005377
+[33m7a8a47142[m Merge branch 'BranchCN' of http://gitlab.gsystems.com.ar/global/geosit.git
+[33m532027bfd[m 0005362
+[33m4a5704d97[m Merge remote-tracking branch 'origin/BranchDB' into BranchCN
+[33mabac20439[m Merge branch 'BranchCN' of http://gitlab.gsystems.com.ar/global/geosit.git
+[33m829b01bee[m correcciones
+[33mdea999519[m Actas
+[33m1d2679c82[m Commit
+[33m87ed2cd4d[m Mapas Tematicos - Pendientes y Bugs al 25/09
+[33m1907d26b8[m Fechas
+[33m39ef09cf7[m Merge remote-tracking branch 'origin/BranchCN' into BranchDB
+[33m20405f5b5[m MANTIS 5299 - 5301
+[33ma1b825334[m Modificaciones
+[33m82064c610[m Merge remote-tracking branch 'origin/BranchCN' into BranchCN
+[33mbb2207847[m[33m ([m[1;31morigin/BranchBrianSchmidt[m[33m)[m saveobjects actualizado
+[33mbe8d879dd[m Merge branch 'BranchCN' of http://gitlab.gsystems.com.ar/global/geosit.git
+[33md5ed8853a[m Se sube auditoria
+[33m84059952f[m Cambios en la parcela
+[33m391d1c55a[m Merge remote-tracking branch 'origin/BranchDB' into BranchCN
+[33me1cbf345e[m merge
+[33m52f6422d2[m Mantis 5302-5290-5291-5293-5292
+[33m1238a8cc4[m commit Correcciones
+[33m1a13900d4[m Tablas Auxiliares - Mappers/ Controllers
+[33m54d909e29[m correcciones
+[33mef4ca4530[m Commit
+[33m25fe9abbe[m expediente obras completado
+[33mb0001bba9[m delete test
+[33mfc3568a92[m prueba
+[33m5d487fa2b[m Generacion de archivo zip
+[33mb3350bfc7[m Merge desde branchErnesto
+[33mbf8eb977e[m Merge branch 'BranchRaul'
+[33mfc76d530d[m Incidencias Configuración Trámite
+[33mabb369e29[m[33m ([m[1;31morigin/BranchCristianAhumada[m[33m)[m Entrega Errores 20/09
+[33me9545004e[m Merge remote-tracking branch 'origin/BranchDB' into BranchCN
+[33md8239de2c[m MERGE
+[33m97bd4f879[m VALUACIONES - TierraPorSuperficieVia - V.1.0
+[33m581c6ab2a[m Valuaciones - TierraPorModulo VIA
+[33mcde7b982b[m merge
+[33me76f89165[m Valuaciones - ValorBasicoTierra
+[33ma31132301[m merge
+[33m132668dc8[m COnf para ezquel
+[33md9c6bc86e[m Merge branch 'BranchCN' of http://gitlab.gsystems.com.ar/global/geosit.git
+[33m2d675c753[m 0005419, 0005377
+[33mbe4ce1bdd[m 0005376
+[33mf08c4d235[m Merge branch 'BranchCN' of http://gitlab.gsystems.com.ar/global/geosit.git
+[33mc1f6156e6[m 0005374
+[33mf2ac13551[m Merge branch 'BranchCN' of http://gitlab.gsystems.com.ar/global/geosit.git
+[33mac609bfda[m Merge branch 'BranchCN' of http://gitlab.gsystems.com.ar/global/geosit.git
+[33m3f5455650[m 0005424
+[33mc78f913bf[m correcciones
+[33m65a334f38[m correcciones merge
+[33m9c3c43322[m Merge branch 'BranchCN' of http://gitlab.gsystems.com.ar/global/geosit.git
+[33m77ce6dbf1[m Prop Bfrtip
+[33m4be4e36c5[m Merge
+[33m946fb26e7[m Valuaciones - Cambios en Tierra por Superficie
+[33m1bc805a85[m commit
+[33m5f0f207e8[m TipoTramite e Incidencia de Personas y Domicilio
+[33me4dae67c2[m ajax form
+[33m49e922c00[m 0005384
+[33md78e33780[m 0005384
+[33md4d955ddb[m 0005384
+[33m11f157ab5[m Tablas Auxiliares - Maquetado
+[33m00d797026[m Mapas Tematicos - Pendientes y Bugs al 15/09
+[33mf0f01056a[m Merge Andres
+[33madf54dc79[m 0005390
+[33mb1a66cf82[m 0005424
+[33m0c6f838e8[m Agrego Api reportes y abm de documentos en mantenimiento parcelario
+[33mf9efc2ff1[m Merge branch 'BranchCN' of http://gitlab.gsystems.com.ar/global/geosit.git
+[33m4f085eda9[m Incidencias
+[33me58721a28[m Merge remote-tracking branch 'origin/BranchCN' into BranchCN
+[33mc9024539c[m Merge con JA
+[33me237bdb61[m Version
+[33m6df12b261[m Nueva Version Auditoria
+[33mf015ef070[m Merge Auditoria y Reporte
+[33m7a52ba2e9[m prueba 3
+[33m965567f5d[m prueba 2
+[33m56375b1f6[m prueba
+[33mac25d6a6c[m Version
+[33m5f25f85ad[m Mapas Tematicos - Pendientes y Bugs al 11/09
+[33m709e4094f[m Incidencias
+[33m907bdf3b7[m Merge
+[33mdfb6e0f6f[m Commit para merge
+[33m7d9e3fcdd[m Valuaciones - Correcciones
+[33medf93ed1a[m Merge remote-tracking branch 'origin/BranchJA' into BranchCN
+[33mb4fbd02e5[m Merge
+[33m1c1cdbb51[m Valuaciones - Cambios generales
+[33m78bb9378f[m correcciones valuaciones
+[33m46fa0586d[m Mapas Tematicos - Pendientes y Bugs 09/09 Certif
+[33m51200e27c[m Merge remote-tracking branch 'origin/BranchCN' into BranchJA
+[33m131153b76[m Valuaciones - Correcciones
+[33m314f52f91[m merge
+[33m9da26bc72[m Merge remote-tracking branch 'origin/BranchDB' into BranchCN
+[33m1d8d92483[m merge
+[33m73f88d2e8[m Mapas Tematicos - Pendientes y Bugs al 09/09
+[33mbc144e1af[m Merge y correcciones
+[33m1ee5a5560[m Modificacion grilla
+[33mad2954cc6[m Agregado de planos al buscador general
+[33m57aaeee02[m mas correcciones
+[33mfc07b2ce0[m VALUACIONES - Print Busqueda Padron
+[33mf71281703[m Merge
+[33m92ea3f80f[m Valuaciones - Cambios inputs
+[33meade76bf1[m prueba
+[33m908b8323a[m Mod
+[33m226893d7a[m listo hasta superficies
+[33m1f8fee192[m Modificaciones
+[33m193c0b8d0[m Merge remote-tracking branch 'origin/BranchCN' into BranchJA
+[33m4f615233d[m Merge 2
+[33mdef34dc93[m merge
+[33ma8aead32e[m Valuaciones - Cambios generales
+[33m2f8508076[m VALUACIONES - Mensajes de Info y Advertencia
+[33mb5fb76743[m Merge
+[33mee9e37d53[m Se sube exportar
+[33mff890f643[m correcciones
+[33me95574e4d[m Valuaciones - Cambios en el controller
+[33m24522eff6[m Merge remote-tracking branch 'origin/BranchCN' into BranchJA
+[33m9c07b1d32[m Valuaciones - Recuperar datos
+[33m24ff66b9b[m fechas de baja null
+[33mb1a5c6ee7[m Servicios de consulta
+[33m867279d75[m Merge remote-tracking branch 'origin/BranchCN' into BranchJA
+[33m954ff458d[m Valuaciones - Cambios generales
+[33m538f253f7[m Correcciones valuaciones.
+[33mb104b6199[m Mapas Tematicos - Cambios al 07/09 - Formularios Modales
+[33m981d3e517[m ajax form
+[33m72723c0a0[m Corrección Entrega Tramites
+[33m723ab6233[m Merge remote-tracking branch 'origin/BranchCN' into BranchDB
+[33mcffaafedd[m merge 6
+[33md61cef84b[m Brian ultimo commit 04/09/2015
+[33me74b432fa[m VALUACIONES - Mensajes
+[33m1c4d6f4e8[m Merge 5
+[33mcea0d3fd9[m Merge 4
+[33m069370223[m Merge 3
+[33mca005aebb[m Merge 2
+[33m686b418a9[m Merge
+[33me0121d4de[m Merge remote-tracking branch 'origin/BranchDB' into BranchCN
+[33m87a7dd467[m Valuaciones - Recuperar Datos
+[33mbb68e5564[m Commit Brian 03/09/2015
+[33m5506dd8b4[m Merge remote-tracking branch 'origin/BranchCN' into BranchDB
+[33m4a81a58f1[m SEGURIDAD - Resolucion de Mantis 5294, 5296, 5297, 5298, 5299 y 5300
+[33m57a32fc62[m Merge remote-tracking branch 'origin/BranchDB' into BranchJA
+[33m869c05305[m Mapeos BD valuaciones faltan correcciones en el controller.
+[33mc97f6cbe8[m Valuaciones - Cambios generales
+[33m8dd135505[m Valuaciones - Solucion de Botones volver
+[33mec95fdf90[m Merge remote-tracking branch 'origin/BranchCN' into BranchDB
+[33md29665849[m a
+[33ma2719344c[m busqueda,identificacion completado
+[33m8e2734923[m Valuaciones - Mantis 5221-5229-5220
+[33m860cb186c[m SEGURIDAD - Resoluacion Mantis 5285
+[33mdfced28ce[m Cambios en Valuaciones
+[33mbd813f767[m Botones de modales
+[33m3397147dd[m Botones modales
+[33m5a5e89635[m Validaciones
+[33mc7bdbada3[m SEGURIDAD - Resolucion de Mantis 5063
+[33md479647e7[m Modificaciones Validacion Funcion
+[33mb549b8f0a[m Modificacion validacion Fechas
+[33m138b91b28[m Commit Brian 01/09/2015
+[33m3a2429b16[m Comento validacion
+[33md53326647[m Merge
+[33m90e700ad5[m commit del merge
+[33m2907e598f[m Commit Brian 31/08/2015
+[33m78dfbe920[m Mapas Tematicos - Pendientes y bugs al 31/08
+[33m8f1688bf0[m commit varios
+[33mb12d3caaf[m SEGURIDAD - Resolucion de Mantis 5247, 5252, 5251, 5249, 5196
+[33m24060e893[m Merge
+[33m0d8769bbc[m Generacion de reportes, auditoria
+[33meafe0c86f[m Mer
+[33m0cf5d4e63[m Resolucion MANTIS 5248 y Pantalla Valuaciones Edicion Parcela
+[33m9be4bb0a6[m Mapas Tematicos - Pendientes y bugs al 27/08
+[33m5c3535840[m merge con abms de Luciana
+[33ma6edd6bc5[m Merge remote-tracking branch 'origin/BranchJA' into BranchCN
+[33m93ca5d904[m Publish 25082015
+[33m56655f07b[m Valuaciones - Cambios generales y validaciones varias
+[33ma6525b9a0[m Entrega Tramites
+[33ma2146ac04[m Entrega parcial tramites
+[33m1b42893ad[m Merge remote-tracking branch 'origin/BranchJA' into BranchCN
+[33mfbfea1848[m Valuaciones - Mantis 5133-5106-5162-5107-5105
+[33m0e1c77ecc[m Buscador Generico
+[33m469635bee[m Mapas Tematicos - Pendientes y bugs al 21/08
+[33mea2260973[m Merge remote-tracking branch 'origin/BranchJA' into BranchDB
+[33m6e5acd014[m merge
+[33mb82e62d07[m SEGURIDAD - Resolucion de Mantis 5169 - 5170 - 5171 - 5174
+[33m3fec6ee3d[m Merge remote-tracking branch 'origin/BranchDB' into BranchCN
+[33m22417a60d[m merge
+[33m0ec2ef463[m SEGURIDAD - Resolucion de Mantis 4893
+[33m53d28eaab[m ccc
+[33m3346f7b3a[m Commit_branch
+[33mb3ce7c51b[m Merge remote-tracking branch 'origin/BranchJA' into BranchCN
+[33mc886e3337[m merge DB
+[33ma3c6c1218[m Correcciones
+[33me88691d41[m SEGURIDAD - Resolucion Mantis 5168
+[33ma7fd86eab[m Mapas Tematicos - Pendientes y bugs al 19/08
+[33md0ef53836[m cambios por actualizacion de OL a v3.8.2
+[33m4a8c111c6[m SEGURIDAD - Resolucion de Mantis 5126 - 5163 - 5164
+[33m9a61e5408[m Buscador (Preliminar)
+[33m382fcdf36[m Valuaciones - Mantis  5105-5162 -5106-5133
+[33mb944c6aec[m merge
+[33m9d7231883[m Merge remote-tracking branch 'origin/BranchDB' into BranchCN
+[33m8b888e020[m Mantis
+[33m9dec1c0c5[m Repositorios y busqueda
+[33m86f3f749d[m Mapas Tematicos - Pendientes y bugs al 14/08
+[33me9af66591[m SEGURIDAD - Resolucion de Mantis (5132 - 5143 - 5166 - 5172 - 5176 - 5177 - 5180 - 5196 - 5197
+[33m22ec22320[m Mapping expediente obras
+[33m30ca1f2c6[m Mapas Tematicos - Pendientes y Bugs
+[33m6003a6a44[m Mapas Tematicos - Pendientes y Bugs varios
+[33m90d81d9ae[m Maquetado Busqueda Padron
+[33m2e7142f99[m Maquetado de ValuacionPadron
+[33ma40682086[m cambio version de OpenLayers a 3.8.2
+[33m73aac68cf[m Maquetado-Valuacion de un  Inmueble
+[33m35b2b3049[m Dom
+[33m67be4776d[m Dom
+[33ma6a20a51f[m Gestion de inspecciones y Gestion de Inspectores
+[33m7fd01353f[m Merge remote-tracking branch 'origin/BranchCN' into BranchJA
+[33m718352753[m Correcciones generales
+[33m6f7a5ea60[m Merge remote-tracking branch 'origin/BranchDB' into BranchCN
+[33m45b3d34d7[m Merge remote-tracking branch 'origin/BranchCN' into BranchDB
+[33mb81ce0a0b[m Aplicacion de Funciones - Perfiles
+[33mc7228e30b[m Mapas Tematicos - Pendientes al 7/8
+[33m6e7a3b9a4[m correcciones y otras funcionalidad
+[33meabfc82a2[m Merge remote-tracking branch 'origin/BranchJA' into BranchCN
+[33m35beb85d2[m Mantis y cambios generales
+[33m366600008[m merge con db
+[33me76d43314[m correcciones de recupero de password
+[33m8fcba438f[m SEGURIDAD - Solucion de Bugs
+[33m086b1d06b[m Merge branch 'Moissane' of http://gitlab.gsystems.com.ar/global/geosit.git
+[33mc21c30717[m Brian Generador Ploteo
+[33me3dd02d2a[m correcciones
+[33m7971dcb83[m puesta a punto prototipo
+[33m4e1d168c3[m Entrega parcial - Errores al 05/08
+[33me2bb46823[m Entrega Parcial correciones al 05/08
+[33md175c0daf[m SEGURIDAD - CAMBIO DE CONTROLES en Usuarios y Perfiles
+[33mc2b4def9c[m SEGURIDAD - Cambio de componente en Usuarios
+[33m58287298c[m Persona
+[33m67d19550e[m correcciones
+[33m91e359be9[m Entrega Parcial (add)
+[33m823d48d50[m Entrega parcial
+[33m0ec965df1[m Merge remote-tracking branch 'origin/BranchDB' into BranchCN
+[33m1c56ffc7f[m Merge remote-tracking branch 'origin/BranchJA' into BranchCN
+[33md59eceb70[m Final Seguridad
+[33m00b89f97d[m SEGURIDAD - Cambio de componente - Perfiles
+[33mfc1571995[m  S0M3F02_CDU01 (Superficie Semi-Cubierta) y Cambios generales
+[33me0d91080d[m cambio estilo menu
+[33mb6589b238[m Entrega parcial correcciones.
+[33m6463ba845[m SEGURIDAD - Cambio de Objeto Funciones
+[33m499fd10f8[m Merge remote-tracking branch 'origin/BranchJA' into BranchCN
+[33m57f2deedb[m correciones
+[33md106a68d9[m Merge remote-tracking branch 'origin/BranchDB' into BranchJA
+[33m4140f37bb[m S0M3F08 Cambios generales
+[33m5b1a8e98c[m Correciones horarios
+[33m2e6b0205d[m Merge remote-tracking branch 'origin/BranchDB' into BranchCN
+[33mf6501add2[m COrrecciones usuarios , horarios , etc.
+[33md97cc3860[m Valuacion - Tierra
+[33m200558cca[m correcciones en seguridad
+[33md719bf723[m correcciones en Valuacion
+[33m398791926[m Merge remote-tracking branch 'origin/BranchCN' into BranchDB
+[33m87e75b549[m SEGURIDAD - Usuarios
+[33m773237561[m Merge con JA
+[33m80e16ac28[m Correcciones en el login , evolutivos , y mas
+[33mfb2091a48[m  S0M3F08 (Valor y Rango)
+[33m6ccd7bdce[m SEGURIDAD - Resolucion Mantis 4917/18 - 5060/61/64
+[33m3fae4d791[m Entrega Corrección Objetos Infraestructura
+[33m96eec8edd[m correccion en los scroll y feriados
+[33m5a2f1af7a[m commit para ejemplificar el formulario modal
+[33mfe709ca61[m Archivos no incluidos previamente
+[33m31c7f1677[m Merge remote-tracking branch 'origin/BranchDB' into BranchCN
+[33mb72f59e02[m Merge Valuaciones
+[33m2c1135db4[m Feriados fase 1
+[33meff612819[m Envio parcial de desarrollo de Gestion de Inpecciones
+[33meb28b481c[m Entrega parcial - Cambios BD
+[33mcfd1ca24f[m Mapa Tematico Filtro Geografico
+[33m0e005645c[m search option mejora
+[33mc3ec9eb47[m Merge remote-tracking branch 'origin/BranchCN' into BranchDB
+[33me6c866fd4[m USUARIOS - PERFILES V.3
+[33mff82ff9e2[m commit: mantenedor parcelario, nuevo core solr y cambios al buscador (cambios y emprolijamientos)
+[33m6e144048c[m Entrega parcial por correcciones post cambios BD
+[33m399948f3f[m expedientes obra prototipo
+[33m16d886221[m Fuentes
+[33m0c0243ca2[m Modificacion Class
+[33m3b1bccece[m Merge remote-tracking branch 'origin/BranchJA' into BranchCN
+[33m2d181d063[m Modificacion class
+[33maf2f948fb[m Merge remote-tracking branch 'origin/BranchCN' into BranchJA
+[33mb4acdcb96[m S0M3F06 y Cambios generales
+[33mbec3bd8a7[m merge
+[33mbbdd8c8c7[m version pao
+[33mcba27d159[m Login correcciones y CU de ayuda.
+[33ma8a58147a[m correccion nuevos cambios bd
+[33m3c1138c00[m Correcciones del cambio de Base de datos y otros cambios.
+[33m091f1c86d[m Merge con DB
+[33m9cb82efc3[m Merge Interno
+[33m04e8c564a[m Merge
+[33m652727817[m Login SMTP.
+[33m119bf820f[m Merge
+[33mc270377db[m Merge remote-tracking branch 'origin/BranchRaul' into BranchCN
+[33m399b1e068[m SOM3F08
+[33m90d6242a9[m Mapa Tematico - Filtro Geografico
+[33mdc604a70c[m Cambios generales
+[33mbfbed911a[m Mapa Tematico Layer Puntos y Filtro Geografico
+[33ma0d6684ab[m SEGURIDAD - PERFILES V.2
+[33me549c2030[m Fix del menu , y maquetas valuaciones
+[33m71ee03738[m Cambios generales
+[33me147b3c8f[m Mantenimiento Coeficiente (nombres)
+[33mc20207697[m Merge remote-tracking branch 'origin/BranchCN' into BranchJA
+[33m0d530cc76[m commit seguridad y valuaciones
+[33m8c67121a1[m Mantenimiento Coeficiente (Maquetado)
+[33m37eec5632[m Entrega Parcial
+[33m6e45560e1[m Mapa Tematico actualizado con Claus
+[33mb22c1c7d3[m Merge remote-tracking branch 'origin/BranchCN' into BranchJA
+[33mf12dfbe38[m Metadato Mejoras (maquetado)
+[33m7cf571f83[m Cambios  en el index , valuaciones maquetacion
+[33m680b789c2[m Mapa Tematico Varios
+[33m80b833331[m Merge con JA
+[33m1d1a6ce32[m Maquetado valuaciones, Login, Horarios
+[33m553f24dab[m Metadato Tierra (maquetado)
+[33m3a6092741[m Merge remote-tracking branch 'origin/BranchCN' into BranchDB
+[33m9898d4d6f[m SEGURIDAD - USUARIOS y PERFILES V.1
+[33m5fb32997d[m Entrega - Mantenimiento de datos de Infraestructura
+[33m311b31682[m Merge remote-tracking branch 'origin/BranchJA' into BranchCN
+[33m3c42431a0[m Correcciones en parametria de la BBDD y temas de Horarios
+[33m16096a440[m Entrega correciones Atributos por Zona
+[33mb40702b23[m Valuación
+[33m230ced971[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m layout maquetado
+[33m092bf11e5[m plantilla
+[33mfd956e2a6[m scroll
+[33m9ef76ee94[m BASE_URL
+[33me718486e1[m dialog footer
+[33m86c41769f[m scroll modal
+[33m546b76cde[m Correcciones Visuales
+[33md2ceb47e7[m Brian obras particulares/expediente obra
+[33ma801ca6dd[m Merge remote-tracking branch 'origin/BranchCN' into BranchJA
+[33m853735cc1[m Cambios Visuales (Resumen)
+[33mad52ca744[m Integración de canvas
+[33m9eb69fb86[m correcciones en MT Importar Atributo
+[33m143daac32[m merge con JA
+[33m0ccd5f8e9[m Correcciones de mantis , visuales y de configuracion
+[33md69a9033f[m Correcciones Visuales
+[33ma95181426[m test1
+[33m57e1ef43f[m test
+[33m6809a7ad6[m Cambio de layout (segunda parte)
+[33m80af51a3f[m Correcciones Visuales
+[33m8df915bd6[m Merge remote-tracking branch 'origin/BranchJA' into BranchCN
+[33m882f4b61d[m Mas correcciones de MT
+[33m63db7e85f[m Cambio de layout (primera parte)
+[33m751df448c[m Entrega: Búsqueda - Resultado de objetos de Infraestructura + Editor Sintactico
+[33mde09af1dc[m Correcciones en importacion
+[33m21f49fdf3[m Correcciones MT
+[33m3813c67c6[m Correccion de Matins de MT
+[33m152039e5f[m Persona/Profesional
+[33m142bad39b[m Correccion de mantis de importacion de biblioteca.
+[33me626b9a0f[m Correccion de mantis
+[33m2ce2006ed[m Correccion de mantis
+[33m9ca94a3c8[m Cambios en filtros geograficos
+[33m37442afb5[m Merge 2
+[33m7ac88c876[m Mergeado
+[33m0e9581f6c[m Personas/Profesion
+[33mf38cab757[m Mas Mantis de MT Corregidos
+[33mca05a6550[m MT 4845
+[33mc5411e948[m Merge remote-tracking branch 'origin/BranchCN' into BranchRaul
+[33m44e972963[m mt varios
+[33m7af89d7ba[m Merge branch 'BranchRaul' into BranchCN
+[33m67a9e0a79[m Confil Filtro Mapper
+[33m71faa42f8[m mantis
+[33mce34eb7d1[m Merge branch 'BranchCN' into BranchRaul
+[33m1b5567596[m Merge branch 'BranchCN' into BranchRaul
+[33m32c7edbc5[m Merge branch 'BranchCN'
+[33m45bb6124c[m Generacion Mapa Tematico a Tabla
+[33mdb0c7bd3a[m Correccion de Mantis de MT
+[33m55811d5cf[m Filtros geograficos (input mask)
+[33m405a05075[m filtro geografico (mas opciones)
+[33m0b697baa2[m Merge branch 'master' into BranchDB
+[33mf123db0ca[m SEGURIDAD - USUARIOS V.2
+[33m0ba4d4224[m Merge con JA
+[33m5d2bab5bf[m Correccion de mantis
+[33md12bebdac[m Mantis 4729 y 4842
+[33m11e7863ae[m cambios estilos en Layout 2da parte
+[33m5e9e34cd0[m cambio de estilos en layout
+[33m71d68faa0[m Commmit MT y correcciones
+[33m071296358[m Clases rereferenciadas
+[33m7e21357d1[m Entrega - Mantenimiento de Atributos y sus valores por Zona
+[33mdc03e5738[m commit que reemplaza todo lo anterior (Ernesto)
+[33m6766a6b24[m Revert "Entrega con correcciones - Mantenimiento del Código de Planeamiento Urbano"
+[33mf4dba2b6e[m Revert "primera parte arreglo iconos"
+[33md4f29848b[m Revert "segunda parte arreglo iconos"
+[33mb9cdb401d[m segunda parte arreglo iconos
+[33mdfdbe42c5[m primera parte arreglo iconos
+[33md340036b2[m Merge con JA
+[33m2f43f3288[m Seguridad Horarios y Mantis MT
+[33m84f1417da[m Cambios generales
+[33m6f4620eff[m SEGURIDAD - Usuarios V.1
+[33m71212fddd[m Entrega con correcciones - Mantenimiento del Código de Planeamiento Urbano
+[33m137c38722[m re buildealo
+[33m60c0edb0e[m Entrega Mantenimiento del Código de Planeamiento Urbano
+[33ma9d074d38[m Merge con Master
+[33m67100f659[m Fixes varios
+[33m9af886462[m Merge
+[33m2e70732d2[m Cambios generales y  pantallas uniformes
+[33md5bd42a5f[m Fixes y Bibliotecas
+[33m1312328f8[m Merge remote-tracking branch 'origin/master' into BranchCN
+[33m8a6ab7913[m Ajuste en los Textos MT
+[33ma57a953b1[m Merge
+[33m57a210a31[m Merge branch 'master' of http://gitlab.gsystems.com.ar/global/geosit.git
+[33m014809176[m Ubicación uniforme de las pantallas
+[33me94379307[m merge
+[33m1becb35ea[m Modal Bibliotecas y transparencia
+[33m7de6cae84[m Scroll importar atributo
+[33m2263df0dc[m Merge branch 'master' into BranchCN
+[33m05ccf4752[m Correccion en el Mapper de MT
+[33mac44b3186[m Es tabla Aux Nulleable
+[33m3f69ae00a[m Merge con branch JA
+[33md70acbbeb[m Cambios en el modelo de datos
+[33m9c1a6db07[m Filtros geográficos (avanzado en el mapa)
+[33ma2dab594d[m Merge
+[33m4842ce5d9[m Merge con seguridad , Recusos de texto , mejoras en el menu, etc.
+[33meb6c51faa[m Merge branch 'master' of http://gitlab.gsystems.com.ar/global/geosit.git
+[33m81ec04838[m Busquedas en Solr (core CBA)
+[33mc0e023394[m Merge
+[33medf444de3[m Transparencia (Visualización)
+[33m705f7f04b[m Cambios visuales
+[33m3df8b10e9[m Pantalla Index sin modal
+[33m621c565e0[m Integracion CU Usuarios
+[33md8c36c2ce[m Merge remote-tracking branch 'origin/BranchDB' into BranchCN
+[33mea09a9de1[m Commit Merge con Seguridad
+[33m7d3a54b37[m zaraza
+[33ma2f14333f[m commit bibloteca parcial
+[33m88cd9cbd1[m Seguridad - Usuarios V.1
+[33m7c03b3108[m Merge
+[33mcc4d8204d[m Visualizacion Picker mapa tematico.
+[33m5b4f110ac[m Merge
+[33m8fe73e103[m Cambios generales y carga de iconos
+[33mdf2024864[m Scroll en tabla de visualizacion.
+[33m8c0590f41[m Agregar icono (visualización)
+[33ma0590b0b9[m Merge branch 'master' into BranchCN
+[33mb82f5b7b3[m Eliminacion del Model de Search
+[33m8ed5ac924[m Merge in branch cn
+[33m1c47256f8[m Limpieza de carpeta de packages
+[33m9ab71eb7f[m Merge branch 'master' of http://gitlab.gsystems.com.ar/global/geosit.git
+[33mb613f4202[m Configuacion de packages de seguridad
+[33m94c26acfb[m Cambios en visualizacion
+[33m8474384eb[m Merge remote-tracking branch 'origin/master'
+[33ma35643f5d[m Commit de archivo de configuracion de paquetes
+[33m6396ad6bd[m Parametrizacion de Mapas (Mapguide y OSM) y Busqueda Inicial
+[33m1023a008c[m merge
+[33m7d79bb492[m packages restore automatico y correccion de busqueda en filtros.
+[33m23aeaf3eb[m Merge branch 'master' of http://gitlab.gsystems.com.ar/global/geosit.git
+[33m715d46002[m Cambios al filtrar cantidad (filtros colección)
+[33m4eb176a6d[m Select2 bootstrap
+[33m5ca94f23b[m pluging select 2 , file input y tooltip en visualizacion.
+[33m2696db77b[m Merge branch 'master' of http://gitlab.gsystems.com.ar/global/geosit.git
+[33m29ffe049e[m Cambios x Mantis
+[33mc82c67468[m Merge branch 'master' of http://gitlab.gsystems.com.ar/global/geosit.git
+[33m1281b9e36[m Modificación al filtrar colecciones
+[33m80329fa99[m Collecciones correcciones , mantis 0004680
+[33ma722d8a1d[m Merge remote-tracking branch 'origin/BranchJA' into BranchCN
+[33m321b72a1a[m Buscar colección (Filtros colección)
+[33mbfc54921a[m Merge remote-tracking branch 'origin/master' into BranchCN
+[33m791f04b6a[m Cambios al seleccionar ( filtros colección)
+[33m1a9569b17[m Merge branch 'master' into BranchCN
+[33mad159f1a4[m Merge branch 'master' of http://gitlab.gsystems.com.ar/global/geosit into BranchJA
+[33mab4e701b2[m Back End Colecciones
+[33m7862cef8a[m Merge branch 'master' into BranchJA
+[33m3f3c1fb8e[m Merge branch 'master' of http://gitlab.gsystems.com.ar/global/geosit.git
+[33mb8156b9f8[m Merge remote-tracking branch 'origin/master' into BranchJA
+[33mfa48e86d4[m Filtros por colección
+[33md9604f1ec[m Cambios generales , de tabla , y demas .
+[33m4ea69cdd9[m Cambios  generales
+[33m11ea32546[m Seguridad - Parametros Generales V.1.1
+[33me6f8898ba[m Merge branch 'master' of http://gitlab.gsystems.com.ar/global/geosit.git
+[33m3954cc9a5[m Seguridad - Parametros Generales V.1
+[33m0dcd478c4[m Merge con JA
+[33m9585f2eda[m Cambios visuales generales
+[33mdd6bdc1db[m Cambios visuales generales
+[33md5e6dd27e[m merge
+[33m7734ab8af[m Correccion WebConfig
+[33m93f694d6c[m Correcciones de mantis
+[33m3457cea3c[m Cambios en la barra de pasos. Contorno (distintos navegadores)
+[33m6a5df0e36[m Merge branch 'master' of http://gitlab.gsystems.com.ar/global/geosit.git
+[33m4b342aa17[m Cambios contorno ( navegadores diferentes)
+[33mfcbde7d13[m Cambios en el nombre de las tablas.
+[33m72e1e7c0b[m Merge branch 'master' of http://gitlab.gsystems.com.ar/global/geosit.git
+[33m3900d17d6[m Merge branch 'BranchCN'
+[33m31b29eada[m Oracle Appender , y otros cambios
+[33m0036cf01e[m Merge
+[33m651e33152[m cambios de validación (importar propiedad)
+[33m11ea3de41[m Cambios al seleccionar indice ( importar atributo)
+[33mc3765c026[m Merge branch 'BranchCN'
+[33m039ff4843[m Correccion de incidencias , instalacion Input Mask
+[33mcadf55e8c[m Merge branch 'master' of http://gitlab.gsystems.com.ar/global/geosit.git
+[33md50a9da85[m Agregado de imagenes de SliderBar
+[33m0aeb1e7e1[m Merge branch 'BranchDB' of http://gitlab.gsystems.com.ar/global/geosit into BranchCN
+[33m14e229591[m Merge branch 'master' of http://gitlab.gsystems.com.ar/global/geosit into BranchCN
+[33ma2561419b[m Merge branch 'master' into BranchDB
+[33m67c135ca7[m Agregado de colores para IE
+[33m18b882e1a[m Merge branch 'master' of http://gitlab.gsystems.com.ar/global/geosit.git
+[33ma36da7b4c[m Cambios al seleccionar indice
+[33m2f184db1b[m Runtime exception correccion
+[33m772461f23[m Cambios de Damian
+[33mc55cd9f74[m mas correcciones
+[33m0f1dc4202[m Correccion del branch
+[33m5a590b008[m sarasa
+[33mccf02a3ba[m merge
+[33mb9b53fb4a[m COMMIT ARREGLOS
+[33mf0b9b3406[m Merge branch 'master' of http://gitlab.gsystems.com.ar/global/geosit.git
+[33m7c4221c41[m Modificaciones en pantalla de visualizacion
+[33m916c016d7[m Cambios de los objetos en session
+[33m8566669d0[m componente x grafico.
+[33m8ca903b22[m Chequeo automatico de columna o cabecera en importar archivo.
+[33m88927f812[m Filtro por tipo en importacion de ficheros.
+[33md2552dbc2[m boton volver atras recuperado
+[33m9cb199388[m correcciones del merge
+[33mbcfcc7cb0[m Revert "merge"
+[33m8be3b898b[m Merge general
+[33m77969a18e[m commit de imagenes atributo
+[33mbd835589f[m Merge branch 'master' of http://gitlab.gsystems.com.ar/global/geosit.git
+[33m4c1d2c594[m Merge branch 'master' of http://gitlab.gsystems.com.ar/global/geosit.git
+[33mcce61a7cb[m Merge branch 'master' of http://gitlab.gsystems.com.ar/global/geosit.git
+[33mf319d7001[m Modificaciones visuales varias
+[33m255c522ab[m Merge
+[33m4b215e8d8[m merge
+[33mf5100d673[m correcciones en el index.
+[33m56f501680[m Merge
+[33m3c85d987d[m CAMBIO ATRIBUTO POR PROPIEDAD
+[33m56cba3d04[m Merge branch 'master' of http://gitlab.gsystems.com.ar/global/geosit.git
+[33m927f698a8[m Mostrar la cantidad total de registros del archivo leído (importar atributo)
+[33m6bc962e29[m Merge branch 'master' of http://gitlab.gsystems.com.ar/global/geosit.git
+[33m6a1e573d5[m Agregado de pantalla inicial DBELTRAMI
+[33m53ad263fc[m Merge branch 'master' of http://gitlab.gsystems.com.ar/global/geosit.git
+[33m99bb24067[m correcciones
+[33mc30079f47[m Cantidad de lineas Backend
+[33mb336c8d8c[m Merge branch 'master' of http://gitlab.gsystems.com.ar/global/geosit.git
+[33mceb1fdccf[m Homogeneización de las pantallas
+[33m9aa2aac17[m Merge branch 'master' of http://gitlab.gsystems.com.ar/global/geosit.git
+[33m1b84c2201[m Visualizacion en dispositivos DBELTRAMI
+[33m0b074d716[m Cambios visuales generales. Automáticamente se posiciona para editar el campo ( filtros geográficos y por atributos)
+[33m6ba04c0e6[m Merge branch 'master' of http://gitlab.gsystems.com.ar/global/geosit.git
+[33m4723dc0a0[m Progress bar y modificaciones en pantalla de atributos
+[33mc0174a5a9[m Cambios en la selección de operaciones (filtros por atributo)
+[33m867c34326[m Merge
+[33m60286a3a1[m Cambios visuales generales
+[33m665e701aa[m cambio Progress Bar - DBELTRAMI
+[33me886e1c1e[m Merge branch 'master' of http://gitlab.gsystems.com.ar/global/geosit.git
+[33m9431df794[m Cambio Progress Bar - DBELTRAMI
+[33mb31b8aa9e[m Importacion de Atributos.
+[33m292afc793[m Cambios varios DBELTRAMI
+[33m940c181ac[m Merge branch 'master' of http://gitlab.gsystems.com.ar/global/geosit.git
+[33m673cb905a[m Cambio en ampliar metros (filtros geograficos)
+[33m2d8ef54b6[m Navegacion de filtros Geograficos
+[33md98c314e1[m Merge de funcionalidad CN
+[33me18fa3d48[m Mis cambios CN
+[33m30f00a0ce[m Merge
+[33m02af37455[m Merge
+[33mdb1f126d5[m Merge branch 'master' of http://gitlab.gsystems.com.ar/global/geosit.git
+[33m8696a4184[m Modificaciones en la hoja de estilo (seleccionables) y cambios visuales ( Filtros geograficos)
+[33mf4bee0c02[m DBELTRAMI
+[33mb54d47525[m Merge branch 'master' of http://gitlab.gsystems.com.ar/global/geosit.git
+[33mb21d8319c[m Correccion de imagenes Servidor de testing
+[33m33bf74afd[m Correcciones necesarias para Publicar en Test
+[33mf2299d68b[m Merge
+[33m7037e768f[m Cambios visuales generales
+[33m4963d52bf[m Merge
+[33mfc5b7ef85[m cambios generales
+[33m30e8d695c[m Merge
+[33m912562c26[m Modificaciones de progress bar y cambios visuales (importar atributo)
+[33m76d8d40b5[m Parametros
+[33m0cf53ed4f[m Picker , correcciones esteticas , Funcionalidad en resumen , Barra de buscar en Filtros. Progress Step Bar , etc.
+[33m849489136[m Cambios visuales (filtros geograficos)
+[33mc1683c7d4[m Resumen
+[33md95056904[m Cambios visuales en Filtros Geograficos
+[33mf2aa11c93[m Cambios visuales en atributos (importar atributo)-merge
+[33m3ccc0cf34[m Cambios visuales en atributos (importar atributo)
+[33m90b896177[m CU Visualizacion y Filtros Geograficos. Correcciones menores en la importacion de archivos. Mejoras Graficas.
+[33mff40cdd3e[m Mapeo de entidades
+[33mec551c891[m Mejoras visuales y en la navegacion.
+[33md0e4c1567[m Lectura de configuraciones del WebConfig
+[33ma7b465d4e[m Se quita referia a MSword
+[33mcebca4bba[m Commit de faltantes (por compartir usuario)
+[33md0dea568b[m Merge
+[33m03c5de529[m Scrollbars Final , cambios en la navegacion.
+[33ma4a665dac[m falto .csproj
+[33me0253d5ff[m Cambios visuales y  conexiones con BD
+[33m42846e04c[m Scroll bar
+[33m1a305d7a2[m Merge
+[33m14e79bbfc[m Scrolls
+[33me6ad01100[m Modificaciones visuales
+[33m4192c8f2b[m correcciones visuales y de redireccionamiento
+[33m391a8611b[m Correcciones visuales
+[33m4e8f849cf[m icono
+[33mca6222b05[m funcionalidades y estilos
+[33m828a1eb53[m Process Step Bar Beta - estilos.
+[33m15fe71fef[m estilado y filtros
+[33m795b227ec[m Estilos Filtros y correccion de bugs
+[33me092be6ab[m Importacion de fichero y presentacion de datos - parcial
+[33m21951389a[m Funcionalidades de Importacion de atributos Parcial,
+[33md318cbed7[m Mapas Tematicos - Pantalla Inicial y Atributos - Parcial
+[33mfe10136f2[m Packages Elmah y Log4net - Menu Dinamico de 2 niveles y Matematico Inicio
+[33m05b97c0e8[m Actualizacion de Librerias y Menu "Dinamico"
+[33m3665b6826[m Subida Inicial
+[33mb3c447a86[m Initial commit to add default .gitIgnore and .gitAttribute files.

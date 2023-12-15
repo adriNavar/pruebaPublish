@@ -1,0 +1,53 @@
+﻿@model GeoSit.Client.Web.ViewModels.ViaViewModel
+
+@Html.Partial("Partials/ObjetoEspecificoBaseView", new GeoSit.Client.Web.ViewModels.ObjetoEspecificoViewModel { Guid = Model.Guid, IdTramiteEntrada = Model.IdTramiteEntrada })
+
+<label style="width: 100%; color: #a3a99b; font-style: italic;">
+    Vía destino
+</label>
+
+<div class="form-group">
+    @Html.LabelFor(m => m.Plano, new { @class = "col-md-4 control-label" })
+    <div class="col-md-7">
+        @Html.TextBoxFor(m => m.Plano, new { @class = "form-control visibleArbolObjetos" })
+        @Html.ValidationMessageFor(m => m.Plano, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+<div class="form-group">
+    @Html.LabelFor(m => m.Tipo, new { @class = "col-md-4 control-label" })
+    <div class="col-md-7">
+        @Html.DropDownListFor(m => m.Tipo, Model.Tipos, new { @class = "form-control visibleArbolObjetos" })
+        @Html.ValidationMessageFor(m => m.Tipo, "", new { @class = "text-danger" })
+    </div>
+</div>
+
+@*TODO: Este script debe eliminarse cuando funcione jquery.validation.unobtrusive*@
+<script>
+    $(document).ready(function () {
+        jQuery.validator.addMethod("alphanumeric", function (value, element) {
+            return this.optional(element) || /^[A-Za-z0-9\d\-_/\s]+$/g.test(value);
+        });
+
+        $("#divEdicionObjetoContainer").validate({
+            rules: {
+                Tipo: {
+                    required: true
+                },
+                Plano: {
+                    required: true,
+                    alphanumeric: true
+                }
+            },
+            messages: {
+                Tipo: {
+                    required: "El campo es requerido",
+                },
+                Plano: {
+                    required: "El campo es requerido",
+                    alphanumeric: "Debe tener cargado un valor alfanumérico"
+                }
+            }
+        });
+    });
+</script>

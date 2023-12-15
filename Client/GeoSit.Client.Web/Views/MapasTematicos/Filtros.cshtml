@@ -1,0 +1,597 @@
+﻿@using GeoSit.Client.Web.Models
+@model MapaTematicoModel
+@{
+    ViewBag.Title = "Filtros";
+    ViewBag.Description = "Define el universo de datos a representar.";
+}
+@helper filtroAlfa(FiltroModel filtro)
+{
+    int idx = Model.Filtros.IndexOf(filtro);
+    @Html.HiddenFor(model => model.Filtros[idx].FiltroId, new { @id = filtro.FiltroId })
+    @Html.HiddenFor(model => model.Filtros[idx].FiltroComponente, new { @class = "fcomponente" })
+    @Html.HiddenFor(model => model.Filtros[idx].FiltroAtributo, new { @class = "fatributo" })
+    @Html.HiddenFor(model => model.Filtros[idx].FiltroOperacion, new { @class = "foperacion" })
+    @Html.HiddenFor(model => model.Filtros[idx].FiltroTipo)
+    @Html.HiddenFor(model => model.Filtros[idx].Habilitado, new { @class = "habilitado" })
+
+    <span>@filtro.FiltroAtributoDesc</span> @Html.Raw("de")
+    <span>@filtro.FiltroComponenteDesc</span>
+    @((filtro.FiltroOperacionDesc ?? string.Empty).ToLower())
+    if (!string.IsNullOrEmpty(filtro.Valor1))
+    {
+        @Html.HiddenFor(model => model.Filtros[idx].Valor1, new { @class = "fvalores_1" })
+        if ((filtro.FiltroOperacion == 16 || filtro.FiltroOperacion == 17) && filtro.Valor1.Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries).Length > 1)
+        {
+            var valores = filtro.Valor1.Split(new[] { "," }, StringSplitOptions.RemoveEmptyEntries);
+            <span> @Html.Raw(string.Join(" </span>y<span> ", new[] { string.Join(", ", valores.Take(valores.Length - 1)), valores.Last() })) </span>
+        }
+        else
+        {
+            <span> @filtro.Valor1 </span>
+        }
+
+    }
+    if (!string.IsNullOrEmpty(filtro.Valor2))
+    {
+        @Html.HiddenFor(model => model.Filtros[idx].Valor2, new { @class = "fvalores_2" })
+        <span>y</span><span> @filtro.Valor2 </span>
+    }
+}
+@helper filtroGeografico(FiltroModel filtro)
+{
+    int idx = Model.Filtros.IndexOf(filtro);
+    @Html.HiddenFor(model => model.Filtros[idx].FiltroId, new { @id = filtro.FiltroId })
+    @Html.HiddenFor(model => model.Filtros[idx].FiltroComponente, new { @class = "fcomponenteGeo" })
+    @Html.HiddenFor(model => model.Filtros[idx].FiltroAtributo, new { @class = "fatributoGeo" })
+    @Html.HiddenFor(model => model.Filtros[idx].FiltroOperacion, new { @class = "foperacionGeo" })
+    @Html.HiddenFor(model => model.Filtros[idx].FiltroTipo)
+    @Html.HiddenFor(model => model.Filtros[idx].Habilitado, new { @class = "habilitado" })
+    @Html.HiddenFor(model => model.Filtros[idx].Coordenadas, new { @class = "fcoordenadas" })
+    @Html.HiddenFor(model => model.Filtros[idx].Tocando, new { @class = "ftocando" })
+    @Html.HiddenFor(model => model.Filtros[idx].Ampliar, new { @class = "fampliar" })
+    @Html.HiddenFor(model => model.Filtros[idx].Dentro, new { @class = "fdentro" })
+    @Html.HiddenFor(model => model.Filtros[idx].Fuera, new { @class = "ffuera" })
+    @Html.HiddenFor(model => model.Filtros[idx].PorcentajeInterseccion, new { @class = "fporcentaje" })
+
+    if (filtro.Tocando == 1 && filtro.Dentro == 1)
+    {
+        <span>Dentro y Tocando selecci&oacute;n gr&aacute;fica</span>
+    }
+    else if (filtro.Tocando == 1)
+    {
+        <span>Tocando selecci&oacute;n gr&aacute;fica</span>
+    }
+    else if (filtro.Dentro == 1)
+    {
+        <span>Dentro de selecci&oacute;n gr&aacute;fica</span>
+    }
+    else if (filtro.Fuera == 1)
+    {
+        <span>Fuera de selecci&oacute;n gr&aacute;fica</span>
+    }
+
+    if (!string.IsNullOrEmpty(filtro.FiltroComponenteDesc))
+    {
+        @Html.Raw(" avanzada ")
+        <span>@filtro.FiltroComponenteDesc</span> <span> con </span>
+        <span>@filtro.FiltroAtributoDesc</span>
+        <span>@((filtro.FiltroOperacionDesc ?? string.Empty).ToLower())</span>
+    }
+    if (!string.IsNullOrEmpty(filtro.Valor1))
+    {
+        @Html.HiddenFor(model => model.Filtros[idx].Valor1, new { @class = "fvalores_1" })
+        <span> @filtro.Valor1 </span>
+    }
+    if (!string.IsNullOrEmpty(filtro.Valor2))
+    {
+        @Html.HiddenFor(model => model.Filtros[idx].Valor2, new { @class = "fvalores_2" })
+        <span> y </span><span>@filtro.Valor2 </span>
+    }
+    if (filtro.Ampliar.GetValueOrDefault() == 1)
+    {
+        var textoPlu = "modificado";
+        if (!string.IsNullOrEmpty(filtro.FiltroComponenteDesc))
+        {
+            if (filtro.FiltroComponenteDesc.ToLower().EndsWith("s"))
+            {
+                //es plural
+                if ((filtro.FiltroComponenteDesc.Substring(0, filtro.FiltroComponenteDesc.Length - 1).ToLower().EndsWith("a")))
+                {
+                    //es femenino
+                    textoPlu = "modificadas";
+                }
+                else
+                {
+                    //es masculino
+                    textoPlu = "modificados";
+                }
+            }
+            else
+            {
+                //es singular
+                if (filtro.FiltroComponenteDesc.ToLower().EndsWith("a"))
+                {
+                    //es femenino
+                    textoPlu = "modificada";
+                }
+            }
+        }
+        <span>@textoPlu en </span> @filtro.Ampliar <span> metros.</span>
+    }
+}
+@helper filtroColeccion(FiltroModel filtro)
+{
+    int idx = Model.Filtros.IndexOf(filtro);
+    @Html.HiddenFor(model => model.Filtros[idx].FiltroId, new { @id = filtro.FiltroId })
+    @Html.HiddenFor(model => model.Filtros[idx].FiltroColeccion, new { @class = "fcoleccion" })
+    @Html.HiddenFor(model => model.Filtros[idx].FiltroTipo)
+    @Html.HiddenFor(model => model.Filtros[idx].Habilitado, new { @class = "habilitado" })
+    @Html.Raw("En Colección")
+    <span>@filtro.FiltroColeccionDesc</span>
+}
+@helper filtroCondiciones(FiltroModel filtro)
+{
+    int idx = Model.Filtros.IndexOf(filtro);
+    @Html.HiddenFor(model => model.Filtros[idx].FiltroId, new { @id = filtro.FiltroId })
+    @Html.HiddenFor(model => model.Filtros[idx].Valor1, new { @class = "fvalores_1" })
+    @Html.HiddenFor(model => model.Filtros[idx].Valor2, new { @class = "fvalores_2" })
+    @Html.HiddenFor(model => model.Filtros[idx].FiltroTipo)
+    @Html.HiddenFor(model => model.Filtros[idx].Habilitado, new { @class = "habilitado" })
+    <span>@filtro.Valor1</span>
+}
+
+<link href="~/Content/mapastematicos.css?v=@(DateTime.Now.Ticks.ToString())" rel="stylesheet" />
+
+<div class="modal fade theme_new mapas-tematicos filtros" id="myModalMT" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-xlg">
+        <div class="modal-content">
+            <div class="scroll-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="myModalLabel">@Resources.Recursos.TituloMapaTematico: @ViewBag.Title</h3>
+                    <span id="cerrar" aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+                    <a href='@Url.Action("BuscarAyuda", "MapasTematicos")'>
+                        <span id="ayuda" data-placement="right" title="Ayuda" data-original-title="Ayuda" class="fa fa-question fa-2x white cursor-pointer img-responsive pull-right" style="margin-right: 10px;"></span>
+                    </a>
+                </div>
+                <div class="modal-body filtros-body">
+                    <div id="filtros-content" class="body-content">
+                        <form method='post' action='@Url.Action("GetAtributosViewVolver", "MapasTematicos")' role='form' id='formVolver' enctype='multipart/form-data'>
+                            @Html.AntiForgeryToken()
+                        </form>
+                        <form method='post' action='@Url.Action("GetVisualizacionView", "MapasTematicos")' role='form' id='form-filtros' enctype='multipart/form-data'>
+                            @Html.AntiForgeryToken()
+                            <div class="panel-group filtros">
+                                <div class="panel panel-default tipos">
+                                    <div class="row">
+                                        <div class="col-xs-4" style="padding-right:0;">
+                                            <button id="geografico" type="button" class="btn btn-secondary">
+                                                Geográfico
+                                                <span class="fa fa-plus-circle light-blue cursor-pointer"></span>
+                                            </button>
+                                            <button id="porAtributo" type="button" class="btn btn-secondary">
+                                                Por Atributo
+                                                <span class="fa fa-plus-circle light-blue cursor-pointer"></span>
+                                            </button>
+                                            <button id="porColeccion" type="button" class="btn btn-secondary">
+                                                Por Colección
+                                                <span class="fa fa-plus-circle light-blue cursor-pointer"></span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default listado">
+                                    <div class="col-xs-11 resumen">
+                                        <ul id="filtros">
+                                            @foreach (var filtro in Model.Filtros)
+                                            {
+                                                string tipo = "fatributos";
+                                                string bloqueado = filtro.Habilitado.GetValueOrDefault() == 1 ? "" : "bloqueado";
+                                                string icono = "fa-tag";
+
+                                                switch (filtro.FiltroTipo)
+                                                {
+                                                    case 2: //geograficos
+                                                        tipo = "fgeograficos";
+                                                        icono = "fa-globe";
+                                                        break;
+                                                    case 3: //colecciones
+                                                        tipo = "fcolecciones";
+                                                        icono = "fa-copyright";
+                                                        break;
+                                                    case 4: //condiciones
+                                                        tipo = "fcondiciones";
+                                                        icono = "fa-asterisk";
+                                                        break;
+                                                    default: //alfanumericos
+                                                        break;
+                                                }
+                                                <li class="seleccionable @tipo @bloqueado">
+                                                    <div id="@filtro.GetHashCode()">
+                                                        <div class="col-xs-1 filtro-icono">
+                                                            <span class="fa @icono fa-2x"></span>
+                                                        </div>
+                                                        <div class="col-xs-8 filtro-texto">
+                                                            @switch (filtro.FiltroTipo)
+                                                            {
+                                                                case 2: //geograficos
+                                                                    @filtroGeografico(filtro);
+                                                                    break;
+                                                                case 3: //colecciones
+                                                                    @filtroColeccion(filtro);
+                                                                    break;
+                                                                case 4: //condiciones
+                                                                    @filtroCondiciones(filtro);
+                                                                    break;
+                                                                default: //alfanumericos
+                                                                    @filtroAlfa(filtro);
+                                                                    break;
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                            }
+                                        </ul>
+                                    </div>
+                                    <div class="col-xs-1 botones">
+                                        <dl>
+                                            <dt style="margin-bottom: 6px">
+                                                <span id="btnBorrar" class="fa fa-minus-circle fa-2x cursor-pointer boton-deshabilitado" aria-hidden="true"></span>
+                                            </dt>
+                                            <dt style="margin-bottom: 6px">
+                                                <span id="btnEditar" class="fa fa-pencil fa-2x cursor-pointer boton-deshabilitado" aria-hidden="true"></span>
+                                            </dt>
+                                            <dt style="margin-bottom: 6px">
+                                                <span id="btnInformacion" class="fa fa-info-circle fa-2x cursor-pointer boton-deshabilitado" aria-hidden="true"></span>
+                                            </dt>
+                                        </dl>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-group alfanumericos" style="display:none">
+                                <div class="panel panel-default filtro">
+                                    <div class="row">
+                                        <div class="col-xs-4">
+                                            <div class="input-group">
+                                                <input id="buscar" type="text" value="" class="form-control" placeholder="Filtrar Componentes" autocomplete="off">
+                                                <span class="input-group-addon cursor-pointer">
+                                                    <span id="clearSearch" title="Limpiar" class="fa fa-eraser"></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-4">
+                                            <div class="input-group">
+                                                <input id="buscarAtributo" type="text" value="" class="form-control" placeholder="Filtrar Atributos" autocomplete="off">
+                                                <span class="input-group-addon cursor-pointer">
+                                                    <span id="clearSearchAtributo" title="Limpiar" class="fa fa-eraser"></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default selectores">
+                                    <div class="panel-body">
+                                        <div class="container-fluid">
+                                            <div class="col-xs-12">
+                                                <div class="col-xs-4 remove-padding">
+                                                    <div class="selector-header">
+                                                        <span class="fa fa-cubes"></span>
+                                                        <label class="h4" for="Componentes">Componentes</label>
+                                                    </div>
+                                                    <div class="selector-body borde-derecho">
+                                                        <ul id="ComponenteULAlfa">
+                                                            @foreach (var comp in (SelectList)ViewBag.Componentes)
+                                                            {
+                                                                <li class="seleccionable">
+                                                                    <div id='@comp.Value'>
+                                                                        <input type="checkbox" class="ComponenteId"
+                                                                               name="@comp.Text" value='@comp.Value' />
+                                                                        <label class="h5" for="@comp.Text">
+                                                                            @comp.Text
+                                                                            <span class="fa fa-check pull-right"></span>
+                                                                        </label>
+                                                                    </div>
+                                                                </li>
+                                                            }
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-4 remove-padding">
+                                                    <div class="selector-header">
+                                                        <span class="fa fa-tag"></span>
+                                                        <label class="h4" for="Atributos">Atributos</label>
+                                                    </div>
+                                                    <div class="selector-body borde-derecho">
+                                                        <ul id="AtributoULAlfa"></ul>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-4 remove-padding">
+                                                    <div class="selector-header">
+                                                        <span class="fa fa-calculator"></span>
+                                                        <label class="h4" for="Filtro">Filtro</label>
+                                                    </div>
+                                                    <div class="selector-body">
+                                                        <ul id="OperacionesULAlfa"></ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default footer">
+                                    <div class="pull-right botones">
+                                        <span data-placement="right" id="cancelar" data-cancela-filtro title="Cancelar" data-original-title="Cancelar" class="fa fa-times fa-2x light-blue cursor-pointer"></span>
+                                        <span data-placement="right" id="aceptar" title="Aceptar" data-original-title="Aceptar" class="fa fa-check fa-2x light-blue cursor-pointer boton-deshabilitado"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-group geograficos" style="display:none">
+                                <div class="panel panel-default filtro">
+                                    <div class="row">
+                                        <div class="col-xs-5">
+                                            <button id="dibujar" class="btn btn-secondary" name="Dibujar">
+                                                Dibujar
+                                                <span class="fa fa-pencil cursor-pointer"></span>
+                                            </button>
+                                            <button id="seleccionar" class="btn btn-secondary" name="Seleccionar">
+                                                Seleccionar
+                                                <span class="fa fa-thumb-tack cursor-pointer" style="transform:rotate(45deg);"></span>
+                                            </button>
+                                            <button id="avanzado" class="btn btn-secondary" name="Avanzado">
+                                                Avanzado
+                                                <span class="fa fa-bolt cursor-pointer"></span>
+                                            </button>
+                                        </div>
+                                        <div class="col-xs-5">
+                                            <button id="dentro" class="btn btn-secondary" type="button">
+                                                Dentro
+                                                <span class="fa fa-check-circle cursor-pointer"></span>
+                                            </button>
+                                            <button id="tocando" class="btn btn-secondary" type="button">
+                                                Tocando
+                                                <span class="fa fa-check-circle cursor-pointer"></span>
+                                            </button>
+                                            <button id="fuera" class="btn btn-secondary" type="button">
+                                                Fuera
+                                                <span class="fa fa-check-circle cursor-pointer"></span>
+                                            </button>
+                                        </div>
+                                        <div class="col-xs-2 text-right">
+                                            <button id="masOpciones" class="btn btn-secondary" type="button">
+                                                M&aacute;s opciones
+                                                <span class="fa fa-plus-circle cursor-pointer"></span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default mapa">
+                                    <div id="mapaMT" style="height:100%;"></div>
+                                </div>
+                                <div class="panel panel-default selectores avanzados" style="display:none;">
+                                    <div class="panel-body">
+                                        <div class="container-fluid">
+                                            <div class="col-xs-12">
+                                                <div class="col-xs-4 remove-padding">
+                                                    <div class="selector-header">
+                                                        <span class="fa fa-cubes"></span>
+                                                        <label class="h4" for="Componentes">Componentes</label>
+                                                    </div>
+                                                    <div class="selector-body borde-derecho">
+                                                        <ul id="ComponenteULGeografico">
+                                                            @foreach (var comp in (IEnumerable<ComponenteModel>)ViewBag.ComponentesGraficos)
+                                                            {
+                                                                <li class="seleccionable">
+                                                                    <div id='componenteGrafico@comp.ComponenteId'>
+                                                                        <input type="checkbox" class="ComponenteIdGeografico"
+                                                                               name="@comp.Nombre" value='@comp.ComponenteId' />
+                                                                        <label class="h5" for="@comp.Nombre">
+                                                                            @comp.Nombre
+                                                                            <span class="fa fa-check pull-right"></span>
+                                                                        </label>
+                                                                    </div>
+                                                                </li>
+                                                            }
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-4 remove-padding">
+                                                    <div class="selector-header">
+                                                        <span class="fa fa-tag"></span>
+                                                        <label class="h4" for="Atributos">Atributos</label>
+                                                    </div>
+                                                    <div class="selector-body borde-derecho">
+                                                        <ul id="AtributoULGeografico">
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-4 remove-padding">
+                                                    <div class="selector-header">
+                                                        <span class="fa fa-calculator"></span>
+                                                        <label class="h4" for="Filtro">Filtro</label>
+                                                    </div>
+                                                    <div class="selector-body">
+                                                        <ul id="OperacionesULGeografico">
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default footer">
+                                    <div class="pull-right botones">
+                                        <span data-placement="right" id="cancelarGeografico" data-cancela-filtro title="Cancelar" data-original-title="Cancelar" class="fa fa-times fa-2x light-blue cursor-pointer"></span>
+                                        <span data-placement="right" id="aceptarGeografico" title="Aceptar" data-original-title="Aceptar" class="fa fa-check fa-2x light-blue cursor-pointer boton-deshabilitado"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel-group colecciones" style="display:none">
+                                <div class="panel panel-default filtro">
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <div class="input-group">
+                                                <input id="buscarColeccion" type="text" value="" class="form-control" placeholder="Filtrar Colecciones" autocomplete="off">
+                                                <span class="input-group-addon cursor-pointer">
+                                                    <span id="clearSearchColeccion" title="Limpiar" class="fa fa-eraser"></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                        @*<div class="col-xs-6 text-right">
+                                                <button id="gestionar" type="button" class="btn btn-secondary">
+                                                    Gestionar
+                                                    <span class="fa fa-plus-circle light-blue cursor-pointer"></span>
+                                                </button>
+                                            </div>*@
+                                    </div>
+                                </div>
+                                <div class="panel panel-default selectores">
+                                    <div class="panel-body">
+                                        <div class="container-fluid">
+                                            <div class="col-xs-12">
+                                                <div class="col-xs-5 remove-padding">
+                                                    <div class="selector-header">
+                                                        <span class="fa fa-copyright"></span>
+                                                        <label class="h4" for="Colecciones">Colecciones</label>
+                                                    </div>
+                                                    <div class="selector-body borde-derecho">
+                                                        <ul id="ColeccionesUL">
+                                                            @foreach (var coleccion in ViewBag.Colecciones)
+                                                            {
+                                                                <li class="seleccionable" id="@("coleccion" + coleccion.ColeccionId)">
+                                                                    <div data-coleccion-id='@coleccion.ColeccionId'>
+                                                                        <input type="checkbox" class="ColeccionId" name="@coleccion.Nombre"
+                                                                               value='@coleccion.ColeccionId' />
+                                                                        <label class="h5" for="@coleccion.Nombre">
+                                                                            @coleccion.Nombre
+                                                                            <span class="fa fa-check pull-right"></span>
+                                                                        </label>
+                                                                    </div>
+                                                                </li>
+                                                            }
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-2 remove-padding">
+                                                    <div class="selector-header">
+                                                        <span class="fa fa-thumb-tack" style="transform:rotate(45deg);"></span>
+                                                        <label class="h4" for="Cantidad">Cantidad</label>
+                                                    </div>
+                                                    <div class="selector-body">
+                                                        <ul id="CantidadesUL">
+                                                            @foreach (var coleccion in ViewBag.Colecciones)
+                                                            {
+                                                                <li class="seleccionable">
+                                                                    <div>
+                                                                        <label class="h5">
+                                                                            @coleccion.Cantidad
+                                                                        </label>
+                                                                    </div>
+                                                                </li>
+                                                            }
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default footer">
+                                    <div class="pull-right botones">
+                                        <span data-placement="right" id="cancelarColeccion" data-cancela-filtro title="Cancelar" data-original-title="Cancelar" class="fa fa-times fa-2x light-blue cursor-pointer"></span>
+                                        <span data-placement="right" id="aceptarColeccion" title="Aceptar" data-original-title="Aceptar" class="fa fa-check fa-2x light-blue cursor-pointer boton-deshabilitado"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            @Html.HiddenFor(model => model.cantFiltrosAtributo)
+                            @Html.HiddenFor(model => model.cantFiltrosColeccion)
+                            @Html.HiddenFor(model => model.cantFiltrosGeografico)
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-xs-8 pull-left wizard">
+                        <div id="progress-bar-step" class="bs-wizard">
+                            <div class="col-xs-2 bs-wizard-step complete">
+                                <div class="progress"><div class="progress-bar"></div></div>
+                                <a class="bs-wizard-dot"></a>
+                                <div class="bs-wizard-info text-center">Componente</div>
+                            </div>
+
+                            <div class="col-xs-2 bs-wizard-step complete">
+                                <div class="progress"><div class="progress-bar"></div></div>
+                                <a class="bs-wizard-dot"></a>
+                                <div class="bs-wizard-info text-center">Atributo</div>
+                            </div>
+
+                            <div class="col-xs-2 bs-wizard-step active">
+                                <div class="progress"><div class="progress-bar"></div></div>
+                                <a class="bs-wizard-dot"></a>
+                                <div class="bs-wizard-info text-center">Filtros</div>
+                            </div>
+
+                            <div class="col-xs-2 bs-wizard-step disabled">
+                                <div class="progress"><div class="progress-bar"></div></div>
+                                <a class="bs-wizard-dot"></a>
+                                <div class="bs-wizard-info text-center">Visualizaci&oacute;n</div>
+                            </div>
+
+                            <div class="col-xs-2 bs-wizard-step disabled">
+                                <div class="progress"><div class="progress-bar"></div></div>
+                                <a class="bs-wizard-dot"></a>
+                                <div class="bs-wizard-info text-center">Resumen</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-4 pull-right botones">
+                        <span data-placement="right" id="volver" title="Volver a Atributo" data-original-title="Volver a Atributo" class="fa fa-arrow-left fa-2x light-blue cursor-pointer"></span>
+                        <span data-placement="right" id="btn-siguiente-filtros" title="Ir a Visualización" data-original-title="Ir a Visualización" class="fa fa-arrow-right fa-2x light-blue cursor-pointer"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Advertencia-->
+<div class="modal fade theme_new mensaje" id="ModalInfoMTFiltros" tabindex="-3" role="dialog" aria-labelledby="TituloInfoMTFiltros" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="TituloInfoMTFiltros">Titulo</h3>
+                <span aria-hidden="true" class="fa fa-close white fa-2x cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+            </div>
+            <div class="modal-body">
+                <div id="MensajeInfoMTFiltros" class="alert alert-dismissible" role="alert">
+                    <p id="DescripcionInfoMTFiltros">Descripcion de la informacion</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-xs-4 pull-right">
+                    <span id="btnAceptarInfoMTFiltros" aria-hidden="true" data-dismiss="modal" data-placement="right" title="Aceptar" data-original-title="Aceptar" class="fa fa-check-circle light-blue fa-3x cursor-pointer"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade theme_new mensaje" id="ModalInfo" tabindex="-3" role="dialog" aria-labelledby="TituloInfo" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog" style="margin: 0 auto;padding-top:200px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">Informaci&oacute;n de Filtros</h3>
+                <span aria-hidden="true" class="fa fa-close white fa-2x cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+            </div>
+            <div class="modal-body">
+                <div id="MensajeInfo" role="alert">
+                    <text id="txtConsulta" style="display:inline-block">Descripcion de la informacion</text>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/jquery.inputmask.js" type="text/javascript"></script>
+<script src="~/Scripts/jquery.inputmask.regex.extensions.js" type="text/javascript"></script>
+<script src="~/Scripts/jquery.inputmask.extensions.js" type="text/javascript"></script>
+<script src="~/Scripts/jquery.inputmask.numeric.extensions.js" type="text/javascript"></script>
+<script src="~/Scripts/jquery.inputmask.date.extensions.js" type="text/javascript"></script>
+<script src="~/Scripts/jquery.form.js"></script>
+<script src="~/Scripts/MapasTematicos/filtros.js"></script>

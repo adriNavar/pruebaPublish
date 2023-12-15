@@ -1,0 +1,123 @@
+﻿.certificados-datos {
+    padding: 0px;
+    margin-top: 0px;
+    margin-bottom: 0;
+}
+
+    .certificados-datos .panel-body:not(.panel-body-line) {
+        padding: 5px 15px !important;
+    }
+
+.panel-body-line {
+    border: solid rgb(53, 149, 180) !important;
+    border-width: 0px 0px 0px 2px !important;
+    margin-left: 9px;
+    padding:0 !important;
+}
+
+.circle {
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgb(53, 149, 180);
+    background-color: #fff;
+}
+
+    .circle.selected {
+        background-color: rgb(53, 149, 180);
+    }
+
+.circle-inside {
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    border: 2px solid #fff;
+}
+
+.line-vert {
+    content: '';
+    width: 0;
+    position: relative;
+    border: 1px solid rgb(53, 149, 180);
+    top: 16px;
+    height: 6px;
+    left: 5px;
+}
+
+.margin-bottom {
+    margin-bottom: 10px;
+}
+
+.nav-controls {
+  margin-top: 30px;
+  margin-bottom: 30px
+}
+
+.col-bottom {
+    float: none;
+    display: table-cell;
+    vertical-align: bottom;
+}
+
+table caption {
+    color: #333;
+    font-weight: 700;
+}
+
+.controls-top {
+    top: 36px;
+}
+
+#message-error {
+    margin-top: 150px;
+    margin-left: 22%;
+    position: fixed;
+    z-index: 1000;
+    width: 55%;
+    box-shadow: 0px 0px 11px 0px #BBB9B9;
+    display: none;
+}
+
+/*bootstrap - customization*/
+
+div.dataTables_processing {
+    z-index: 1;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.fieldset-height {
+    height: 99px;
+}
+
+.row-margin-top {
+    margin-top: -14px;
+}
+
+fieldset.fieldset-border {
+    border: 1px groove #ddd !important;
+    padding: 0 1.4em 1.4em 1.4em !important;
+    margin: 0 0 1.5em 0 !important;
+    -webkit-box-shadow:  0px 0px 0px 0px #000;
+            box-shadow:  0px 0px 0px 0px #000;
+}
+
+legend.fieldset-border {
+    font-size: inherit; /*1.2em !important;*/
+    font-weight: 700; /*bold !important;*/
+    text-align: left !important;
+    width:auto;
+    padding:0 10px;
+    border-bottom:none;
+}
+
+.slider-container {
+    margin-top: 12px;
+}
+
+select option[disabled] {
+    display: none;
+}
+#accordionBusquedaCertificados .form-group {
+    margin: 7px 7px 0;
+}

@@ -1,0 +1,62 @@
+﻿@using GeoSit.Client.Web.Models
+@model ColeccionListaModels
+
+<div class="col-xs-7" style="padding:0;">
+    <div class="left-scrollable-panel">
+        <div class="panel-group accordion" id="accordion-colecciones">
+            <div id="colecciones-panel" class="panel-primary">
+                <div class="opciones-coleccion">
+
+                </div>
+                @foreach (var coleccion in Model.Colecciones)
+                {
+                    var colId = coleccion.ColeccionId;
+                    bool classExpandColeccion = Model.Colecciones.Count == 1;
+                    var classModifColeccion = coleccion.Modificada ? "coleccion-modificada" : string.Empty;
+                    <div class="section-position cabecera-coleccion">
+                        <div class='panel-heading bg-primary' id='headingColecciones_@colId' data-nombre-coleccion='@coleccion.Nombre' data-id-coleccion-value=@colId>
+                            <a data-toggle='collapse' data-parent='#accordion-colecciones' href='#collapseColecciones_@colId'
+                               aria-controls='collapseColecciones_@colId'>
+                                <div class='panel-title @classModifColeccion'>
+                                    <span name="check-coleccion" class="fa fa-square" style="font-size:large; margin: 4px;">
+                                        <input type="hidden" value="@coleccion.Nombre">
+                                    </span>
+                                    <span id="titulo-coleccion" data-toggle="tooltip" title="@coleccion.Nombre (@coleccion.Cantidad)">@coleccion.Nombre (@coleccion.Cantidad)</span><br />
+                                    <span id="fecha" style="font-size:12px;padding-left:40px;">@coleccion.FechaModificacion</span>
+                                    <div class="opciones-coleccion">
+                                        <span class="fa fa-map-marker cursor-pointer" data-ver-coleccion="@colId"></span>
+                                        <span class="fa fa-hand-pointer-o cursor-pointer" data-seleccionar-coleccion="@colId"></span>
+                                        <span class="fa fa-minus-circle cursor-pointer" onclick="borrarColeccion(this, event)"></span>
+                                        <span class="fa fa-ellipsis-h cursor-pointer" tabindex="0" data-toggle="popover" data-trigger="click"></span>
+                                        <span class="fa fa-chevron-down"></span>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                        <div id='collapseColecciones_@colId' class='panel-collapse collapse @(classExpandColeccion ? "in" : string.Empty)'>
+                            <input id="hiddenColId" type="hidden" value="@coleccion.ColeccionId" />
+                            <div id="componenteContent_@colId"></div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-xs-5" style="padding:0;">
+    @{Html.RenderPartial("~/Views/DetalleObjeto/Detalle.cshtml", new DetalleObjetoConfig("coleccion"));}
+</div>
+
+<div id="coleccion-popover-content" class="content hide">
+    <ul class="coleccion-menu">
+        <li class="accion-copiar"><a href="#" onclick="copiarColeccion(this, event)">Copiar</a></li>
+        <li class="accion-renombrar"><a href="#" onclick="renombrarColeccion(this, event)">Renombrar</a></li>
+        <li class="accion-agregar"><a href="#" onclick="agregarObjetosSeleccionadosColeccion(this, event)">Agregar</a></li>
+        <li class="accion-exportar-excel"><a href="#" onclick="exportarExcel(this, event)">Exportar</a></li>
+        <li class="accion-limpiar"><a href="#" onclick="limpiarColeccion(this, event)">Limpiar</a></li>
+        <li class="accion-ploteo"><a href="#" onclick="ploteoColeccion(this,event)">Ploteo</a></li>
+        <li class="accion-ruteo"><a href="#" onclick="ruteoColeccion(this, event)">Ruteo</a></li>
+        <li class="accion-exportar"><a href="#" onclick="exportarColeccion(this, event)">Compartir</a></li>
+        <li class="accion-exportar"><a href="#" onclick="eliminarObjetosSeleccionados(this, event)">Eliminar objs.</a></li>
+    </ul>
+</div>

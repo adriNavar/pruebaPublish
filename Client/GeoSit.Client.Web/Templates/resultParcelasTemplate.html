@@ -1,0 +1,19 @@
+﻿<div class='srow parcelas'>
+    <div class="controls fa pull-right">
+        <span class="opcion fa-map-marker tooltips" directiva data-placement="bottom" title="Ver en mapa" ng-click="verEnMapa($event,parcela,true)" data-ng-show="tieneGrafico"></span>
+        <span class="opcion fa-hand-pointer-o tooltips" data-placement="bottom" title="Seleccionar" ng-click="verEnMapa($event,parcela,false)" data-ng-show="tieneGrafico"></span>
+        <span class="opcion fa-file-excel-o tooltips" data-placement="bottom" title="Exportar a Excel" ng-click="exportarObjetoExcel($event)"></span>
+        <span class="opcion fa-file-pdf-o tooltips" data-placement="bottom" title="Reporte Parcelario" data-ng-click="getInformeParcelario()" ng-show="allowInformeParcelario"></span>
+        <span class="opcion fa-th tooltips" data-placement="bottom" title="Mantenimiento Parcelario" data-ng-click="abrir('MantenimientoParcelario/Test', parcela.id)" data-ng-show="allowMantenedor"></span>
+    </div>
+    <div class="roundChkBox parcelas">
+        <input type="checkbox" data-name="{{parcela.id}}" data-componente="{{parcela.tipo}}" data-componente-ploteable="true" id="{{chkboxid}}" ng-click="selectedChanged()" ng-model="parcela.selected" />
+        <label for="{{chkboxid}}"></label>
+    </div>
+    <div ng-click="showAtributos()">
+        <p class='text-primary'>
+            <span data-ng-bind-html="parcela.partida_nomenclatura | highlight:pattern:true"></span>
+        </p>
+        <p ng-if="tieneDescripcion"><span data-ng-bind-html="parcela.descripcion | highlight:pattern:true"></span></p>
+    </div>
+</div>

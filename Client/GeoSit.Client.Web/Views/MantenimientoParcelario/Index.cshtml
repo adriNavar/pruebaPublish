@@ -1,0 +1,1268 @@
+﻿@using GeoSit.Client.Web.Controllers;
+@using System.Text.RegularExpressions;
+@using System.Xml;
+
+@model GeoSit.Data.BusinessEntities.Inmuebles.Parcela
+@helper FormatNomenclatura(GeoSit.Data.BusinessEntities.Inmuebles.Nomenclatura nomenc)
+{
+    var grupos = new List<string>();
+    Dictionary<string, string> _nombres = nomenc.GetNomenclaturas();
+    foreach (var item in _nombres)
+    {
+        grupos.Add(string.Format("{0}:&nbsp;{1}", Regex.Replace(item.Key, item.Key, string.Format("<span class='text-muted'>{0}</span>", "$0")),
+                    Regex.Replace(item.Value, item.Value, string.Format("<span class='text-primary'>{0}</span>", "$0"))));
+    }
+
+    string nomenclatura = string.Join("<span class='text-muted'>&nbsp;&nbsp;&nbsp;</span>", grupos);
+    @Html.Raw(nomenclatura);
+
+}
+@helper GetNodoAtributo(string xmlatributo, string descripcion)
+{
+    if (xmlatributo == null)
+    {
+        return;
+    }
+    var doc = new XmlDocument();
+    doc.LoadXml(xmlatributo);
+    var node = doc.SelectSingleNode("//datos/" + descripcion + "/text()");
+    if (node != null)
+    {
+        @Html.Raw(node.Value)
+    }
+}
+@helper FormatSuperficiesRelevadaRegistrada(decimal superficie)
+{
+    if (Model.TipoParcelaID == 1)
+    {
+        @Html.Raw(superficie.ToString("0.00"))
+    }
+    else
+    {
+        @Html.Raw(superficie.ToString("0.0000"))
+    }
+}
+@helper FormatSuperficies(decimal superficie)
+{
+    @Html.Raw(superficie.ToString("F"))
+}
+@{
+    ViewBag.Title = "Mantenimiento Parcelario";
+    var superficies = ViewData["Superficies"] as GeoSit.Data.BusinessEntities.Inmuebles.ParcelaSuperficies ?? new GeoSit.Data.BusinessEntities.Inmuebles.ParcelaSuperficies();
+
+}
+
+<link href="~/Content/mantenimientoParcelario.css" rel="stylesheet" />
+
+<div class="modal fade theme_new" id="modal-window-mantenedor" tabindex="-1" data-backdrop="static" role="dialog" aria-labelledby="modal-windowLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="scroll-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="lblModal">@ViewBag.Title</h3>
+                    <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+                </div>
+                <div class="modal-body mantenedor-body">
+                    <div class="body-header">
+                        @if ((bool)ViewData["VisualizarPartidas"] && (bool)ViewData["TienePartidas"])
+                        {
+                            <h2 id="codigo">@Model.UnidadesTributarias.OrderBy(ut => ut.TipoUnidadTributariaID).OrderBy(ut => ut.TipoUnidadTributariaID).First().CodigoProvincial</h2>
+                         
+                        }
+                        @if ((bool)ViewData["VisualizarNomenclaturas"] && (bool)ViewData["TieneNomenclaturas"])
+                        {
+                            <h3>@FormatNomenclatura(Model.Nomenclaturas.OrderByDescending(n => n.FechaAlta.GetValueOrDefault()).First())</h3>
+                        }
+                    </div>
+                    <div class="body-content">
+                        <div class="panel-group accordion" id="accordion-mantenedor">
+                            <div class="section-position">
+                                <div class="panel-heading bg-primary main-heading" id="headingParcela">
+                                    <a data-toggle="collapse" data-parent='#accordion-mantenedor' href="#collapseParcela" aria-expanded="true"
+                                       aria-controls="collapseParcela">
+                                        <div class='panel-title'>
+                                            Parcela
+                                            <i class="fa"></i>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class="panel-collapse collapse in main-collapse" id="collapseParcela" aria-labelledby="headingParcela">
+                                    <div class="panel-body">
+                                        <ul class="nav nav-tabs">
+                                            <li class="active">
+                                                <a href="#parcela-general" data-toggle="tab">
+                                                    <span aria-hidden="true" class="fa fa-server fa-2x tooltips" data-placement="bottom" data-original-title="Datos Generales"></span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#parcela-superficies" data-toggle="tab">
+                                                    <span aria-hidden="true" class="fa fa-object-group fa-2x tooltips" data-placement="bottom" data-original-title="Superficies y Medidas"></span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#parcela-observaciones" data-toggle="tab">
+                                                    <span aria-hidden="true" class="fa fa-pencil-square-o fa-2x tooltips" data-placement="bottom" data-original-title="Observaciones"></span>
+                                                </a>
+                                            </li>
+                                            <li>
+                                                <a href="#parcela-documentos" data-toggle="tab">
+                                                    <span aria-hidden="true" class="fa fa-file fa-2x tooltips" data-placement="bottom" data-original-title="Documentos"></span>
+                                                </a>
+                                            </li>
+                                            @if ((bool)ViewData["VisualizarZonificacion"])
+                                            {
+                                                <li>
+                                                    <a href="#parcela-zonificacion" data-toggle="tab">
+                                                        <span aria-hidden="true" class="fa fa-globe fa-2x tooltips" data-placement="bottom" data-original-title="Zonificación"></span>
+                                                    </a>
+                                                </li>
+                                            }
+                                            @if ((bool)ViewData["VisualizarValuaciones"])
+                                            {
+                                                <li>
+                                                    <a href="#parcela-valuaciones" data-toggle="tab">
+                                                        <span aria-hidden="true" class="fa fa-money fa-2x tooltips" data-placement="bottom" data-original-title="Valuación"></span>
+                                                    </a>
+                                                </li>
+                                            }
+                                        </ul>
+                                        <form id="parcela-form">
+                                            <div class="tab-content tab-content-parcela">
+                                                <div id="parcela-general" class="tab-pane active">
+                                                    <div class="panel-group">
+                                                        <div class="panel panel-default remove-shadow">
+                                                            <div class="panel-title">General</div>
+                                                            <div class="panel-body">
+                                                                <div class="col-xs-12">
+                                                                    <div class="form-horizontal">
+                                                                        <div class="form-group">
+                                                                            <label class="control-label col-xs-4 text-right">Tipo</label>
+                                                                            <div class="col-xs-8">
+                                                                                @Html.DropDownListFor(model => model.TipoParcelaID, (List<SelectListItem>)ViewData["TiposParcela"], new { @class = "form-control", id = "cboTipo", @disabled = "disabled" })
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label class="control-label col-xs-4 text-right">Clase</label>
+                                                                            <div class="col-xs-8">
+                                                                                @Html.DropDownListFor(model => model.ClaseParcelaID, (List<SelectListItem>)ViewData["ClasesParcela"], new { @class = "form-control", id = "cboClase", @disabled = "disabled", data_editable = "disabled" })
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label class="control-label col-xs-4 text-right">Estado</label>
+                                                                            <div class="col-xs-8">
+                                                                                @Html.DropDownListFor(model => model.EstadoParcelaID, (List<SelectListItem>)ViewData["EstadosParcela"], new { @class = "form-control", id = "cboEstado", @disabled = "disabled", data_editable = "disabled" })
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label class="control-label col-xs-4 text-right">Superficie</label>
+                                                                            <div class="col-xs-8">
+                                                                                @{
+                                                                                    string formatoSuperficie = Model.TipoParcelaID == 1 ? "{0:0.00}" : "{0:0.0000}";
+
+                                                                                    if (!SeguridadController.ExisteFuncion(@Resources.Seguridad.ModificarSuperficieVigencia))
+                                                                                    {
+                                                                                        @Html.TextBoxFor(m => m.Superficie, formatoSuperficie, new { @class = "form-control", @readonly = "readonly" })
+                                                                                    }
+                                                                                    else
+                                                                                    {
+                                                                                        @Html.TextBoxFor(m => m.Superficie, formatoSuperficie, new { @class = "form-control", data_editable = "readonly", @readonly = "readonly" })
+                                                                                    }
+                                                                                }
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label class="control-label col-xs-4 text-right">ID Plano</label>
+                                                                            <div class="col-xs-8">
+                                                                                @Html.TextBoxFor(m => m.PlanoId, new { @class = "form-control", data_editable = "readonly", @readonly = "readonly" })
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label class="control-label col-xs-4 text-right">Exp. de Creaci&oacute;n</label>
+                                                                            <div class="col-xs-8">
+                                                                                @Html.TextBoxFor(m => m.ExpedienteAlta, new { @class = "form-control", data_editable = "readonly", @readonly = "readonly" })
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label class="control-label col-xs-4 text-right">Fecha de Creaci&oacute;n</label>
+                                                                            <div class="col-xs-8">
+                                                                                @Html.TextBoxFor(m => m.FechaAltaExpediente, new { @type = "text", @class = "form-control parcela-fecha", @Value = (Model.FechaAltaExpediente ?? Model.FechaAlta).ToString("dd/MM/yyyy"), @readonly = "readonly" })
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label class="control-label col-xs-4 text-right">Exp. de Baja</label>
+                                                                            <div class="col-xs-8">
+                                                                                @Html.TextBoxFor(m => m.ExpedienteBaja, new { @type = "text", @class = "form-control", data_editable = "readonly", @readonly = "readonly" })
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label class="control-label col-xs-4 text-right">Fecha de Baja</label>
+                                                                            <div class="col-xs-8">
+                                                                                @Html.TextBoxFor(m => m.FechaBajaExpediente, new { @type = "text", @class = "form-control parcela-fecha", data_editable = "readonly", @readonly = "readonly", @Value = Model.FechaBajaExpediente.HasValue ? Model.FechaBajaExpediente.Value.ToString("dd/MM/yyyy") : string.Empty })
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label class="control-label col-xs-4 text-right">Afectaci&oacute;n a PH</label>
+                                                                            <div class="col-xs-8">
+                                                                                <div class="custom-toggle">
+                                                                                    @{
+                                                                                        string AfectaPh = GetNodoAtributo(Model.Atributos, "AfectaPH").ToString() == "true" ? "1" : "0";
+                                                                                    }
+                                                                                    <input type="hidden" id="afecta-ph" value="@AfectaPh" />
+                                                                                    <a data-checked="@AfectaPh" class="disabled" href="javascript:void(0);" data-editable="clase"><i class="fa"></i></a>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label class="control-label col-xs-4 text-right">Ubicaci&oacute;n</label>
+                                                                            <div class="col-xs-8">
+                                                                                @Html.TextBox("txtCoordenadas", Model.Coordenadas, new { @class = "form-control", @readonly = "readonly" })
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        @if ((bool)ViewData["VisualizarDesignaciones"])
+                                                        {
+                                                            <div class="panel panel-default remove-shadow panel-parcela-designaciones">
+                                                                <div class="panel-title">
+                                                                    Designaciones
+                                                                </div>
+                                                                <div class="panel-body">
+                                                                    <div class="col-xs-12">
+                                                                        <div class="tabla-sin-botones">
+                                                                            <table id="designaciones" class="table table-striped table-bordered table-responsive">
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        <th>Designador</th>
+                                                                                        <th>Designaci&oacute;n</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tfoot></tfoot>
+                                                                                <tbody></tbody>
+                                                                            </table>
+                                                                            @if (SeguridadController.ExisteFuncion(@Resources.Seguridad.AltaDesignaciones) ||
+                                                                                 SeguridadController.ExisteFuncion(@Resources.Seguridad.BajaDesignaciones) ||
+                                                                                 SeguridadController.ExisteFuncion(@Resources.Seguridad.ModificarDesignaciones))
+                                                                            {
+                                                                                <dl>
+                                                                                    @if (SeguridadController.ExisteFuncion(@Resources.Seguridad.AltaDesignaciones))
+                                                                                    {
+                                                                                        <dt><span id="designacion-insert" class="fa fa-plus-circle fa-lg black cursor-pointer" data-editable aria-hidden="true"></span></dt>
+                                                                                    }
+                                                                                    @if (SeguridadController.ExisteFuncion(@Resources.Seguridad.BajaDesignaciones))
+                                                                                    {
+                                                                                        <dt><span id="designacion-delete" class="fa fa-minus-circle fa-lg black cursor-pointer disabled" data-editable aria-hidden="true"></span></dt>
+                                                                                    }
+                                                                                    @if (SeguridadController.ExisteFuncion(@Resources.Seguridad.ModificarDesignaciones))
+                                                                                    {
+                                                                                        <dt><span id="designacion-edit" class="fa fa-pencil fa-lg black cursor-pointer disabled" data-editable aria-hidden="true"></span></dt>
+                                                                                    }
+                                                                                </dl>
+                                                                            }
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        }
+                                                        @if ((bool)ViewData["VisualizarNomenclaturas"])
+                                                        {
+                                                            <div class="panel panel-default remove-shadow panel-nomenclaturas">
+                                                                <div class="panel-title">Nomenclaturas</div>
+                                                                <div class="panel-body">
+                                                                    <div class="col-xs-12">
+                                                                        <div class="tabla-sin-botones">
+                                                                            <table id="nomenclaturas" class="table table-striped table-bordered table-responsive">
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        <th>Tipo</th>
+                                                                                        <th>Nomenclatura</th>
+                                                                                        <th>Fecha</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody></tbody>
+                                                                            </table>
+                                                                            @if (SeguridadController.ExisteFuncion(@Resources.Seguridad.AltaNomenclatura) ||
+                                                                                 SeguridadController.ExisteFuncion(@Resources.Seguridad.BajaNomenclatura) ||
+                                                                                 SeguridadController.ExisteFuncion(@Resources.Seguridad.ModificarNomenclatura))
+                                                                            {
+                                                                                <dl>
+                                                                                    @if (SeguridadController.ExisteFuncion(@Resources.Seguridad.AltaNomenclatura))
+                                                                                    {
+                                                                                        <dt><span id="nomenclatura-insert" class="fa fa-plus-circle fa-lg black cursor-pointer" data-editable aria-hidden="true"></span></dt>
+                                                                                    }
+                                                                                    @if (SeguridadController.ExisteFuncion(@Resources.Seguridad.BajaNomenclatura))
+                                                                                    {
+                                                                                        <dt><span id="nomenclatura-delete" class="fa fa-minus-circle fa-lg black cursor-pointer disabled" data-editable aria-hidden="true"></span></dt>
+                                                                                    }
+                                                                                    @if (SeguridadController.ExisteFuncion(@Resources.Seguridad.ModificarNomenclatura))
+                                                                                    {
+                                                                                        <dt><span id="nomenclatura-edit" class="fa fa-pencil fa-lg black cursor-pointer disabled" data-editable aria-hidden="true"></span></dt>
+                                                                                    }
+                                                                                </dl>
+                                                                            }
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        }
+                                                        <div class="panel panel-default remove-shadow panel-parcelas-origen">
+                                                            <div class="panel-title">Parcelas Origen</div>
+                                                            <div class="panel-body">
+                                                                <div class="col-xs-12">
+                                                                    <div class="tabla-sin-botones">
+                                                                        <table id="parcelas-origen" class="table table-striped table-bordered table-responsive">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>Tipo</th>
+                                                                                    <th>Partida</th>
+                                                                                    <th>Operaci&oacute;n</th>
+                                                                                    <th>Fecha</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody></tbody>
+                                                                        </table>
+                                                                        @if (true || SeguridadController.ExisteFuncion(@Resources.Seguridad.MPAltaParcelasOrigen) ||
+                                                                                 SeguridadController.ExisteFuncion(@Resources.Seguridad.MPBajaParcelasOrigen) ||
+                                                                                 SeguridadController.ExisteFuncion(@Resources.Seguridad.MPModificacionParcelasOrigen))
+                                                                        {
+                                                                            <dl>
+                                                                                @if (true || SeguridadController.ExisteFuncion(@Resources.Seguridad.MPAltaParcelasOrigen))
+                                                                                {
+                                                                                    <dt><span id="parcela-origen-insert" class="fa fa-plus-circle fa-lg black cursor-pointer" data-editable aria-hidden="true"></span></dt>
+                                                                                }
+                                                                                @if (true || SeguridadController.ExisteFuncion(@Resources.Seguridad.MPBajaParcelasOrigen))
+                                                                                {
+                                                                                    <dt><span id="parcela-origen-delete" class="fa fa-minus-circle fa-lg black cursor-pointer disabled" data-editable aria-hidden="true"></span></dt>
+                                                                                }
+                                                                                @if (true || SeguridadController.ExisteFuncion(@Resources.Seguridad.MPModificacionParcelasOrigen))
+                                                                                {
+                                                                                    <dt><span id="parcela-origen-edit" class="fa fa-pencil fa-lg black cursor-pointer disabled" data-editable aria-hidden="true"></span></dt>
+                                                                                }
+                                                                            </dl>
+                                                                        }
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div id="parcela-superficies" class="tab-pane">
+                                                    <div class="panel-group">
+                                                        <div class="panel panel-default remove-shadow">
+                                                            <div class="panel-body">
+                                                                <div class="col-xs-6 text-center" style="padding-bottom:5px;">
+                                                                    <h4>Registrada</h4>
+                                                                </div>
+                                                                <div class="col-xs-6 text-center" style="padding-bottom:5px;">
+                                                                    <h4>Relevada</h4>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="panel panel-default remove-shadow">
+                                                            <div class="panel-title">Tierra</div>
+                                                            <div class="panel-body">
+                                                                <div class="row" style="margin-top:5px;">
+                                                                    <div class="col-xs-6">
+                                                                        <div class="tabla-sin-botones">
+                                                                            <table id="superficies-tierra-dgc" class="table table-responsive">
+                                                                                <tbody>
+                                                                                    <tr>
+                                                                                        <td>Registrada</td>
+                                                                                        <td class="number" id="superficie-tierra-registrada">@FormatSuperficiesRelevadaRegistrada(Model.Superficie)</td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-xs-6">
+                                                                        <div class="tabla-sin-botones">
+                                                                            <table id="superficies-tierra-relevamiento" class="table table-responsive">
+                                                                                <tbody>
+                                                                                    <tr>
+                                                                                        <td>Relevada</td>
+                                                                                        <td class="number">@FormatSuperficiesRelevadaRegistrada(superficies.RelevamientoParcela.Relevada)</td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="panel-footer" style="background-color: transparent !important;padding: 0 15px 10px;">
+                                                                <span>Las medidas est&aacute;n expresadas en <strong>@(Html.Raw(Model.TipoParcelaID == 1  ? "m<sup>2</sup>" : "ha"))</strong></span>
+                                                            </div>
+                                                        </div>
+                                                        <div class="panel panel-default remove-shadow">
+                                                            <div class="panel-title">Mejoras</div>
+                                                            <div class="panel-body">
+                                                                <div class="row" style="margin: 10px 0 0">
+                                                                    <div class="col-xs-12 text-center" style="padding:0;">
+                                                                        <span class="subtitle">Construcciones</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-xs-6">
+                                                                        <div class="tabla-sin-botones">
+                                                                            <table id="superficies-construcciones-dgc" class="table table-responsive remove-margin">
+                                                                                <tbody>
+                                                                                    <tr>
+                                                                                        <td>Cubierta</td>
+                                                                                        <td class="number">@FormatSuperficies(superficies.DGCMejorasConstrucciones.Cubierta)</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>Negocio</td>
+                                                                                        <td class="number">@FormatSuperficies(superficies.DGCMejorasConstrucciones.Negocio)</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>Semicubierta</td>
+                                                                                        <td class="number">@FormatSuperficies(superficies.DGCMejorasConstrucciones.Semicubierta)</td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-xs-6">
+                                                                        <div class="tabla-sin-botones">
+                                                                            <table id="superficies-construcciones-relevamiento" class="table table-responsive remove-margin">
+                                                                                <tbody>
+                                                                                    <tr>
+                                                                                        <td>Cubierta</td>
+                                                                                        <td class="number">@FormatSuperficies(superficies.RelevamientoMejorasConstrucciones.Cubierta)</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>Galp&oacute;n</td>
+                                                                                        <td class="number">@FormatSuperficies(superficies.RelevamientoMejorasConstrucciones.Galpon)</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>Semicubierta</td>
+                                                                                        <td class="number">@FormatSuperficies(superficies.RelevamientoMejorasConstrucciones.Semicubierta)</td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-xs-6">
+                                                                        <div class="tabla-sin-botones">
+                                                                            <table id="total-construcciones-dgc" class="table table-responsive remove-margin totalizador">
+                                                                                <tbody>
+                                                                                    <tr>
+                                                                                        <td>Total</td>
+                                                                                        <td class="number">@FormatSuperficies(superficies.DGCMejorasConstrucciones.Total)</td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-xs-6">
+                                                                        <div class="tabla-sin-botones">
+                                                                            <table id="total-construcciones-relevamiento" class="table table-responsive remove-margin totalizador">
+                                                                                <tbody>
+                                                                                    <tr>
+                                                                                        <td>Total</td>
+                                                                                        <td class="number">@FormatSuperficies(superficies.RelevamientoMejorasConstrucciones.Total)</td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row" style="margin: 15px 0 0">
+                                                                    <div class="col-xs-12 text-center" style="padding:0;">
+                                                                        <span class="subtitle">Otras Mejoras</span>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-xs-6">
+                                                                        <div class="tabla-sin-botones">
+                                                                            <table id="superficies-otrascar-dgc" class="table table-responsive remove-margin">
+                                                                                <tbody>
+                                                                                    <tr>
+                                                                                        <td>Piscina</td>
+                                                                                        <td class="number">@FormatSuperficies(superficies.DGCMejorasOtras.Piscina)</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>Pavimento</td>
+                                                                                        <td class="number">@FormatSuperficies(superficies.DGCMejorasOtras.Pavimento)</td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-xs-6">
+                                                                        <div class="tabla-sin-botones">
+                                                                            <table id="superficies-otrascar-relevamiento" class="table table-responsive remove-margin">
+                                                                                <tbody>
+                                                                                    <tr>
+                                                                                        <td>Piscina</td>
+                                                                                        <td class="number">@FormatSuperficies(superficies.RelevamientoMejorasOtras.Piscina)</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>Deportiva</td>
+                                                                                        <td class="number">@FormatSuperficies(superficies.RelevamientoMejorasOtras.Deportiva)</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>En contrucci&oacute;n</td>
+                                                                                        <td class="number">@FormatSuperficies(superficies.RelevamientoMejorasOtras.Construccion)</td>
+                                                                                    </tr>
+                                                                                    <tr>
+                                                                                        <td>Precaria</td>
+                                                                                        <td class="number">@FormatSuperficies(superficies.RelevamientoMejorasOtras.Precaria)</td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-xs-6">
+                                                                        <div class="tabla-sin-botones">
+                                                                            <table id="total-otrascar-dgc" class="table table-responsive remove-margin totalizador">
+                                                                                <tbody>
+                                                                                    <tr>
+                                                                                        <td>Total</td>
+                                                                                        <td class="number">@FormatSuperficies(superficies.DGCMejorasOtras.Total)</td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-xs-6">
+                                                                        <div class="tabla-sin-botones">
+                                                                            <table id="total-otrascar-relevamiento" class="table table-responsive remove-margin totalizador">
+                                                                                <tbody>
+                                                                                    <tr>
+                                                                                        <td>Total</td>
+                                                                                        <td class="number">@FormatSuperficies(superficies.RelevamientoMejorasOtras.Total)</td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="panel panel-default remove-shadow">
+                                                            <div class="panel-body">
+                                                                <div class="row">
+                                                                    <div class="col-xs-6">
+                                                                        <div class="tabla-sin-botones">
+                                                                            <table class="table table-responsive remove-margin totalizador">
+                                                                                <tbody>
+                                                                                    <tr>
+                                                                                        <td>Superficie Total</td>
+                                                                                        <td class="number">@FormatSuperficies(superficies.DGCMejorasOtras.Total + superficies.DGCMejorasConstrucciones.Total)</td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div class="col-xs-6">
+                                                                        <div class="tabla-sin-botones">
+                                                                            <table class="table table-responsive remove-margin totalizador">
+                                                                                <tbody>
+                                                                                    <tr>
+                                                                                        <td>Superficie Total</td>
+                                                                                        <td class="number">@FormatSuperficies(superficies.RelevamientoMejorasOtras.Total + superficies.RelevamientoMejorasConstrucciones.Total)</td>
+                                                                                    </tr>
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="panel-footer" style="background-color: transparent !important;padding: 0px 15px 10px;">
+                                                                <span>Las medidas est&aacute;n expresadas en <strong>m<sup>2</sup></strong></span>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div id="parcela-observaciones" class="tab-pane">
+                                                    <div class="panel-group">
+                                                        <div class="panel panel-default remove-shadow">
+                                                            <div class="panel-body">
+                                                                <div class="col-xs-12">
+                                                                    <textarea id="observacionesParcela" rows="6" class="form-control" data-editable="readonly" readonly="readonly">@GetNodoAtributo(Model.Atributos, "Observacion")</textarea>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div id="parcela-documentos" class="tab-pane">
+                                                    <div class="panel-group">
+                                                        <div class="panel panel-default remove-shadow panel-parcela-documentos">
+                                                            <div class="panel-body">
+                                                                <div class="col-xs-12">
+                                                                    <div class="tabla-con-botones">
+                                                                        <table id="tablaParcelaDocumentos" class="table table-striped table-bordered table-responsive">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>Tipo</th>
+                                                                                    <th>Nombre</th>
+                                                                                    <th>Fecha Alta</th>
+                                                                                    <th>Descripci&oacute;n</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody></tbody>
+                                                                        </table>
+                                                                        <dl class="has-perma-buttons">
+                                                                            @if (SeguridadController.ExisteFuncion(@Resources.Seguridad.AltaDocumentosParcela))
+                                                                            {
+                                                                                <dt><span id="documento-insert" class="fa fa-plus-circle fa-lg black cursor-pointer" data-editable aria-hidden="true"></span></dt>
+                                                                            }
+                                                                            @if (SeguridadController.ExisteFuncion(@Resources.Seguridad.BajaDocumentosParcela))
+                                                                            {
+                                                                                <dt><span id="documento-delete" class="fa fa-minus-circle fa-lg black cursor-pointer disabled" data-editable aria-hidden="true"></span></dt>
+                                                                            }
+                                                                            @if (SeguridadController.ExisteFuncion(@Resources.Seguridad.ModificarDocumentosParcela))
+                                                                            {
+                                                                                <dt><span id="documento-edit" class="fa fa-pencil fa-lg black cursor-pointer disabled" data-editable aria-hidden="true"></span></dt>
+                                                                            }
+                                                                            <dt><span id="documento-view" class="fa fa-eye fa-lg black cursor-pointer disabled" aria-hidden="true"></span></dt>
+                                                                        </dl>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                @if ((bool)ViewData["VisualizarZonificacion"])
+                                                {
+                                                    <div id="parcela-zonificacion" class="tab-pane">
+                                                        <div class="panel-group">
+                                                            <div class="panel panel-default remove-shadow">
+                                                                <div class="panel-body">
+                                                                    <div class="col-xs-12">
+                                                                        <div class="form-horizontal">
+                                                                            <div class="form-group">
+                                                                                <label class="control-label col-xs-4 text-right">C&oacute;digo de Zona</label>
+                                                                                @if (Model.Zonificacion != null)
+                                                                                {
+                                                                                    <label class="control-label col-xs-8">@Model.Zonificacion.CodigoZona</label>
+                                                                                }
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label class="control-label col-xs-4 text-right">Nombre de Zona</label>
+                                                                                @if (Model.Zonificacion != null)
+                                                                                {
+                                                                                    <label class="control-label col-xs-8">@Model.Zonificacion.NombreZona</label>
+                                                                                }
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="panel panel-default remove-shadow panel-atributos-zonificacion">
+                                                                <div class="panel-body">
+                                                                    <div class="col-xs-12">
+                                                                        <div class="tabla-sin-botones">
+                                                                            <table id="atributosZonificacion" class="table table-striped table-bordered table-responsive">
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        <th>Atributo</th>
+                                                                                        <th>Valor</th>
+                                                                                        <th>UM</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody></tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                }
+                                                @if ((bool)ViewData["VisualizarValuaciones"])
+                                                {
+                                                    <div id="parcela-valuaciones" class="tab-pane">
+                                                        <div class="panel-group">
+                                                            <div class="panel panel-default remove-shadow panel-parcela-valuacion">
+                                                                <div class="panel-body">
+                                                                    <div class="col-xs-12">
+                                                                        <div class="form-horizontal">
+                                                                            <div class="form-group">
+                                                                                <label class="control-label col-xs-4 text-right">Valor de Tierra</label>
+                                                                                <div class="col-xs-8">
+                                                                                    <label id="valor-tierra" readonly="readonly" class="form-control"></label>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label class="control-label col-xs-4 text-right">Vigencia Desde</label>
+                                                                                <div class="col-xs-8">
+                                                                                    <label id="vigencia" readonly="readonly" class="form-control"></label>
+                                                                                </div>
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label class="control-label col-xs-4 text-right">Decretos Aplicados</label>
+                                                                                <div class="col-xs-8">
+                                                                                    <label id="decretos" readonly="readonly" class="form-control"></label>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    @if (SeguridadController.ExisteFuncion(@Resources.Seguridad.CertificadoValuatorio))
+                                                                    {
+                                                                        <div class="col-xs-4 pull-right text-right">
+                                                                            <span id="btnImprimirInformeValuatiorio" aria-hidden="true" data-placement="right" title="Imprimir" data-original-title="Imprimir" class="fa fa-print fa-2x black cursor-pointer"></span>
+                                                                        </div>
+                                                                    }
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                }
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="section-position">
+                                <div class="panel-heading bg-primary main-heading" id="headingUnidadTributaria">
+                                    <a data-toggle="collapse" data-parent='#accordion-mantenedor' href="#collapseUnidadTributaria" aria-expanded="true"
+                                       aria-controls="collapseUnidadTributaria">
+                                        <div class='panel-title'>
+                                            Unidades Tributarias
+                                            <i class="fa"></i>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div class='panel-collapse collapse in main-collapse' id="collapseUnidadTributaria" aria-labelledby="headingUnidadTributaria">
+                                    <div class="panel-body">
+                                        <div class="panel-unidades-tributarias">
+                                            <div class="@(SeguridadController.ExisteFuncion(@Resources.Seguridad.InformeTributario) ? "tabla-con-botones":"tabla-sin-botones")">
+                                                <table id="unidadesTributarias" class="table table-striped table-bordered table-responsive">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>Partida</th>
+                                                            <th>Tipo</th>
+                                                            <th>Piso</th>
+                                                            <th>Depto</th>
+                                                            <th>%</th>
+                                                            <th>Fecha Alta</th>
+                                                            <th>Fecha Baja</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>
+                                                @if (SeguridadController.ExisteFuncion(@Resources.Seguridad.AltaMantenedorUnidadTributaria) ||
+                                                    SeguridadController.ExisteFuncion(@Resources.Seguridad.BajaMantenedorUnidadTributaria) ||
+                                                    SeguridadController.ExisteFuncion(@Resources.Seguridad.ModificarMantenedorUnidadTributaria) ||
+                                                    SeguridadController.ExisteFuncion(@Resources.Seguridad.DeclaracionesJuradas) ||
+                                                    SeguridadController.ExisteFuncion(@Resources.Seguridad.InformeTributario))
+                                                {
+                                                    <dl class="@(SeguridadController.ExisteFuncion(@Resources.Seguridad.InformeTributario) ? "has-perma-buttons":"")">
+                                                        @if (SeguridadController.ExisteFuncion(@Resources.Seguridad.AltaMantenedorUnidadTributaria))
+                                                        {
+                                                            <dt><span id="ut-insert" class="fa fa-plus-circle fa-lg black cursor-pointer" data-editable aria-hidden="true"></span></dt>
+                                                        }
+                                                        @if (SeguridadController.ExisteFuncion(@Resources.Seguridad.BajaMantenedorUnidadTributaria))
+                                                        {
+                                                            <dt><span id="ut-delete" class="fa fa-minus-circle fa-lg black cursor-pointer disabled" data-editable aria-hidden="true"></span></dt>
+                                                        }
+                                                        @if (SeguridadController.ExisteFuncion(@Resources.Seguridad.ModificarMantenedorUnidadTributaria))
+                                                        {
+                                                            <dt><span id="ut-edit" class="fa fa-pencil fa-lg black cursor-pointer disabled" data-editable aria-hidden="true"></span></dt>
+                                                        }
+                                                        @if (SeguridadController.ExisteFuncion(@Resources.Seguridad.DeclaracionesJuradas))
+                                                        {
+                                                            <dt><a><span id="btnDDJJ" class="fa fa-file-text-o fa-lg black cursor-pointer" aria-hidden="true"></span></a></dt>
+                                                        }
+                                                        @if (SeguridadController.ExisteFuncion(@Resources.Seguridad.InformeTributario))
+                                                        {
+                                                            <dt><a><span id="ut-reporte" class="fa fa-print fa-lg black cursor-pointer" aria-hidden="true"></span></a></dt>
+                                                        }
+                                                        <dt><a><span title="Informe Histórico de Cambios" id="exportarHistoricoCambiosUT" class="fa fa-line-chart fa-lg black cursor-pointer" aria-hidden="true"></span></a></dt>
+                                                        @*<dt><span id="ut-interfaz-sistema" class="fa fa-plug fa-lg black cursor-pointer hidden" aria-hidden="true"></span></dt>*@
+                                                    </dl>
+                                                }
+                                            </div>
+                                        </div>
+                                        <ul class="nav nav-tabs">
+                                            @*<li class="active">
+                                                    <a href="#ut-domicilios" data-toggle="tab">
+                                                        <span aria-hidden="true" class="fa fa-home fa-2x tooltips" data-placement="bottom" data-original-title="Domicilios"></span>
+                                                    </a>
+                                                </li>*@
+                                            <li class="active">
+                                                <a href="#ut-dominios" data-toggle="tab">
+                                                    <span aria-hidden="true" class="fa fa-book fa-2x tooltips" data-placement="bottom" data-original-title="Dominios"></span>
+                                                </a>
+                                            </li>
+                                            @*<li>
+                                                    <a href="#ut-deudas" data-toggle="tab">
+                                                        <span aria-hidden="true" class="fa fa-calculator fa-2x tooltips" data-placement="bottom" data-original-title="Deudas"></span>
+                                                    </a>
+                                                </li>*@
+                                            <li>
+                                                <a href="#ut-documentos" data-toggle="tab">
+                                                    <span aria-hidden="true" class="fa fa-file fa-2x tooltips" data-placement="bottom" data-original-title="Documentos"></span>
+                                                </a>
+                                            </li>
+                                            @if ((bool)ViewData["VisualizarValuaciones"])
+                                            {
+                                                <li>
+                                                    <a href="#ut-valuacion" data-toggle="tab">
+                                                        <span aria-hidden="true" class="fa fa-money fa-2x tooltips" data-placement="bottom" data-original-title="Valuaciones"></span>
+                                                    </a>
+                                                </li>
+                                            }
+                                            <li>
+                                                <a href="#ut-observaciones" data-toggle="tab">
+                                                    <span aria-hidden="true" class="fa fa-pencil-square-o fa-2x tooltips" data-placement="bottom" data-original-title="Observaciones"></span>
+                                                </a>
+                                            </li>
+                                        </ul>
+                                        <div class="tab-content tab-content-ut">
+                                            @*<div id="ut-domicilios" class="tab-pane active">
+                                                    <div class="panel-group">
+                                                        <div class="panel panel-default remove-shadow panel-ut-domicilios">
+                                                            <div class="panel-title">Domicilios</div>
+                                                            <div class="panel-body">
+                                                                <div class="col-xs-12">
+                                                                    <div class="tabla-sin-botones">
+                                                                        <table id="tablaDomicilios" class="table table-striped table-bordered table-responsive">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>Tipo</th>
+                                                                                    <th>Domicilio</th>
+                                                                                    <th>C.P.</th>
+                                                                                    <th>Localidad</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody></tbody>
+                                                                        </table>
+                                                                        @if (SeguridadController.ExisteFuncion(@Resources.Seguridad.AltaDomicilio) ||
+                                                                             SeguridadController.ExisteFuncion(@Resources.Seguridad.BajaDomicilio) ||
+                                                                             SeguridadController.ExisteFuncion(@Resources.Seguridad.ModificarDomicilio))
+                                                                        {
+                                                                            <dl>
+                                                                                @if (SeguridadController.ExisteFuncion(@Resources.Seguridad.AltaDomicilio))
+                                                                                {
+                                                                                    <dt><span id="domicilio-insert" class="fa fa-plus-circle fa-lg black cursor-pointer" data-editable aria-hidden="true"></span></dt>
+                                                                                }
+                                                                                @if (SeguridadController.ExisteFuncion(@Resources.Seguridad.BajaDomicilio))
+                                                                                {
+                                                                                    <dt><span id="domicilio-delete" class="fa fa-minus-circle fa-lg black cursor-pointer disabled" data-editable aria-hidden="true"></span></dt>
+                                                                                }
+                                                                                @if (SeguridadController.ExisteFuncion(@Resources.Seguridad.ModificarDomicilio))
+                                                                                {
+                                                                                    <dt><span id="domicilio-edit" class="fa fa-pencil fa-lg black cursor-pointer disabled" data-editable aria-hidden="true"></span></dt>
+                                                                                }
+                                                                            </dl>
+                                                                        }
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="panel panel-default remove-shadow panel-ut-responsables-fiscales">
+                                                            <div class="panel-title">Responsables Fiscales</div>
+                                                            <div class="panel-body">
+                                                                <div class="col-xs-12">
+                                                                    <div class="tabla-sin-botones">
+                                                                        <table id="tablaResponsablesFiscales" class="table table-striped table-bordered table-responsive">
+                                                                            <thead>
+                                                                                <tr>
+                                                                                    <th>Tipo</th>
+                                                                                    <th>Nombre</th>
+                                                                                    <th>Domicilio</th>
+                                                                                </tr>
+                                                                            </thead>
+                                                                            <tbody></tbody>
+                                                                        </table>
+                                                                        @if (SeguridadController.ExisteFuncion(@Resources.Seguridad.AltaResponsableFiscal) ||
+                                                                             SeguridadController.ExisteFuncion(@Resources.Seguridad.BajaResponsableFiscal) ||
+                                                                             SeguridadController.ExisteFuncion(@Resources.Seguridad.ModificarResponsableFiscal))
+                                                                        {
+                                                                            <dl>
+                                                                                @if (SeguridadController.ExisteFuncion(@Resources.Seguridad.AltaResponsableFiscal))
+                                                                                {
+                                                                                    <dt><span id="responsable-insert" class="fa fa-plus-circle fa-lg black cursor-pointer" data-editable aria-hidden="true"></span></dt>
+                                                                                }
+                                                                                @if (SeguridadController.ExisteFuncion(@Resources.Seguridad.BajaResponsableFiscal))
+                                                                                {
+                                                                                    <dt><span id="responsable-delete" class="fa fa-minus-circle fa-lg black cursor-pointer disabled" data-editable aria-hidden="true"></span></dt>
+                                                                                }
+                                                                                @if (SeguridadController.ExisteFuncion(@Resources.Seguridad.ModificarResponsableFiscal))
+                                                                                {
+                                                                                    <dt><span id="responsable-edit" class="fa fa-pencil fa-lg black cursor-pointer disabled" data-editable aria-hidden="true"></span></dt>
+                                                                                }
+                                                                            </dl>
+                                                                        }
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>*@
+                                            <div id="ut-dominios" class="tab-pane active">
+                                                <div class="panel-group">
+                                                    <div class="panel panel-default remove-shadow panel-ut-dominios">
+                                                        <div class="panel-title">Dominios</div>
+                                                        <div class="panel-body">
+                                                            <div class="col-xs-12">
+                                                                <div class="tabla-sin-botones">
+                                                                    <table id="tablaDominios" class="table table-striped table-bordered table-responsive">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>Tipo</th>
+                                                                                <th>Inscripci&oacute;n</th>
+                                                                                <th>A&ntilde;o</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody></tbody>
+                                                                    </table>
+                                                                    @if (SeguridadController.ExisteFuncion(@Resources.Seguridad.AltaDominio) ||
+                                                                        SeguridadController.ExisteFuncion(@Resources.Seguridad.BajaDominio) ||
+                                                                        SeguridadController.ExisteFuncion(@Resources.Seguridad.ModificarDominio))
+                                                                    {
+                                                                        <dl>
+                                                                            @if (SeguridadController.ExisteFuncion(@Resources.Seguridad.AltaDominio))
+                                                                            {
+                                                                                <dt><span id="dominio-insert" class="fa fa-plus-circle fa-lg black cursor-pointer" data-editable aria-hidden="true"></span></dt>
+                                                                            }
+                                                                            @if (SeguridadController.ExisteFuncion(@Resources.Seguridad.BajaDominio))
+                                                                            {
+                                                                                <dt><span id="dominio-delete" class="fa fa-minus-circle fa-lg black cursor-pointer disabled" data-editable aria-hidden="true"></span></dt>
+                                                                            }
+                                                                            @if (SeguridadController.ExisteFuncion(@Resources.Seguridad.ModificarDominio))
+                                                                            {
+                                                                                <dt><span id="dominio-edit" class="fa fa-pencil fa-lg black cursor-pointer disabled" data-editable aria-hidden="true"></span></dt>
+                                                                            }
+                                                                        </dl>
+                                                                    }
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="panel panel-default remove-shadow panel-ut-titulares">
+                                                        <div class="panel-title">Titulares</div>
+                                                        <div class="panel-body">
+                                                            <div class="col-xs-12">
+                                                                <div class="tabla-sin-botones">
+                                                                    <table id="tablaTitulares" class="table table-striped table-bordered table-responsive">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>Nombre Completo</th>
+                                                                                <th>Tipo y Nro.</th>
+                                                                                <th>% Copro.</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody></tbody>
+                                                                    </table>
+                                                                    @if (SeguridadController.ExisteFuncion(@Resources.Seguridad.AltaTitular) ||
+                                                                        SeguridadController.ExisteFuncion(@Resources.Seguridad.BajaTitular) ||
+                                                                        SeguridadController.ExisteFuncion(@Resources.Seguridad.ModificarTitular))
+                                                                    {
+                                                                        <dl>
+                                                                            @if (SeguridadController.ExisteFuncion(@Resources.Seguridad.AltaTitular))
+                                                                            {
+                                                                                <dt><span id="titular-insert" class="fa fa-plus-circle fa-lg black cursor-pointer" data-editable aria-hidden="true"></span></dt>
+                                                                            }
+                                                                            @if (SeguridadController.ExisteFuncion(@Resources.Seguridad.BajaTitular))
+                                                                            {
+                                                                                <dt><span id="titular-delete" class="fa fa-minus-circle fa-lg black cursor-pointer disabled" data-editable aria-hidden="true"></span></dt>
+                                                                            }
+                                                                            @if (SeguridadController.ExisteFuncion(@Resources.Seguridad.ModificarTitular))
+                                                                            {
+                                                                                <dt><span id="titular-edit" class="fa fa-pencil fa-lg black cursor-pointer disabled" data-editable aria-hidden="true"></span></dt>
+                                                                            }
+                                                                        </dl>
+                                                                    }
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div id="ut-documentos" class="tab-pane">
+                                                <div class="panel-group">
+                                                    <div class="panel panel-default remove-shadow panel-ut-documentos">
+                                                        <div class="panel-body">
+                                                            <div class="col-xs-12">
+                                                                <div class="tabla-con-botones">
+                                                                    <table id="tablaUTDocumentos" class="table table-striped table-bordered table-responsive">
+                                                                        <thead>
+                                                                            <tr>
+                                                                                <th>Tipo</th>
+                                                                                <th>Nombre</th>
+                                                                                <th>Fecha Alta</th>
+                                                                                <th>Descripci&oacute;n</th>
+                                                                            </tr>
+                                                                        </thead>
+                                                                        <tbody></tbody>
+                                                                    </table>
+                                                                    <dl class="has-perma-buttons">
+                                                                        @if (SeguridadController.ExisteFuncion(@Resources.Seguridad.AltaDocumentosUnidadTributaria))
+                                                                        {
+                                                                            <dt><span id="ut-documento-insert" class="fa fa-plus-circle fa-lg black cursor-pointer" data-editable aria-hidden="true"></span></dt>
+                                                                        }
+                                                                        @if (SeguridadController.ExisteFuncion(@Resources.Seguridad.BajaDocumentosUnidadTributaria))
+                                                                        {
+                                                                            <dt><span id="ut-documento-delete" class="fa fa-minus-circle fa-lg black cursor-pointer disabled" data-editable aria-hidden="true"></span></dt>
+                                                                        }
+                                                                        @if (SeguridadController.ExisteFuncion(@Resources.Seguridad.ModificarDocumentosUnidadTributaria))
+                                                                        {
+                                                                            <dt><span id="ut-documento-edit" class="fa fa-pencil fa-lg black cursor-pointer disabled" data-editable aria-hidden="true"></span></dt>
+                                                                        }
+                                                                        <dt><span id="ut-documento-view" class="fa fa-eye fa-lg black cursor-pointer disabled" aria-hidden="true"></span></dt>
+                                                                    </dl>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            @if ((bool)ViewData["VisualizarValuaciones"])
+                                            {
+                                                <div id="ut-valuacion" class="tab-pane">
+                                                    <div class="panel-group">
+                                                        <div class="panel panel-default remove-shadow panel-ut-valuacion">
+                                                            <div class="panel-body">
+                                                                <div class="col-xs-12">
+                                                                    <div class="form-horizontal">
+                                                                        <div class="form-group">
+                                                                            <label class="control-label col-xs-4 text-right">Valor de Tierra</label>
+                                                                            <div class="col-xs-8">
+                                                                                <label id="ut-valor-tierra" readonly="readonly" class="form-control"></label>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label class="control-label col-xs-4 text-right">Valor de Mejoras</label>
+                                                                            <div class="col-xs-8">
+                                                                                <label id="ut-valor-mejoras" readonly="readonly" class="form-control"></label>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label class="control-label col-xs-4 text-right">Valor Total</label>
+                                                                            <div class="col-xs-8">
+                                                                                <label id="ut-valor-total" readonly="readonly" class="form-control"></label>
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="form-group">
+                                                                            <label class="control-label col-xs-4 text-right">Vigencia Desde</label>
+                                                                            <div class="col-xs-8">
+                                                                                <label id="ut-vigencia" readonly="readonly" class="form-control"></label>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                @if (SeguridadController.ExisteFuncion(@Resources.Seguridad.CertificadoValuatorio))
+                                                                {
+                                                                    <div class="col-xs-4 pull-right text-right">
+                                                                        <span id="btnImprimirCertificadoValuatorio" aria-hidden="true" data-placement="right" title="Imprimir" data-original-title="Imprimir" class="fa fa-print fa-2x black cursor-pointer"></span>
+                                                                    </div>
+                                                                }
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                            <div id="ut-observaciones" class="tab-pane">
+                                                <div class="panel-group">
+                                                    <div class="panel panel-default remove-shadow">
+                                                        <div class="panel-body">
+                                                            <div class="col-xs-12">
+                                                                @Html.TextArea("observacionesUT", new { @class = "form-control", @readonly = "readonly", @rows = "6" })
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            @if ((bool)ViewData["PuedeVerVIR"])
+                            {
+                                <div class="section-position">
+                                    <div class="panel-heading bg-primary main-heading" id="headingVIR">
+                                        <a data-toggle="collapse" data-parent='#accordion-mantenedor' href="#collapseVIR" aria-expanded="true"
+                                           aria-controls="collapseVIR">
+                                            <div class='panel-title'>
+                                                Valor Inmobiliario de Referencia - VIR
+                                                <i class="fa"></i>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div class='panel-collapse collapse in main-collapse' id="collapseVIR" aria-labelledby="headingVIR">
+                                        <div class="panel-body">
+                                            <div class="panel-VIR" style="margin: 7px 7px 0;">
+                                                <input type="hidden" id="IdInmueble" value="@ViewData["IdInmueble"]" />
+                                                <div class="tabla-con-botones">
+                                                    <table id="tablaVIR" class="table table-bordered table-responsive">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>Vig. Desde</th>
+                                                                <th>Val. Total</th>
+                                                                <th>Val. Tierra</th>
+                                                                <th>Val. Mejoras</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody></tbody>
+                                                    </table>
+                                                    <dl class="has-perma-buttons">
+                                                        <dt><span id="btnVIR-edit" class="fa fa-pencil fa-lg black cursor-pointer" aria-hidden="true" data-editable title="Editar" data-original-title="Editar"></span></dt>
+                                                        <dt><span id="btnInformeParcelarioVIR" class="fa fa-print fa-lg black cursor-pointer" aria-hidden="true" title="Reporte Parcelario" data-original-title="Reporte Parcelario"></span></dt>
+                                                    </dl>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-xs-4 pull-right">
+                        @if ((bool)ViewData["PuedeModificarDatos"])
+                        {
+                            <span aria-hidden="true" data-edicion="true" data-placement="right" title="Editar" data-original-title="Editar" id="edit-all" class="fa fa-pencil fa-2x black cursor-pointer"></span>
+                            <span aria-hidden="true" data-edicion="false" data-placement="right" title="Guardar" data-original-title="Guardar" id="save-all" class="fa fa-save fa-2x black cursor-pointer hidden"></span>
+                            <span aria-hidden="true" data-edicion="false" data-placement="right" title="Cancelar" data-original-title="Cancelar" id="cancel-all" class="fa fa-undo fa-2x black cursor-pointer hidden"></span>
+                        }
+                        @if ((bool)ViewData["PuedeImprimirInformeParcelario"])
+                        {
+                            <span aria-hidden="true" data-placement="right" title="Reporte Parcelario" data-original-title="Reporte Parcelario" id="print-all" class="fa fa-print fa-2x black cursor-pointer"></span>
+                            <span aria-hidden="true" data-placement="right" title="Informe Histórico de Cambios" data-original-title="Informe Histórico de Cambios" id="exportarHistoricoCambiosParcela" class="fa fa-line-chart fa-2x black cursor-pointer"></span>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade theme_new mensaje" id="mantenedor-parcelario-confirm-modal" tabindex="-2" role="dialog" aria-labelledby="TituloAdvertencia" aria-hidden="true" data-backdrop="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="TituloAdvertencia">Titulo</h3>
+                <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+            </div>
+            <div class="modal-body">
+                <div id="MensajeAlerta" class="alert alert-dismissible" role="alert">
+                    <p id="DescripcionAdvertencia"></p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-xs-4 pull-right">
+                    <span id="btnAdvertenciaOK" aria-hidden="true" data-dismiss="modal" data-placement="right" title="Aceptar" data-original-title="Aceptar" class="fa fa-check-circle light-blue fa-2x cursor-pointer"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="mantenedor-externo-container"></div>
+<div id="personas-externo-container"></div>
+
+<script src="~/Scripts/jquery.dataTables.js"></script>
+<script src="~/Scripts/dataTables.bootstrap.js"></script>
+<script src="~/Scripts/formValidation.min.js"></script>
+<script src="~/Scripts/bootstrapValidation.min.js"></script>
+<script src="~/Scripts/jquery-oneclick.js"></script>
+
+<script src="~/Scripts/mantenimientoParcelario/main.js"></script>
+<script src="~/Scripts/mantenimientoParcelario/parcelasOrigen.js"></script>
+<script src="~/Scripts/mantenimientoParcelario/parcelaDocumentos.js"></script>
+<script src="~/Scripts/mantenimientoParcelario/unidadesTributarias.js"></script>
+<script src="~/Scripts/mantenimientoParcelario/utDocumentos.js"></script>
+@*
+    <script src="~/Scripts/mantenimientoParcelario/utDomicilios.js"></script>
+    <script src="~/Scripts/mantenimientoParcelario/utResponsablesFiscales.js"></script>
+*@
+<script src="~/Scripts/mantenimientoParcelario/utDominios.js"></script>
+<script src="~/Scripts/mantenimientoParcelario/utTitulares.js"></script>
+
+<script>
+    var submodulos = [];
+    var modulos = [
+        new ParcelasOrigen(), new ParcelaDocumentos(),
+        new UnidadesTributarias(), new UTDocumentos(),
+        @*new UTDomicilios(), new UTResponsablesFiscales(),*@
+        new UTDominios(), new UTTitulares(),
+    ];
+</script>
+
+@if ((bool)ViewData["VisualizarNomenclaturas"])
+{
+    <script src="~/Scripts/mantenimientoParcelario/nomenclaturas.js"></script>
+    <script>
+        modulos = [...modulos, new Nomenclaturas()];
+    </script>
+}
+@if ((bool)ViewData["VisualizarZonificacion"])
+{
+    <script src="~/Scripts/mantenimientoParcelario/zonificacion.js"></script>
+    <script>
+        modulos = [...modulos, new Zonificacion()];
+    </script>
+}
+@if ((bool)ViewData["VisualizarDesignaciones"])
+{
+    <script src="~/Scripts/mantenimientoParcelario/parcelaDesignaciones.js"></script>
+    <script>
+        modulos = [...modulos, new ParcelaDesignaciones()];
+    </script>
+}
+@if ((bool)ViewData["VisualizarValuaciones"])
+{
+    if (SeguridadController.ExisteFuncion(@Resources.Seguridad.AdministracionValuacion))
+    {
+        <script src="~/Scripts/mantenimientoParcelario/administracionUTValuacion.js"></script>
+        <script>
+            submodulos = [...submodulos, new AdministracionUTValuacion()];
+        </script>
+    }
+    if (SeguridadController.ExisteFuncion(@Resources.Seguridad.CertificadoValuatorio))
+    {
+        <script src="~/Scripts/mantenimientoParcelario/impresionCertificadoValuatorio.js"></script>
+        <script>
+            submodulos = [...submodulos, new CertificadoValuatorio()];
+        </script>
+    }
+    <script src="~/Scripts/mantenimientoParcelario/parcelaValuacion.js"></script>
+    <script src="~/Scripts/mantenimientoParcelario/utValuacion.js"></script>
+    <script>
+        modulos = [...modulos, new ParcelaValuacion(), new UTValuacion(submodulos)];
+        submodulos = [];
+    </script>
+}
+@if ((bool)ViewData["PuedeImprimirInformeParcelario"])
+{
+    <script src="~/Scripts/mantenimientoParcelario/impresionInformeParcelario.js"></script>
+    <script>
+        modulos = [...modulos, new InformeParcelario()];
+    </script>
+}
+@if (SeguridadController.ExisteFuncion(@Resources.Seguridad.InformeTributario))
+{
+    <script src="~/Scripts/mantenimientoParcelario/impresionInformeUT.js"></script>
+    <script>
+        modulos = [...modulos, new UTInforme()];
+    </script>
+}
+@if ((bool)ViewData["PuedeModificarDatos"])
+{
+    <script src="~/Scripts/mantenimientoParcelario/edicion.js"></script>
+    <script>
+        modulos = [...modulos, new EdicionMantenedorParcelario(modulos)];
+    </script>
+}
+@if ((bool)ViewData["PuedeVerVIR"])
+{
+    <script src="~/Scripts/mantenimientoParcelario/vir.js"></script>
+    <script>
+        modulos = [...modulos, new VIR()];
+    </script>
+}
+<script type="text/javascript">
+    (function () {
+        var mantenedorParcelario = new MantenedorParcelario(modulos);
+        $(document).ready(mantenedorParcelario.init);
+    })();
+</script>

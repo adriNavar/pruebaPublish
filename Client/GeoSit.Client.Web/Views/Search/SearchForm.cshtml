@@ -1,0 +1,12 @@
+﻿@using (Ajax.BeginForm("ByText", "Search", new AjaxOptions { OnComplete = "updateResults", UpdateTargetId = "sresults", InsertionMode = InsertionMode.Replace, HttpMethod = "Post" }))
+{
+    <div onload="loadBuscador()">
+        <h4 class="text-primary pull-left" style="margin-left: 0;padding-left:0;">Buscar</h4>
+        <button id="sclose" type="button" class="close pull-right"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+    </div>
+    @Html.TextBox("stext", string.Empty, new { @placeholder = "texto a buscar...", @keyPressed = "buscar();" })
+    <div style="overflow: auto">
+        <div id="smessage" class="text-muted pull-left"></div>
+        <button id="sbutton" type="submit" class="btn btn-primary btn-sm pull-right">Buscar</button>
+    </div>
+}

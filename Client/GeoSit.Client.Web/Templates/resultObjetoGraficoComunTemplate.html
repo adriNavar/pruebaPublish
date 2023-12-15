@@ -1,0 +1,18 @@
+﻿<div class='srow {{objeto.tipo}}'>
+    <div class="controls fa pull-right">
+        <span class="opcion fa-external-link tooltips" data-placement="bottom" ng-if="tieneDocumento" title="Ver Documento" ng-click="verDocumento($event)"></span>
+        <span class="opcion fa-map-marker tooltips" data-placement="bottom" ng-if="tieneGrafico" title="Ver en mapa" ng-click="verEnMapa($event,objeto,true)"></span>
+        <span class="opcion fa-hand-pointer-o tooltips" data-placement="bottom" ng-if="tieneGrafico" title="Seleccionar" ng-click="verEnMapa($event,objeto,false)"></span>
+        <span class="opcion fa-file-excel-o tooltips" data-placement="bottom" title="Exportar a Excel" ng-click="exportarObjetoExcel($event)"></span>
+    </div>
+    <div class="roundChkBox {{objeto.tipo}}">
+        <input type="checkbox" data-name="{{objeto.id}}" data-componente="{{objeto.tipo}}" data-componente-ploteable="{{ploteable}}" id="{{chkboxid}}" ng-click="selectedChanged()" ng-model="objeto.selected" />
+        <label for="{{chkboxid}}"></label>
+    </div>
+    <div ng-click="showAtributos()">
+        <p class='text-primary'>
+            <span data-ng-bind-html="objeto.nombre | highlight:pattern:true"></span>
+        </p>
+        <p ng-if="tieneDescripcion"><span data-ng-bind-html="objeto.descripcion | highlight:pattern:true"></span></p>
+    </div>
+</div>

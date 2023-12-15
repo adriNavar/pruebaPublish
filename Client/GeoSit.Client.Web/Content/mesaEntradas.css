@@ -1,0 +1,32 @@
+﻿.mesaEntradas-body thead tr.filtros th {
+    padding: 5px;
+}
+
+.dropdown-divider {
+    height: 0;
+    margin: .5rem 0;
+    overflow: hidden;
+    border-top: 1px solid #e9ecef;
+}
+
+.mesaEntradas-body thead tr.filtros th  .form-control.input-sm {
+    width: 100%;
+}
+
+.btn-accion {
+    background-color: #127796;
+    color: #fff;
+}
+
+    .btn-accion:hover,
+    .btn-accion:focus,
+    .btn-accion.focus,
+    .btn-accion:active,
+    .btn-accion.active {
+        color: #fff;
+        background-color: #00BAEB;
+    }
+
+    .btn-accion + ul.dropdown-menu li:hover a {
+        background-color: #B0BED9;
+    }

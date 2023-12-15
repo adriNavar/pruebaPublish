@@ -1,0 +1,514 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Abierta" xml:space="preserve">
+    <value>Abierta</value>
+  </data>
+  <data name="Calendario" xml:space="preserve">
+    <value>Calendario</value>
+    <comment>Titulo Calendario</comment>
+  </data>
+  <data name="Descripcion" xml:space="preserve">
+    <value>Descripción</value>
+  </data>
+  <data name="Documentos" xml:space="preserve">
+    <value>Documentos</value>
+  </data>
+  <data name="Estado" xml:space="preserve">
+    <value>Estado</value>
+  </data>
+  <data name="FechaAlta" xml:space="preserve">
+    <value>Fecha Alta</value>
+  </data>
+  <data name="FechaHoraDesde" xml:space="preserve">
+    <value>Fecha y Hora</value>
+  </data>
+  <data name="FechaHoraHasta" xml:space="preserve">
+    <value>Fecha Hora hasta</value>
+  </data>
+  <data name="FechaHoraPlanificacion" xml:space="preserve">
+    <value>Fecha y Hora de Planificación</value>
+  </data>
+  <data name="FechaHoraOriginal" xml:space="preserve">
+    <value>Fecha y Hora Originales</value>
+  </data>
+  <data name="Finalizada" xml:space="preserve">
+    <value>Finalizada</value>
+  </data>
+  <data name="Identificador" xml:space="preserve">
+    <value>Identificador</value>
+  </data>
+  <data name="Inspector" xml:space="preserve">
+    <value>Inspector</value>
+  </data>
+  <data name="Nombre" xml:space="preserve">
+    <value>Nombre</value>
+  </data>
+  <data name="Objeto" xml:space="preserve">
+    <value>Objeto</value>
+  </data>
+  <data name="Observaciones" xml:space="preserve">
+    <value>Observaciones</value>
+  </data>
+  <data name="PlanificacionInspeccion" xml:space="preserve">
+    <value>Planificación de la Inspección</value>
+  </data>
+  <data name="PlanificacionInspecciones" xml:space="preserve">
+    <value>Planificación de Inspecciones</value>
+    <comment>Titulo Planificación de Inspecciones</comment>
+  </data>
+  <data name="Planificada" xml:space="preserve">
+    <value>Planificada</value>
+    <comment>Planificada</comment>
+  </data>
+  <data name="Cliente" xml:space="preserve">
+    <value>GeoSystems S.A</value>
+    <comment>Razon social o nombre del cliente de instalacion.</comment>
+  </data>
+  <data name="DNIInexistente" xml:space="preserve">
+    <value>El DNI ingresado No corresponde a un usuario dado de alta.</value>
+    <comment>Mensaje de error cuando no se encuentra el DNI al recuperar contraseña</comment>
+  </data>
+  <data name="GrupoInexistente" xml:space="preserve">
+    <value>Error al ingresar al sistema</value>
+    <comment>Mensaje para el grupo de usuario AD inexistente</comment>
+  </data>
+  <data name="MailRecuperoPassword" xml:space="preserve">
+    <value>Se ha enviado un nuevo Password via Mail.</value>
+    <comment>Mensaje de confirmacion  de recupero de contraseña enviado</comment>
+  </data>
+  <data name="MailRecuperoUsuario" xml:space="preserve">
+    <value>Se ha enviado tu Usuario via Mail.</value>
+    <comment>Mensaje de confirmacion de recupero de usuario enviado.</comment>
+  </data>
+  <data name="Privadas" xml:space="preserve">
+    <value>Privadas</value>
+    <comment>Biliotecas Privadas Titulo</comment>
+  </data>
+  <data name="Publicas" xml:space="preserve">
+    <value>Públicas</value>
+    <comment>Bibliotecas Publicas Titulo</comment>
+  </data>
+  <data name="RelacionarCon" xml:space="preserve">
+    <value>Relacionar con</value>
+  </data>
+  <data name="ResultadoInspeccion" xml:space="preserve">
+    <value>Resultado de la Inspección</value>
+  </data>
+  <data name="Tipo" xml:space="preserve">
+    <value>Tipo</value>
+  </data>
+  <data name="TipoInspeccion" xml:space="preserve">
+    <value>Tipo de Inspección</value>
+    <comment>Tipo de Inspección</comment>
+  </data>
+  <data name="TituloGestionInspecciones" xml:space="preserve">
+    <value>Gestión de Inspecciones</value>
+    <comment>Titulo Gestión de Inspecciones</comment>
+  </data>
+  <data name="TituloFeriados" xml:space="preserve">
+    <value>ABM Feriado</value>
+    <comment>Titulo de ABM Feriados Singular</comment>
+  </data>
+  <data name="TituloHorarios" xml:space="preserve">
+    <value>ABM Horario</value>
+    <comment>Titulo de ABM Horarios Singular</comment>
+  </data>
+  <data name="TituloMapaTematico" xml:space="preserve">
+    <value>Mapas Temáticos</value>
+    <comment>Titulo Mapa tematico Plural</comment>
+  </data>
+  <data name="UnidadesTributarias" xml:space="preserve">
+    <value>Unidades Tributarias</value>
+  </data>
+  <data name="UnidadTributaria" xml:space="preserve">
+    <value>Unidad Tributaria</value>
+  </data>
+  <data name="Vencida" xml:space="preserve">
+    <value>Vencida</value>
+  </data>
+  <data name="FechaOrigenDesde" xml:space="preserve">
+    <value>Fecha Origen desde</value>
+  </data>
+  <data name="FechaOrigenHasta" xml:space="preserve">
+    <value>Fecha Origen hasta</value>
+  </data>
+  <data name="AdministracionInspectores" xml:space="preserve">
+    <value>Administración de Inspectores</value>
+  </data>
+  <data name="CaracteristicasInspector" xml:space="preserve">
+    <value>Caracteristicas del Inspector</value>
+  </data>
+  <data name="Inspectores" xml:space="preserve">
+    <value>Inspectores</value>
+  </data>
+  <data name="InspectoresRegistrados" xml:space="preserve">
+    <value>Inspectores Registrados</value>
+  </data>
+  <data name="Planificador" xml:space="preserve">
+    <value>Planificador</value>
+  </data>
+  <data name="Usuario" xml:space="preserve">
+    <value>Usuario</value>
+  </data>
+  <data name="InspeccionDe" xml:space="preserve">
+    <value>Inspección de</value>
+  </data>
+  <data name="Acta" xml:space="preserve">
+    <value>Acta</value>
+  </data>
+  <data name="ActaOrigen" xml:space="preserve">
+    <value>Acta de Origen</value>
+  </data>
+  <data name="Actas" xml:space="preserve">
+    <value>Actas</value>
+  </data>
+  <data name="Busqueda" xml:space="preserve">
+    <value>Búsqueda</value>
+  </data>
+  <data name="Codigo" xml:space="preserve">
+    <value>Código</value>
+  </data>
+  <data name="Desde" xml:space="preserve">
+    <value>Desde</value>
+  </data>
+  <data name="Dias" xml:space="preserve">
+    <value>Días</value>
+  </data>
+  <data name="DocumentosReferencias" xml:space="preserve">
+    <value>Documentos y Referencias</value>
+  </data>
+  <data name="Domicilio" xml:space="preserve">
+    <value>Domicilio/s</value>
+  </data>
+  <data name="ExpedienteObra" xml:space="preserve">
+    <value>Expediente de Obra</value>
+  </data>
+  <data name="Fecha" xml:space="preserve">
+    <value>Fecha</value>
+  </data>
+  <data name="FechaDesde" xml:space="preserve">
+    <value>Fecha Desde</value>
+  </data>
+  <data name="FechaHasta" xml:space="preserve">
+    <value>Fecha Hasta</value>
+  </data>
+  <data name="FechaHora" xml:space="preserve">
+    <value>Fecha y Hora</value>
+  </data>
+  <data name="Fechas" xml:space="preserve">
+    <value>Fechas</value>
+  </data>
+  <data name="Hasta" xml:space="preserve">
+    <value>Hasta</value>
+  </data>
+  <data name="Identificacion" xml:space="preserve">
+    <value>Identificación</value>
+  </data>
+  <data name="NombreRazonSocial" xml:space="preserve">
+    <value>Nombre / Razón Social</value>
+  </data>
+  <data name="Nro" xml:space="preserve">
+    <value>Nro</value>
+  </data>
+  <data name="NroActa" xml:space="preserve">
+    <value>Nro Acta</value>
+  </data>
+  <data name="Numero" xml:space="preserve">
+    <value>Número</value>
+  </data>
+  <data name="OtrosObjetos" xml:space="preserve">
+    <value>Otros Objetos</value>
+  </data>
+  <data name="Personas" xml:space="preserve">
+    <value>Personas</value>
+  </data>
+  <data name="Plazo" xml:space="preserve">
+    <value>Plazo</value>
+  </data>
+  <data name="PlazoCump" xml:space="preserve">
+    <value>Plazo Cump.</value>
+  </data>
+  <data name="Resultado" xml:space="preserve">
+    <value>Resultado</value>
+  </data>
+  <data name="Rol" xml:space="preserve">
+    <value>Rol</value>
+  </data>
+  <data name="TipoActa" xml:space="preserve">
+    <value>Tipo de Acta</value>
+  </data>
+  <data name="TipoDeActa" xml:space="preserve">
+    <value>Tipo de Acta</value>
+  </data>
+  <data name="Tramites" xml:space="preserve">
+    <value>Tramites</value>
+  </data>
+  <data name="AdministracionPloteosPredefinidos" xml:space="preserve">
+    <value>Administración de Ploteos Predefinidos</value>
+  </data>
+  <data name="DispatcherPloteos" xml:space="preserve">
+    <value>Lanzador de Ploteos</value>
+  </data>
+  <data name="AdministracionExpedientesObra" xml:space="preserve">
+    <value>Expedientes de Obra</value>
+  </data>
+  <data name="MantenimientoInfraestructura" xml:space="preserve">
+    <value>Mantenimiento de datos de Infraestructura</value>
+  </data>
+  <data name="AtributosZona" xml:space="preserve">
+    <value>Atributos por Zona</value>
+  </data>
+  <data name="GeneracionCertificados" xml:space="preserve">
+    <value>Gestión de Informes y Certificados</value>
+  </data>
+  <data name="AlfanumericoParcela" xml:space="preserve">
+    <value>Alta Alfanumérica de Parcelas</value>
+  </data>
+  <data name="TituloMensajesAviso" xml:space="preserve">
+    <value>AVISO</value>
+    <comment>Titulo para modales de aviso.</comment>
+  </data>
+  <data name="UsuarioInexistente" xml:space="preserve">
+    <value>Error al ingresar al sistema</value>
+    <comment>Mensaje para el usuario Inexistente</comment>
+  </data>
+  <data name="CambioMunicipio" xml:space="preserve">
+    <value>35</value>
+    <comment>ID del parámetro cambio municipio en ge_parametro</comment>
+  </data>
+  <data name="ValidarNumeroExpediente" xml:space="preserve">
+    <value>39</value>
+    <comment>ID del parámetro validar número de expediente en ge_parametro</comment>
+  </data>
+  <data name="InformeInspeccionesPorPeriodo" xml:space="preserve">
+    <value>Informe de Inspecciones por Periodo</value>
+    <comment>Titulo de informe de inspecciones por periodo</comment>
+  </data>
+  <data name="InformeExpedienteObras" xml:space="preserve">
+    <value>Informe de Expedientes por Obras</value>
+    <comment>Titulo de informe de expediente de obra</comment>
+  </data>
+  <data name="InformeExpedienteObrasDetallado" xml:space="preserve">
+    <value>Informe Detallado de Expedientes de Obra</value>
+    <comment>Titulo de informe de expediente de obra detallado</comment>
+  </data>
+  <data name="InformeInspeccionesPorTipo" xml:space="preserve">
+    <value>Informe de Inspecciones por Tipo</value>
+    <comment>Titulo de informe de inspecciones por tipo</comment>
+  </data>
+  <data name="UsuarioDesactivo" xml:space="preserve">
+    <value>(*) Usuario desactivado</value>
+  </data>
+  <data name="DNI" xml:space="preserve">
+    <value>DNI</value>
+  </data>
+  <data name="ExpresionRegularChapa" xml:space="preserve">
+    <value>47</value>
+    <comment>Expresion regular para número de chapa</comment>
+  </data>
+  <data name="ExpresionRegularExpediente" xml:space="preserve">
+    <value>45</value>
+    <comment>Expresion regular para número de expediente</comment>
+  </data>
+  <data name="ExpresionRegularLegajo" xml:space="preserve">
+    <value>46</value>
+    <comment>Expresion regular para número de legajo</comment>
+  </data>
+  <data name="ActivarAutonumeracionLegajo" xml:space="preserve">
+    <value>48</value>
+    <comment>Activar autonumeración de Legajo</comment>
+  </data>
+  <data name="MostrarPadrónPartida" xml:space="preserve">
+    <value>41</value>
+    <comment>Mostrar Padrón o Partida</comment>
+  </data>
+  <data name="ZonaPlanificacion" xml:space="preserve">
+    <value>34</value>
+    <comment>ID del parámetro ZONA_PLANIFICACION en ge_parametro</comment>
+  </data>
+  <data name="CambiarContraseña" xml:space="preserve">
+    <value>Cambiar Contraseña</value>
+  </data>
+  <data name="ActivarValuaciones" xml:space="preserve">
+    <value>ACTIVA_VALUACIONES</value>
+    <comment>Clave del parámetro general para activar valuaciones en mantenedor parcelario</comment>
+  </data>
+  <data name="ActivarInterfaz" xml:space="preserve">
+    <value>52</value>
+    <comment>ID del parámetro Activar_Interfaz en ge_parametro</comment>
+  </data>
+  <data name="Todos" xml:space="preserve">
+    <value>Todos</value>
+  </data>
+  <data name="Zonas" xml:space="preserve">
+    <value>Zonas</value>
+  </data>
+  <data name="AnalisisPredefinido" xml:space="preserve">
+    <value>Generador de Analisis Predefinido</value>
+  </data>
+  <data name="ExpedientesObraMostrarActas" xml:space="preserve">
+    <value>54</value>
+    <comment>ID del parámetro Expedientes Obra Mostrar Actas en ge_parametro</comment>
+  </data>
+  <data name="ExpresionRegularChapaVisible" xml:space="preserve">
+    <value>78</value>
+    <comment>Patron para mostrar número de chapa</comment>
+  </data>
+  <data name="ExpresionRegularExpedienteVisible" xml:space="preserve">
+    <value>76</value>
+    <comment>Patron para mostrar  número de expediente</comment>
+  </data>
+  <data name="ExpresionRegularLegajoVisible" xml:space="preserve">
+    <value>77</value>
+    <comment>Patron para mostrar  número de legajo</comment>
+  </data>
+  <data name="Archivo" xml:space="preserve">
+    <value>Archivo</value>
+  </data>
+  <data name="ServiciosComarcal" xml:space="preserve">
+    <value>76</value>
+    <comment>Este parametro activa la interaccion con servicios de sitemas tributarios de comarcal</comment>
+  </data>
+  <data name="ColeccionController_ImportarArchivoColeccion_FormatoInvalido" xml:space="preserve">
+    <value>Formato del archivo seleccionado inválido.</value>
+  </data>
+  <data name="ColeccionController_NombreColeccionExistente" xml:space="preserve">
+    <value>El nombre [{0}] ya existe, por favor ingrese uno nuevo.</value>
+  </data>
+  <data name="RuteoErrorEnConexion" xml:space="preserve">
+    <value>Error al intentar conectar con el servicio de ruteo. Verifique la conexión a internet e intente nuevamente.</value>
+  </data>
+  <data name="ActivarDesignaciones" xml:space="preserve">
+    <value>ACTIVA_DESIGNACIONES</value>
+    <comment>Clave del parámetro general para activar designaciones en mantenedor parcelario</comment>
+  </data>
+  <data name="ActivarNomenclaturas" xml:space="preserve">
+    <value>ACTIVA_NOMENCLATURAS</value>
+    <comment>Clave del parámetro general para activar nomenclaturas en mantenedor parcelario</comment>
+  </data>
+  <data name="ActivarPartidas" xml:space="preserve">
+    <value>ACTIVA_PARTIDAS</value>
+    <comment>Clave del parámetro general para activar partidas en mantenedor parcelario</comment>
+  </data>
+  <data name="ActivarZonificacion" xml:space="preserve">
+    <value>ACTIVA_ZONIFICACION</value>
+    <comment>Clave del parámetro general para activar zonificacion en mantenedor parcelario</comment>
+  </data>
+</root>

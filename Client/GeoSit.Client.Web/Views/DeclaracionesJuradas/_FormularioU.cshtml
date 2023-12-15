@@ -1,0 +1,202 @@
+﻿@model GeoSit.Client.Web.Models.FormularioUModel
+@{
+    if (Model.DDJJ.IdDeclaracionJurada > 0)
+    {
+        ViewBag.Title = "Edición DDJJ";
+    }
+    else
+    {
+        ViewBag.Title = "Nueva DDJJ";
+    }
+}
+<style>
+    input.form-control.fecha-vigencia {
+        background-color: #fff;
+    }
+
+    input.mark-error {
+        color: #a94442;
+        border-color: #a94442;
+    }
+
+    span.mark-error {
+        color: #a94442;
+    }
+</style>
+
+<div id="formularioDDJJ">
+    <div class="modal fade theme_new" id="modalFormulario" role="dialog" aria-hidden="true" data-backdrop="false" data-keyboard="false">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="scroll-content">
+                    <div class="modal-header">
+                        <h3 class="modal-title">@ViewBag.Title - Formulario U</h3>
+                        <span id="btnCloseFormDDJJ" aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" aria-label="Cerrar" title="Cerrar"></span>
+                        @if (!Model.ReadOnly)
+                        {
+                            <span id="btnSave" class="fa fa-save fa-2x cursor-pointer white pull-right" title="Guardar"></span>
+                        }
+                    </div>
+                    <div id="formulario-body" class="modal-body">
+                        <div id="formulario-content" class="body-content">
+                            <div class="stepwizard hide">
+                                <div class="stepwizard-row setup-panel">
+                                    <div class="stepwizard-step">
+                                        <a id="step1" href="#step-1" type="button">1</a>
+                                    </div>
+
+                                    <div class="stepwizard-step">
+                                        <a id="step2" href="#step-2" type="button" disabled="disabled">2</a>
+                                    </div>
+
+                                    <div class="stepwizard-step">
+                                        <a id="step3" href="#step-3" type="button" disabled="disabled">3</a>
+                                    </div>
+
+                                    <!--<div class="stepwizard-step">
+                                        <a id="step4" href="#step-4" type="button" disabled="disabled">4</a>
+                                    </div>-->
+
+                                    <div class="stepwizard-step">
+                                        <a id="step4" href="#step-4" type="button" disabled="disabled">4</a>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @if ((bool)ViewData["EsTemporal"])
+                            {
+                                @Html.Hidden("hdnTemporal", ViewData["EsTemporal"])
+                            }
+                            @using (Ajax.BeginForm("GuardarFormularioU", "DeclaracionesJuradas", new AjaxOptions() { }, new { @id = "formFormularioU" }))
+                            {
+                                @Html.HiddenFor(x => x.ReadOnly)
+                                @Html.HiddenFor(x => x.DDJJ.IdDeclaracionJurada)
+                                @Html.HiddenFor(x => x.DDJJ.IdUnidadTributaria)
+                                @Html.HiddenFor(x => x.DDJJ.IdVersion)
+                                @Html.HiddenFor(x => x.DDJJ.IdOrigen)
+
+                                @Html.HiddenFor(x => x.DDJJU.IdDeclaracionJurada)
+                                @Html.HiddenFor(x => x.DDJJU.IdU)
+
+                                @Html.HiddenFor(x => x.DDJJDesignacion.IdDeclaracionJurada)
+                                @Html.HiddenFor(x => x.DDJJDesignacion.IdDesignacion)
+                                @Html.HiddenFor(x => x.DDJJDesignacion.IdBarrio)
+                                @Html.HiddenFor(x => x.DDJJDesignacion.IdParaje)
+                                @Html.HiddenFor(x => x.DDJJDesignacion.IdSeccion)
+                                @Html.HiddenFor(x => x.DDJJDesignacion.IdTipoDesignador)
+
+                                <div class="setup-content" id="step-1">
+                                    @{ Html.RenderPartial("FormularioU/_Cabecera", Model); }
+                                </div>
+
+                                <div class="setup-content" id="step-2">
+                                    @{ Html.RenderPartial("FormularioU/_Rubro1IncB", Model); }
+                                </div>
+
+                                <div class="setup-content" id="step-3">
+                                    @{ Html.RenderPartial("FormularioU/_Rubro1IncCyD", Model); }
+                                </div>
+
+                                <!--<<div class="setup-content" id="step-4">
+
+                                </div>-->
+
+                                <div class="setup-content" id="step-4">
+                                    @{ Html.RenderPartial("FormularioU/_Rubro2", Model); }
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="col-xs-8 pull-left wizard">
+                            <div id="progress-bar-step" class="bs-wizard">
+                                <div id="stepWiz1" class="col-xs-2 bs-wizard-step active">
+                                    <div class="progress"><div class="progress-bar"></div></div>
+                                    <a class="bs-wizard-dot"></a>
+                                    <div class="bs-wizard-info text-center">Cabecera</div>
+                                </div>
+
+                                <div id="stepWiz2" class="col-xs-2 bs-wizard-step disabled">
+                                    <div class="progress"><div class="progress-bar"></div></div>
+                                    <a class="bs-wizard-dot"></a>
+                                    <div class="bs-wizard-info text-center">Inc. B</div>
+                                </div>
+
+
+                                <div id="stepWiz3" class="col-xs-2 bs-wizard-step disabled">
+                                    <div class="progress"><div class="progress-bar"></div></div>
+                                    <a class="bs-wizard-dot"></a>
+                                    <div class="bs-wizard-info text-center">Inc. C y D</div>
+                                </div>
+
+                                <!--<div id="stepWiz4" class="col-xs-2 bs-wizard-step disabled">
+                                    <div class="progress"><div class="progress-bar"></div></div>
+                                    <a class="bs-wizard-dot"></a>
+                                    <div class="bs-wizard-info text-center">Inc. E y F</div>
+                                </div>-->
+
+                                <div id="stepWiz4" class="col-xs-2 bs-wizard-step disabled">
+                                    <div class="progress"><div class="progress-bar"></div></div>
+                                    <a class="bs-wizard-dot"></a>
+                                    <div class="bs-wizard-info text-center">Rubro 1 y 2</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-4 pull-right botones">
+                            <span data-placement="right" id="btn-atras" title="Atras" data-original-title="Atras" class="fa fa-arrow-left fa-2x light-blue cursor-pointer disabled"></span>
+                            <span data-placement="right" id="btn-siguiente" title="Siguiente" data-original-title="Siguiente" class="fa fa-arrow-right fa-2x light-blue cursor-pointer"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="formulario-externo-container"></div>
+    <div id="buscador-ddjj-container"></div>
+    <div id="mantenedor-externo-container"></div>
+    <div id="buscador-container"></div>
+
+    @{
+        Html.RenderPartial("FormularioU/_SeleccionClase");
+        Html.RenderPartial("FormularioU/_BusquedaAforo");
+    }
+</div>
+
+<script src="~/Scripts/jquery.form.js"></script>
+
+<script src="~/Scripts/DeclaracionesJuradas/FormularioDDJJController.js"></script>
+<script src="~/Scripts/DeclaracionesJuradas/Validators/Tierra/CabeceraValidator.js"></script>
+<script src="~/Scripts/DeclaracionesJuradas/Validators/Tierra/Rubro1IncCyDValidator.js"></script>
+<script src="~/Scripts/DeclaracionesJuradas/Validators/Tierra/FormularioU/Rubro1IncBValidator.js"></script>
+<!--<script src="~/Scripts/DeclaracionesJuradas/Validators/Tierra/FormularioU/Rubro1IncEyFValidator.js"></script>-->
+<script src="~/Scripts/DeclaracionesJuradas/Validators/Tierra/FormularioU/Rubro2Validator.js"></script>
+
+<script>
+    const modalContainer = "#modalFormulario", mainContainer = "#formularioDDJJ";
+    const containers = {
+        buscador: $("#buscador-ddjj-container", mainContainer),
+        formularioExterno: $("#formulario-externo-container", mainContainer),
+        formularioDDJJ: $("#formulario-content", modalContainer)
+    };
+    const validators = [
+        new CabeceraFormUSoRValidator({ section: $("#step-1", containers.formularioDDJJ), ...containers }),
+        new Rubro1IncBFormUValidator({ section: $("#step-2", containers.formularioDDJJ), ...containers }),
+        new Rubro1IncCyDFormUSoRValidator({ section: $("#step-3", containers.formularioDDJJ), ...containers }),
+        //new Rubro1IncEyFFormUValidator({ section: $("#step-4", containers.formularioDDJJ), ...containers }),
+        new Rubro2FormUValidator($("#modalSeleccionClase", mainContainer), $("#busquedaCalleAforo", mainContainer), { section: $("#step-4", containers.formularioDDJJ), ...containers })
+    ];
+    var formularioU = new FormularioDDJJController(modalContainer, validators, declaracionesJuradas);
+    $(document).ready(function () {
+        $(modalContainer).one("hide.bs.modal", function () {
+            delete CabeceraFormUSoRValidator;
+            delete Rubro1IncBFormUValidator;
+            delete Rubro1IncCyDFormUSoRValidator;
+            //delete Rubro1IncEyFFormUValidator;
+            delete Rubro2FormUValidator;
+            delete FormularioDDJJController;
+            delete formularioU;
+        });
+        formularioU.init();
+    });
+</script>

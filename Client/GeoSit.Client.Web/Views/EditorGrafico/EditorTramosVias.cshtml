@@ -1,0 +1,365 @@
+﻿@model GeoSit.Data.BusinessEntities.Via.DTO.TramoViaDTO
+@{
+    Layout = "Index.cshtml";
+}
+@section Title
+{
+    @Html.Raw("Listado de Tramos")
+}
+@section Detail
+{
+    @Html.Raw("Detalle de Tramo")
+}
+
+@section Scripts
+{
+    <script>
+        var ObjetoManager = function (owner) {
+            const form = "form.object-data",
+                cols = [
+                    { name: "TipoVia", data: "TipoVia" },
+                    { name: "Calle", data: "Calle" },
+                    { name: "Altura", data: "Altura" },
+                    { name: "Paridad", data: "Paridad" },
+                    { name: "Localidad", data: "Localidad" },
+                ];
+            const fill = (tramoVia) => {
+                cancelCalle();
+                $("#TramoViaId", form).val(tramoVia.TramoViaId);
+                $("#NombreVia", form).val("");
+                $("#TipoViaId", form).val(tramoVia.TipoViaId);
+                $("#LocalidadId", form).val(tramoVia.LocalidadId).trigger('change');
+                $("#AlturaDesde", form).val(tramoVia.AlturaDesde);
+                $("#AlturaHasta", form).val(tramoVia.AlturaHasta);
+                $("#Paridad", form).val(tramoVia.Paridad);
+                $("#Aforo", form).val(tramoVia.Aforo);
+                $("#Cpa", form).val(tramoVia.Cpa);
+                $("#WKT", form).val(tramoVia.WKT);
+                getCalles(tramoVia.LocalidadId)
+                    .then(() => {
+                        $("#ViaId", form).val(tramoVia.ViaId).trigger('change');
+                    });
+            };
+            const get = function (row) {
+                let loaded = Promise.resolve(true);
+                if (row) {
+                    loaded = new Promise((ok, error) => {
+                        showLoading();
+                        $.getJSON(`${BASE_URL}EditorGrafico/TramosVias/${row.TramoViaId}`)
+                            .done(data => {
+                                fill(data);
+                                ok(false);
+                            })
+                            .fail(error)
+                            .always(hideLoading);
+                    });
+                }
+                return loaded;
+            };
+            const save = function () {
+                return new Promise((ok, error) => {
+                    $.post(`${BASE_URL}EditorGrafico/TramosVias`, $(form).serialize())
+                        .done(() => ok(`El tramo de vía se ha grabado correctamente`))
+                        .fail(() => error(`No se pudo grabar el tramo de vía`))
+                });
+            };
+            const remove = function (row) {
+                return new Promise((ok, error) => {
+                    $.post(`${BASE_URL}EditorGrafico/BorrarTramoVia/${row.TramoViaId}`)
+                        .done(() => ok(`El tramo de vía seleccionado se ha borrado correctamente`))
+                        .fail(() => error(`No se pudo borrar el tramo de vía seleccionado`));
+                });
+            };
+            const beginEdit = function () {
+                $("#btnEditarUbicacion,#btnEliminarUbicacion,#LocalidadId,#ViaId,#btnNuevaVia,#btnCancelarVia,#Paridad,#TipoViaId", form).removeAttr("disabled");
+                $("#NombreVia,#AlturaDesde,#AlturaHasta,#Cpa,#Aforo", form).removeAttr("readonly");
+            };
+            const reset = function () {
+                endEdit();
+                fill({});
+            };
+            const endEdit = function () {
+                $("#btnEditarUbicacion,#btnEliminarUbicacion,#LocalidadId,#ViaId,#btnNuevaVia,#btnCancelarVia,#Paridad,#TipoViaId", form).attr("disabled", "disabled");
+                $("#NombreVia,#AlturaDesde,#AlturaHasta,#Cpa,#Aforo", form).attr("readonly", "readonly");
+                resetValidator();
+            };
+            const valid = function () {
+                const fv = $(form).data('formValidation');
+                fv.validate();
+                return fv.isValid();
+            };
+            const showGeometry = function (edit) {
+                $(owner).trigger("showGeometry", { edit });
+            };
+            const writeGeometry = function (wkt) {
+                $("#WKT", form).val(wkt);
+            };
+            const getWKT = function () {
+                return $("#WKT", form).val();
+            };
+            const getSelection = function () {
+                const hasWKT = !!getWKT(),
+                    id = hasWKT ? Number($("#TramoViaId", form).val()) : Number($("#LocalidadId", form).val()),
+                    layer = hasWKT ? "@(ViewData["Layer"])" : "@(ViewData["LayerLocalidad"])";
+
+                return [[[id]], [layer]];
+            };
+            const getCalles = function (localidad) {
+                let opts = [{ id: "", text: "- SELECCIONE -" }]
+                let loaded = Promise.resolve(opts);
+                if (localidad) {
+                    loaded = new Promise((ok, error) => {
+                        $.getJSON(`${BASE_URL}EditorGrafico/ViasByLocalidad/${localidad}`, vias => {
+                            ok([...opts, ...vias]);
+                        }).fail(error);
+                    });
+                }
+                return loaded.then(vias => {
+                    $("#ViaId", form).empty().html(vias.sort((a, b) => a.text <= b.text ? -1 : 1).map(v => `<option value="${v.id}">${v.text}</option>`));
+                    $("#ViaId", form).trigger("change");
+                });
+            };
+            const addCalle = function () {
+                $(".via.select", form).hide();
+                $(".via.edit", form).show();
+                $(form)
+                    .bootstrapValidator("enableFieldValidators", "ViaId", false)
+                    .bootstrapValidator("enableFieldValidators", "NombreVia", true)
+                    .bootstrapValidator("resetField", "ViaId");
+            };
+            const cancelCalle = function () {
+                $(".via.edit", form).hide();
+                $(".via.select", form).show();
+                $("#NombreVia").val("");
+                $(form)
+                    .bootstrapValidator("enableFieldValidators", "ViaId", true)
+                    .bootstrapValidator("enableFieldValidators", "NombreVia", false)
+                    .bootstrapValidator("resetField", "Via.Nombre");
+            };
+            const resetValidator = function () {
+                if ($(form).data("bootstrapValidator")) {
+                    $(form).bootstrapValidator("destroy");
+                }
+                $(form).bootstrapValidator({
+                    message: 'Este valor no es válido',
+                    excluded: ['[readonly]', '[disabled]', ':disabled'],
+                    fields: {
+                        Paridad: {
+                            message: 'Prioridad no válida',
+                            validators: {
+                                notEmpty: {
+                                    message: 'Debe seleccionar una prioridad.'
+                                }
+                            }
+                        },
+                        ObjetoPadreId: {
+                            message: 'Localidad no válida',
+                            validators: {
+                                notEmpty: {
+                                    message: 'Debe seleccionar una localidad.'
+                                }
+                            }
+                        },
+                        ViaId: {
+                            message: 'Calle no válida',
+                            validators: {
+                                notEmpty: {
+                                    message: 'Debe especificar una calle.'
+                                }
+                            }
+                        },
+                        AlturaDesde: {
+                            message: 'Altura desde no válida',
+                            validators: {
+                                notEmpty: {
+                                    message: 'Debe especificar una altura desde.'
+                                }
+                            }
+                        },
+                        AlturaHasta: {
+                            message: 'Altura hasta no válida',
+                            validators: {
+                                notEmpty: {
+                                    message: 'Debe especificar una altura hasta.'
+                                }
+                            }
+                        },
+                        NombreVia: {
+                            message: 'Nombre Calle no válida',
+                            validators: {
+                                notEmpty: {
+                                    message: 'Debe especificar el nombre de la calle.'
+                                }
+                            }
+                        },
+                        TipoViaId: {
+                            message: 'Tipo de vía no válida',
+                            validators: {
+                                notEmpty: {
+                                    message: 'Debe seleccionar el tipo de vía.'
+                                }
+                            }
+                        }
+                    }
+                });
+            };
+            resetValidator();
+            $("#filtroLocalidad").select2();
+            $("#LocalidadId", form).on("change", (evt) => getCalles(evt.target.value)).select2();
+            $("#ViaId", form).select2();
+            $("#btnNuevaVia", form).on("click", addCalle);
+            $("#btnCancelarVia", form).on("click", cancelCalle);
+            $("#btnEliminarUbicacion").on("click", writeGeometry.bind(null, ""));
+            $("#btnEditarUbicacion").on("click", showGeometry.bind(null, true));
+
+            return {
+                tableColumns: cols,
+                get,
+                save,
+                remove,
+                reset,
+                valid,
+                edit: beginEdit,
+                showGeometry: showGeometry.bind(null, false),
+                writeGeometry,
+                getWKT,
+                getSelection
+            };
+        }
+    </script>
+}
+
+@section TableColumns
+{
+    <th> Tipo</th>
+    <th> Calle</th>
+    <th> Altura</th>
+    <th> Paridad</th>
+    <th> Localidad</th>
+}
+
+@section TableFilters
+{
+    <th>
+        <form onsubmit="javascript:void(0);">
+            @Html.DropDownList("filtroTipoVia", (IEnumerable<SelectListItem>)ViewData["FiltroTiposVias"], new { @class = "form-control input-sm", @Value = ViewData["TipoViaDefault"] })
+        </form>
+    </th>
+    <th><form onsubmit="javascript:void(0);"><input autocomplete="off" type="text" data-filter class="form-control input-sm" placeholder="Buscar..."></form></th>
+    <th><form onsubmit="javascript:void(0);"><input autocomplete="off" type="text" data-filter class="form-control input-sm" placeholder="Buscar..."></form></th>
+    <th>
+        <form onsubmit="javascript:void(0);">
+            @Html.DropDownList("filtroParidad", (IEnumerable<SelectListItem>)ViewData["FiltroParidad"], new { @class = "form-control input-sm", @Value = ViewData["ParidadDefault"] })
+        </form>
+    </th>
+    <th>
+        <form onsubmit="javascript:void(0);">
+            @Html.DropDownList("filtroLocalidad", (IEnumerable<SelectListItem>)ViewData["FiltroLocalidades"], new { @class = "form-control input-sm", @Value = ViewData["LocalidadDefault"] })
+        </form>
+    </th>
+}
+@section ObjectData
+{
+    <form class="form-horizontal object-data">
+        @Html.HiddenFor(model => model.TramoViaId)
+        @*<div class="row">
+                <div class="form-group col-xs-6">
+                    <label class="control-label col-xs-4">Localidad</label>
+                    <div class="col-xs-8">
+                        @Html.DropDownListFor(model => model.ObjetoPadreId, (IEnumerable<SelectListItem>)ViewData["Localidades"], new { @class = "form-control", @disabled = "disabled" })
+                    </div>
+                </div>
+            </div>*@
+        <div class="row">
+            <div class="form-group col-xs-6">
+                <label class="control-label col-xs-4">Localidad</label>
+                <div class="col-xs-8">
+                    @Html.DropDownListFor(model => model.LocalidadId, (IEnumerable<SelectListItem>)ViewData["Localidades"], new { @class = "form-control", @disabled = "disabled" })
+                </div>
+            </div>
+            <div class="form-group col-xs-6">
+                <label class="control-label col-xs-4">Nombre</label>
+                <div class="col-xs-8">
+                    <div class="via select input-group">
+                        <select name="ViaId" id="ViaId" class="form-control" disabled="disabled"></select>
+                        <span class="input-group-btn">
+                            <button type="button" title="Nueva Calle" id="btnNuevaVia" class="btn btn-default" disabled="disabled">
+                                <i class="fa fa-edit"></i>
+                            </button>
+                        </span>
+                    </div>
+                    <div class="via edit input-group" style="display:none;">
+                        @Html.TextBoxFor(model => model.NombreVia, new { @class = "form-control" })
+                        <span class="input-group-btn">
+                            <button type="button" title="Seleccionar Calle" id="btnCancelarVia" class="btn btn-default" disabled="disabled">
+                                <i class="fa fa-undo"></i>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-xs-6">
+                <label class="control-label col-xs-4">Tipo</label>
+                <div class="col-xs-8">
+                    @Html.DropDownListFor(model => model.TipoViaId, (IEnumerable<SelectListItem>)ViewData["TiposVias"], new { @class = "form-control", @disabled = "disabled" })
+                </div>
+            </div>
+            <div class="form-group col-xs-6">
+                <div class="row">
+                    <div class="form-group col-xs-6 remove-margin">
+                        <label class="control-label col-xs-4">Desde</label>
+                        <div class="col-xs-8">
+                            @Html.TextBoxFor(model => model.AlturaDesde, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+                    <div class="form-group col-xs-6 remove-margin">
+                        <label class="control-label col-xs-4">Hasta</label>
+                        <div class="col-xs-8">
+                            @Html.TextBoxFor(model => model.AlturaHasta, new { @class = "form-control", @readonly = "readonly" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-xs-6">
+                <label class="control-label col-xs-4">Paridad</label>
+                <div class="col-xs-8">
+                    @Html.DropDownListFor(model => model.Paridad, (IEnumerable<SelectListItem>)ViewData["Paridad"], new { @class = "form-control", @disabled = "disabled" })
+                </div>
+            </div>
+            <div class="form-group col-xs-6">
+                <label class="control-label col-xs-4">CP</label>
+                <div class="col-xs-8">
+                    @Html.TextBoxFor(model => model.Cpa, new { @class = "form-control", @readonly = "readonly" })
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-xs-6">
+                <label class="control-label col-xs-4">Aforo</label>
+                <div class="col-xs-8">
+                    @Html.TextBoxFor(model => model.Aforo, new { @class = "form-control", @readonly = "readonly", @type = "number", @min = "0", @step = "0.01" })
+                </div>
+            </div>
+            <div class="form-group col-xs-6">
+                <label class="control-label col-xs-4">Coordenadas</label>
+                <div class="col-xs-8">
+                    <div class="input-group">
+                        @Html.TextBoxFor(model => model.WKT, new { @class = "form-control", @readonly = "readonly" })
+                        <span class="input-group-btn">
+                            <button type="button" title="Editar" id="btnEditarUbicacion" class="btn btn-default" disabled="disabled">
+                                <i class="fa fa-edit"></i>
+                            </button>
+                            <button type="button" title="Quitar" id="btnEliminarUbicacion" class="btn btn-default" disabled="disabled">
+                                <i class="fa fa-eraser"></i>
+                            </button>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+}

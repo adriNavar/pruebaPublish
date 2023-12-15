@@ -1,0 +1,46 @@
+﻿#scroll-content-plantillas { color: black; overflow: hidden !important; }
+#scroll-content-plantillas .panel-heading {  border-radius: 0 ; }
+#scroll-content-plantillas .panel-info { position:relative !important; top: -10px !important; }
+#scroll-content-plantillas a .panel-title {font-size: 14px;  padding: 8px 15px;  font-weight: bold; background-color:transparent; }
+#scroll-content-plantillas a .panel-title::selection { background-color:transparent; }
+#scroll-content-plantillas a .panel-title .glyphicon { margin-top: 2px; }
+#scroll-content-plantillas a .panel-title:hover { }
+#scroll-content-plantillas .panel-body {padding: 0; border: none;}
+#scroll-content-plantillas .panel-default { margin: 0; border: 0; border-radius: 5px 5px 0 0;}
+#scroll-content-plantillas .panel-default > .panel-heading{ font-weight:bold;border-radius: 0;	border: 0;}
+#scroll-content-plantillas p { margin: 0 0 0 30px;}
+#scroll-content-plantillas .text-muted, #plantillaModal p {  font-weight: bold; cursor: default; line-height: 2.5em; }
+#scroll-content-plantillas .text-muted  { margin-top: 10px !important; }
+#scroll-content-plantillas a .panel-title i.fa {
+	float: right;
+	position: relative;
+	margin: 1px -5px 0 5px;
+	font-size: 15px;
+	right: 10px;
+}
+.accordion a.collapsed .panel-title i.fa:after {  content: '\f078';}
+.accordion a .panel-title i.fa:after { content: '\f077';}
+.plantilla-content .search { width: 100%; margin-top: 10px; display:table; vertical-align:central; border-collapse: collapse; }
+.plantilla-body {
+	overflow: hidden !important; 	
+	overflow-y: visible !important; 
+    padding-bottom: 0 !important;
+}
+.plantilla-datos {
+    padding: 0px;
+    margin-top: 0px; margin-bottom: 0;
+}
+.plantilla-datos .panel-body { padding: 5px 15px !important }
+
+.cursor-pointer { cursor: pointer; }
+.align-right { text-align: right; }
+.tooltip.in {
+  filter: alpha(opacity=100);
+  opacity: 1;
+}
+
+.resultados { margin-top: 10px }
+.plantilla-listado { height: auto; max-height: 300px }
+.section-position { 
+    margin-top: 3px;
+}

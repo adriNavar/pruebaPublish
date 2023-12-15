@@ -1,0 +1,153 @@
+﻿@model GeoSit.Client.Web.Models.BusquedaAvanzadaModel
+@{
+    ViewBag.Title = "Componentes";
+    ViewBag.Description = "Componentes a visualizar.<br />";
+}
+
+<link href="~/Content/theme_new.css?v=@(DateTime.Now.Ticks.ToString())" rel="stylesheet" />
+<link href="~/Content/busquedaavanzada.css?v=@(DateTime.Now.Ticks.ToString())" rel="stylesheet" />
+
+<div class="modal fade theme_new busqueda-avanzada componentes" id="myModalBA" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static">
+    <div class="modal-dialog  modal-fullwidth">
+        <div class="modal-content">
+            <div class="scroll-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="myModalLabel">Búsqueda Avanzada: @ViewBag.Title</h3>
+                    <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+                    <a href='@Url.Action("BuscarAyuda", "BusquedaAvanzada")'>
+                        <span id="ayuda" data-placement="right" title="Ayuda" data-original-title="Ayuda" class="fa fa-question fa-2x white cursor-pointer img-responsive pull-right" style="margin-right: 10px;"></span>
+                    </a>
+                </div>
+                <div class="modal-body componentes-body">
+                    <div id="componentes-content" class="body-content">
+                        @using (Ajax.BeginForm("GetAgrupamientoView", "BusquedaAvanzada", new AjaxOptions { }, new { id = "form-componente", role = "form", novalidate = "" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            <div class="panel panel-default filtro">
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <div class="input-group">
+                                            <input id="buscar" type="text" value="" class="form-control" placeholder="Filtrar" autocomplete="off">
+                                            <span class="input-group-addon cursor-pointer">
+                                                <span id="clearSearch" title="Limpiar" class="fa fa-eraser"></span>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="panel panel-default selectores listado-componentes">
+                                <div class="panel-body">
+                                    <div class="container-fluid">
+                                        <div class="selector-body">
+                                            <ul id="componentes">
+                                                @foreach (var item in ViewBag.listaComponenetes)
+                                                {
+                                                    var txt = "";
+                                                    if (Model.Componentelist.Any(c => c.ComponenteId == item.ComponenteId))
+                                                    {
+                                                        txt = "seleccionado";
+                                                    }
+                                                    <li class="col-xs-4 seleccionable @txt">
+                                                        <div class="col-xs-3">
+                                                            @if (item.Graficos == 1)
+                                                            {<span class="glyphicons-icon vector_path_polygon"></span> }
+                                                            else if (item.Graficos == 2)
+                                                            { <span class="glyphicons-icon vector_path_line"></span> }
+                                                            else if (item.Graficos == 3)
+                                                            { <span class="glyphicons-icon google_maps"></span> }
+                                                            else if (item.Graficos == 4)
+                                                            { <span class="glyphicons-icon show_thumbnails"></span>}
+                                                        </div>
+                                                        <div class="col-xs-7">
+                                                            <div class="row">
+                                                                @if (!string.IsNullOrEmpty(txt))
+                                                                {
+                                                                    <input type="checkbox" checked="checked" name="Componente.ComponenteId" value='@item.ComponenteId' />
+                                                                }
+                                                                else
+                                                                {
+                                                                    <input type="checkbox" name="Componente.ComponenteId" value='@item.ComponenteId' />
+                                                                }
+                                                                <label class="h5" for="@item.Nombre">
+                                                                    @item.Nombre
+                                                                    <span class="fa fa-check pull-right"></span>
+                                                                </label>
+                                                            </div>
+                                                            <div class="row">
+                                                                <h6><span class="pull-left">@item.Descripcion</span></h6>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                }
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-xs-8 pull-left wizard">
+                        <div id="progress-bar-step" class="bs-wizard">
+                            <div class="col-xs-3 bs-wizard-step active">
+                                <div class="progress"><div class="progress-bar"></div></div>
+                                <a class="bs-wizard-dot"></a>
+                                <div class="bs-wizard-info text-center">Componentes</div>
+                            </div>
+
+                            <div class="col-xs-3 bs-wizard-step disabled">
+                                <div class="progress"><div class="progress-bar"></div></div>
+                                <a class="bs-wizard-dot"></a>
+                                <div class="bs-wizard-info text-center">Agrupamiento</div>
+                            </div>
+
+                            <div class="col-xs-3 bs-wizard-step disabled">
+                                <div class="progress"><div class="progress-bar"></div></div>
+                                <a class="bs-wizard-dot"></a>
+                                <div class="bs-wizard-info text-center">Filtros</div>
+                            </div>
+
+                            <div class="col-xs-3 bs-wizard-step disabled">
+                                <div class="progress"><div class="progress-bar"></div></div>
+                                <a class="bs-wizard-dot"></a>
+                                <div class="bs-wizard-info text-center">Resultado</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-4 pull-right botones">
+                        <span data-placement="right" id="volver" title="Volver a Biblioteca" data-original-title="Volver a Biblioteca" class="fa fa-arrow-left fa-2x light-blue cursor-pointer"></span>
+                        <span data-placement="right" id="btn-componente-siguiente" title="Ir a Agrupamiento" data-original-title="Ir a Agrupamiento" class="fa fa-arrow-right fa-2x light-blue cursor-pointer"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Advertencia-->
+<div class="modal fade theme_new mensaje" id="ModalInfoBAComponentes" tabindex="-3" role="dialog" aria-labelledby="TituloInfoBAComponentes" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="TituloInfoBAComponentes">Titulo</h3>
+                <span aria-hidden="true" class="fa fa-close white fa-2x cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+            </div>
+            <div class="modal-body">
+                <div id="MensajeInfoBAComponentes" class="alert alert-dismissible" role="alert">
+                    <p id="DescripcionInfoBAComponentes">Descripcion de la informacion</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-xs-4 pull-right">
+                    <span id="btnAceptarInfoBAComponentes" aria-hidden="true" data-dismiss="modal" data-placement="right" title="Aceptar" data-original-title="Aceptar" class="fa fa-check-circle light-blue fa-3x cursor-pointer"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/jquery.form.js"></script>
+<script src="~/Scripts/BusquedaAvanzada/componentes.js"></script>
+<script src="~/Scripts/MicrosoftAjax.debug.js" type="text/javascript"></script>
+<script src="~/Scripts/MicrosoftMvcAjax.debug.js" type="text/javascript"></script>

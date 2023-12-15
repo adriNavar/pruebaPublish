@@ -1,0 +1,19 @@
+﻿@model IEnumerable<GeoSit.Data.BusinessEntities.Inmuebles.UnidadTributaria>
+
+
+@foreach (var u in Model)
+{ 
+    <tr>
+        <td class="hide">@u.UnidadTributariaId</td>
+        <td>@u.CodigoProvincial</td>
+        @if (u.ParcelaID != null)
+        {
+            <td><span onclick="fnClickMasInfo(@u.ParcelaID)" class="fa fa-th black cursor-pointer boton-deshabilitado" aria-hidden="true"></span></td>
+        }
+        else
+        {
+            <td><span class="fa fa-th black cursor-pointer boton-deshabilitado" aria-hidden="true"></span></td>
+        }
+    </tr>
+}
+

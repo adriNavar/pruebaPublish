@@ -1,0 +1,1211 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="ABMdeActas" xml:space="preserve">
+    <value>236</value>
+    <comment>Actas - ABM de Actas</comment>
+  </data>
+  <data name="ABMdeExpedientesdeObra" xml:space="preserve">
+    <value>118</value>
+    <comment>Obras Particulares - ABM de Expedientes de Obra</comment>
+  </data>
+  <data name="ABMdePersonas" xml:space="preserve">
+    <value>244</value>
+    <comment>Herramientas - ABM de Personas</comment>
+  </data>
+  <data name="ABMDocumentos" xml:space="preserve">
+    <value>262</value>
+    <comment>Herramientas - ABM Documentos</comment>
+  </data>
+  <data name="ABMDomicilios" xml:space="preserve">
+    <value>120</value>
+    <comment>ABM Domicilios</comment>
+  </data>
+  <data name="ABMPersonas" xml:space="preserve">
+    <value>282</value>
+    <comment>ABM Personas</comment>
+  </data>
+  <data name="ABMProfesion" xml:space="preserve">
+    <value>257</value>
+    <comment>Herramientas - ABM Profesión</comment>
+  </data>
+  <data name="AccederalMantenedorparcelario" xml:space="preserve">
+    <value>129</value>
+    <comment>Asociación de Parcelas Gráficas y Alfanuméricas - Acceder al Mantenedor parcelario</comment>
+  </data>
+  <data name="Actas" xml:space="preserve">
+    <value>119</value>
+    <comment>Inspecciones - Actas</comment>
+  </data>
+  <data name="ActualizacionPadrones" xml:space="preserve">
+    <value>338</value>
+    <comment>Rentas - Actualización Padrones</comment>
+  </data>
+  <data name="AdministraciondeFeriados" xml:space="preserve">
+    <value>47</value>
+    <comment>Seguridad - Administración de Feriados</comment>
+  </data>
+  <data name="AdministraciondeHorarios" xml:space="preserve">
+    <value>43</value>
+    <comment>Seguridad - Administración de Horarios</comment>
+  </data>
+  <data name="AdministraciondePerfiles" xml:space="preserve">
+    <value>39</value>
+    <comment>Seguridad - Administración de Perfiles</comment>
+  </data>
+  <data name="AdministraciondeTablasAuxiliares" xml:space="preserve">
+    <value>51</value>
+    <comment>Administración de Tablas Auxiliares</comment>
+  </data>
+  <data name="AdministraciondeUsuarios" xml:space="preserve">
+    <value>35</value>
+    <comment>Seguridad - Administración de Usuarios</comment>
+  </data>
+  <data name="AgregarControlesTecnicos" xml:space="preserve">
+    <value>17</value>
+    <comment>Expediente de Obra - Agregar Controles Técnicos</comment>
+  </data>
+  <data name="AgregarExpedienteObra" xml:space="preserve">
+    <value>5</value>
+    <comment>Expediente de Obra - Agregar Expediente Obra</comment>
+  </data>
+  <data name="AgregarFeriados" xml:space="preserve">
+    <value>48</value>
+    <comment>Administración de Feriados - Agregar Feriados</comment>
+  </data>
+  <data name="AgregarLiquidaciones" xml:space="preserve">
+    <value>13</value>
+    <comment>Expediente de Obra - Agregar Liquidaciones</comment>
+  </data>
+  <data name="AgregarObservaciones" xml:space="preserve">
+    <value>20</value>
+    <comment>Expediente de Obra - Agregar Observaciones</comment>
+  </data>
+  <data name="AgregarPlanos" xml:space="preserve">
+    <value>9</value>
+    <comment>Expediente de Obra - Agregar Planos</comment>
+  </data>
+  <data name="AgregarSuperficies" xml:space="preserve">
+    <value>24</value>
+    <comment>Expediente de Obra - Agregar Superficies</comment>
+  </data>
+  <data name="AgregarTablasAux" xml:space="preserve">
+    <value>52</value>
+    <comment>Administración de Tablas Auxiliares - Agregar Tablas Aux</comment>
+  </data>
+  <data name="AltaAlfanumericodeParcelasyPosesiones" xml:space="preserve">
+    <value>105</value>
+    <comment>Catastro - Alta Alfanumérico de Parcelas y Posesiones</comment>
+  </data>
+  <data name="AltaAtributo" xml:space="preserve">
+    <value>195</value>
+    <comment>Mantenimiento de Atributos y sus Valores por Zona - Alta Atributo</comment>
+  </data>
+  <data name="AltaCertificados" xml:space="preserve">
+    <value>213</value>
+    <comment>Gestión de Informes y Certificados - Alta Certificados</comment>
+  </data>
+  <data name="AltaControlTecnico" xml:space="preserve">
+    <value>182</value>
+    <comment>ABM de Expedientes de Obra - Alta Control Tecnico</comment>
+  </data>
+  <data name="AltadeActas" xml:space="preserve">
+    <value>239</value>
+    <comment>ABM de Actas - Alta de Actas</comment>
+  </data>
+  <data name="AltadeDomicilio" xml:space="preserve">
+    <value>252</value>
+    <comment>AMB Domicilio - Alta de Domicilio</comment>
+  </data>
+  <data name="AltadeInspeccion" xml:space="preserve">
+    <value>227</value>
+    <comment>Planificar inspecciones - Alta de Inspección</comment>
+  </data>
+  <data name="Altadeinspectores" xml:space="preserve">
+    <value>231</value>
+    <comment>Registro de Inspectores - Alta de inspectores</comment>
+  </data>
+  <data name="AltadeParcelasDestino" xml:space="preserve">
+    <value>123</value>
+    <comment>Alta Alfanumérico de Parcelas y Posesiones - Alta de Parcelas Destino</comment>
+  </data>
+  <data name="AltadeParcelasOrigen" xml:space="preserve">
+    <value>122</value>
+    <comment>Alta Alfanumérico de Parcelas y Posesiones - Alta de Parcelas Origen</comment>
+  </data>
+  <data name="AltadePersonas" xml:space="preserve">
+    <value>246</value>
+    <comment>ABM de Personas - Alta de Personas</comment>
+  </data>
+  <data name="AltadeProfesion" xml:space="preserve">
+    <value>259</value>
+    <comment>ABM Profesión - Alta de Profesión</comment>
+  </data>
+  <data name="Altaderegistros" xml:space="preserve">
+    <value>269</value>
+    <comment>Mantenimiento de Tablas Auxiliares - Alta de registros</comment>
+  </data>
+  <data name="AltadeResultadodeBusqueda" xml:space="preserve">
+    <value>202</value>
+    <comment>Mantenimiento de Datos de Infraestructura - Alta de Resultado de Búsqueda</comment>
+  </data>
+  <data name="AltadeTramites" xml:space="preserve">
+    <value>218</value>
+    <comment>Configuración de Certificados - Alta de Trámites</comment>
+  </data>
+  <data name="AltaDocumento" xml:space="preserve">
+    <value>172</value>
+    <comment>ABM de Expedientes de Obra - Alta Documento</comment>
+  </data>
+  <data name="AltaDocumentosParcela" xml:space="preserve">
+    <value>136</value>
+    <comment>Mantenedor Parcelario - Alta Documentos Parcela</comment>
+  </data>
+  <data name="AltaDocumentosUnidadTributaria" xml:space="preserve">
+    <value>149</value>
+    <comment>Mantenedor Parcelario - Alta Documentos Unidad Tributaria</comment>
+  </data>
+  <data name="AltaDomicilio" xml:space="preserve">
+    <value>142</value>
+    <comment>Mantenedor Parcelario - Alta Domicilio</comment>
+  </data>
+  <data name="AltaDominio" xml:space="preserve">
+    <value>152</value>
+    <comment>Mantenedor Parcelario - Alta Dominio</comment>
+  </data>
+  <data name="AltaEstado" xml:space="preserve">
+    <value>166</value>
+    <comment>ABM de Expedientes de Obra - Alta Estado</comment>
+  </data>
+  <data name="AltaExpedientesObra" xml:space="preserve">
+    <value>158</value>
+    <comment>ABM de Expedientes de Obra - Alta Expedientes Obra</comment>
+  </data>
+  <data name="AltaHorario" xml:space="preserve">
+    <value>44</value>
+    <comment>Administración de Horarios - Agregar Horarios</comment>
+  </data>
+  <data name="AltaInspeccion" xml:space="preserve">
+    <value>181</value>
+    <comment>ABM de Expedientes de Obra - Alta Inspeccion</comment>
+  </data>
+  <data name="AltaLiquidacion" xml:space="preserve">
+    <value>178</value>
+    <comment>ABM de Expedientes de Obra - Alta Liquidacion</comment>
+  </data>
+  <data name="AltaMantenedorUnidadTributaria" xml:space="preserve">
+    <value>312</value>
+    <comment>Mantenedor Parcelario - Alta Mantenedor Unidad Tributaria</comment>
+  </data>
+  <data name="AltaNomenclatura" xml:space="preserve">
+    <value>133</value>
+    <comment>Mantenedor Parcelario - Alta Nomenclatura</comment>
+  </data>
+  <data name="AltaObservacion" xml:space="preserve">
+    <value>185</value>
+    <comment>ABM de Expedientes de Obra - Alta Observacion</comment>
+  </data>
+  <data name="AltaPerfil" xml:space="preserve">
+    <value>40</value>
+    <comment>Administración de Perfiles - Agregar Perfiles</comment>
+  </data>
+  <data name="AltaPersona" xml:space="preserve">
+    <value>175</value>
+    <comment>ABM de Expedientes de Obra - Alta Persona</comment>
+  </data>
+  <data name="AltaResponsableFiscal" xml:space="preserve">
+    <value>145</value>
+    <comment>Mantenedor Parcelario - Alta Responsable Fiscal</comment>
+  </data>
+  <data name="AltaSuperficie" xml:space="preserve">
+    <value>168</value>
+    <comment>ABM de Expedientes de Obra - Alta Superficie</comment>
+  </data>
+  <data name="AltaTitular" xml:space="preserve">
+    <value>155</value>
+    <comment>Mantenedor Parcelario - Alta Titular</comment>
+  </data>
+  <data name="AltaUbicacionObra" xml:space="preserve">
+    <value>163</value>
+    <comment>ABM de Expedientes de Obra - Alta Ubicacion Obra</comment>
+  </data>
+  <data name="AltaUnidadesTributarias" xml:space="preserve">
+    <value>161</value>
+    <comment>ABM de Expedientes de Obra - Alta Unidades Tributarias</comment>
+  </data>
+  <data name="AltaUsuario" xml:space="preserve">
+    <value>36</value>
+    <comment>Administración de Usuarios - Agregar Usuarios</comment>
+  </data>
+  <data name="AMBDomicilio" xml:space="preserve">
+    <value>250</value>
+    <comment>Herramientas - AMB Domicilio</comment>
+  </data>
+  <data name="AsociaciondeParcelasGraficasyAlfanumericas" xml:space="preserve">
+    <value>112</value>
+    <comment>Catastro - Asociación de Parcelas Gráficas y Alfanuméricas</comment>
+  </data>
+  <data name="Auditoria" xml:space="preserve">
+    <value>102</value>
+    <comment>Seguridad - Auditoria</comment>
+  </data>
+  <data name="BajaCertificados" xml:space="preserve">
+    <value>215</value>
+    <comment>Gestión de Informes y Certificados - Baja Certificados</comment>
+  </data>
+  <data name="BajaControlTecnico" xml:space="preserve">
+    <value>183</value>
+    <comment>ABM de Expedientes de Obra - Baja Control Tecnico</comment>
+  </data>
+  <data name="Bajadeactas" xml:space="preserve">
+    <value>241</value>
+    <comment>ABM de Actas - Baja de actas</comment>
+  </data>
+  <data name="BajadeAtributos" xml:space="preserve">
+    <value>197</value>
+    <comment>Mantenimiento de Atributos y sus Valores por Zona - Baja de Atributos</comment>
+  </data>
+  <data name="BajadeDomicilio" xml:space="preserve">
+    <value>254</value>
+    <comment>AMB Domicilio - Baja de Domicilio</comment>
+  </data>
+  <data name="BajadeInspeccion" xml:space="preserve">
+    <value>229</value>
+    <comment>Planificar inspecciones - Baja de Inspección</comment>
+  </data>
+  <data name="Bajadeinspectores" xml:space="preserve">
+    <value>232</value>
+    <comment>Registro de Inspectores - Baja de inspectores</comment>
+  </data>
+  <data name="BajadeLiquidacion" xml:space="preserve">
+    <value>177</value>
+    <comment>ABM de Expedientes de Obra - Baja de Liquidación</comment>
+  </data>
+  <data name="BajadeParcelasDestino" xml:space="preserve">
+    <value>125</value>
+    <comment>Alta Alfanumérico de Parcelas y Posesiones - Baja de Parcelas Destino</comment>
+  </data>
+  <data name="BajadeParcelasOrigen" xml:space="preserve">
+    <value>124</value>
+    <comment>Alta Alfanumérico de Parcelas y Posesiones - Baja de Parcelas Origen</comment>
+  </data>
+  <data name="BajadePersonas" xml:space="preserve">
+    <value>248</value>
+    <comment>ABM de Personas - Baja de Personas</comment>
+  </data>
+  <data name="BajadeProfesion" xml:space="preserve">
+    <value>261</value>
+    <comment>ABM Profesión - Baja de Profesión</comment>
+  </data>
+  <data name="BajadeRegistros" xml:space="preserve">
+    <value>271</value>
+    <comment>Mantenimiento de Tablas Auxiliares - Baja de Registros</comment>
+  </data>
+  <data name="BajadeResultadodeBusqueda" xml:space="preserve">
+    <value>204</value>
+    <comment>Mantenimiento de Datos de Infraestructura - Baja de Resultado de Búsqueda</comment>
+  </data>
+  <data name="BajadeTramite" xml:space="preserve">
+    <value>220</value>
+    <comment>Configuración de Certificados - Baja de Trámite</comment>
+  </data>
+  <data name="BajaDocumento" xml:space="preserve">
+    <value>173</value>
+    <comment>ABM de Expedientes de Obra - Baja Documento</comment>
+  </data>
+  <data name="BajaDocumentosParcela" xml:space="preserve">
+    <value>138</value>
+    <comment>Mantenedor Parcelario - Baja Documentos Parcela</comment>
+  </data>
+  <data name="BajaDocumentosUnidadTributaria" xml:space="preserve">
+    <value>151</value>
+    <comment>Mantenedor Parcelario - Baja Documentos Unidad Tributaria</comment>
+  </data>
+  <data name="BajaDomicilio" xml:space="preserve">
+    <value>144</value>
+    <comment>Mantenedor Parcelario - Baja Domicilio</comment>
+  </data>
+  <data name="BajaDominio" xml:space="preserve">
+    <value>154</value>
+    <comment>Mantenedor Parcelario - Baja Dominio</comment>
+  </data>
+  <data name="BajaExpedientedeObra" xml:space="preserve">
+    <value>189</value>
+    <comment>Baja Expediente de Obra</comment>
+  </data>
+  <data name="BajaExpedientesObra" xml:space="preserve">
+    <value>159</value>
+    <comment>ABM de Expedientes de Obra - Baja Expedientes Obra</comment>
+  </data>
+  <data name="BajaLiquidacion" xml:space="preserve">
+    <value>179</value>
+    <comment>ABM de Expedientes de Obra - Baja Liquidacion</comment>
+  </data>
+  <data name="BajaMantenedorUnidadTributaria" xml:space="preserve">
+    <value>313</value>
+    <comment>Mantenedor Parcelario - Baja Mantenedor Unidad Tributaria</comment>
+  </data>
+  <data name="BajaNomenclatura" xml:space="preserve">
+    <value>135</value>
+    <comment>Mantenedor Parcelario - Baja Nomenclatura</comment>
+  </data>
+  <data name="BajaObservacion" xml:space="preserve">
+    <value>186</value>
+    <comment>ABM de Expedientes de Obra - Baja Observacion</comment>
+  </data>
+  <data name="BajaPersona" xml:space="preserve">
+    <value>176</value>
+    <comment>ABM de Expedientes de Obra - Baja Persona</comment>
+  </data>
+  <data name="BajaResponsableFiscal" xml:space="preserve">
+    <value>147</value>
+    <comment>Mantenedor Parcelario - Baja Responsable Fiscal</comment>
+  </data>
+  <data name="BajaSuperficie" xml:space="preserve">
+    <value>169</value>
+    <comment>ABM de Expedientes de Obra - Baja Superficie</comment>
+  </data>
+  <data name="BajaTitular" xml:space="preserve">
+    <value>157</value>
+    <comment>Mantenedor Parcelario - Baja Titular</comment>
+  </data>
+  <data name="BajaUbicacionObra" xml:space="preserve">
+    <value>164</value>
+    <comment>ABM de Expedientes de Obra - Baja Ubicacion Obra</comment>
+  </data>
+  <data name="BajaUnidadesTributarias" xml:space="preserve">
+    <value>162</value>
+    <comment>ABM de Expedientes de Obra - Baja Unidades Tributarias</comment>
+  </data>
+  <data name="BusquedAlfanumericadeobjetosdeInfraestructura" xml:space="preserve">
+    <value>201</value>
+    <comment>Mantenimiento de Datos de Infraestructura - Búsqued Alfanumérica de objetos de Infraestructura</comment>
+  </data>
+  <data name="Catastro" xml:space="preserve">
+    <value>327</value>
+    <comment>Catastro</comment>
+  </data>
+  <data name="CatastroProvincial" xml:space="preserve">
+    <value>336</value>
+    <comment>Interfaces - Catastro Provincial</comment>
+  </data>
+  <data name="Certificados" xml:space="preserve">
+    <value>210</value>
+    <comment>Informes - Certificados</comment>
+  </data>
+  <data name="ConexionCAD" xml:space="preserve">
+    <value>284</value>
+    <comment>ConexionCAD</comment>
+  </data>
+  <data name="Configuracion" xml:space="preserve">
+    <value>330</value>
+    <comment>Valuación - Configuración</comment>
+  </data>
+  <data name="ConfiguraciondeCertificados" xml:space="preserve">
+    <value>216</value>
+    <comment>Certificados - Configuración de Certificados</comment>
+  </data>
+  <data name="ConfiguraciondeParametrosGenerales" xml:space="preserve">
+    <value>33</value>
+    <comment>Seguridad - Configuracion de Parametros Generales</comment>
+  </data>
+  <data name="Consulta" xml:space="preserve">
+    <value>101</value>
+    <comment>Seguridad - Consulta</comment>
+  </data>
+  <data name="ConsultadelPadron" xml:space="preserve">
+    <value>333</value>
+    <comment>Valuación - Consulta del Padrón</comment>
+  </data>
+  <data name="ConsultadeTramites" xml:space="preserve">
+    <value>283</value>
+    <comment>Certificados - Consulta de Trámites</comment>
+  </data>
+  <data name="ConsultarEstadoDeuda" xml:space="preserve">
+    <value>320</value>
+    <comment>Mantenedor Parcelario - Consultar Estado Deuda</comment>
+  </data>
+  <data name="EditarValuacion" xml:space="preserve">
+    <value>321</value>
+    <comment>Mantenedor Parcelario - Editar Valuacion</comment>
+  </data>
+  <data name="EliminarControlesTecnicos" xml:space="preserve">
+    <value>19</value>
+    <comment>Expediente de Obra - Eliminar Controles Técnicos</comment>
+  </data>
+  <data name="EliminarExpedienteObra" xml:space="preserve">
+    <value>7</value>
+    <comment>Expediente de Obra - Eliminar Expediente Obra</comment>
+  </data>
+  <data name="EliminarFeriados" xml:space="preserve">
+    <value>50</value>
+    <comment>Administración de Feriados - Eliminar Feriados</comment>
+  </data>
+  <data name="EliminarHorario" xml:space="preserve">
+    <value>46</value>
+    <comment>Administración de Horarios - Eliminar Horarios</comment>
+  </data>
+  <data name="EliminarInspectores" xml:space="preserve">
+    <value>117</value>
+    <comment>Eliminar Inspectores</comment>
+  </data>
+  <data name="EliminarLiquidaciones" xml:space="preserve">
+    <value>15</value>
+    <comment>Expediente de Obra - Eliminar Liquidaciones</comment>
+  </data>
+  <data name="EliminarObservaciones" xml:space="preserve">
+    <value>22</value>
+    <comment>Expediente de Obra - Eliminar Observaciones</comment>
+  </data>
+  <data name="EliminarParcelaDestino" xml:space="preserve">
+    <value>111</value>
+    <comment>Alta Alfanumérico de Parcelas y Posesiones - Eliminar Parcela Destino</comment>
+  </data>
+  <data name="EliminarParcelaOrigen" xml:space="preserve">
+    <value>108</value>
+    <comment>Alta Alfanumérico de Parcelas y Posesiones - Eliminar Parcela Origen</comment>
+  </data>
+  <data name="EliminarPerfil" xml:space="preserve">
+    <value>42</value>
+    <comment>Administración de Perfiles - Eliminar Perfiles</comment>
+  </data>
+  <data name="EliminarPlanos" xml:space="preserve">
+    <value>11</value>
+    <comment>Expediente de Obra - Eliminar Planos</comment>
+  </data>
+  <data name="EliminarSuperficies" xml:space="preserve">
+    <value>26</value>
+    <comment>Expediente de Obra - Eliminar Superficies</comment>
+  </data>
+  <data name="EliminarTablaAux" xml:space="preserve">
+    <value>54</value>
+    <comment>Administración de Tablas Auxiliares - Eliminar Tabla Aux</comment>
+  </data>
+  <data name="EliminarUsuarios" xml:space="preserve">
+    <value>38</value>
+    <comment>Administración de Usuarios - Eliminar Usuarios</comment>
+  </data>
+  <data name="ExpedientedeObra" xml:space="preserve">
+    <value>4</value>
+    <comment>Expediente de Obra</comment>
+  </data>
+  <data name="ExportarCADAdmin" xml:space="preserve">
+    <value>324</value>
+    <comment>Exportar CAD Admin</comment>
+  </data>
+  <data name="ExportarCADUsuario" xml:space="preserve">
+    <value>325</value>
+    <comment>Exportar CAD Usuario</comment>
+  </data>
+  <data name="GeneraciondeCertificados" xml:space="preserve">
+    <value>211</value>
+    <comment>Certificados - Gestión de Informes y Certificados</comment>
+  </data>
+  <data name="GeneraciondeReportes" xml:space="preserve">
+    <value>209</value>
+    <comment>Informes - Generación de Reportes</comment>
+  </data>
+  <data name="Generarauditoria" xml:space="preserve">
+    <value>104</value>
+    <comment>Auditoria - Generar auditoria</comment>
+  </data>
+  <data name="Guardar" xml:space="preserve">
+    <value>198</value>
+    <comment>Mantenimiento de Atributos y sus Valores por Zona - Guardar</comment>
+  </data>
+  <data name="Guardarcambios" xml:space="preserve">
+    <value>234</value>
+    <comment>Registro de Inspectores - Guardar cambios</comment>
+  </data>
+  <data name="GuardarDocumentos" xml:space="preserve">
+    <value>266</value>
+    <comment>ABM Documentos - Guardar Documentos</comment>
+  </data>
+  <data name="GuardarDomicilio" xml:space="preserve">
+    <value>255</value>
+    <comment>AMB Domicilio - Guardar Domicilio</comment>
+  </data>
+  <data name="GuardarGeneral" xml:space="preserve">
+    <value>126</value>
+    <comment>Alta Alfanumérico de Parcelas y Posesiones - Guardar General</comment>
+  </data>
+  <data name="GuardarPersona" xml:space="preserve">
+    <value>249</value>
+    <comment>ABM de Personas - Guardar Persona</comment>
+  </data>
+  <data name="Guardarregistros" xml:space="preserve">
+    <value>272</value>
+    <comment>Mantenimiento de Tablas Auxiliares - Guardar registros</comment>
+  </data>
+  <data name="Herramientas" xml:space="preserve">
+    <value>243</value>
+    <comment>Herramientas</comment>
+  </data>
+  <data name="InformedeActaVencidasporPlazosOtorgados" xml:space="preserve">
+    <value>237</value>
+    <comment>Actas - Informe de Acta Vencidas por Plazos Otorgados</comment>
+  </data>
+  <data name="InformedeAtributoporZona" xml:space="preserve">
+    <value>199</value>
+    <comment>Mantenimiento del Código de Planeamiento Urbano - Informe de Atributo por Zona</comment>
+  </data>
+  <data name="InformedeInspeccionesporPeriodo" xml:space="preserve">
+    <value>224</value>
+    <comment>Inspecciones Sub menu - Informe de Inspecciones por Período</comment>
+  </data>
+  <data name="InformedeInspeccionesporTipodeInspeccion" xml:space="preserve">
+    <value>225</value>
+    <comment>Inspecciones Sub menu - Informe de Inspecciones por Tipo de Inspección</comment>
+  </data>
+  <data name="InformedeObjetodeInfraestructura" xml:space="preserve">
+    <value>206</value>
+    <comment>Mantenimiento de Datos de Infraestructura - Informe de Objeto de Infraestructura</comment>
+  </data>
+  <data name="InformedeSeguimientodeExpedientesdeO" xml:space="preserve">
+    <value>113</value>
+    <comment>Informe de Seguimiento de Expedientes de O</comment>
+  </data>
+  <data name="InformedeSeguimientodeExpedientesdeObra" xml:space="preserve">
+    <value>28</value>
+    <comment>Obras Particulares - Informe de Seguimiento de Expedientes de Obra</comment>
+  </data>
+  <data name="InformeEstadisticodeEdificacion" xml:space="preserve">
+    <value>30</value>
+    <comment>Informe Estadístico de Edificacion</comment>
+  </data>
+  <data name="InformeParcelario" xml:space="preserve">
+    <value>311</value>
+    <comment>Mantenedor Parcelario - Informe Parcelario</comment>
+  </data>
+  <data name="Informes" xml:space="preserve">
+    <value>208</value>
+    <comment>Informes</comment>
+  </data>
+  <data name="InformeTributario" xml:space="preserve">
+    <value>316</value>
+    <comment>Mantenedor Parcelario - Informe Tributario</comment>
+  </data>
+  <data name="InsertarInspectores" xml:space="preserve">
+    <value>116</value>
+    <comment>Insertar Inspectores</comment>
+  </data>
+  <data name="InsertarParcelaDestino" xml:space="preserve">
+    <value>110</value>
+    <comment>Alta Alfanumérico de Parcelas y Posesiones - Insertar Parcela Destino</comment>
+  </data>
+  <data name="InsertarParcelaOrigen" xml:space="preserve">
+    <value>107</value>
+    <comment>Alta Alfanumérico de Parcelas y Posesiones - Insertar Parcela Origen</comment>
+  </data>
+  <data name="Inspecciones" xml:space="preserve">
+    <value>115</value>
+    <comment>Inspecciones</comment>
+  </data>
+  <data name="InspeccionesSubmenu" xml:space="preserve">
+    <value>334</value>
+    <comment>Inspecciones - Inspecciones Sub menu</comment>
+  </data>
+  <data name="Instructivo" xml:space="preserve">
+    <value>274</value>
+    <comment>Herramientas - Instructivo</comment>
+  </data>
+  <data name="IntercambioCADconGeRED" xml:space="preserve">
+    <value>345</value>
+    <comment>Intercambio CAD con GeRED</comment>
+  </data>
+  <data name="Interfaces" xml:space="preserve">
+    <value>335</value>
+    <comment>Interfaces</comment>
+  </data>
+  <data name="LinksaOtrosSitiosdeInteres" xml:space="preserve">
+    <value>275</value>
+    <comment>Herramientas - Links a Otros Sitios de Interes</comment>
+  </data>
+  <data name="Listadodetareasporusuarios" xml:space="preserve">
+    <value>276</value>
+    <comment>Consulta - Listado de tareas por usuarios</comment>
+  </data>
+  <data name="ListadodeUsuariosportareas" xml:space="preserve">
+    <value>278</value>
+    <comment>Consulta - Listado de Usuarios por tareas</comment>
+  </data>
+  <data name="Loginexitoso" xml:space="preserve">
+    <value>326</value>
+    <comment>Login exitoso</comment>
+  </data>
+  <data name="MantenedorParcelario" xml:space="preserve">
+    <value>114</value>
+    <comment>Catastro - Mantenedor Parcelario</comment>
+  </data>
+  <data name="MantenimientodeAtributosysusValoresporZona" xml:space="preserve">
+    <value>328</value>
+    <comment>Mantenimiento del Código de Planeamiento Urbano - Mantenimiento de Atributos y sus Valores por Zona</comment>
+  </data>
+  <data name="MantenimientodeCalles" xml:space="preserve">
+    <value>273</value>
+    <comment>Herramientas - Mantenimiento de Calles</comment>
+  </data>
+  <data name="MantenimientodeDatosdeInfraestructura" xml:space="preserve">
+    <value>200</value>
+    <comment>Planeamiento - Mantenimiento de Datos de Infraestructura</comment>
+  </data>
+  <data name="MantenimientodelCodigodePlaneamientoUrbano" xml:space="preserve">
+    <value>193</value>
+    <comment>Planeamiento - Mantenimiento del Código de Planeamiento Urbano</comment>
+  </data>
+  <data name="MantenimientodeObjetosdeInfraestructura" xml:space="preserve">
+    <value>329</value>
+    <comment>Mantenimiento de Datos de Infraestructura - Mantenimiento de Objetos de Infraestructura</comment>
+  </data>
+  <data name="MantenimientodeTablasAuxiliares" xml:space="preserve">
+    <value>267</value>
+    <comment>Herramientas - Mantenimiento de Tablas Auxiliares</comment>
+  </data>
+  <data name="MapaderesultadodeBusqueda" xml:space="preserve">
+    <value>205</value>
+    <comment>Mantenimiento de Datos de Infraestructura - Mapa de resultado de Búsqueda</comment>
+  </data>
+  <data name="ModifiarDomicilio" xml:space="preserve">
+    <value>253</value>
+    <comment>AMB Domicilio - Modifiar Domicilio</comment>
+  </data>
+  <data name="ModificaciondeActas" xml:space="preserve">
+    <value>240</value>
+    <comment>ABM de Actas - Modificación de Actas</comment>
+  </data>
+  <data name="ModificaciondeAtributos" xml:space="preserve">
+    <value>196</value>
+    <comment>Mantenimiento de Atributos y sus Valores por Zona - Modificación de Atributos</comment>
+  </data>
+  <data name="ModificaciondeResultadodeBusqueda" xml:space="preserve">
+    <value>203</value>
+    <comment>Mantenimiento de Datos de Infraestructura - Modificación de Resultado de Búsqueda</comment>
+  </data>
+  <data name="ModificacionExpedientesObra" xml:space="preserve">
+    <value>160</value>
+    <comment>ABM de Expedientes de Obra - Modificacion Expedientes Obra</comment>
+  </data>
+  <data name="ModificarCertificados" xml:space="preserve">
+    <value>214</value>
+    <comment>Gestión de Informes y Certificados - Modificar Certificados</comment>
+  </data>
+  <data name="ModificarControlesTecnicos" xml:space="preserve">
+    <value>18</value>
+    <comment>Expediente de Obra - Modificar Controles Técnicos</comment>
+  </data>
+  <data name="ModificarControlTecnico" xml:space="preserve">
+    <value>184</value>
+    <comment>ABM de Expedientes de Obra - Modificar Control Tecnico</comment>
+  </data>
+  <data name="ModificarDocumento" xml:space="preserve">
+    <value>174</value>
+    <comment>ABM de Expedientes de Obra - Modificar Documento</comment>
+  </data>
+  <data name="ModificarDocumentosParcela" xml:space="preserve">
+    <value>137</value>
+    <comment>Mantenedor Parcelario - Modificar Documentos Parcela</comment>
+  </data>
+  <data name="ModificarDocumentosUnidadTributaria" xml:space="preserve">
+    <value>150</value>
+    <comment>Mantenedor Parcelario - Modificar Documentos Unidad Tributaria</comment>
+  </data>
+  <data name="ModificarDomicilio" xml:space="preserve">
+    <value>143</value>
+    <comment>Mantenedor Parcelario - Modificar Domicilio</comment>
+  </data>
+  <data name="ModificarDominio" xml:space="preserve">
+    <value>153</value>
+    <comment>Mantenedor Parcelario - Modificar Dominio</comment>
+  </data>
+  <data name="ModificarEstado" xml:space="preserve">
+    <value>167</value>
+    <comment>ABM de Expedientes de Obra - Modificar Estado</comment>
+  </data>
+  <data name="ModificarExpedienteObra" xml:space="preserve">
+    <value>6</value>
+    <comment>Expediente de Obra - Modificar Expediente Obra</comment>
+  </data>
+  <data name="ModificarFeriados" xml:space="preserve">
+    <value>49</value>
+    <comment>Administración de Feriados - Modificar Feriados</comment>
+  </data>
+  <data name="ModificarHorarios" xml:space="preserve">
+    <value>45</value>
+    <comment>Administración de Horarios - Modificar Horarios</comment>
+  </data>
+  <data name="ModificarInspeccion" xml:space="preserve">
+    <value>228</value>
+    <comment>Planificar inspecciones - Modificar Inspección</comment>
+  </data>
+  <data name="Modificarinspectores" xml:space="preserve">
+    <value>233</value>
+    <comment>Registro de Inspectores - Modificar inspectores </comment>
+  </data>
+  <data name="ModificarLiquidacion" xml:space="preserve">
+    <value>180</value>
+    <comment>ABM de Expedientes de Obra - Modificar Liquidacion</comment>
+  </data>
+  <data name="ModificarLiquidaciones" xml:space="preserve">
+    <value>14</value>
+    <comment>Expediente de Obra - Modificar Liquidaciones</comment>
+  </data>
+  <data name="ModificarMantenedorParcelario" xml:space="preserve">
+    <value>130</value>
+    <comment>Mantenedor Parcelario - Modificar Mantenedor Parcelario</comment>
+  </data>
+  <data name="ModificarMantenedorUnidadTributaria" xml:space="preserve">
+    <value>314</value>
+    <comment>Mantenedor Parcelario - Modificar Mantenedor Unidad Tributaria</comment>
+  </data>
+  <data name="ModificarNomenclatura" xml:space="preserve">
+    <value>134</value>
+    <comment>Mantenedor Parcelario - Modificar Nomenclatura</comment>
+  </data>
+  <data name="ModificarObservacion" xml:space="preserve">
+    <value>188</value>
+    <comment>ABM de Expedientes de Obra - Modificar Observacion</comment>
+  </data>
+  <data name="ModificarObservaciones" xml:space="preserve">
+    <value>21</value>
+    <comment>Expediente de Obra - Modificar Observaciones</comment>
+  </data>
+  <data name="ModificarParametrosGenerales" xml:space="preserve">
+    <value>34</value>
+    <comment>Configuracion de Parametros Generales - Modificar Parametros Generales</comment>
+  </data>
+  <data name="ModificarPerfil" xml:space="preserve">
+    <value>41</value>
+    <comment>Administración de Perfiles - Modificar Perfiles</comment>
+  </data>
+  <data name="ModificarPersonas" xml:space="preserve">
+    <value>247</value>
+    <comment>ABM de Personas - Modificar Personas</comment>
+  </data>
+  <data name="ModificarPlanos" xml:space="preserve">
+    <value>10</value>
+    <comment>Expediente de Obra - Modificar Planos</comment>
+  </data>
+  <data name="ModificarProfesion" xml:space="preserve">
+    <value>260</value>
+    <comment>ABM Profesión - Modificar Profesión</comment>
+  </data>
+  <data name="ModificarRegistreos" xml:space="preserve">
+    <value>270</value>
+    <comment>Mantenimiento de Tablas Auxiliares - Modificar Registreos</comment>
+  </data>
+  <data name="ModificarResponsableFiscal" xml:space="preserve">
+    <value>146</value>
+    <comment>Mantenedor Parcelario - Modificar Responsable Fiscal</comment>
+  </data>
+  <data name="ModificarSuperficie" xml:space="preserve">
+    <value>171</value>
+    <comment>ABM de Expedientes de Obra - Modificar Superficie</comment>
+  </data>
+  <data name="ModificarSuperficies" xml:space="preserve">
+    <value>25</value>
+    <comment>Expediente de Obra - Modificar Superficies</comment>
+  </data>
+  <data name="ModificarTablasAux" xml:space="preserve">
+    <value>53</value>
+    <comment>Administración de Tablas Auxiliares - Modificar Tablas Aux</comment>
+  </data>
+  <data name="ModificarTitular" xml:space="preserve">
+    <value>156</value>
+    <comment>Mantenedor Parcelario - Modificar Titular</comment>
+  </data>
+  <data name="ModificarTramites" xml:space="preserve">
+    <value>219</value>
+    <comment>Configuración de Certificados - Modificar Trámites</comment>
+  </data>
+  <data name="ModificarUsuarios" xml:space="preserve">
+    <value>37</value>
+    <comment>Administración de Usuarios - Modificar Usuarios</comment>
+  </data>
+  <data name="ModuloSeguridad" xml:space="preserve">
+    <value>32</value>
+    <comment>Seguridad</comment>
+  </data>
+  <data name="ObrasParticulares" xml:space="preserve">
+    <value>3</value>
+    <comment>Obras Particulares</comment>
+  </data>
+  <data name="Planeamiento" xml:space="preserve">
+    <value>192</value>
+    <comment>Planeamiento</comment>
+  </data>
+  <data name="Planificarinspecciones" xml:space="preserve">
+    <value>221</value>
+    <comment>Inspecciones Sub menu - Planificar inspecciones</comment>
+  </data>
+  <data name="PrimarioUbicacionObra" xml:space="preserve">
+    <value>165</value>
+    <comment>ABM de Expedientes de Obra - Primario Ubicacion Obra</comment>
+  </data>
+  <data name="QuitarDocumentos" xml:space="preserve">
+    <value>264</value>
+    <comment>ABM Documentos - Quitar Documentos</comment>
+  </data>
+  <data name="Rankingdetareasporusuarios" xml:space="preserve">
+    <value>277</value>
+    <comment>Consulta - Ranking de tareas por usuarios</comment>
+  </data>
+  <data name="RankingdeUusariosportareas" xml:space="preserve">
+    <value>279</value>
+    <comment>Consulta - Ranking de Uusarios por tareas</comment>
+  </data>
+  <data name="RankingGeneraldetareas" xml:space="preserve">
+    <value>280</value>
+    <comment>Consulta - Ranking General de tareas</comment>
+  </data>
+  <data name="RankingGeneraldetiposdeobjetosyCantidad" xml:space="preserve">
+    <value>103</value>
+    <comment>Consulta - Ranking General de tipos de objetos y Cantidad</comment>
+  </data>
+  <data name="RealizarAsosicion" xml:space="preserve">
+    <value>127</value>
+    <comment>Asociación de Parcelas Gráficas y Alfanuméricas - Realizar Asosición </comment>
+  </data>
+  <data name="RealizarDesasociacion" xml:space="preserve">
+    <value>128</value>
+    <comment>Asociación de Parcelas Gráficas y Alfanuméricas - Realizar Des asociación</comment>
+  </data>
+  <data name="RegistrodeInspectores" xml:space="preserve">
+    <value>223</value>
+    <comment>Inspecciones Sub menu - Registro de Inspectores</comment>
+  </data>
+  <data name="Rentas" xml:space="preserve">
+    <value>337</value>
+    <comment>Interfaces - Rentas</comment>
+  </data>
+  <data name="TablerodeInspecciones" xml:space="preserve">
+    <value>222</value>
+    <comment>Inspecciones Sub menu - Tablero de Inspecciones</comment>
+  </data>
+  <data name="Valuacion" xml:space="preserve">
+    <value>207</value>
+    <comment>Valuación</comment>
+  </data>
+  <data name="ValuacionIndividual" xml:space="preserve">
+    <value>331</value>
+    <comment>Valuación - Valuación Individual</comment>
+  </data>
+  <data name="ValuacionMasiva" xml:space="preserve">
+    <value>332</value>
+    <comment>Valuación - Valuación Masiva</comment>
+  </data>
+  <data name="VisaulizarRegistros" xml:space="preserve">
+    <value>268</value>
+    <comment>Mantenimiento de Tablas Auxiliares - Visaulizar Registros</comment>
+  </data>
+  <data name="VisualizarABMExpedienteObra" xml:space="preserve">
+    <value>323</value>
+    <comment>ABM de Expedientes de Obra - Visualizar ABM Expediente Obra</comment>
+  </data>
+  <data name="VisualizarActas" xml:space="preserve">
+    <value>238</value>
+    <comment>ABM de Actas - Visualizar Actas</comment>
+  </data>
+  <data name="VisualizarCertificados" xml:space="preserve">
+    <value>212</value>
+    <comment>Gestión de Informes y Certificados - Visualizar Certificados</comment>
+  </data>
+  <data name="VisualizarDocumentos" xml:space="preserve">
+    <value>263</value>
+    <comment>ABM Documentos - Visualizar Documentos</comment>
+  </data>
+  <data name="VisualizarDomicilio" xml:space="preserve">
+    <value>251</value>
+    <comment>AMB Domicilio - Visualizar Domicilio</comment>
+  </data>
+  <data name="VisualizarExpedienteObra" xml:space="preserve">
+    <value>8</value>
+    <comment>Expediente de Obra - Visualizar Expediente Obra</comment>
+  </data>
+  <data name="VisualizarInformeEstadistico" xml:space="preserve">
+    <value>31</value>
+    <comment>Informe Estadístico de Edificacion - Visualizar Informe Estadistico</comment>
+  </data>
+  <data name="VisualizarInformeSeguimiento" xml:space="preserve">
+    <value>29</value>
+    <comment>Informe de Seguimiento de Expedientes de Obra - Visualizar Informe Seguimiento</comment>
+  </data>
+  <data name="VisualizarInspeccion" xml:space="preserve">
+    <value>226</value>
+    <comment>Planificar inspecciones - Visualizar Inspección</comment>
+  </data>
+  <data name="Visualizarinspectores" xml:space="preserve">
+    <value>230</value>
+    <comment>Registro de Inspectores - Visualizar inspectores</comment>
+  </data>
+  <data name="VisualizarLiquidaciones" xml:space="preserve">
+    <value>16</value>
+    <comment>Expediente de Obra - Visualizar Liquidaciones</comment>
+  </data>
+  <data name="VisualizarObservaciones" xml:space="preserve">
+    <value>23</value>
+    <comment>Expediente de Obra - Visualizar Observaciones</comment>
+  </data>
+  <data name="Visualizarpersona" xml:space="preserve">
+    <value>245</value>
+    <comment>ABM de Personas - Visualizar persona</comment>
+  </data>
+  <data name="VisualizarPlanos" xml:space="preserve">
+    <value>12</value>
+    <comment>Expediente de Obra - Visualizar Planos</comment>
+  </data>
+  <data name="VisualizarProfesion" xml:space="preserve">
+    <value>258</value>
+    <comment>ABM Profesión - Visualizar Profesión</comment>
+  </data>
+  <data name="VisualizarSuperficies" xml:space="preserve">
+    <value>27</value>
+    <comment>Expediente de Obra - Visualizar Superficies</comment>
+  </data>
+  <data name="VisualizarTramites" xml:space="preserve">
+    <value>217</value>
+    <comment>Configuración de Certificados - Visualizar Trámites</comment>
+  </data>
+  <data name="VisualizarValuacion" xml:space="preserve">
+    <value>319</value>
+    <comment>Mantenedor Parcelario - Visualizar Valuacion</comment>
+  </data>
+  <data name="VisualizarMantenedor" xml:space="preserve">
+    <value>318</value>
+    <comment>Mantenedor Parcelario - Visualizar Mantenedor</comment>
+  </data>
+  <data name="ActualizacionObjetoAdministrativo" xml:space="preserve">
+    <value>347</value>
+    <comment>Actualizacion Objeto Administrativo</comment>
+  </data>
+  <data name="PublicarDespublicarBibliotecaMT" xml:space="preserve">
+    <value>349</value>
+    <comment>Mapa Temático - Despublicar Biblioteca </comment>
+  </data>
+  <data name="EliminarBibliotecaMT" xml:space="preserve">
+    <value>349</value>
+    <comment>Mapa Temático - Eliminar Biblioteca </comment>
+  </data>
+  <data name="PublicarDespublicarBibliotecaBA" xml:space="preserve">
+    <value>350</value>
+  </data>
+  <data name="EliminarBibliotecaBA" xml:space="preserve">
+    <value>352</value>
+  </data>
+  <data name="BajadePlantilla" xml:space="preserve">
+    <value>478</value>
+  </data>
+  <data name="DespublicarPlantilla" xml:space="preserve">
+    <value>476</value>
+  </data>
+  <data name="ModificarPlantilla" xml:space="preserve">
+    <value>477</value>
+  </data>
+  <data name="PublicarPlantilla" xml:space="preserve">
+    <value>475</value>
+  </data>
+  <data name="CertificadoCatastral" xml:space="preserve">
+    <value>495</value>
+    <comment>Certificados - Certificado Catastral</comment>
+  </data>
+  <data name="AltaDesignaciones" xml:space="preserve">
+    <value>497</value>
+    <comment>Mantenedor Parcelario - Alta de Designaciones</comment>
+  </data>
+  <data name="BajaDesignaciones" xml:space="preserve">
+    <value>498</value>
+    <comment>Mantenedor Parcelario - Baja de Designaciones</comment>
+  </data>
+  <data name="ModificarDesignaciones" xml:space="preserve">
+    <value>499</value>
+    <comment>Mantenedor Parcelario - Modificación de Designaciones</comment>
+  </data>
+  <data name="VisualizarDesignaciones" xml:space="preserve">
+    <value>500</value>
+    <comment>Mantenedor Parcelario - Visualizar Designacion</comment>
+  </data>
+  <data name="DeclaracionesJuradas" xml:space="preserve">
+    <value>601</value>
+    <comment>Valuación - Declaraciones Juradas</comment>
+  </data>
+  <data name="AdministracionValuacion" xml:space="preserve">
+    <value>602</value>
+    <comment>Valuación - Administración de Valuaciones</comment>
+  </data>
+  <data name="CertificadoValuatorio" xml:space="preserve">
+    <value>603</value>
+    <comment>Informes - Certificado Valuatorio</comment>
+  </data>
+  <data name="AdministracionDDJJ" xml:space="preserve">
+    <value>617</value>
+    <comment>Valuación - Declaraciones Juradas - Administración</comment>
+  </data>
+  <data name="VisualizacionDDJJ" xml:space="preserve">
+    <value>618</value>
+    <comment>Valuación - Declaraciones Juradas - Visualización</comment>
+  </data>
+  <data name="AltaDocumentoMensura" xml:space="preserve">
+    <value>620</value>
+  </data>
+  <data name="AltaMensura" xml:space="preserve">
+    <value>607</value>
+  </data>
+  <data name="AltaParcelasMensura" xml:space="preserve">
+    <value>610</value>
+  </data>
+  <data name="BajaDocumentoMesnsura" xml:space="preserve">
+    <value>621</value>
+  </data>
+  <data name="BajaMensura" xml:space="preserve">
+    <value>609</value>
+  </data>
+  <data name="ModificacionMensura" xml:space="preserve">
+    <value>608</value>
+  </data>
+  <data name="ModificarDocumentoMensura" xml:space="preserve">
+    <value>622</value>
+  </data>
+  <data name="MPAltaParcelasOrigen" xml:space="preserve">
+    <value>520</value>
+    <comment>Mantenedor Parcelario - Alta Parcelas Origen</comment>
+  </data>
+  <data name="MPBajaParcelasOrigen" xml:space="preserve">
+    <value>521</value>
+    <comment>Mantenedor Parcelario - Baja Parcelas Origen</comment>
+  </data>
+  <data name="MPModificacionParcelasOrigen" xml:space="preserve">
+    <value>522</value>
+    <comment>Mantenedor Parcelario - Modificación Parcelas Origen</comment>
+  </data>
+  <data name="ModificarSuperficieVigencia" xml:space="preserve">
+    <value>623</value>
+    <comment>Mantenedor Parcelario - Modificar Superficie y Vigencia</comment>
+  </data>
+  <data name="VIR" xml:space="preserve">
+    <value>1000</value>
+    <comment>Mantenedor Parcelario - VIR</comment>
+  </data>
+  <data name="ReasignacionTramites" xml:space="preserve">
+    <value>518</value>
+    <comment>Mesa de Entrada - Reasignacion de Tramites</comment>
+  </data>
+  <data name="PermiteDDJJSoRNoVigentes" xml:space="preserve">
+    <value>619</value>
+    <comment>DDJJ SoR - Permite DDJJ SoR No Vigentes</comment>
+  </data>
+</root>

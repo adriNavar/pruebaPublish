@@ -1,0 +1,56 @@
+﻿@model List<AtributoTA>
+@using GeoSit.Data.BusinessEntities.Mantenimiento
+@{
+    ComponenteTA componente = ViewBag.Componente;
+    System.Data.DataTable Data = ViewBag.Data;
+}
+<style>
+    table#Parametros {
+        width: 100% !important;
+    }
+</style>
+<div class="col-xs-11" style="padding-right: 0;">
+    <table id="Parametros" class="table table-bordered table-striped table-responsive nowrap">
+        <thead>
+            <tr>
+                @foreach (var atributo in Model)
+                {
+                    <th class="@(atributo.Es_Visible?"":"hidden")">@atributo.Nombre</th>
+                }
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (System.Data.DataRow row in Data.Rows)
+            {
+                <tr>
+                    @for (var i = 0; i < Data.Columns.Count; i++)
+                    {
+                        var atributo = Model.ElementAt(i);
+                        var valor = row.ItemArray[i].ToString();
+                        if (!String.IsNullOrEmpty(valor) && atributo.Opciones != null && atributo.Opciones.Any(a => valor.Equals(a.Id_Atributo.ToString())))
+                        {
+                            <td>@atributo.Opciones.Where(a => valor.Equals(a.Id_Atributo.ToString())).FirstOrDefault().Descripcion</td>
+                        }
+                        else if (atributo.Id_Tipo_Dato == AtributoTA.TipoBoolean || atributo.Id_Tipo_Dato == AtributoTA.TipoCheck)
+                        {
+                            <td><i class="fa black @(valor.Equals("1") ? "fa-check" : "fa-remove")"></i></td>
+
+                        }
+                        else
+                        {
+                            <td>@valor</td>
+
+                        }
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+<div class="col-xs-1" id="conditions-controls">
+    <dl>
+        <dt><span class="fa fa-2x fa-plus-circle cursor-pointer black @((componente.Permite_Agregar) ? "": "boton-deshabilitado")" aria-hidden="false" id="btn_AgregarRow"></span></dt>
+        <dt><span class="fa fa-2x fa-minus-circle cursor-pointer black boton-deshabilitado" aria-hidden="true" id="@((componente.Permite_Eliminar) ? "btn_EliminarRow": "")"></span></dt>
+        <dt><span class="fa fa-2x fa-pencil cursor-pointer black boton-deshabilitado" aria-hidden="true" id="@((componente.Permite_Modifiar) ? "btn_EditarRow": "")"></span></dt>
+    </dl>
+</div>

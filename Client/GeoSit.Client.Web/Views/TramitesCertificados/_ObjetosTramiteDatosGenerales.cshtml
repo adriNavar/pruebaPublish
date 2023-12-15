@@ -1,0 +1,47 @@
+﻿@model GeoSit.Data.BusinessEntities.ObrasPublicas.Tramite
+
+<div class="panel-body">
+    <label class="control-label col-xs-3">Tipo:</label>
+    <div class="col-xs-9">
+        @Html.DropDownListFor(m => m.Id_Tipo_Tramite, (ViewBag.TipoTramiteList as IEnumerable<SelectListItem>), new { id = "CmbTipoTramiteEditar", @class = "form-control select2" })
+    </div>
+</div>
+
+<div class="panel-body">
+    <label class="control-label col-xs-3">Identificador:</label>
+    <div class="col-xs-9">
+        @Html.TextBoxFor(model => model.Cod_Tramite, new { id = "txtIdentificador", @class = "form-control" })
+    </div>
+</div>
+
+<div class="panel-body">
+    <label class="control-label col-xs-3">Fecha de Inicio:</label>
+    <div class="col-xs-9">
+        <div class="input-group date">
+            @Html.TextBoxFor(model => model.Fecha, new { @id = "txtFechaInicio", @class = "form-control date" })
+            <span class="input-group-addon">
+                <span class="fa fa-calendar"></span>
+            </span>
+        </div>
+    </div>
+</div>
+<div class="panel-body">
+    <label class="control-label col-xs-3">Nro. Trámite:</label>
+    @if (ViewBag.TramiteVerificar == "0")
+    {
+        <div class="col-xs-9">
+            @Html.TextBoxFor(m => m.Nro_Tramite, new { @id = "txtNroTramite", @class = "form-control" })
+        </div>
+    }
+    else
+    { 
+        <div class="col-xs-7">
+            @Html.TextBoxFor(m => m.Nro_Tramite, new { @id = "txtNroTramite", @class = "form-control" })
+        </div>
+        
+        <div class="col-xs-2">
+            <span id="tramite-numero-verify" class="fa fa-link fa-2x black cursor-pointer boton-deshabilitado" aria-hidden="true"></span>
+        </div>
+    }
+    
+</div>

@@ -1,0 +1,293 @@
+﻿@model GeoSit.Client.Web.Models.ViewPlantilla
+
+@Html.TextBoxFor(model => model.IdPlantilla, new { @type = "hidden" })
+
+@Html.TextBoxFor(model => model.Visibilidad, new { @type = "hidden" })
+
+@Html.TextBoxFor(model => model.Transparencia, new { @type = "hidden" })
+
+<div class="form-group">
+    <label class="control-label col-xs-3">
+        Categoría
+    </label>
+    <div class="col-xs-9">
+        @Html.DropDownListFor(model => model.IdPlantillaCategoria, Model.PlantillaCategoriaList, new { @class = "form-control" })
+    </div>
+</div>
+<div class="form-group">
+    <label class="control-label col-xs-3">Nombre</label>
+    <div class="col-xs-9">
+        @Html.TextBoxFor(model => model.Nombre, new { @class = "form-control" })
+    </div>
+</div>
+<div class="form-group">
+    <label class="control-label col-xs-3">Hoja</label>
+    <div class="col-xs-9">
+        @Html.DropDownListFor(model => model.IdHoja, Model.HojaList, new { @class = "form-control" })
+    </div>
+</div>
+<div class="form-group">
+    <label class="control-label col-xs-3">Orientación</label>
+    <div class="col-xs-3">
+        <label class="radio-inline">
+            @Html.RadioButtonFor(model => model.Orientacion, "0") Horizontal
+        </label>
+    </div>
+    <div class="col-xs-6">
+        <label class="radio-inline">
+            @Html.RadioButtonFor(model => model.Orientacion, "1") Vertical
+        </label>
+    </div>
+</div>
+<div class="form-group">
+    <label class="control-label col-xs-3">Fondo</label>
+    <div class="col-xs-9">
+        <input class="form-control file" id="Pdf" name="Pdf" type="file">
+    </div>
+</div>
+<fieldset class="fieldset-border">
+    <legend class="fieldset-border">Área de impresión</legend>
+
+    <div class="form-group">
+        <label class="control-label col-xs-3">
+            Mín X (mm)
+        </label>
+        <div class="col-xs-9">
+            <div class="input-group">
+                @Html.TextBoxFor(model => model.ImpresionXMin, new { id = "minXValue", @class = "form-control" })
+                <span class="input-group-addon"><span class="glyphicon glyphicon-question-sign cursor-pointer" aria-hidden="true" data-toggle="popover" data-content="Márgen mínimo en el eje horizontal (x)" tabindex="0"></span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-xs-3">
+            Mín Y (mm)
+        </label>
+        <div class="col-xs-9">
+            <div class="input-group">
+                @Html.TextBoxFor(model => model.ImpresionYMin, new { id = "minYValue", @class = "form-control" })
+                <span class="input-group-addon"><span class="glyphicon glyphicon-question-sign cursor-pointer" aria-hidden="true" data-toggle="popover" data-content="Márgen mínimo en el eje vertical (y)" tabindex="0"></span></span>
+            </div>
+            <span id="demo2" style="color: #a94442"></span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-3">
+            Máx X (mm)
+        </label>
+        <div class="col-xs-9">
+            <div class="input-group">
+                @Html.TextBoxFor(model => model.ImpresionXMax, new { id = "maxXValue", @class = "form-control" })
+                <span class="input-group-addon"><span class="glyphicon glyphicon-question-sign cursor-pointer" aria-hidden="true" data-toggle="popover" data-content="Márgen máximo en el eje horizontal (x) " tabindex="0"></span></span>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-3">
+            Máx Y (mm)
+        </label>
+        <div class="col-xs-9">
+            <div class="input-group">
+                @Html.TextBoxFor(model => model.ImpresionYMax, new { id = "maxYValue", @class = "form-control" })
+                <span class="input-group-addon"><span class="glyphicon glyphicon-question-sign cursor-pointer" aria-hidden="true" data-toggle="popover" data-content="Márgen máximo en el eje vertical (y)" tabindex="0"></span></span>
+            </div>
+        </div>
+    </div>
+</fieldset>
+<div class="form-group">
+    <label class="control-label col-xs-3">
+        Buffer (m)
+    </label>
+    <div class="col-xs-9">
+        @Html.TextBoxFor(model => model.DistBuffer, new { @class = "form-control" })
+    </div>
+</div>
+<div class="form-group">
+    <label class="control-label col-xs-3">Optimizar Tamaño de Hoja</label>
+    <div class="col-xs-9">
+        <div class="switch">
+            @Html.CheckBoxFor(model => model.OptimizarTamanioHoja, new { id = "tamanio-hoja", @class = "cmn-toggle cmn-toggle-round-flat" })
+        </div>
+    </div>
+</div>
+
+<fieldset class="fieldset-border">
+    <legend class="fieldset-border">Referencias</legend>
+    <div class="form-group">
+        <label class="control-label col-xs-3">
+            Mín X (mm)
+        </label>
+        <div class="col-xs-9">
+            <div class="input-group">
+                @Html.TextBoxFor(model => model.ReferenciaXMin, new { id = "minX", @class = "form-control" })
+                <span class="input-group-addon"><span class="glyphicon glyphicon-question-sign cursor-pointer" aria-hidden="true" data-toggle="popover" data-content="Márgen mínimo en el eje horizontal (x)" tabindex="0"></span></span>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-3">
+            Mín Y (mm)
+        </label>
+        <div class="col-xs-9">
+            <div class="input-group">
+                @Html.TextBoxFor(model => model.ReferenciaYMin, new { id = "minY", @class = "form-control" })
+                <span class="input-group-addon"><span class="glyphicon glyphicon-question-sign cursor-pointer" aria-hidden="true" data-toggle="popover" data-content="Márgen mínimo en el eje vertical (y)" tabindex="0"></span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-xs-3">
+            Máx X (mm)
+        </label>
+        <div class="col-xs-9">
+            <div class="input-group">
+                @Html.TextBoxFor(model => model.ReferenciaXMax, new { id = "maxX", @class = "form-control" })
+                <span class="input-group-addon"><span class="glyphicon glyphicon-question-sign cursor-pointer" aria-hidden="true" data-toggle="popover" data-content="Márgen máximo en el eje horizontal (x)" tabindex="0"></span></span>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-3">
+            Máx Y (mm)
+        </label>
+        <div class="col-xs-9">
+            <div class="input-group">
+                @Html.TextBoxFor(model => model.ReferenciaYMax, new { id = "maxY", @class = "form-control" })
+                <span class="input-group-addon"><span class="glyphicon glyphicon-question-sign cursor-pointer" aria-hidden="true" data-toggle="popover" data-content="Márgen máximo en el eje vertical (y)" tabindex="0"></span></span>
+            </div>
+        </div>
+    </div>
+    <fieldset class="fieldset-border">
+        <legend class="fieldset-border">Fuente</legend>
+        <div class="form-group">
+            <label class="control-label col-xs-3">
+                Letra
+            </label>
+            <div class="col-xs-9">
+                @Html.DropDownListFor(model => model.ReferenciaFuenteNombre, Model.FuenteList, new { id= "ReferenciaFuenteNombre", @class = "form-control select2", @style="padding:0;" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-xs-3">
+                Tamaño (mm)
+            </label>
+            <div class="col-xs-9">
+                @Html.TextBoxFor(model => model.ReferenciaFuenteTamanio, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-xs-3">
+                Color
+            </label>
+            <div class="col-xs-9">
+                @Html.TextBoxFor(model => model.ReferenciaColor, new { @class = "form-control pick-a-color" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-xs-3">
+                Estilo
+            </label>
+            <div class="col-xs-2">
+                <label class="checkbox-inline">
+                    @Html.CheckBoxFor(model => model.Negrita, new { id = "plantilla-negrita" }) Negrita
+                </label>
+            </div>
+            <div class="col-xs-2">
+                <label class="checkbox-inline">
+                    @Html.CheckBoxFor(model => model.Cursiva, new { id = "plantilla-cursiva" }) Cursiva
+                </label>
+            </div>
+            <div class="col-xs-2">
+                <label class="checkbox-inline">
+                    @Html.CheckBoxFor(model => model.Subrayada, new { id = "plantilla-subrayada" }) Subrayado
+                </label>
+            </div>
+            <div class="col-xs-3">
+                <label class="checkbox-inline">
+                    @Html.CheckBoxFor(model => model.Tachada, new { id = "plantilla-tachada" }) Tachado
+                </label>
+            </div>
+        </div>
+    </fieldset>
+    <div class="form-group">
+        <label class="control-label col-xs-3">
+            Espaciado (mm)
+        </label>
+        <div class="col-xs-9">
+            @Html.TextBoxFor(model => model.ReferenciaEspaciado, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label col-xs-3">
+            Columnas (cant.)
+        </label>
+        <div class="col-xs-9">
+            @Html.TextBoxFor(model => model.ReferenciaColumnas, new { @class = "form-control" })
+        </div>
+    </div>
+</fieldset>
+<fieldset class="fieldset-border">
+    <legend class="fieldset-border">Norte</legend>
+
+    <div class="col-xs-8">
+        <div class="form-group">
+            <label class="control-label col-xs-3">
+                Imagen
+            </label>
+            <div class="col-xs-9">
+                @Html.DropDownListFor(model => model.IdNorte, Model.NorteList, new { id = "id-norte", @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-xs-3">
+                X (mm)
+            </label>
+            <div class="col-xs-9">
+                @Html.TextBoxFor(model => model.NorteX, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-xs-3">
+                Y (mm)
+            </label>
+            <div class="col-xs-9">
+                @Html.TextBoxFor(model => model.NorteY, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-xs-3">
+                Alto (mm)
+            </label>
+            <div class="col-xs-9">
+                @Html.TextBoxFor(model => model.NorteAlto, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-xs-3">
+                Ancho (mm)
+            </label>
+            <div class="col-xs-9">
+                @Html.TextBoxFor(model => model.NorteAncho, new { @class = "form-control" })
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-4">
+        <div class="thumbnail">
+            <img id="imagen-norte" alt="imagen" />
+        </div>
+    </div>
+</fieldset>
+<fieldset class="fieldset-border">
+    <div class="col-xs-12">
+        <div class="form-group">
+            <label class="control-label col-xs-2">
+                Función Adicional
+            </label>
+            <div class="col-xs-10">
+                @Html.DropDownListFor(model => model.IdFuncionAdicional, Model.FuncionAdicionalList, new { @class = "form-control" })
+            </div>
+        </div>
+    </div>
+</fieldset>

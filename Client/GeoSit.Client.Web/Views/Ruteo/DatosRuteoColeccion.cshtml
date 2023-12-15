@@ -1,0 +1,136 @@
+﻿@model GeoSit.Client.Web.Models.ColeccionModel
+
+<link href="~/Content/Ruteo/DatosRuteoColeccion.css" rel="stylesheet" />
+
+<div class="modal fade" id="modal-window-ruteo" tabindex="-1" data-backdrop="static" role="dialog" aria-labelledby="modal-windowLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title col-lg-11 col-xs-11 col-sm-11 col-md-11">Generar Ruteo</h3>
+                <span id="btnCerrar" aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer" style="padding-top:3px;" aria-label="Cerrar" title="Cerrar"></span>
+            </div>
+            <div class="modal-body ruteo-body">
+                <div class="input-group col-lg-offset-2 col-lg-8" style="margin-top:7px; margin-bottom:7px;">
+                    <input type="text" value="" class="form-control" id="filtro-ruteo" name="filtro-ruteo" placeholder="Filtrar">
+                    <span class="input-group-addon "><span id="clearSearch" class="glyphicon glyphicon-trash" style="cursor:pointer"></span></span>
+                </div>
+                <div class="ruteo-content">
+                    <div class="panel-group accordion" id="accordion-colecciones">
+                        <div class="panel-primary">
+                            <div class="section-position">
+                                <div class='panel-heading bg-primary' id='headingColecciones'>
+                                    <a data-toggle='collapse' data-parent='#accordion-colecciones' href='#collapseColecciones'
+                                       aria-controls='collapseColecciones'>
+                                        <div class='panel-title'>
+                                            <span name="check-coleccion" class="fa fa-square" style="font-size:large; margin: 4px;"></span>
+                                            @Model.Nombre
+                                            <i class="fa"></i>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div id='collapseColecciones' class='panel-collapse collapse in'>
+                                    <div class="panel-body">
+                                        @if (Model.Componentes != null)
+                                        {
+                                            <div class="panel-group accordion" id="accordion-componentes">
+                                                <div class="panel-body panel-primary">
+                                                    @foreach (var componente in Model.Componentes)
+                                                    {
+                                                        var cmpId = componente.ComponenteId;
+                                                        <div class="section-position cabecera-componente">
+                                                            <div class="panel-group" style="margin:3px 0;">
+                                                                <div class='panel-heading bg-primary' id='headingComponente_@cmpId'>
+                                                                    <a data-toggle='collapse' data-parent='#accordion-componentes' href='#collapseComponente_@cmpId'
+                                                                       aria-controls='collapseComponente_@cmpId'>
+                                                                        <div class='panel-title'>
+                                                                            <span name="check-componente" class="fa fa-square" style="font-size:large; margin: 4px;"></span>
+                                                                            @componente.Nombre
+                                                                            <i class="fa"></i>
+                                                                        </div>
+                                                                    </a>
+                                                                </div>
+                                                                <div id='collapseComponente_@cmpId' class='panel-collapse collapse in'>
+                                                                    <div class="panel-body inner-accordion">
+                                                                        @if (componente.Objetos != null)
+                                                                        {
+                                                                            <ul id="ul-objetos-@cmpId" style="padding-left: 0">
+                                                                                @foreach (var objeto in componente.Objetos)
+                                                                                {
+                                                                                    <li id="li-objeto-@objeto.ObjetoId">
+                                                                                        <input type="hidden" name="id" value="@objeto.ObjetoId" />
+                                                                                        <input type="hidden" name="componente" value="@componente.Nombre" />
+                                                                                        <input type="hidden" name="descripcion" value="@objeto.Descripcion" />
+                                                                                        <input type="hidden" name="point" />
+                                                                                        <input type="hidden" name="latitud" value="@objeto.Latitud" />
+                                                                                        <input type="hidden" name="longitud" value="@objeto.Longitud" />
+                                                                                        <div class="row" style="margin-right: 15px; margin-left: 15px;">
+                                                                                            <div class="col-lg-10">
+                                                                                                <span id="check-objeto-@objeto.ObjetoId" class="fa fa-square-o light-blue" style="font-size:large; margin: 8px;"/>
+                                                                                                <span id="label-objeto" style="font-size: larger;">@objeto.Descripcion</span>
+                                                                                            </div>
+                                                                                            <div class="posicion-objeto col-lg-2" style="display:none; font-size: medium; padding-top: 3px;">
+                                                                                                <span name="start-point" data-start="" class="label label-default cursor-pointer">I</span>
+                                                                                                <span name="end-point" data-end="" class="label label-default cursor-pointer">F</span>
+                                                                                            </div>
+                                                                                        </div>
+                                                                                    </li>
+                                                                                }
+                                                                            </ul>
+                                                                        }
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    }
+                                                </div>
+                                            </div>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="seccion-tipo-ruteo" style="font-size: large; padding: 10px 0; ">
+                    <input id="modo-tipo-ruteo" type="hidden" value="driving" />
+                    <div class="col-md-4">
+                        Tipo de Ruteo:
+                    </div>
+                    <div id="driving-mode-option" class="col-md-3 cursor-pointer">
+                        <span class="fa fa-dot-circle-o light-blue"></span>
+                        <span>En Auto</span>
+                    </div>
+                    <div id="walking-mode-option" class="col-md-3 cursor-pointer">
+                        <span class="fa fa-circle-o light-blue"></span>
+                        <span>A Pie</span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer" style="background-color:#ffffff;">
+                <span id="btnAceptar" aria-hidden="true" aria-controls="button" data-placement="right" title="Aceptar" data-original-title="Aceptar" class="fa fa-check-circle light-blue fa-3x cursor-pointer"></span>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Información-->
+<div class="modal fade" id="ModalInfoRuteo" tabindex="-3" role="dialog" aria-labelledby="TituloInfo" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header" style="font-size:2em;height:2em">
+                <h4 style="border:none;" class="modal-title col-lg-12 col-xs-12 col-sm-12 col-md-12" id="TituloInfoRuteo">Titulo</h4>
+            </div>
+            <div class="modal-body">
+                <div id="MensajeInfoRuteo" class="alert alert-info alert-dismissible" role="alert">
+                    <h5 style="border:none;"><strong>Atención!</strong></h5>
+                    <p id="DescripcionInfoRuteo">Descripcion de la informacion</p>
+                </div>
+            </div>
+            <div class="modal-footer" style="background-color:#ffffff;" id="botones-modal-info">
+                <span id="btnAceptarAlert" aria-hidden="true" data-dismiss="modal" data-placement="right" title="Aceptar" data-original-title="Aceptar" class="fa fa-check-circle light-blue fa-3x cursor-pointer"></span>
+                <span id="btnCancelarAlert" aria-hidden="true" data-dismiss="modal" data-placement="right" title="Cancelar" data-original-title="Cancelar" class="fa fa-times-circle light-blue fa-3x cursor-pointer"></span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="~/Scripts/Ruteo/DatosRuteoColeccion.js"></script>

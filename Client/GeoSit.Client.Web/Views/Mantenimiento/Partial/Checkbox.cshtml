@@ -1,0 +1,12 @@
+﻿@model GeoSit.Data.BusinessEntities.Mantenimiento.AtributoTA
+<div class="form-group clearfix">
+    <label class="control-label col-xs-4 text-right">@Model.Nombre @(Model.Es_Obligatorio ? "*" : "")</label>
+    <div class="col-xs-8">
+        <div class="switch">
+            <input name="Parametros[@Model.Campo]" type="hidden" value="@(Model.Valor != null && Model.Valor.Equals("1") ? "1" : "0")">
+
+            <input id="@Model.Campo" data-checkbox-target="Parametros[@Model.Campo]" value="1" class="cmn-toggle cmn-toggle-round" type="checkbox" @(Model.Es_Obligatorio ? "required=\"required\"" : "") @(Model.Valor != null && Model.Valor.Equals("1") ? "checked='checked'" : "")>
+            <label for="@Model.Campo"></label>
+        </div>
+    </div>
+</div>

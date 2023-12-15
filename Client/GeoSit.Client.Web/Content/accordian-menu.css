@@ -1,0 +1,117 @@
+/* Code By Webdevtrick ( https://webdevtrick.com ) */
+* {
+    margin: 0;
+    padding: 0;
+}
+
+/*body {
+    background: #8dd4ff;
+    font-family: 'Montserrat', sans-serif;
+}*/
+
+#accordian {
+    width: 220px;
+    margin: 0px auto 0 auto;
+    color: white;
+}
+
+    #accordian h3 {
+        background: url("images/Menu/back-60.png") !important;
+        color: #4a4f54;
+        margin-top: 0px;
+        margin-bottom: 0px;
+    }
+
+        #accordian h3 a {
+            padding: 20px 15px;
+            font-size: 14px;
+            display: block;
+            color: #4a4f54;
+            text-decoration: none;
+        }
+
+            #accordian h3 a:hover {
+                background: #1b84f9 !important;
+                color: #fff !important;
+            }
+
+    #accordian li {
+        list-style-type: none;
+    }
+
+
+    #accordian ul ul li a,
+    #accordian h4 {
+        color: #1b84f9;
+        text-decoration: none;
+        font-size: 13px;
+        display: block;
+        padding: 15px 15px;
+        -webkit-transition: all 0.15s;
+        transition: all 0.15s;
+        position: relative;
+        background: url("images/Menu/back-60.png");
+    }
+
+.first-level {
+    padding-left: 25px !important
+}
+
+.second-level {
+    padding-left: 45px !important;
+    color: #4a4f54 !important;
+}
+
+
+#accordian ul ul {
+    background: #ccc !important;
+}
+
+
+
+    #accordian ul ul li {
+        background: #767676 !important;
+        color: #1b84f9 !important;
+    }
+
+    #accordian ul ul ul li {
+        background: #fff !important;
+        color: #4a4f54 !important;
+    }
+
+        #accordian ul ul ul li a: {
+            background: #fff !important;
+            color: #4a4f54 !important;
+        }
+
+
+    #accordian ul ul li a: {
+        background: #fff !important;
+        color: #1b84f9 !important;
+    }
+
+
+        #accordian ul ul li a:hover {
+            background: #1b84f9 !important;
+            color: #FFF !important;
+        }
+
+#accordian ul ul {
+    display: none;
+}
+
+
+
+#accordian li.active > ul {
+    display: block;
+}
+
+#accordian ul ul ul {
+    margin-left: 0px;
+}
+
+#accordian a:not(:only-child):after {
+}
+
+#accordian .active > a:not(:only-child):after {
+}

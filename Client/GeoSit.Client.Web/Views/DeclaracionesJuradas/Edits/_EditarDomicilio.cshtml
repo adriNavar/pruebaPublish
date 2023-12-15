@@ -1,0 +1,135 @@
+﻿@model GeoSit.Client.Web.Models.DomiciliosModel
+@using GeoSit.Client.Web.Controllers;
+@{
+    if (Model.Id > 0)
+    {
+        ViewBag.Title = "Edicion de Domicilio";
+    }
+    else
+    {
+        ViewBag.Title = "Crear nuevo Domicilio";
+    }
+}
+
+<div class="modal fade theme_new" id="modalEditarDomicilio" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div id="scroll-content-editar-domicilio" class="scroll-content">
+                <div class="modal-header">
+                    <h3 id="editarDomicilioTitle" class="modal-title">@ViewBag.Title</h3>
+                    <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right closeModalDomicilio" aria-label="Cerrar" title="Cerrar"></span>
+                </div>
+                <div class="modal-body editar-domicilio-body">
+                    <div class="row editar-domicilio-content">
+
+
+                        @Html.HiddenFor(x => x.Id);
+
+                        @Html.HiddenFor(x => x.PersonaId);
+
+                        <div class="col-xs-12">
+
+                            <div class="row">
+                                <div class="form-group col-xs-12">
+                                    <label class="col-xs-5 control-label">Tipo</label>
+                                    <div class="col-xs-7">
+                                        @Html.TextBoxFor(x => x.Tipo, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group col-xs-12">
+                                    <label class="col-xs-5 control-label">Provincia</label>
+                                    <div class="col-xs-7">
+                                        @Html.TextBoxFor(x => x.Provincia, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="form-group col-xs-12">
+                                    <label class="col-xs-5 control-label">Localidad</label>
+                                    <div class="col-xs-7">
+                                        @Html.TextBoxFor(x => x.Localidad, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group col-xs-12">
+                                    <label class="col-xs-5 control-label">Barrio</label>
+                                    <div class="col-xs-7">
+                                        @Html.TextBoxFor(x => x.Barrio, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="form-group col-xs-12">
+                                    <label class="col-xs-5 control-label">Calle</label>
+                                    <div class="col-xs-7">
+                                        @Html.TextBoxFor(x => x.Calle, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group col-xs-12">
+                                    <label class="col-xs-5 control-label">N</label>
+                                    <div class="col-xs-7">
+                                        @Html.TextBoxFor(x => x.Altura, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group col-xs-12">
+                                    <label class="col-xs-5 control-label">Piso</label>
+                                    <div class="col-xs-7">
+                                        @Html.TextBoxFor(x => x.Piso, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group col-xs-12">
+                                    <label class="col-xs-5 control-label">Depto.</label>
+                                    <div class="col-xs-7">
+                                        @Html.TextBoxFor(x => x.Departamento, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group col-xs-12">
+                                    <label class="col-xs-5 control-label">CP</label>
+                                    <div class="col-xs-7">
+                                        @Html.TextBoxFor(x => x.CodigoPostal, new { @class = "form-control" })
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-lg-4 pull-right">
+                    <span id="btnGuardarDomicilio" aria-hidden="true" data-placement="right" title="Guardar" data-original-title="Guardar" class="fa fa-floppy-o fa-2x black cursor-pointer"></span>
+                    <span aria-hidden="true" data-placement="right"  title="Cancelar" data-original-title="Cancelar" class="fa fa-undo fa-2x black cursor-pointer closeModalDomicilio"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/DeclaracionesJuradas/Edits/EditarDomicilio.js"></script>
+
+<script>
+    $(document).ready(function () {
+        editarDomicilio.init();
+    });
+</script>

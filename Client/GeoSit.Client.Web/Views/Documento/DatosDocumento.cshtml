@@ -1,0 +1,282 @@
+﻿@model GeoSit.Client.Web.Models.DocumentoModels
+
+@{
+    ViewBag.Title = "Documentos";
+}
+<link href="~/Content/bootstrap-fileinput/css/fileinput.min.css" rel="stylesheet" />
+<div class="modal fade theme_new" id="modal-window-documento" tabindex="-1" data-backdrop="false" role="dialog" aria-labelledby="modal-windowLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="scroll-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="lblModalDocumento">@ViewBag.Title</h3>
+                    <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+                </div>
+                <div class="modal-body documento-body">
+                    <div id="body-content-documento" class="body-content">
+                        <div class="panel-group remove-margin">
+                            <div class="panel remove-shadow">
+                                <div class='panel-body'>
+                                    @using (Ajax.BeginForm("Update_DatosDocumento", "Documento", new AjaxOptions { }, new { id = "form", @class = "form-horizontal", role = "form", novalidate = "", enctype = "multipart/form-data" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        @Html.HiddenFor(model => model.DatosDocumento.id_documento, new { @Value = ViewBag.DatosDocumento.id_documento })
+                                        @Html.HiddenFor(model => model.DatosDocumento.extension_archivo, new { @Value = ViewBag.DatosDocumento.extension_archivo })
+                                        @Html.HiddenFor(model => model.DatosDocumento.fecha_baja_1, new { @Value = ViewBag.DatosDocumento.fecha_baja_1 })
+                                        @Html.HiddenFor(model => model.DatosDocumento.id_usu_baja, new { @Value = ViewBag.DatosDocumento.id_usu_baja })
+                                        @Html.HiddenFor(model => model.DatosDocumento.fecha_alta_1, new { @Value = ViewBag.DatosDocumento.fecha_alta_1 })
+                                        @Html.HiddenFor(model => model.DatosDocumento.id_usu_alta, new { @Value = ViewBag.DatosDocumento.id_usu_alta })
+                                        @Html.HiddenFor(model => model.DatosDocumento.fecha_modif, new { @Value = ViewBag.DatosDocumento.fecha_modif })
+                                        @Html.HiddenFor(model => model.DatosDocumento.id_usu_modif, new { @Value = ViewBag.DatosDocumento.id_usu_modif })
+                                        @Html.HiddenFor(model => model.DatosDocumento.atributos, new { @Value = ViewBag.DatosDocumento.atributos })
+
+                                        <div class="form-group">
+                                            <label class="control-label col-xs-4 text-right">Tipo</label>
+                                            <div class="col-xs-8">
+                                                @{
+                                                    var opts = new Dictionary<string, object>()
+                                                                                        {
+                                                        { "class", "form-control" },
+                                                        { "Value",  ViewBag.DatosDocumento.id_tipo_documento }
+                                                    };
+                                                    if (ViewBag.SoloLectura)
+                                                    {
+                                                        opts.Add("disabled", "disabled");
+                                                    }
+                                                }
+                                                @Html.DropDownListFor(model => model.DatosDocumento.id_tipo_documento, (IEnumerable<SelectListItem>)ViewData["tiposdoc"], opts)
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-xs-4 text-right">Descripci&oacute;n</label>
+                                            <div class="col-xs-8">
+                                                @{
+                                                    opts = new Dictionary<string, object>()
+                                                                                        {
+                                                        { "class", "form-control" },
+                                                        { "Value",  ViewBag.DatosDocumento.descripcion },
+                                                        { "maxlength", 100}
+                                                    };
+                                                    if (ViewBag.SoloLectura)
+                                                    {
+                                                        opts.Add("readonly", "readonly");
+                                                    }
+                                                }
+                                                @Html.TextBoxFor(model => model.DatosDocumento.descripcion, opts)
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-xs-4 text-right">Fecha</label>
+                                            <div class="col-xs-8">
+                                                @{
+                                                    string fecha = ViewBag.DatosDocumento.fecha;
+                                                    if (string.IsNullOrEmpty(fecha))
+                                                    {
+                                                        fecha = DateTime.Today.ToString("yyyy-MM-dd");
+                                                    }
+                                                    fecha = fecha.Substring(0, Math.Min(fecha.Length, 10));
+                                                    opts = new Dictionary<string, object>()
+                                                                                        {
+                                                        { "class", "form-control" },
+                                                        { "type", "date" },
+                                                        { "Value",  fecha }
+                                                    };
+                                                    if (ViewBag.SoloLectura)
+                                                    {
+                                                        opts.Add("readonly", "readonly");
+                                                    }
+                                                }
+                                                @Html.TextBoxFor(model => model.DatosDocumento.fecha, opts)
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-xs-4 text-right">Archivo</label>
+                                            <div class="col-xs-8">
+                                                @{
+                                                    opts = new Dictionary<string, object>()
+                                                                                        {
+                                                        { "class", "form-control" },
+                                                        { "Value",  ViewBag.DatosDocumento.nombre_archivo }
+                                                    };
+                                                    if (ViewBag.SoloLectura)
+                                                    {
+                                                        opts.Add("readonly", "readonly");
+                                                    }
+                                                }
+                                                @Html.TextBoxFor(model => model.DatosDocumento.nombre_archivo, opts)
+                                                <input id="archivo2" type="file" style="display:none" value="@ViewBag.archivo2" onchange="changeFile(this)" name="archivo2" />
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-xs-offset-8 col-xs-4 text-right">
+                                                @{
+                                                    string cls = string.Empty;
+                                                    if (!ViewBag.Nuevo && !ViewBag.Editable)
+                                                    {
+                                                        cls = "hidden";
+                                                    }
+                                                }
+                                                <span class="tooltips fa fa-folder-open fa-2x black cursor-pointer @cls" data-placement="bottom" title="Buscar Documento" data-original-title="Buscar Documento" aria-hidden="true" id="btnExplorar">&ensp;</span>
+                                                @{
+                                                    cls = string.Empty;
+                                                    if (ViewBag.Nuevo || !ViewBag.Eliminable)
+                                                    {
+                                                        cls = "hidden";
+                                                    }
+                                                }
+                                                <span class="tooltips fa fa-trash fa-2x black cursor-pointer @cls" data-placement="bottom" title="Quitar Documento" data-original-title="Quitar Documento" aria-hidden="true" id="btnEliminar">&ensp;</span>
+                                                <span class="tooltips fa fa-eye fa-2x black cursor-pointer @(ViewBag.Nuevo ? "hidden":string.Empty)" data-placement="bottom" title="Visualizar Documento" data-original-title="Visualizar Documento" aria-hidden="true" id="btnVisualizar"></span>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="control-label col-xs-4 text-right">Observaciones</label>
+                                            <div class="col-xs-8">
+                                                @{
+                                                    opts = new Dictionary<string, object>()
+                                                                                        {
+                                                        { "class", "form-control" },
+                                                        { "rows", 3 },
+                                                        { "maxlength", 255 },
+                                                        { "style", "height:auto" },
+                                                        { "Value",  ViewBag.DatosDocumento.observaciones }
+                                                    };
+                                                    if (ViewBag.SoloLectura)
+                                                    {
+                                                        opts.Add("readonly", "readonly");
+                                                    }
+                                                }
+                                                @Html.Hidden("hdfObservaciones", (string)@ViewBag.DatosDocumento.observaciones)
+                                                @Html.TextAreaFor(model => model.DatosDocumento.observaciones, opts)
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @if (!ViewBag.SoloLectura)
+                {
+                    <div class="modal-footer">
+                        <div class="col-xs-4 pull-right">
+                            <span aria-hidden="true" data-placement="right" title="Guardar" data-original-title="Guardar" id="btnGrabarDocumento" class="fa fa-save fa-2x black cursor-pointer"></span>
+                            <span aria-hidden="true" data-placement="right" title="Cancelar" data-original-title="Cancelar" id="btnCancelarDocumento" class="fa fa-undo fa-2x black cursor-pointer"></span>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Error-->
+<div class="modal fade theme_new mensaje" id="ModalErrorDoc" tabindex="-2" role="dialog" aria-labelledby="TituloErrorDoc" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="TituloErrorDoc">Titulo</h3>
+                    <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+                </div>
+            </div>
+            <div class="modal-body" style="word-wrap:break-word;">
+                <div id="MensajeErrorDoc" class="alert alert-danger alert-dismissible" role="alert">
+                    <p id="DescripcionErrorDoc"></p>
+                </div>
+            </div>
+            <div class="modal-footer" style="display:none;">
+                <div class="col-lg-2 pull-right">
+                    <span id="btnAceptarErrorDoc" aria-hidden="true" data-dismiss="modal" data-placement="right" title="Aceptar" data-original-title="Aceptar" class="fa fa-check-circle fa-3x light-blue cursor-pointer"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal Advertencia-->
+<div class="modal fade theme_new mensaje" id="ModalAdvertenciaDoc" tabindex="-2" role="dialog" aria-labelledby="TituloAdvertenciaDoc" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="TituloAdvertenciaDoc">Titulo</h3>
+                <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+            </div>
+            <div class="modal-body">
+                <div id="MensajeAlertaDoc" class="alert alert-warning alert-dismissible" role="alert">
+                    <p id="DescripcionAdvertenciaDoc"> </p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-lg-2 pull-right">
+                    <span id="btnGrabarAdvertenciaDoc" aria-hidden="true" data-dismiss="modal" data-placement="right" title="Aceptar" data-original-title="Aceptar" class="fa fa-check-circle fa-3x light-blue cursor-pointer"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Reemplazar-->
+<div class="modal fade theme_new mensaje" id="ModalReemplazar" tabindex="-2" role="dialog" aria-labelledby="TituloAdvertencia" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="TituloReemplazar">Titulo</h3>
+                <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+            </div>
+            <div class="modal-body">
+                <div id="MensajeAlertaReemplazar" class="alert alert-warning alert-dismissible" role="alert">
+                    <p id="DescripcionReemplazar">Esta apunto de reemplazar el archivo.<br />Está seguro de continuar?</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-lg-2 pull-right">
+                    <span id="btnGrabarReemplazar" aria-hidden="true" data-dismiss="modal" data-placement="right" title="Reemplazar" class="fa fa-check-circle fa-3x light-blue cursor-pointer"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Visualizar-->
+<div class="modal fade theme_new mensaje" id="myModalVisualizar" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="myModalLabelVisualizar">Visualizar Documento</h3>
+                <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+            </div>
+            <div class="modal-body">
+                <div id="accordionVisualizar">
+                    <div class="panel-group remove-margin">
+                        <div class="panel panel-default remove-padding" id="accordion_panel_Visualizar" aria-expanded="true" style="border: solid; border-width: 1px; border-color: #a5a5a5; color: #000000">
+                            <div class="panel-body">
+                                <img id="imagenVisualizar" name="imagenVisualizar" src="@ViewBag.BytesArray">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Información-->
+<div class="modal fade theme_new mensaje" id="ModalInfo" tabindex="-3" role="dialog" aria-labelledby="TituloInfo" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="TituloInfo">Titulo</h3>
+                <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+            </div>
+            <div class="modal-body">
+                <div id="MensajeInfo" class="alert alert-success alert-dismissible" role="alert">
+                    <p id="DescripcionInfo">Descripcion de la informacion</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/Scripts/jquery.form.js"></script>
+<script src="~/Scripts/fileinput.js"></script>
+<script src="~/Scripts/fileinput.min.js"></script>
+<script src="~/Scripts/Documentos/main.js"></script>

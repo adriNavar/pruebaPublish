@@ -1,0 +1,232 @@
+﻿#modal-window-indicaciones {
+    color: black;
+    overflow: hidden !important;
+}
+
+    #modal-window-indicaciones .panel-heading {
+        border-radius: 0;
+    }
+
+    #modal-window-indicaciones a .panel-title {
+        font-size: 18px;
+        padding: 10px;
+        font-weight: normal;
+    }
+
+        #modal-window-indicaciones a .panel-title .glyphicon {
+            margin-top: 2px;
+        }
+
+        #modal-window-indicaciones a .panel-title i.fa {
+            float: right;
+            position: relative;
+        }
+
+.modeless {
+     top:10%;
+    left:50%;
+    bottom:auto;
+    right:auto;
+    margin-left:-30%;
+}
+
+.accordion a.collapsed .panel-title i.fa:after {
+    content: '\f078';
+}
+
+.accordion a .panel-title i.fa:after {
+    content: '\f077';
+}
+
+#modal-window-indicaciones a .panel-title:hover {
+}
+
+#modal-window-indicaciones .panel-body {
+    padding: 0;
+}
+
+#modal-window-indicaciones .panel-default {
+    margin: 38px 0 0;
+    border: 0;
+    border-radius: 5px 5px 0 0;
+}
+
+    #modal-window-indicaciones .panel-default > .panel-heading {
+        font-weight: bold;
+        border-radius: 0;
+        border: 0;
+    }
+
+#modal-window-indicaciones .text-primary {
+    font-weight: bold;
+    cursor: default;
+}
+
+#modal-window-indicaciones p {
+    margin: 0 0 0 30px;
+}
+
+#modal-window-indicaciones .text-muted, #modal-window-indicaciones p {
+    font-weight: bold;
+    cursor: default;
+}
+
+.section-position {
+    margin-bottom: 3px;
+    margin-top: 0;
+    padding: 0 10px;
+}
+
+.tab-pane {
+    padding-bottom: 15px;
+}
+
+.align-right {
+    text-align: right;
+}
+
+li.active > a {
+    border: none !important;
+}
+
+    li.active > a > span, li.active > a:hover > span, .black {
+        color: black !important;
+    }
+
+.inner-accordion {
+    padding-left: 15px !important;
+}
+
+.tooltip.in {
+    filter: alpha(opacity=100);
+    opacity: 1;
+}
+
+.panel-info {
+    position: relative !important;
+    top: -10px !important;
+}
+
+.adp,
+.adp table {
+    font-family: Roboto, Arial, sans-serif;
+    font-size: 16px;
+    color: #2c2c2c;
+}
+
+.adp-substep {
+    vertical-align: top;
+}
+
+    .adp-substep .adp-stepicon .adp-maneuver {
+        display: none;
+        background-image: url(https://maps.gstatic.com/mapfiles/api-3/images/maneuvers_hdpi.png);
+        background-size: 38px 1260px;
+        position: absolute;
+        left: 0;
+        width: 32px;
+        height: 32px;
+    }
+
+    .adp-substep .adp-stepicon {
+        overflow: hidden;
+        position: relative;
+        top: 0;
+        left: 0;
+        width: 32px;
+        height: 32px;
+    }
+
+.adp-distance {
+    white-space: nowrap;
+}
+
+.adp-substep .adp-stepicon .adp-maneuver.adp-ferry {
+    display: inline;
+    background-position: 0 -1228px;
+}
+
+.adp-substep .adp-stepicon .adp-maneuver.adp-ferry-train {
+    display: inline;
+    background-position: 0 -1132px;
+}
+
+.adp-substep .adp-stepicon .adp-maneuver.adp-merge {
+    display: inline;
+    background-position: 0 -286px;
+}
+
+.adp-substep .adp-stepicon .adp-maneuver.adp-straight {
+    display: inline;
+    background-position: 0 -1068px;
+}
+
+.adp-substep .adp-stepicon .adp-maneuver.adp-fork-left {
+    display: inline;
+    background-position: 0 -1100px;
+}
+
+.adp-substep .adp-stepicon .adp-maneuver.adp-ramp-left {
+    display: inline;
+    background-position: 0 -1196px;
+}
+
+.adp-substep .adp-stepicon .adp-maneuver.adp-roundabout-left {
+    display: inline;
+    background-position: 0 -394px;
+}
+
+.adp-substep .adp-stepicon .adp-maneuver.adp-turn-left {
+    display: inline;
+    background-position: 0 -826px;
+}
+
+.adp-substep .adp-stepicon .adp-maneuver.adp-turn-sharp-left {
+    display: inline;
+    background-position: 0 0;
+}
+
+.adp-substep .adp-stepicon .adp-maneuver.adp-turn-slight-left {
+    display: inline;
+    background-position: 0 -756px;
+}
+
+.adp-substep .adp-stepicon .adp-maneuver.adp-uturn-left {
+    display: inline;
+    background-position: 0 -610px;
+}
+
+.adp-substep .adp-stepicon .adp-maneuver.adp-fork-right {
+    display: inline;
+    background-position: 0 -998px;
+}
+
+.adp-substep .adp-stepicon .adp-maneuver.adp-ramp-right {
+    display: inline;
+    background-position: 0 -858px;
+}
+
+.adp-substep .adp-stepicon .adp-maneuver.adp-roundabout-right {
+    display: inline;
+    background-position: 0 -464px;
+}
+
+.adp-substep .adp-stepicon .adp-maneuver.adp-turn-right {
+    display: inline;
+    background-position: 0 -966px;
+}
+
+.adp-substep .adp-stepicon .adp-maneuver.adp-turn-sharp-right {
+    display: inline;
+    background-position: 0 -1164px;
+}
+
+.adp-substep .adp-stepicon .adp-maneuver.adp-turn-slight-right {
+    display: inline;
+    background-position: 0 -102px;
+}
+
+.adp-substep .adp-stepicon .adp-maneuver.adp-uturn-right {
+    display: inline;
+    background-position: 0 -70px;
+}

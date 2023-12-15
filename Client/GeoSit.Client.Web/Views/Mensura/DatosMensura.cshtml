@@ -1,0 +1,462 @@
+﻿@model GeoSit.Client.Web.Models.MensuraModels
+
+@using GeoSit.Client.Web.Controllers
+
+@{
+    ViewBag.Title = "Administración de Mensuras";
+    ViewBag.AccionProfesion = "";
+    ViewBag.IdMensura = 0;
+    ViewBag.IdEstadoMensura = 0;
+    ViewBag.Numero = "";
+    ViewBag.Letra = "";
+    ViewBag.Descripcion = "";
+    ViewBag.Observaciones = "";
+    ViewBag.IdUsuarioAlta = 0;
+    ViewBag.FechaAlta = "";
+    ViewBag.IdUsuarioModif = 0;
+    ViewBag.FechaModif = "";
+    ViewBag.IdUsuarioBaja = 0;
+    ViewBag.FechaBaja = "";
+    ViewBag.FechaPresentacion = "";
+    ViewBag.FechaAprobacion = "";
+
+    ViewBag.Tipo = "";
+    ViewBag.Estado = "";
+
+    ViewBag.ModoEdicion = "false";
+}
+
+<link href="~/Content/dataTables.bootstrap.css" rel="stylesheet" />
+<link href="~/Content/select2.css" rel="stylesheet" />
+<link href="~/Content/select2-bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/abmMensuras.css" rel="stylesheet" />
+
+
+<div class="modal theme_new fade mainwnd" id="modal-window-mensura" tabindex="-1" data-backdrop="static" role="dialog" aria-labelledby="modal-windowLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <input type="hidden" id="editarLocal" name="editarLocal" value="" />
+            <input type="hidden" id="editarLocalIndex" name="editarLocalIndex" value="" />
+            <div id="scroll-content-mensura" class="scroll-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="lblModalMensura">@ViewBag.Title</h3>
+                    <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+                </div>
+                @*Fin de modal-header*@
+                <div class="modal-body mensura-body">
+                    @InputExtensions.Hidden(Html, "IdMensura", ViewBag.DatosMensura.IdMensura)
+                    @InputExtensions.Hidden(Html, "Descripcion", ViewBag.DatosMensura.Descripcion)
+                    @InputExtensions.Hidden(Html, "Tipo", ViewBag.DatosMensura.Tipo)
+                    @InputExtensions.Hidden(Html, "Estado", ViewBag.DatosMensura.Estado)
+                    <div id="body-content-mensura" class="mensura-content body-content">
+                        @*Inicio de listado*@
+                        <div class="panel panel-group mensura-listado" id="panel_listado_mensuras">
+                            <div class='panel-heading bg-primary main-heading' role='tab' id='headingListado'>
+                                <a data-toggle='collapse' aria-expanded='true'>
+                                    <div class='panel-title'>
+                                        Lista de Mensuras
+                                    </div>
+                                </a>
+                            </div>
+                            <div class="panel-body" id="Panel_Grilla_Mensuras">
+                                <div class="col-xs-11">
+                                    <h5>Filtrar</h5>
+
+                                    <div class="input-group">
+                                        <input type="search" value="" placeholder="Texto a buscar..." class="form-control search-filter" id="txtFiltroMensura" onkeypress="runSearch(event)">
+                                        <div class="input-group-addon cursor-pointer">
+                                            <span aria-hidden="true" data-placement="bottom" title="Borrar" data-original-title="Borrar" id="borrarBusqueda" class="fa-lg fa fa-trash black cursor-pointer"></span>
+                                            <span aria-hidden="true" data-placement="bottom" title="Buscar" data-original-title="Buscar" id="btnSearch" class="fa-lg fa fa-search black cursor-pointer"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="resultados col-xs-11">
+                                    <table id="Grilla_mensuras" class="table table-striped table-bordered table-responsive">
+                                        <thead>
+                                            <tr>
+                                                <th class="hide"></th>
+                                                <th> Descripci&oacute;n</th>
+                                                <th> Tipo</th>
+                                                <th> Estado</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                                <div class="resultados col-xs-1" id="mensura-controls">
+                                    <dl>
+                                        @if (SeguridadController.ExisteFuncion(@Resources.Seguridad.AltaMensura))
+                                        {
+                                            <dt><span id="btn_Agregar" class="fa fa-plus-circle fa-2x black cursor-pointer" aria-hidden="true"></span></dt>
+                                        }
+                                        @if (SeguridadController.ExisteFuncion(@Resources.Seguridad.BajaMensura))
+                                        {
+                                            <dt><span id="btn_Eliminar" class="fa fa-minus-circle fa-2x black cursor-pointer boton-deshabilitado" aria-hidden="true"></span></dt>
+                                        }
+                                        @if (SeguridadController.ExisteFuncion(@Resources.Seguridad.ModificacionMensura))
+                                        {
+                                            <dt><span id="btn_Modificar" class="fa fa-pencil fa-2x black cursor-pointer boton-deshabilitado" aria-hidden="true"></span></dt>
+                                        }
+                                    </dl>
+                                </div>
+                            </div>
+                        </div>
+                        @*Fin de listado*@
+
+                        @*Inicio de accordion*@
+                        <div class="panel-group accordion mensura-datos" id="accordion-mensura">
+                            @*Inicio Datos Mensura*@
+                            @using (Ajax.BeginForm("Save_DatosMensura", "Mensura", new AjaxOptions { OnBegin = "return ValidarDatos()" }, new { id = "formMensura", role = "form", novalidate = "", enctype = "multipart/form-data" }))
+                            {
+                                @Html.AntiForgeryToken()
+
+                                <div id="div_informacion_mensura" style="margin-bottom: 3px; margin-top: 0;">
+                                    <div class='panel-heading bg-primary main-heading panel-deshabilitado' role='region' id='headingMensuraInfo'>
+                                        <a data-toggle='collapse' data-parent='#accordion-mensura' href='#collapseMensuraInfo' aria-expanded='false'
+                                           aria-controls='collapseMensuraInfo' class="collapsed">
+                                            <div class='panel-title' id="panel_datos_objeto">
+                                                Datos del Objeto
+                                                <i class="fa"></i>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div id='collapseMensuraInfo' class='panel-collapse collapse main-collapse' aria-labelledby='headingMensuraInfo'>
+                                        <div class="panel-body">
+                                            @Html.Hidden("ModoEdicion", "false")
+                                            @Html.Hidden("ResultadoBusqueda", "false")
+                                            @Html.Hidden("EstadoOperacion", "Consulta")
+                                            @Html.HiddenFor(model => model.DatosMensura.IdMensura, new { @Value = ViewBag.IdMensura })
+
+                                            <div class="form-horizontal">
+                                                <div class="form-group">
+                                                    <label class="col-sm-4 control-label text-right">Tipo de Mensura</label>
+                                                    <div class="col-sm-8">
+                                                        @Html.DropDownListFor(model => model.DatosMensura.IdTipoMensura, (IEnumerable<SelectListItem>)ViewData["tiposmensuras"], new { @class = "form-control", @Value = ViewBag.TipoMensuraId, disabled = "disabled" })
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-4 control-label text-right">N&uacute;mero</label>
+                                                    <div class="col-sm-4">
+                                                        @Html.TextBoxFor(model => model.DatosMensura.Numero, new { @class = "form-control uppercase static", @Value = ViewBag.Numero, @readonly = "readonly", @maxlength = "6" })
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-4 control-label text-right">Letra</label>
+                                                    <div class="col-sm-4">
+                                                        @Html.TextBoxFor(model => model.DatosMensura.Letra, new { @class = "form-control uppercase static", @Value = ViewBag.Letra, @readonly = "readonly", @maxlength = "2" })
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-4 control-label text-right">Descripci&oacute;n</label>
+                                                    <div class="col-sm-8">
+                                                        <div class="input-group">
+                                                            @Html.TextBoxFor(model => model.DatosMensura.Descripcion, new { @class = "form-control static", @Value = ViewBag.Descripcion, @readonly = "readonly", @maxlength = "40" })
+                                                            <span class="input-group-btn btn-generacion-mensura">
+                                                                <button disabled="disabled" id="btnGenerarMensura" class="btn btn-default" type="button" title="Generar Número de Mensura Automático"><i class="fa fa-lg fa-gears cursor-pointer"></i></button>
+                                                                <button disabled="disabled" id="btnToggleModoGeneracionMensura" class="btn btn-default" type="button" title="Activar Generación Manual"><i class="fa fa-lg fa-pencil cursor-pointer" style="display:inline-block"></i><i class="fa fa-lg fa-times cursor-pointer" style="display:none"></i></button>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-4 control-label text-right">Estado</label>
+                                                    <div class="col-sm-8">
+                                                        @Html.DropDownListFor(model => model.DatosMensura.IdEstadoMensura, (IEnumerable<SelectListItem>)ViewData["estadosmensuras"], new { @class = "form-control", disabled = "disabled" })
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    <label class="col-sm-4 control-label text-right">Fecha Presentaci&oacute;n</label>
+                                                    <div class="col-sm-4">
+                                                        <div class="input-group date input-group-sm">
+                                                            @Html.TextBoxFor(model => model.DatosMensura.FechaPresentacion, new { @class = "form-control fecPresentacion", @Value = ViewBag.FechaPresentacion, @readonly = "readonly", @maxlength = "10" })
+                                                            <span class="input-group-addon">
+                                                                <i class="fa fa-calendar"></i>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-4 control-label text-right">Fecha Aprobaci&oacute;n</label>
+                                                    <div class="col-sm-4">
+                                                        <div class="input-group date input-group-sm">
+                                                            @Html.TextBoxFor(model => model.DatosMensura.FechaAprobacion, new { @class = "form-control fecAprobacion", @Value = ViewBag.FechaAprobacion, @readonly = "readonly", @maxlength = "10" })
+                                                            <span class="input-group-addon">
+                                                                <i class="fa fa-calendar"></i>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-4">
+                                                    </div>
+                                                </div>
+                                                <div class="form-group">
+                                                    <label class="col-sm-4 control-label text-right">Observaciones</label>
+                                                    <div class="col-sm-8">
+                                                        @Html.TextAreaFor(model => model.DatosMensura.Observaciones, new { @style = "margin-left: 0px; margin-top: 5px; height: 80px;", @Value = ViewBag.Observaciones, @readonly = "readonly", @maxlength = "300", @class = "form-control" })
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                @*Fin Datos Mensura*@
+
+                                @*Inicio Parcela*@
+                                <div id="div_parcela" style="margin-bottom: 3px; margin-top: 0;">
+                                    <div class='panel-heading bg-primary main-heading panel-deshabilitado' role='region' id='headingMensuraParcela'>
+                                        <a data-toggle='collapse' data-parent='#accordion-mensura' href='#collapseMensuraParcela' aria-expanded='false'
+                                           aria-controls='collapseMensuraParcela' class="collapsed">
+                                            <div class='panel-title' id="panel_titulo_parcela">
+                                                Parcelas Relacionadas
+                                                <i class="fa"></i>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div id='collapseMensuraParcela' class='panel-collapse collapse main-collapse' aria-labelledby='headingMensuraParcela'>
+                                        <div class="panel-body">
+                                            <div class="col-xs-11">
+                                                <table id="unidades" class="table table-striped table-bordered table-responsive" style="width: 100%;">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="hide"></th>
+                                                            <th>Partida</th>
+                                                            <th>Acci&oacute;n</th>
+                                                            <th class="hide"></th>
+                                                            <th class="hide"></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>
+                                            </div>
+                                            <div class="col-xs-1 controls-top">
+                                                <dl id="unidades-controls">
+                                                    @if (SeguridadController.ExisteFuncion(@Resources.Seguridad.AltaParcelasMensura))
+                                                    {
+                                                        <dt><span id="unidades-insert" class="fa fa-plus-circle fa-2x black cursor-pointer" aria-hidden="true"></span></dt>
+                                                        <dt><span id="unidades-delete" class="fa fa-minus-circle fa-2x black cursor-pointer boton-deshabilitado" aria-hidden="true"></span></dt>
+                                                    }
+                                                </dl>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                @*Fin Parcela*@
+
+                                @*Inicio Mensuras Relacionadas*@
+                                <div id="div_mensuraRelac" style="margin-bottom: 3px; margin-top: 0;">
+                                    <div class='panel-heading bg-primary main-heading panel-deshabilitado' role='region' id='headingMensuraRelac'>
+                                        <a data-toggle='collapse' data-parent='#accordion-mensuraRelac' href='#collapseMensuraRelac' aria-expanded='false'
+                                           aria-controls='collapseMensuraRelac' class="collapsed">
+                                            <div class='panel-title' id="panel_titulo_mensuraRelac">
+                                                Mensuras Relacionadas
+                                                <i class="fa"></i>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div id='collapseMensuraRelac' class='panel-collapse collapse main-collapse' aria-labelledby='headingMensuraRelac'>
+                                        <div class="panel-body">
+                                            <div class="col-xs-11">
+                                                <table id="mensurasRelacionadas" class="table table-striped table-bordered table-responsive" style="width: 465px;">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="hide"></th>
+                                                            <th> Descripci&oacute;n</th>
+                                                            <th> Tipo</th>
+                                                            <th> Estado</th>
+                                                            <th class="hide"></th>
+                                                            <th class="hide"></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>
+                                            </div>
+                                            <div class="col-xs-1 controls-top">
+                                                <dl id="mensurasRelac-controls">
+                                                    <dt><span id="mensurasRelacionadas-insert" class="fa fa-plus-circle fa-2x black cursor-pointer" aria-hidden="true"></span></dt>
+                                                    <dt><span id="mensurasRelacionadas-delete" class="fa fa-minus-circle fa-2x black cursor-pointer boton-deshabilitado" aria-hidden="true"></span></dt>
+                                                </dl>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                @*Fin Mensuras Relacionadas*@
+
+                                @*Inicio Documento*@
+                                <div id="div_documento" style="margin-bottom: 3px; margin-top: 0;">
+                                    <div class='panel-heading bg-primary main-heading panel-deshabilitado' role='region' id='headingMensuraDocumento'>
+                                        <a data-toggle='collapse' data-parent='#accordion-mensura' href='#collapseMensuraDocumento' aria-expanded='false'
+                                           aria-controls='collapseMensuraDocumento' class="collapsed">
+                                            <div class='panel-title' id="panel_titulo_documento">
+                                                Documentos Relacionados
+                                                <i class="fa"></i>
+                                            </div>
+                                        </a>
+                                    </div>
+                                    <div id='collapseMensuraDocumento' class='panel-collapse collapse main-collapse' aria-labelledby='headingMensuraDocumento'>
+                                        <div class="panel-body" id="documentos-panel-body">
+                                            <div class="col-xs-11">
+                                                <table id="documentos" class="table table-striped table-bordered table-responsive" style="width: 465px;">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="hide"></th>
+                                                            <th>Tipo</th>
+                                                            <th>Descripción</th>
+                                                            <th>Fecha</th>
+                                                            <th>Archivo</th>
+                                                            <th class="hide"></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>
+                                            </div>
+                                            <div class="col-xs-1 controls-top">
+                                                <dl id="documentos-controls">
+                                                    @if (SeguridadController.ExisteFuncion(@Resources.Seguridad.AltaDocumentoMensura))
+                                                    {
+                                                        <dt><span id="documentos-insert" class="fa fa-plus-circle fa-2x black cursor-pointer" aria-hidden="true"></span></dt>
+                                                    }
+                                                    @if (SeguridadController.ExisteFuncion(@Resources.Seguridad.BajaDocumentoMesnsura))
+                                                    {
+                                                        <dt><span id="documentos-delete" class="fa fa-minus-circle fa-2x black cursor-pointer boton-deshabilitado" aria-hidden="true"></span></dt>
+                                                    }
+                                                    @if (SeguridadController.ExisteFuncion(@Resources.Seguridad.ModificarDocumentoMensura))
+                                                    {
+                                                        <dt><span id="documentos-edit" class="fa fa-pencil fa-2x black cursor-pointer boton-deshabilitado" aria-hidden="true"></span></dt>
+                                                    }
+                                                    <dt><span id="documentos-view" class="fa fa-eye fa-2x black cursor-pointer boton-deshabilitado" aria-hidden="true"></span></dt>
+                                                </dl>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                @*Fin Documento*@
+
+                            }
+                        </div>
+                        @*Fin accordion*@
+                    </div>
+                </div>
+                @*Fin de modal-body*@
+                <div class="modal-footer" style="display:none" id="Panel_Botones_Mensuras">
+                    <div class="col-xs-4 pull-right">
+                        <span aria-hidden="true" data-placement="right" title="Guardar" data-original-title="Guardar" id="btnGrabar" class="fa fa-save fa-2x black cursor-pointer"></span>
+                        <span aria-hidden="true" data-placement="right" title="Cancelar" data-original-title="Cancelar" id="btnCancelar" class="fa fa-undo fa-2x black cursor-pointer"></span>
+                    </div>
+                </div>
+                @*Botones Grabar y Cancelar*@
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Advertencia-->
+<div class="modal theme_new mensaje fade" id="ModalAdvertenciaMensura" tabindex="-2" role="dialog" aria-labelledby="TituloAdvertenciaMensura" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="TituloAdvertenciaMensura">Titulo</h3>
+                <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+            </div>
+            <div class="modal-body">
+                <div id="MensajeAlertaMensura" class="alert alert-warning alert-dismissible" role="alert">
+                    <p id="DescripcionAdvertenciaMensura">Está a punto de DAR DE BAJA a la mensura<br />Está seguro de continuar?</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-xs-4 pull-right">
+                    <span aria-hidden="true" data-placement="right" title="Guardar" data-original-title="Guardar" data-dismiss="modal" id="btnGrabarAdvertenciaMensura" class="fa fa-check-circle light-blue fa-3x cursor-pointer"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Información-->
+<div class="modal fade theme_new mensaje" id="ModalInfoMensura" tabindex="-3" role="dialog" aria-labelledby="TituloInfoMensura" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="TituloInfoMensura">Titulo</h3>
+                <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+            </div>
+            <div class="modal-body">
+                <div id="MensajeInfoMensura" class="alert alert-warning alert-dismissible" role="alert">
+                    <p id="DescripcionInfoMensura">Descripcion de la informacion</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade theme_new mensaje" id="confirmModal" tabindex="-2" role="dialog" data-backdrop="static" aria-labelledby="TituloAdvertencia" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <input type="hidden" id="TipoAdvertencia" value="">
+                <h3 class="modal-title" id="TituloAdvertencia">Titulo</h3>
+                <span id="btnAdvertenciaCancel" aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+            </div>
+            <div class="modal-body">
+                <div id="MensajeAlerta" class="alert alert-warning alert-dismissible" role="alert">
+                    <p id="DescripcionAdvertencia">Está a punto de DESACTIVAR al usuario Perez, Juan <br>Está seguro de continuar?</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-xs-4 fa pull-right">
+                    <span id="btnAdvertenciaOK" aria-hidden="true" data-dismiss="modal" data-placement="right" title="Aceptar" data-original-title="Aceptar" class="fa fa-check-circle light-blue fa-3x cursor-pointer"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade theme_new mensaje" id="mdlSeleccionDepartamento" tabindex="-2" role="dialog" data-backdrop="false" aria-labelledby="TituloSeleccionDepartamento" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="TituloSeleccionDepartamento">Selecci&oacute;n de Departamento</h3>
+                <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+            </div>
+            <div class="modal-body">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-sm-4 control-label text-right">Departamento</label>
+                        <div class="col-sm-8">
+                            @Html.DropDownList("cboDepartamentos", (IEnumerable<SelectListItem>)ViewData["departamentos"], new { @class = "form-control" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-xs-4 fa pull-right">
+                    <span id="btnSeleccionOk" aria-hidden="true" data-dismiss="modal" data-placement="right" title="Aceptar" data-original-title="Aceptar" class="fa fa-check-circle light-blue fa-3x cursor-pointer"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="mensura-externo"></div>
+@if (((bool?)ViewData["esAltaBuscador"]).GetValueOrDefault())
+{
+    <script>
+        function mensuraGuardada(mensura) {
+            $(window).trigger({ type: "mensuraAgregada", mensura: mensura });
+            $("#modal-window-mensura").modal('hide');
+        }
+    </script>
+}
+
+<div id="parcela-grafica-externo-container"></div>
+<div id="contenedor-forms-externos"></div>
+<div id="buscador-container"></div>
+
+<script src="~/Scripts/jquery.form.js"></script>
+<script src="~/Scripts/jquery.dataTables.js"></script>
+<script src="~/Scripts/select2.min.js"></script>
+<script src="~/Scripts/mensuras/main.js"></script>
+

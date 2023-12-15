@@ -1,0 +1,516 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:tns="http://localhost:8088/" xmlns:s1="http://microsoft.com/wsdl/types/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" targetNamespace="http://localhost:8088/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://localhost:8088/">
+      <s:import namespace="http://microsoft.com/wsdl/types/" />
+      <s:element name="BusquedaParcelas">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="circ" type="s:long" />
+            <s:element minOccurs="0" maxOccurs="1" name="seccion" type="s:long" />
+            <s:element minOccurs="0" maxOccurs="1" name="sector" type="s:long" />
+            <s:element minOccurs="0" maxOccurs="1" name="tipodiv" type="s:string" />
+            <s:element minOccurs="0" maxOccurs="1" name="valortipo" type="s:long" />
+            <s:element minOccurs="0" maxOccurs="1" name="fecha_desde" type="s:dateTime" />
+            <s:element minOccurs="0" maxOccurs="1" name="fecha_hasta" type="s:dateTime" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="BusquedaParcelasResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="unbounded" name="ResultadoParcelasShortResult" type="tns:ParcelaShortResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ParcelaShortResult">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="FeatId" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="Nomenclatura" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="IdClaseParcela" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="DescriClaseParcela" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="SupGrafico" type="s:float" />
+          <s:element minOccurs="0" maxOccurs="1" name="FechaAlta" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="FechaBaja" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="Numero" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="HasGeometry" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CantUnidades" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="IdTipoParcela" type="s:long" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="BusquedaParcelasById">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="featId" type="s:long" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="BusquedaParcelasByIdResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ResultadoParcelasResult" type="tns:ParcelaResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="ParcelaResult">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="FeatId" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="IdClaseParcela" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="DescriClaseParcela" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Numero" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="Letra" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ParDescriptor" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="SupGrafico" type="s:float" />
+          <s:element minOccurs="0" maxOccurs="1" name="SupMensura" type="s:float" />
+          <s:element minOccurs="0" maxOccurs="1" name="SupTitulo" type="s:float" />
+          <s:element minOccurs="0" maxOccurs="1" name="SupCenso" type="s:float" />
+          <s:element minOccurs="0" maxOccurs="1" name="UnidadSupMensura" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="DepDescriptor" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="NombreDepto" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="EjiDescriptor" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="CirDescriptor" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="SecDescriptor" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="SctDescriptor" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DivDescriptor" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="IdTipoDivision" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="ColDescriptor" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="DepFeatId" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="EjiFeatId" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="CirFeatId" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="SecFeatId" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="SctFeatId" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="DivFeatId" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="ColFeatId" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="NombreEst" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="NcaDepto" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="NcaPueblo" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="NcaSeccion" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="NcaFraccion" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="NcaFracRural" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="NcaChacra" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="NcaFracUrbana" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="NcaQuinta" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="NcaSeccionUrbana" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="NcaSolar" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="NcaMacizo" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="NcaManzana" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="NcaColonia" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="NcaBarrio" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="NcaParcela" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="NcaLote" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="NcaNomenclaAnterior" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="NcaDivision" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="NcaTipoDivision" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="NvaDepto" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="NvaCircunscripcion" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="NvaSector" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="NvaParcela" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="NplDepDescriptor" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="NplEjiDescriptor" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="NplCirDescriptor" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="NplSecDescriptor" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="NplSctDescriptor" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="NplDivDescriptor" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="NplIdTipoDivision" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="NplDivDescriptor2" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="NplIdTipoDivision2" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="NplColDescriptor" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="NplParcela" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="NplTipoLote" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="NplLote" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="NplLegua" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="NplTipoLoteDesc" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FechaAlta" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="FechaModificacion" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="FechaBaja" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="IdUsuarioAlta" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="IdUsuarioModificacion" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="IdUsuarioBaja" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="IdEstado" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="IdFuente" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="IdTipoParcela" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="IdTipoEjido" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="ExpCreacion" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ExpBaja" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DescMedidas" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DescLinderos" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="HasGeometry" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="GType" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="NroPartida" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Animales" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="Frente" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="Fondo" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="ValorTierra" type="s:float" />
+          <s:element minOccurs="0" maxOccurs="1" name="ValorInmueble" type="s:float" />
+          <s:element minOccurs="0" maxOccurs="1" name="Caption" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="Nomenclatura" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="NomenclaturaNCA" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="TipoDivision" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="NcaTipoDivisionDesc" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Estado" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CaptionNomenc" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CantUnidades" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="CantUnidadesAfectadas" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="parDelegActual" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="cpaCodigo" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="IdUsResponsable" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="FechaHoraIni" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="IdExpeTemp" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="FeatIdsOrigen" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="EstadoParcela" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="CantUnidadesGuardadas" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="NumeroPartida" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="FraccionRural" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Chacra" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FraccionUrbana" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Quinta" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="SeccionUrbana" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Solar" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Macizo" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Manzana" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Colonia" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Barrio" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Geometry" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Partida" type="tns:PartidasResult" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="PartidasResult">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Id" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="Numero" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="DigVer" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="PorcCopropiedad" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="ExpCreacion" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ExpBaja" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="VigDesde" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="VigHasta" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="Tomo" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="Folio" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="Finca" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="Matricula" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="ExpAdjudicacion" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Ley" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="TipoInscripcion" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="NroInscripcion" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="FechaAlta" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="FechaModificacion" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="FechaBaja" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="IdUsuarioAlta" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="IdUsuarioModificacion" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="IdUsuarioBaja" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="IdFuente" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="FeatIdParcela" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="Nomenclatura" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="IdTipoUnidad" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="TipoOperacion" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="ExpOperacion" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="PdaPH" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="UnidadFuncional" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="Copropiedad" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="DescInmueble" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="TributaEn" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="IdTipoInmueble" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="TipoInmueble" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="IdExencionImpositiva" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="SupCubierta" type="s:float" />
+          <s:element minOccurs="0" maxOccurs="1" name="SupSemicubierta" type="s:float" />
+          <s:element minOccurs="0" maxOccurs="1" name="SupDescubierta" type="s:float" />
+          <s:element minOccurs="0" maxOccurs="1" name="Poligono" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="TipoUnidad" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Estado" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Ejido" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="Departamento" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="DepartamentoDesc" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="EstadoTemp" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Domicilio" type="tns:DomicilioResult" />
+          <s:element minOccurs="0" maxOccurs="unbounded" name="Valuacion" type="tns:ValuacionResult" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="DomicilioResult">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Id" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="NroPuerta" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="Piso" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Depto" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Ubicacion" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CPA" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CodigoPostal" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="DepDescriptor" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="EjiDescriptor" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="Localidad" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Departamento" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Provincia" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Ejido" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Pais" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="CodigoPais" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="IdTipo" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="IdPartida" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="FeatIdEjeCalle" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="Observaciones" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FechaAlta" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="FechaModificacion" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="FechaBaja" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="IdUsuarioAlta" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="IdUsuarioModificacion" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="IdUsuarioBaja" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="IdCalle" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="Calle" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="IdDocumento" type="s:long" />
+        </s:sequence>
+      </s:complexType>
+      <s:complexType name="ValuacionResult">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Id" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="IdPartida" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="IdCompTierra" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="IdTipoTierra" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="FeatIdParcela" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="VigenciaDesde" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="VigenciaHasta" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="Copropiedad" type="s:float" />
+          <s:element minOccurs="0" maxOccurs="1" name="ValorTierra" type="s:float" />
+          <s:element minOccurs="0" maxOccurs="1" name="ValorTierraProp" type="s:float" />
+          <s:element minOccurs="0" maxOccurs="1" name="ValorMejoras" type="s:float" />
+          <s:element minOccurs="0" maxOccurs="1" name="ValorMejorasProp" type="s:float" />
+          <s:element minOccurs="0" maxOccurs="1" name="ValorMejorasExclusivo" type="s:float" />
+          <s:element minOccurs="0" maxOccurs="1" name="ValorInmueble" type="s:float" />
+          <s:element minOccurs="0" maxOccurs="1" name="Observaciones" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="IdMonedaTierra" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="MonedaTierra" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="IdMonedaMejoras" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="MonedaMejoras" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="SuperficieTierra" type="s:float" />
+          <s:element minOccurs="0" maxOccurs="1" name="SuperficieMejoras" type="s:float" />
+          <s:element minOccurs="0" maxOccurs="1" name="CodExenImp" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="DescriCodExenImp" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="Origen" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FechaAlta" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="IdUsuarioAlta" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="FechaBaja" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="IdUsuarioBaja" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="AnimalesLegua" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="CoefFrenteFondo" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="CoefReceptividad" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="Base" type="s:string" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="BusquedaPartidas">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="partidaDesde" type="s:long" />
+            <s:element minOccurs="0" maxOccurs="1" name="partidaHasta" type="s:long" />
+            <s:element minOccurs="0" maxOccurs="1" name="fecha_desde" type="s:dateTime" />
+            <s:element minOccurs="0" maxOccurs="1" name="fecha_hasta" type="s:dateTime" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="BusquedaPartidasResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="unbounded" name="ResultadoPartidasShortResult" type="tns:PartidasShortResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:complexType name="PartidasShortResult">
+        <s:sequence>
+          <s:element minOccurs="0" maxOccurs="1" name="Id" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="Numero" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="FeatIdParcela" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="UnidadFuncional" type="s:long" />
+          <s:element minOccurs="0" maxOccurs="1" name="Nomenclatura" type="s:string" />
+          <s:element minOccurs="0" maxOccurs="1" name="FechaAlta" type="s:dateTime" />
+          <s:element minOccurs="0" maxOccurs="1" name="FechaBaja" type="s:dateTime" />
+        </s:sequence>
+      </s:complexType>
+      <s:element name="BusquedaPartidasById">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="idPartida" type="s:long" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="BusquedaPartidasByIdResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ResultadoPartidasResult" type="tns:PartidasResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="BusquedaPartidasByParcelaId">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="idPartida" type="s:long" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="BusquedaPartidasByParcelaIdResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="unbounded" name="ResultadoPartidasResult" type="tns:PartidasResult" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://microsoft.com/wsdl/types/">
+      <s:simpleType name="char">
+        <s:restriction base="s:unsignedShort" />
+      </s:simpleType>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="BusquedaParcelasSoapIn">
+    <wsdl:part name="parameters" element="tns:BusquedaParcelas" />
+  </wsdl:message>
+  <wsdl:message name="BusquedaPartidasByParcelaIdSoapOut">
+    <wsdl:part name="parameters" element="tns:BusquedaPartidasByParcelaIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="BusquedaParcelasByIdSoapOut">
+    <wsdl:part name="parameters" element="tns:BusquedaParcelasByIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="BusquedaPartidasByIdSoapOut">
+    <wsdl:part name="parameters" element="tns:BusquedaPartidasByIdResponse" />
+  </wsdl:message>
+  <wsdl:message name="BusquedaParcelasSoapOut">
+    <wsdl:part name="parameters" element="tns:BusquedaParcelasResponse" />
+  </wsdl:message>
+  <wsdl:message name="BusquedaPartidasByIdSoapIn">
+    <wsdl:part name="parameters" element="tns:BusquedaPartidasById" />
+  </wsdl:message>
+  <wsdl:message name="BusquedaPartidasSoapIn">
+    <wsdl:part name="parameters" element="tns:BusquedaPartidas" />
+  </wsdl:message>
+  <wsdl:message name="BusquedaPartidasByParcelaIdSoapIn">
+    <wsdl:part name="parameters" element="tns:BusquedaPartidasByParcelaId" />
+  </wsdl:message>
+  <wsdl:message name="BusquedaPartidasSoapOut">
+    <wsdl:part name="parameters" element="tns:BusquedaPartidasResponse" />
+  </wsdl:message>
+  <wsdl:message name="BusquedaParcelasByIdSoapIn">
+    <wsdl:part name="parameters" element="tns:BusquedaParcelasById" />
+  </wsdl:message>
+  <wsdl:portType name="InterfazDGCeITSoap">
+    <wsdl:operation name="BusquedaParcelasById">
+      <wsdl:input message="tns:BusquedaParcelasByIdSoapIn" />
+      <wsdl:output message="tns:BusquedaParcelasByIdSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="BusquedaPartidasById">
+      <wsdl:input message="tns:BusquedaPartidasByIdSoapIn" />
+      <wsdl:output message="tns:BusquedaPartidasByIdSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="BusquedaPartidas">
+      <wsdl:input message="tns:BusquedaPartidasSoapIn" />
+      <wsdl:output message="tns:BusquedaPartidasSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="BusquedaParcelas">
+      <wsdl:input message="tns:BusquedaParcelasSoapIn" />
+      <wsdl:output message="tns:BusquedaParcelasSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="BusquedaPartidasByParcelaId">
+      <wsdl:input message="tns:BusquedaPartidasByParcelaIdSoapIn" />
+      <wsdl:output message="tns:BusquedaPartidasByParcelaIdSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="InterfazDGCeITSoap12" type="tns:InterfazDGCeITSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="BusquedaParcelasById">
+      <soap12:operation soapAction="http://localhost:8088/BusquedaParcelasById" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BusquedaPartidasById">
+      <soap12:operation soapAction="http://localhost:8088/BusquedaPartidasById" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BusquedaParcelas">
+      <soap12:operation soapAction="http://localhost:8088/BusquedaParcelas" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BusquedaPartidas">
+      <soap12:operation soapAction="http://localhost:8088/BusquedaPartidas" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BusquedaPartidasByParcelaId">
+      <soap12:operation soapAction="http://localhost:8088/BusquedaPartidasByParcelaId" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="InterfazDGCeITSoap" type="tns:InterfazDGCeITSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="BusquedaParcelasById">
+      <soap:operation soapAction="http://localhost:8088/BusquedaParcelasById" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BusquedaPartidasById">
+      <soap:operation soapAction="http://localhost:8088/BusquedaPartidasById" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BusquedaParcelas">
+      <soap:operation soapAction="http://localhost:8088/BusquedaParcelas" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BusquedaPartidas">
+      <soap:operation soapAction="http://localhost:8088/BusquedaPartidas" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="BusquedaPartidasByParcelaId">
+      <soap:operation soapAction="http://localhost:8088/BusquedaPartidasByParcelaId" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="InterfazDGCeIT">
+    <wsdl:port name="InterfazDGCeITSoap" binding="tns:InterfazDGCeITSoap">
+      <soap:address location="http://localhost:8088/InterfazDGCeIT" />
+    </wsdl:port>
+    <wsdl:port name="InterfazDGCeITSoap12" binding="tns:InterfazDGCeITSoap12">
+      <soap12:address location="http://localhost:8088/InterfazDGCeIT" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

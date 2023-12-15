@@ -1,0 +1,247 @@
+﻿@using GeoSit.Client.Web.Models
+@model MapaTematicoModel
+@{
+    ViewBag.Title = "Resumen";
+    ViewBag.Description = "Confirmación de las configuraciones establecidas.";
+}
+
+<link href="~/Content/css/select2.css" rel="stylesheet" />
+<link href="~/Content/select2-bootstrap.min.css" rel="stylesheet" />
+<link href="~/Content/mapastematicos.css?v=@(DateTime.Now.Ticks.ToString())" rel="stylesheet" />
+
+<div class="modal fade theme_new mapas-tematicos resumen" id="myModalMT" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog modal-xlg">
+        <div class="modal-content">
+            <div class="scroll-content">
+                <div class="modal-header">
+                    <h3 class="modal-title" id="myModalLabel">@Resources.Recursos.TituloMapaTematico: @ViewBag.Title</h3>
+                    <span id="cerrar" aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+                    <a href='@Url.Action("BuscarAyuda", "MapasTematicos")'>
+                        <span id="ayuda" data-placement="right" title="Ayuda" data-original-title="Ayuda" class="fa fa-question fa-2x white cursor-pointer img-responsive pull-right" style="margin-right: 10px;"></span>
+                    </a>
+                </div>
+                <div class="modal-body resumen-body">
+                    <div id="resumen-content" class="body-content">
+                        <form method='post' action='@Url.Action("GetIndexView", "MapasTematicos")' role='form' id='form-componente'>
+                            @Html.AntiForgeryToken()
+                        </form>
+                        <form method='post' action='@Url.Action("GetAtributosViewVolver", "MapasTematicos")' role='form' id='form-atributo'>
+                            @Html.AntiForgeryToken()
+                        </form>
+                        <form method='post' action='@Url.Action("GetFiltrosViewVolver", "MapasTematicos")' role='form' id='form-filtros'>
+                            @Html.AntiForgeryToken()
+                        </form>
+                        <form method='post' action='@Url.Action("GetVisualizacionViewVolver", "MapasTematicos")' role='form' id='form-visualizacion'>
+                            @Html.AntiForgeryToken()
+                        </form>
+                        <form method='post' action='@Url.Action("Generar", "MapasTematicos")' role='form' id='form-resumen'>
+                            @Html.AntiForgeryToken()
+                            <div class="panel-group informacion">
+                                <div class="panel panel-default acciones">
+                                    <div class="row">
+                                        <div class="col-xs-8 pull-right text-right">
+                                            <button id="guardarBiblioteca" type="button" class="btn btn-secondary">
+                                                <span class="fa fa-floppy-o light-blue cursor-pointer"></span>
+                                                Biblioteca
+                                            </button>
+                                            <button id="guardarColeccion" type="button" class="btn btn-secondary">
+                                                <span class="fa fa-floppy-o light-blue cursor-pointer"></span>
+                                                Colecciones
+                                            </button>
+                                            <button id="exportarExcel" type="button" class="btn btn-secondary">
+                                                <span class="fa fa-file-excel-o light-blue cursor-pointer"></span>
+                                                Excel
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="panel panel-default accesos">
+                                    <div class="row">
+                                        <div class="col-xs-4 tiles">
+                                            <div class="row">
+                                                <div class="col-xs-2">
+                                                    <span class="fa fa-cubes fa-3x icono"></span>
+                                                </div>
+                                                <div class="col-xs-10">
+                                                    <div class="row cabecera">
+                                                        <span class="h4">Componente</span>
+                                                        <div id="editarComponente">
+                                                            <span class="fa fa-cog fa-lg"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row detalle">
+                                                        @Html.DisplayFor(model => model.Componente.Nombre)
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-4 tiles">
+                                            <div class="row">
+                                                <div class="col-xs-2">
+                                                    <span class="fa fa-tag fa-3x icono"></span>
+                                                </div>
+                                                <div class="col-xs-10">
+                                                    <div class="row cabecera">
+                                                        <span class="h4">Atributo</span>
+                                                        <div id="editarAtributo">
+                                                            <span class="fa fa-cog fa-lg"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row detalle">
+                                                        @if (Model.ComponenteAtributo.Atributo.Agrupacion != null && Model.ComponenteAtributo.Atributo.Agrupacion.Nombre != null)
+                                                        {
+                                                            @Html.DisplayFor(model => Model.ComponenteAtributo.Atributo.Agrupacion.Nombre) <span> de </span>
+                                                        }
+                                                        @Html.DisplayFor(model => model.ComponenteAtributo.Atributo.Nombre) <span> Por </span> @Html.DisplayFor(model => model.ComponenteAtributo.Nombre)
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-4 tiles">
+                                            <div class="row">
+                                                <div class="col-xs-2">
+                                                    <span class="fa fa-filter fa-3x icono"></span>
+                                                </div>
+                                                <div class="col-xs-10">
+                                                    <div class="row cabecera">
+                                                        <span class="h4">Filtros</span>
+                                                        <div id="editarFiltros">
+                                                            <span class="fa fa-cog fa-lg"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row detalle">
+                                                        @if (Model.cantFiltrosAtributo > 0)
+                                                        {@Model.cantFiltrosAtributo <span> filtros por Atributo </span> <br />}
+                                                        @if (Model.cantFiltrosColeccion > 0)
+                                                        {@Model.cantFiltrosColeccion <span> filtros por Colección </span> <br />}
+                                                        @if (Model.cantFiltrosGeografico > 0)
+                                                        {@Model.cantFiltrosGeografico <span> filtros Geográficos </span> <br />}
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-4 tiles">
+                                            <div class="row">
+                                                <div class="col-xs-2">
+                                                    <span class="fa fa-eye fa-3x icono"></span>
+                                                </div>
+                                                <div class="col-xs-10">
+                                                    <div class="row cabecera">
+                                                        <span class="h4">Visualizaci&oacute;n</span>
+                                                        <div id="editarVisualizacion">
+                                                            <span class="fa fa-cog fa-lg"></span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="row detalle">
+                                                        <span>Distribuci&oacute;n </span> @Html.DisplayFor(model => model.Visualizacion.DistribucionDesc) <br />
+                                                        @Html.DisplayFor(model => model.Visualizacion.Rangos) <span> Rangos</span> @Html.DisplayFor(model => model.Visualizacion.ColoreadoDesc)
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-4 tiles">
+                                            <div class="row">
+                                                <div class="col-xs-2">
+                                                    <span class="fa fa-underline fa-3x icono"></span>
+                                                </div>
+                                                <div class="col-xs-10">
+                                                    <div class="row cabecera">
+                                                        <span class="h4">T&iacute;tulo</span>
+                                                    </div>
+                                                    <div class="row detalle">
+                                                        @Html.TextBoxFor(model => model.Nombre, new { @id = "tituloNombre", @style = "margin-left: 0px; margin-top: 5px;", @maxlength = "254", @class = "form-control", @placeholder = "Ingrese un título" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-xs-4 tiles">
+                                            <div class="row">
+                                                <div class="col-xs-2">
+                                                    <span class="fa fa-align-justify fa-3x icono"></span>
+                                                </div>
+                                                <div class="col-xs-10">
+                                                    <div class="row cabecera">
+                                                        <span class="h4">Descripci&oacute;n</span>
+                                                    </div>
+                                                    <div class="row detalle">
+                                                        @Html.TextAreaFor(model => model.Descripcion, new { @id = "descripcion", @style = "margin-left: 0px; margin-top: 5px; height: 80px;", @maxlength = "254", @class = "form-control", @placeholder = "Ingrese una descripción" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="col-xs-8 pull-left wizard">
+                        <div id="progress-bar-step" class="bs-wizard">
+                            <div class="col-xs-2 bs-wizard-step complete">
+                                <div class="progress"><div class="progress-bar"></div></div>
+                                <a class="bs-wizard-dot"></a>
+                                <div class="bs-wizard-info text-center">Componente</div>
+                            </div>
+
+                            <div class="col-xs-2 bs-wizard-step complete">
+                                <div class="progress"><div class="progress-bar"></div></div>
+                                <a class="bs-wizard-dot"></a>
+                                <div class="bs-wizard-info text-center">Atributo</div>
+                            </div>
+
+                            <div class="col-xs-2 bs-wizard-step complete">
+                                <div class="progress"><div class="progress-bar"></div></div>
+                                <a class="bs-wizard-dot"></a>
+                                <div class="bs-wizard-info text-center">Filtros</div>
+                            </div>
+
+                            <div class="col-xs-2 bs-wizard-step complete">
+                                <div class="progress"><div class="progress-bar"></div></div>
+                                <a class="bs-wizard-dot"></a>
+                                <div class="bs-wizard-info text-center">Visualizaci&oacute;n</div>
+                            </div>
+
+                            <div class="col-xs-2 bs-wizard-step active">
+                                <div class="progress"><div class="progress-bar"></div></div>
+                                <a class="bs-wizard-dot"></a>
+                                <div class="bs-wizard-info text-center">Resumen</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xs-4 pull-right botones">
+                        @*<span data-placement="right" id="volver" title="Volver a Visualización" data-original-title="Volver a Visualización" class="fa fa-arrow-left fa-2x light-blue cursor-pointer"></span>*@
+                        <span data-placement="right" id="btn-generar" title="Generar" data-original-title="Generar" class="fa fa-check fa-2x light-blue cursor-pointer"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Advertencia-->
+<div class="modal fade theme_new mensaje" id="ModalInfoMTResu" tabindex="-3" role="dialog" aria-labelledby="TituloInfoMTResu" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="TituloInfoMTResu">Titulo</h3>
+                <span aria-hidden="true" class="fa fa-close white fa-2x cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+            </div>
+            <div class="modal-body">
+                <div id="MensajeInfoMTResu" class="alert alert-dismissible" role="alert">
+                    <p id="DescripcionInfoMTResu">Descripcion de la informacion</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-xs-4 pull-right">
+                    <span id="btnAceptarInfoMTResu" aria-hidden="true" data-dismiss="modal" data-placement="right" title="Aceptar" data-original-title="Aceptar" class="fa fa-check-circle light-blue fa-3x cursor-pointer"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/select2.min.js"></script>
+<script src="~/Scripts/jquery.form.js"></script>
+<script src="~/Scripts/MapasTematicos/resumen.js"></script>

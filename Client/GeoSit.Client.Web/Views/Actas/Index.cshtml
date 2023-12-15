@@ -1,0 +1,727 @@
+﻿@model GeoSit.Client.Web.Models.ActaModel
+
+<link href="~/Content/dataTables.bootstrap.css" rel="stylesheet" />
+<link href="~/Scripts/bootstrap-calendar/css/calendar.css" rel="stylesheet">
+<link href="~/Scripts/bootstrap-datepicker/css/bootstrap-datepicker.css" rel="stylesheet">
+
+<link href="~/Content/Actas/actas.css" rel="stylesheet">
+
+<link href="~/Scripts/bootstrap-clockpicker/bootstrap-clockpicker.min.css" rel="stylesheet">
+
+<div class="modal fade theme_new" id="modal-window-actas" tabindex="-1" data-backdrop="static" role="dialog" aria-labelledby="modal-windowLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div id="actasModal" class="scroll-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">@Resources.Recursos.Actas</h3>
+                    <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+                </div>
+                <div class="modal-body actas-body">
+                    @using (Html.BeginForm("Inspeccion_Programar", "ObrasParticulares", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { id = "formActas", role = "form", novalidate = "" }))
+                    {@Html.AntiForgeryToken()
+                    <input type="text" id="NonActaId" value="@ViewBag.ActaId" class="hide" />
+                    <input type="text" id="NonBuscaId" value="@ViewBag.buscaId" class="hide" />
+                    <input type="hidden" id="editionMode" value="false" />
+                    <input type="hidden" id="idPanel" value="1" />
+                    <div id="body-content" class="actas-content body-content">
+                        <div class="panel-group accordion" id="accordion-actas">
+                            <div class="section-position">
+                                <div class='panel-heading bg-primary main-heading' id='headingPlanificacion'>
+                                    <a data-toggle='collapse' data-parent='#accordion-actas' href='#collapsePlanificacion' aria-expanded='true'
+                                       aria-controls='collapsePlanificacion'>
+                                        <div class='panel-title'>
+                                            @Resources.Recursos.Busqueda
+                                            <i class="fa"></i>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div id='collapsePlanificacion' class='panel-collapse collapse in main-collapse' aria-labelledby='headingPlanificacion'>
+                                    <div class="panel-body" style="padding-top: 5px;">
+                                        <div class="panel-body" style="margin-bottom: 10px">
+                                            <form id="busqueda-form">
+                                                <div class="panel-group" style="margin-bottom: 0" id="accordionBusqueda" role="tablist" aria-multiselectable="true">
+                                                    <div>
+                                                        <div role="tab" id="headingUT">
+                                                            <ul class="list-inline">
+                                                                <li>
+                                                                    <div class="circle">
+                                                                        <div class="circle-inside">
+                                                                            <div class="line-vert"></div>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                                <li>
+                                                                    <a role="button" data-toggle="collapse" data-parent="#accordionBusqueda" aria-expanded="true" aria-controls="collapseUT" id="accordionUT" class="collapseBusqueda">
+                                                                        Unidad Tributaria
+                                                                    </a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                        <div id="collapseUT" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingUT">
+                                                            <div class="panel-body panel-body-line">
+                                                                <div class="form-horizontal">
+                                                                    <div class="form-group form-group-sm">
+                                                                        <div class="col-xs-6">
+                                                                            <div class="input-group">
+                                                                                <input class="form-control" id="UnidadTributaria" name="UnidadTributaria" readonly="readonly" type="text" value="">
+                                                                                <input type="hidden" id="UnidadTributariaId" />
+                                                                                <div class="input-group-addon cursor-pointer" id="ut-search">
+                                                                                    <span data-placement="bottom" title="Buscar Unidad Tributaria" class="fa-lg fa fa-search black cursor-pointer" aria-hidden="true"></span>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <div role="tab" id="headingNA">
+                                                            <ul class="list-inline">
+                                                                <li>
+                                                                    <div class="circle">
+                                                                        <div class="circle-inside">
+                                                                            <div class="line-vert"></div>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                                <li>
+                                                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordionBusqueda" aria-expanded="false" aria-controls="collapseNA" id="accordionNA">
+                                                                        Número de Acta
+                                                                    </a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                        <div id="collapseNA" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingNA">
+                                                            <div class="panel-body panel-body-line">
+                                                                <div class="form-horizontal">
+                                                                    <div class="form-group form-group-sm">
+                                                                        <label class="control-label col-xs-1">Desde</label>
+                                                                        <div class="col-xs-4">
+                                                                            <input type="text" id="numeroDesde" class="form-control center-block" />
+                                                                        </div>
+                                                                        <label class="control-label col-xs-1">Hasta</label>
+                                                                        <div class="col-xs-4">
+                                                                            <input type="text" id="numeroHasta" class="form-control center-block" />
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <div role="tab" id="headingFC">
+                                                            <ul class="list-inline">
+                                                                <li>
+                                                                    <div class="circle">
+                                                                        <div class="circle-inside">
+                                                                            <div class="line-vert"></div>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                                <li>
+                                                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordionBusqueda" aria-expanded="false" aria-controls="collapseFC" id="accordionFC">
+                                                                        Fecha
+                                                                    </a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                        <div id="collapseFC" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingFC">
+                                                            <div class="panel-body panel-body-line">
+                                                                <div class="form-horizontal">
+                                                                    <div class="form-group form-group-sm">
+                                                                        <label class="control-label col-xs-1">Desde</label>
+                                                                        <div class="col-xs-4">
+                                                                            <div class="input-group date fechaPicker">
+                                                                                <input type="text" id="fechaDesde" class="form-control center-block" />
+                                                                                <span class="input-group-addon">
+                                                                                    <span class="icon-th fa fa-calendar fa-lg light-blue cursor-pointer"></span>
+                                                                                </span>
+                                                                            </div>
+                                                                        </div>
+                                                                        <label class="control-label col-xs-1">Hasta</label>
+                                                                        <div class="col-xs-4">
+                                                                            <div class="input-group date fechaPicker">
+                                                                                <input type="text" id="fechaHasta" class="form-control center-block" />
+                                                                                <span class="input-group-addon">
+                                                                                    <span class="icon-th fa fa-calendar fa-lg light-blue cursor-pointer"></span>
+                                                                                </span>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <div role="tab" id="headingEstado">
+                                                            <ul class="list-inline">
+                                                                <li>
+                                                                    <div class="circle">
+                                                                        <div class="circle-inside">
+                                                                            <div class="line-vert"></div>
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                                <li>
+                                                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordionBusqueda" aria-expanded="false" aria-controls="collapseEstado" id="accordionEstado">
+                                                                        Estado
+                                                                    </a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                        <div id="collapseEstado" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingEstado">
+                                                            <div class="panel-body panel-body-line">
+                                                                <div class="form-horizontal">
+                                                                    <div class="form-group form-group-sm">
+                                                                        <div class="col-xs-6">
+                                                                            @Html.DropDownListFor(model => model.SelectedEstadoActa, Model.CmbEstadosActas, new { @class = "form-control", @id = "idEstadoBusqueda" })
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div>
+                                                        <div role="tab" id="headingInspectores">
+                                                            <ul class="list-inline">
+                                                                <li>
+                                                                    <div class="circle">
+                                                                        <div class="circle-inside">
+                                                                        </div>
+                                                                    </div>
+                                                                </li>
+                                                                <li>
+                                                                    <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordionBusqueda" aria-expanded="false" aria-controls="collapseInspectores" id="accordionInspectores">
+                                                                        Inspectores
+                                                                    </a>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                        <div id="collapseInspectores" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingInspectores">
+                                                            <div class="panel-body">
+                                                                <div class="form-horizontal">
+                                                                    <div class="form-group form-group-sm">
+                                                                        <div class="col-xs-10">
+                                                                            <table id="Grilla_InspectoresBusqueda" class="table table-striped table-condensed table-bordered table-responsive" cellspacing="0" style="width:100%">
+                                                                                <thead>
+                                                                                    <tr>
+                                                                                        <th width="5%" class="no-sort"></th>
+                                                                                        <th width="95%">@Resources.Recursos.Inspector</th>
+                                                                                    </tr>
+                                                                                </thead>
+                                                                                <tbody>
+                                                                                    @{foreach (var item in Model.Inspectores)
+                                                                                        {
+                                                                                            string inspector = item.Usuario.Apellido + " " + item.Usuario.Nombre;
+                                                                                            long idInspector = item.InspectorID;
+
+                                                                                            if (item.Usuario.Fecha_baja != null)
+                                                                                            {
+                                                                                                <tr style="background : #fd9999;">
+                                                                                                    <td width="5%">@idInspector</td>
+                                                                                                    <td width="95%">@inspector</td>
+                                                                                                </tr>
+                                                                                            }
+                                                                                            else
+                                                                                            {
+                                                                                                <tr>
+                                                                                                    <td width="5%">@idInspector</td>
+                                                                                                    <td width="95%">@inspector</td>
+                                                                                                </tr>
+                                                                                            }
+
+                                                                                            continue;
+                                                                                        }}
+                                                                                </tbody>
+                                                                            </table>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <span id="btnBuscar" class="fa fa-search fa-lg fa-2x cursor-pointer pull-right" aria-hidden="true" style="margin-bottom:7px; margin-left:7px;" />
+                                                <span id="btnAdd" class="fa fa-plus-circle fa-lg fa-2x cursor-pointer pull-right" style="margin-bottom:7px;" aria-hidden="true" />
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="section-position">
+                                <div class='panel-heading bg-primary main-heading panel-deshabilitado' role='region' id='headingResultado'>
+                                    <a data-toggle='collapse' data-parent='#accordion-actas' href='#collapseDatos' aria-expanded='false'
+                                       aria-controls='collapseDatos' class='collapsed'>
+                                        <div class='panel-title'>
+                                            @Resources.Recursos.Resultado
+                                            <i class="fa"></i>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div id="collapseDatos" class='panel-collapse collapse main-collapse' aria-labelledby='headingResultado'>
+                                    <div class="panel-body" style="padding-top: 5px;">
+                                        <div class="col-md-12 center-block">
+                                            @Resources.Recursos.Actas
+                                            <hr />
+                                        </div>
+                                        <div class="col-xs-11 center-block">
+                                            <table id="Grilla_ActasResultadoBusqueda" class="table table-striped table-condensed table-bordered table-responsive" cellspacing="0" style="width:100%">
+                                                <thead>
+                                                    <tr>
+                                                        <th class="no-sort"></th>
+                                                        <th width="10%">@Resources.Recursos.Numero</th>
+                                                        <th width="10%">@Resources.Recursos.Tipo</th>
+                                                        <th width="15%">@Resources.Recursos.Fecha</th>
+                                                        <th width="15%">@Resources.Recursos.PlazoCump</th>
+                                                        <th width="30%">@Resources.Recursos.Inspector</th>
+                                                        <th width="20%">@Resources.Recursos.Estado</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
+                                        <div class="col-xs-1 position-botton">
+                                            <dl>
+                                                <dt><span aria-hidden="true" aria-controls="button" data-placement="right" title="Agregar" data-original-title="Agregar" id="btnAdd2" class="fa fa-plus-circle fa-2x black cursor-pointer" /></dt>
+                                                <dt><span aria-hidden="true" aria-controls="button" data-placement="right" title="Borrar" data-original-title="Borrar" id="btnBorrar" class="fa fa-minus-circle fa-2x black cursor-pointer boton-deshabilitado"></span></dt>
+                                                <dt><span aria-hidden="true" aria-controls="button" data-placement="right" title="Editar" data-original-title="Editar" id="btnEditar" class="fa fa-pencil fa-2x black cursor-pointer boton-deshabilitado"></span></dt>
+                                            </dl>
+                                        </div>
+                                    </div>
+                                </div>
+                                @*<div id="collapseDatos" class='panel-collapse collapse main-collapse' aria-labelledby='headingDatos'>
+                        <div class="panel-body">
+                            <div class="col-md-12 center-block">
+                                @Resources.Recursos.Actas
+                                <hr />
+                            </div>
+                            <div class="col-xs-12">
+                                <table id="Grilla_Actas" class="table table-striped table-bordered table-responsive" cellspacing="0" style="width:100%">
+                                    <thead>
+                                        <tr>
+                                            <th width="5%"></th>
+                                            <th class="no-sort" width="5%"></th>
+                                            <th width="95%">@Resources.Recursos.Numero</th>
+                                            <th width="95%">@Resources.Recursos.FechaAlta</th>
+                                            <th width="95%">@Resources.Recursos.PlazoCump</th>
+                                            <th width="95%">@Resources.Recursos.Inspector</th>
+                                            <th width="95%">@Resources.Recursos.Estado</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>*@
+                            </div>
+                            <div class="section-position">
+                                <div class='panel-heading bg-primary main-heading panel-deshabilitado' role='region' id='headingDatos'>
+                                    <a data-toggle='collapse' data-parent='#accordion-actas' href='#collapseResultados' aria-expanded='false'
+                                       aria-controls='collapseResultados' class='collapsed'>
+                                        <div class='panel-title'>
+                                            @Resources.Recursos.Identificacion
+                                            <i class="fa"></i>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div id="collapseResultados" class='panel-collapse collapse main-collapse' aria-labelledby='headingDatos'>
+                                    <div class="panel-body">
+
+                                        <div class="col-md-12 col-xs-12 paddingElements">
+                                            <div class="col-md-3 col-xs-3 center-block labels">
+                                                Tipo y Numero
+                                            </div>
+
+
+
+                                            <div class="col-md-5 col-xs-5 center-block">
+                                                @Html.DropDownListFor(model => model.SelectedTipoActa, Model.CmbActasTipos, new { @class = "form-control" })
+                                            </div>
+                                            <div class="col-md-4 col-xs-4 center-block">
+                                                <input type="text" id="nroActa" class="form-control center-block" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 col-xs-12 paddingElements">
+                                            <div class="col-md-3 col-xs-3 center-block labels">
+                                                @Resources.Recursos.FechaHora<span id="fecha_required" class="oculto required">*</span><br />
+                                            </div>
+
+                                            <div class="col-md-3 col-xs-3 center-block">
+                                                <div class="input-append date form_datetime fechaPicker" style="width : 125px">
+                                                    <input id="fecha" size="16" type="text" value="" class="form-control fechaCalendarioValue" style="width:80%; display:inline;">
+                                                    <span style="margin-top: 3px" class="add-on">
+                                                        <span data-placement="right" title="Calendario" data-original-title="Calendario" style="margin-left: -20px; margin-top: 3px" class="icon-th fa fa-calendar fa-lg GestionInspecciones cursor-pointer"></span>
+                                                    </span>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-3 col-xs-3 center-block">
+                                                <div class="input-group clockpicker" data-align="top" data-autoclose="true">
+                                                    <input type="text" class="form-control" value="09:30" id="hora">
+                                                    <span class="input-group-addon">
+                                                        <span class="glyphicon glyphicon-time"></span>
+                                                    </span>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="col-md-3 col-xs-3 center-block">
+                                                @Resources.Recursos.Plazo<span id="plazo_required" class="oculto required">*</span>
+
+                                                <input type="text" id="plazo" class="form-control center-block" style="width:39%; display:inline;" />
+
+                                                @Resources.Recursos.Dias
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 col-xs-12 paddingElements">
+                                            <div class=" col-md-3 col-xs-3 center-block labels">
+                                                @Resources.Recursos.Inspector<span id="SelectedInspector_required" class="oculto required">*</span>
+                                            </div>
+                                            <div class=" col-md-9 col-xs-9 center-block">
+                                                @Html.DropDownListFor(model => model.SelectedInspector, Model.CmbInspectores, new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12 col-xs-12 paddingElements">
+                                            <div class=" col-md-3 col-xs-3 center-block labels">
+                                                @Resources.Recursos.Estado<span id="SelectedEstadoActa_required" class="oculto required">*</span>
+                                            </div>
+                                            <div class=" col-md-9 col-xs-9 center-block">
+                                                @Html.DropDownListFor(model => model.SelectedEstadoActa, Model.CmbEstadosActas, new { @class = "form-control" })
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="section-position">
+                                <div class='panel-heading bg-primary main-heading panel-deshabilitado' role='region' id='headingUnidadesTributarias'>
+                                    <a data-toggle='collapse' data-parent='#accordion-actas' href='#collapseUnidadesTributarias' aria-expanded='false'
+                                       aria-controls='collapseResultados' class='collapsed'>
+                                        <div class='panel-title'>
+                                            @Resources.Recursos.UnidadesTributarias
+                                            <i class="fa"></i>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div id="collapseUnidadesTributarias" class='panel-collapse collapse main-collapse' aria-labelledby='headingUnidadesTributarias'>
+                                    <div class="panel-body">
+                                        <div class="col-xs-12 paddingElements">
+
+                                            @Resources.Recursos.UnidadesTributarias<span id="UnidadesTributarias_required" class="col-md-12 oculto required">*</span><hr />
+
+                                            <div class="col-xs-11">
+                                                <table id="Grilla_UnidadesTributarias" class="table table-striped table-condensed table-bordered table-responsive" cellspacing="0">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="no-sort" width="5%"></th>
+                                                            <th class="single-column" width="100%">@Resources.Recursos.Descripcion</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>
+                                            </div>
+                                            <div class="col-xs-1 center-block paddingElements">
+                                                <dl>
+                                                    <dt><span id="btnAddUT" class="fa fa-plus-circle fa-2x black cursor-pointer" aria-hidden="true"></span></dt>
+                                                    <dt><span id="btnRemUT" class="fa fa-minus-circle fa-2x black cursor-pointer boton-deshabilitado" aria-hidden="true"></span></dt>
+                                                </dl>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-xs-12 paddingElements">
+                                            @Resources.Recursos.Domicilio<span id="Domicilios_required" class="oculto required">*</span><hr />
+
+                                            <div class="col-xs-11">
+                                                <table id="domicilios" class="table table-striped table-condensed table-bordered table-responsive" cellspacing="0">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="no-sort" width="5%"></th>
+                                                            <th width="95%">@Resources.Recursos.Descripcion</th>
+                                                            <th></th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>
+                                            </div>
+                                            <div class="col-xs-1 paddingElements">
+                                                <dl>
+                                                    <dt><span id="btnAddDom" class="fa fa-plus-circle fa-2x black cursor-pointer" aria-hidden="true"></span></dt>
+                                                    <dt><span id="btnRemDom" class="fa fa-minus-circle fa-2x black cursor-pointer boton-deshabilitado" aria-hidden="true"></span></dt>
+                                                </dl>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="section-position">
+                                <div class='panel-heading bg-primary main-heading panel-deshabilitado' role='region' id='headingPersonas'>
+                                    <a data-toggle='collapse' data-parent='#accordion-actas' href='#collapsePersonas' aria-expanded='false'
+                                       aria-controls='collapsePersonas' class='collapsed'>
+                                        <div class='panel-title'>
+                                            @Resources.Recursos.Personas<span id="selectedPer_required  " class="oculto required">*</span>
+                                            <i class="fa"></i>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div id="collapsePersonas" class='panel-collapse collapse main-collapse' aria-labelledby='headingPersonas'>
+                                    <div class="panel-body">
+                                        <div class="col-xs-12 paddingElements">
+                                            <div class="col-xs-11">
+                                                <table id="Grilla_Personas" class="table table-striped table-condensed table-bordered table-responsive" cellspacing="0" style="width:100%">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="no-sort" width="5%"></th>
+                                                            <th class="no-sort" width="5%"></th>
+                                                            <th width="15%">@Resources.Recursos.Rol</th>
+                                                            <th width="95%">@Resources.Recursos.NombreRazonSocial</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>
+                                            </div>
+                                            <div class="col-xs-1 paddingElements">
+                                                <dl>
+                                                    <dt><span id="btnAddPer" class="fa fa-plus-circle fa-2x black cursor-pointer" aria-hidden="true"></span></dt>
+                                                    <dt><span id="btnRemPer" class="fa fa-minus-circle fa-2x black cursor-pointer boton-deshabilitado" aria-hidden="true"></span></dt>
+                                                </dl>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="section-position">
+                                <div class='panel-heading bg-primary main-heading panel-deshabilitado' role='region' id='headingDocumentos'>
+                                    <a data-toggle='collapse' data-parent='#accordion-actas' href='#collapseDocumentos' aria-expanded='false'
+                                       aria-controls='collapsePersonas' class='collapsed'>
+                                        <div class='panel-title'>
+                                            @Resources.Recursos.DocumentosReferencias
+                                            <i class="fa"></i>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div id="collapseDocumentos" class='panel-collapse collapse main-collapse' aria-labelledby='headingDocumentos'>
+                                    <div class="panel-body">
+                                        <div class="col-xs-12 paddingElements">
+                                            @Resources.Recursos.Documentos
+                                            <hr />
+
+                                            <div class="col-xs-11">
+                                                <table id="documentos" class="table table-striped table-condensed table-bordered table-responsive" cellspacing="0" style="width : 100%">
+                                                    <thead>
+                                                        <tr>
+                                                            <th class="no-sort"></th>
+                                                            <th width="10%">@Resources.Recursos.Tipo</th>
+                                                            <th width="45%">@Resources.Recursos.Descripcion</th>
+                                                            <th width="15%">@Resources.Recursos.Fecha</th>
+                                                            <th width="30%">@Resources.Recursos.Archivo</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>
+                                            </div>
+                                            <div class="col-xs-1 paddingElements">
+                                                <dl>
+                                                    <dt><span id="btnAddDoc" class="fa fa-plus-circle fa-2x black cursor-pointer" aria-hidden="true"></span></dt>
+                                                    <dt><span id="btnRemDoc" class="fa fa-minus-circle fa-2x black cursor-pointer boton-deshabilitado" aria-hidden="true"></span></dt>
+                                                    <dt><span id="btnEditDoc" class="fa fa-pencil fa-2x black cursor-pointer boton-deshabilitado" aria-hidden="true"></span></dt>
+                                                    <dt><span id="btnViewDoc" class="fa fa-eye fa-2x black cursor-pointer boton-deshabilitado" aria-hidden="true"></span></dt>
+                                                </dl>
+                                            </div>
+                                        </div>
+                                        @*QUEDA PENDIENTE*@
+                                        @*<div class="col-xs-12 paddingElements">
+                                @Resources.Recursos.ActaOrigen
+                                <hr />
+                                <div class="col-xs-11">
+                                    <table id="Grilla_ActaOrigen" class="table table-striped table-bordered table-responsive" cellspacing="0" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th class="no-sort" width="5%"></th>
+                                                <th width="33%">@Resources.Recursos.Nro</th>
+                                                <th width="33%">@Resources.Recursos.Fecha</th>
+                                                <th width="33%">@Resources.Recursos.Codigo</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                                <div class="col-xs-1 paddingElements">
+                                    <dl>
+                                        <dt><span id="btnAddActas" class="fa fa-plus-circle fa-2x black cursor-pointer" aria-hidden="true"></span></dt>
+                                        <dt><span id="btnRemActas" class="fa fa-minus-circle fa-2x black cursor-pointer boton-deshabilitado" aria-hidden="true"></span></dt>
+                                    </dl>
+                                </div>
+
+                            </div>
+
+                            <div class="col-xs-12 paddingElements">
+                                @Resources.Recursos.OtrosObjetos
+                                <hr />
+                                <div class="col-xs-11">
+                                    <table id="Grilla_OtrosObjetos" class="table table-striped table-bordered table-responsive" cellspacing="0" style="width:100%">
+                                        <thead>
+                                            <tr>
+                                                <th class="no-sort" width="5%"></th>
+                                                <th class="no-sort" width="5%"></th>
+                                                <th width="15%">@Resources.Recursos.Tipo</th>
+                                                <th width="95%">@Resources.Recursos.Numero</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                                <div class="col-xs-1 paddingElements">
+                                    <dl>
+                                        <dt><span id="btnAddObj" class="fa fa-plus-circle fa-2x black cursor-pointer" aria-hidden="true"></span></dt>
+                                        <dt><span id="btnRemObj" class="fa fa-minus-circle fa-2x black cursor-pointer boton-deshabilitado" aria-hidden="true"></span></dt>
+                                    </dl>
+                                </div>
+                            </div>*@
+                                    </div>
+
+                                    <div class="col-xs-12 paddingElements">
+                                        @Resources.Recursos.Observaciones
+                                        <hr />
+                                        <div class="col-xs-12 paddingElements">
+                                            <textarea id="observaciones" style="resize: none"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+                </div>
+                <div class="modal-footer" id="Panel_Botones">
+                    <div class="col-xs-4 pull-right">
+                        <span aria-hidden="true" aria-controls="button" data-placement="right" title="Guardar" data-original-title="Guardar" id="btnGrabar" class="fa fa-save fa-2x black cursor-pointer boton-deshabilitado"></span>
+                        <span aria-hidden="true" aria-controls="button" data-placement="right" title="Cancelar" data-original-title="Cancelar" id="btnCerrar" class="fa fa-undo fa-2x black cursor-pointer boton-deshabilitado"></span>
+                    </div>
+                </div>
+                </div>
+        </div>
+    </div>
+</div>
+
+<div id="buscador-container"></div>
+<input type="hidden" id="alert_message_btnSi_result">
+<input type="hidden" id="alert_message_btnNo_result">
+
+<div class="modal fade theme_new mensaje" id="ModalInfoActas" tabindex="-3" role="dialog" aria-labelledby="TituloInfo" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="TituloInfoActas">Titulo</h3>
+                <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+            </div>
+            <div class="modal-body">
+                <div id="MensajeInfoActas" class="alert alert-info alert-dismissible" role="alert">
+                    <p id="DescripcionInfoActas">Descripcion de la informacion</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-xs-4 pull-right">
+                    <span id="btnAceptarAlert" aria-hidden="true" data-dismiss="modal" data-placement="right" title="Aceptar" data-original-title="Aceptar" class="fa fa-check-circle light-blue fa-3x cursor-pointer"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade theme_new mensaje" id="ModalRolPersona" tabindex="-3" role="dialog" aria-labelledby="TituloInfo" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="TituloRolPersona">Agregar Persona</h3>
+                <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+            </div>
+            <div class="modal-body">
+                <div class="form-horizontal">
+                    <div class="form-group">
+                        <label for="rolesPersona" class="col-xs-2 control-label">Rol</label>
+                        <div class="col-xs-10">
+                            <select id="rolesPersona" class="form-control"></select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-2 control-label">Persona</label>
+                        <div class="col-sm-10">
+                            <div class="input-group">
+                                <input class="form-control" id="personaSelected" name="personaSelected" readonly="readonly" type="text" value="">
+                                <input type="hidden" id="idPersonaSelected" />
+                                <div class="input-group-addon cursor-pointer" id="btnBuscarPersona">
+                                    <span data-placement="bottom" title="Buscar Persona" class="fa-lg fa fa-search black cursor-pointer" aria-hidden="true"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              </div>
+            <div class="modal-footer">
+                <div class="col-xs-4 pull-right">
+                    <span id="btnAceptarRolPersona" aria-hidden="true" data-dismiss="modal" data-placement="right" title="Aceptar" data-original-title="Aceptar" class="fa fa-check-circle GestionInspecciones fa-3x cursor-pointer"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--Otros Objetos Form-->
+<div class="modal fade theme_new mensaje" id="ModalOtrosObjeto" tabindex="-3" role="dialog" aria-labelledby="TituloInfo" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="TituloRolPersona">Agregar otro Objeto</h3>
+                <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+            </div>
+            <div class="modal-body" style="height:100px">
+                <div class="col-md-3 col-xs-3 center-block labels">
+                    Tipo y Numero:
+                </div>
+
+                <div class="col-md-5 col-xs-5 center-block">
+                    <select id="otrosObjetosTipo" class="form-control" style="width: 100%">
+                        <option value="1">@Resources.Recursos.ExpedienteObra</option>
+                        <option value="2">@Resources.Recursos.Acta</option>
+                        <option value="3">@Resources.Recursos.Tramites</option>
+                    </select>
+                </div>
+                <div class="col-md-3 col-xs-3">
+                    <input type="text" id="otrosObjetosNumero" class="form-control" style="width: 100%;" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-xs-4 pull-right">
+                    <span id="btnAceptarOtrosObjetos" aria-hidden="true" data-dismiss="modal" data-placement="right" title="Aceptar" data-original-title="Aceptar" class="fa fa-check-circle GestionInspecciones light-blue fa-3x cursor-pointer"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<input type="hidden" id="actaId" value="@ViewBag.ActaId" />
+<input type="hidden" id="selectedUT" />
+<input type="hidden" id="selectedDom" />
+<input type="hidden" id="selectedPer" />
+<input type="hidden" id="selectedActasOrigen" />
+<input type="hidden" id="selectedInspectoresBusqueda" />
+<input type="hidden" id="selectedDocs" />
+<input type="hidden" id="selectedOtrosObjetos" />
+
+<div id="buscador-container"></div>
+<div id="documentos-externo"></div>
+<div id="mantenedor-externo-container"></div>
+
+<script type="text/javascript" src="~/Scripts/moment.js"></script>
+<script type="text/javascript" src="~/Scripts/jquery-ui.js"></script>
+<script type="text/javascript" src="~/Scripts/jquery.numeric.min.js"></script>
+<script type="text/javascript" src="~/Scripts/bootstrap-calendar/components/underscore/underscore-min.js"></script>
+<script type="text/javascript" src="~/Scripts/bootstrap-calendar/js/language/es-ES.js"></script>
+<script type="text/javascript" src="~/Scripts/bootstrap-calendar/js/calendar.js"></script>
+<script type="text/javascript" src="~/Scripts/jquery.dataTables.js"></script>
+<script type="text/javascript" src="~/Scripts/dataTables.bootstrap.js"></script>
+<script type="text/javascript" src="~/Scripts/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
+<script type="text/javascript" src="~/Scripts/bootstrap-datepicker/locales/bootstrap-datepicker.es.min.js" charset="UTF-8"></script>
+<script type="text/javascript" src="~/Scripts/bootstrap-clockpicker/bootstrap-clockpicker.min.js"></script>
+<script type="text/javascript" src="~/Scripts/Actas/Actas.js"></script>

@@ -1,0 +1,211 @@
+﻿@model GeoSit.Client.Web.Models.MantenimientoParcelarioModel
+
+@{
+    ViewBag.Title = "Mantenimiento Parcelario";
+}
+
+<div class="modal fade theme_new" id="modal-mantenimiento-parcelario" role="dialog" aria-hidden="true" data-backdrop="static" data-keyboard="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div id="scroll-content-mantenimiento-parcelario" class="scroll-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">@ViewBag.Title</h3>
+                    <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+                </div>
+                <div class="modal-body">
+
+                    <h2 class="text-center" id="partidaInmobiliaria">@Model.PartidaInmobiliaria</h2>
+
+                    <div class="row text-center" style="font-size:1.2em">
+                        <span>Depto.: <b>@Model.Departamento</b></span>
+                        <span style="margin-left:10px">Dist.: <b>@Model.Distrito</b></span>
+                        <span style="margin-left:10px">Sec.: <b>@Model.Seccion</b></span>
+                        <span style="margin-left:10px">Manz.: <b>@Model.Manzana</b></span>
+                        <span style="margin-left:10px">Parc.: <b>@Model.Parcela</b></span>
+                    </div>
+
+                    <br /><br />
+
+                    <div class="panel-group accordion" id="accordion-mantenimiento-parcelario">
+
+                        <div class="accordion-section">
+                            <div class='panel-heading bg-primary main-heading' role='region' id='headingParcela'>
+                                <a data-toggle='collapse' data-parent='#accordion-mantenimiento-parcelario' href='#collapseParcela' aria-expanded='false'
+                                   aria-controls='collapseParcela' class="collapsed">
+                                    <div class='panel-title'>
+                                        Parcela
+                                        <i class="fa"></i>
+                                    </div>
+                                </a>
+                            </div>
+                            <div id='collapseParcela' class='panel-collapse collapse main-collapse' aria-expanded='false' aria-labelledby='headingParcela'>
+                                <div class="col-xs-12">
+                                    <h4 style="border-bottom:1px solid black"><strong>Valuacion</strong></h4>
+                                </div>
+
+                                <div class="row remove-margin" style="margin-top:7px;">
+                                    <div class="col-xs-12">
+                                        <div class="form-horizontal">
+                                            <div class="form-group">
+                                                <label class="col-xs-offset-0 col-xs-4 control-label">Valor Tierra</label>
+                                                <div class="col-xs-7">
+                                                    @Html.TextBoxFor(x => x.ValorTierra, "{0:C}", new { @class = "form-control", @readonly = true, @id = "ValuacionesValorTierra" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-xs-offset-0 col-xs-4 control-label">Vigencia</label>
+                                                <div class="col-xs-7">
+                                                    @Html.TextBoxFor(x => x.VigenciaValorTierra, "{0:dd/MM/yyyy}", new { @class = "form-control", @readonly = true, @id = "ValuacionesVigenciaValorTierra" })
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-xs-offset-0 col-xs-4 control-label">Ultimo decreto aplicado</label>
+                                                <div class="col-xs-7">
+                                                    @Html.TextBoxFor(x => x.UltimoDecretoAplicado, new { @class = "form-control", @readonly = true })
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <span id="btnImprimirParcela" aria-hidden="true" data-placement="right" title="Imprimir" data-original-title="Imprimir" class="fa fa-print pull-right fa-2x black cursor-pointer" style="margin-right:30px"></span>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+                        <div class="accordion-section">
+                            <div class='panel-heading bg-primary main-heading' role='region' id='headingUnidadTributaria'>
+                                <a data-toggle='collapse' data-parent='#accordion-mantenimiento-parcelario' href='#collapseUnidadTributaria' aria-expanded='false'
+                                   aria-controls='collapseUnidadTributaria' class="collapsed">
+                                    <div class='panel-title'>
+                                        Unidad Tributaria
+                                        <i class="fa"></i>
+                                    </div>
+                                </a>
+                            </div>
+                            <div id='collapseUnidadTributaria' class='panel-collapse collapse main-collapse' aria-expanded='false' aria-labelledby='headingUnidadTributaria'>
+
+                                @*Grilla*@
+
+                                <div class="row remove-margin" style="margin-top:7px;">
+                                    <div class="col-xs-12">
+                                        <div class="form-horizontal">
+
+                                            <div class="row">
+                                                <div class="col-xs-6">
+                                                    <div class="form-group">
+                                                        <label class="col-xs-5 control-label">Valor Tierra</label>
+                                                        <div class="col-xs-7">
+                                                            @Html.TextBoxFor(x => x.ValorTierra, "{0:C}", new { @class = "form-control", @readonly = true })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-6">
+                                                    <div class="form-group">
+                                                        <label class="col-xs-offset-0 col-xs-4 control-label">Vigencia</label>
+                                                        <div class="col-xs-7">
+                                                            @Html.TextBoxFor(x => x.VigenciaValorTierra, "{0:dd/MM/yyyy}", new { @class = "form-control", @readonly = true })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-xs-6">
+                                                    <div class="form-group">
+                                                        <label class="col-xs-5 control-label">Valor Mejoras</label>
+                                                        <div class="col-xs-7">
+                                                            @Html.TextBoxFor(x => x.ValorMejoras, "{0:C}", new { @class = "form-control", @readonly = true })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-6">
+                                                    <div class="form-group">
+                                                        <label class="col-xs-offset-0 col-xs-4 control-label">Vigencia</label>
+                                                        <div class="col-xs-7">
+                                                            @Html.TextBoxFor(x => x.VigenciaValorMejoras, "{0:dd/MM/yyyy}", new { @class = "form-control", @readonly = true })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-xs-6">
+                                                    <div class="form-group">
+                                                        <label class="col-xs-5 control-label">Valor Fiscal Total</label>
+                                                        <div class="col-xs-7">
+                                                            @Html.TextBoxFor(x => x.ValorFiscalTotal, "{0:C}", new { @class = "form-control", @readonly = true })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-6">
+                                                    <div class="form-group">
+                                                        <label class="col-xs-offset-0 col-xs-4 control-label">Vigencia</label>
+                                                        <div class="col-xs-7">
+                                                            @Html.TextBoxFor(x => x.VigenciaValorFiscalTotal, "{0:dd/MM/yyyy}", new { @class = "form-control", @readonly = true })
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <span id="btnImprimirUnidadTributaria" aria-hidden="true" data-placement="right" title="Imprimir" data-original-title="Imprimir" class="fa fa-print pull-right fa-2x black cursor-pointer" style="margin-right:30px"></span>
+                                        <span id="btnValuaciones" aria-hidden="true" data-placement="right" title="Valuaciones" data-original-title="Valuaciones" class="fa fa-money pull-right fa-2x black cursor-pointer"></span>
+                                        <span id="btnDDJJ" aria-hidden="true" data-placement="right" title="Declaraciones Juradas" data-original-title="Declaraciones Juradas" class="fa fa-file-text-o pull-right fa-2x black cursor-pointer"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-lg-4 pull-right">
+                    <span id="btnGuardar" aria-hidden="true" data-placement="right" title="Guardar" data-original-title="Guardar" class="fa fa-floppy-o fa-2x black boton-deshabilitado cursor-pointer"></span>
+                    <span id="btnDescartar" aria-hidden="true" data-placement="right" title="Cancelar" data-original-title="Cancelar" class="fa fa-undo fa-2x black boton-deshabilitado cursor-pointer"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade theme_new mensaje" id="ModalInfo" tabindex="-3" role="dialog" aria-hidden="true" data-backdrop="false">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="TituloInfo">Titulo</h3>
+                <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+            </div>
+            <div class="modal-body">
+                <div class="alert alert-success alert-dismissible" role="alert">
+                    <p id="DescripcionInfo">Descripcion de la informacion</p>
+                </div>
+            </div>
+            <div class="modal-footer" style="display:none;">
+                <div class="col-lg-4 pull-right">
+                    <span id="btnInfoOK" aria-hidden="true" data-dismiss="modal" title="Seleccionar" class="fa fa-check-circle fa-3x light-blue cursor-pointer"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="ddjj-container"></div>
+
+<script src="~/Scripts/formValidation.min.js"></script>
+<script src="~/Scripts/bootstrapValidation.min.js"></script>
+<script src="~/Scripts/DeclaracionesJuradas/MantenimientoParcelario.js"></script>
+
+<script>
+    $(document).ready(function () {
+        mantenimientoParcelario.init();
+    });
+</script>

@@ -1,0 +1,258 @@
+﻿@model GeoSit.Client.Web.ViewModels.DDJJ
+<link href="~/Content/DeclaracionesJuradas.css" rel="stylesheet">
+
+@Html.Partial("Partials/ObjetoEspecificoBaseView", new GeoSit.Client.Web.ViewModels.ObjetoEspecificoViewModel { Guid = Model.Guid, IdTramiteEntrada = Model.IdTramiteEntrada })
+
+<label style="width: 100%; color: #a3a99b; font-style: italic;">
+    DDJJ a presentar
+</label>
+
+<div class="form-group">
+    <label for="cboDDJJOrigen" class="col-md-3 control-label">Copiar de</label>
+    <div class="col-md-9">
+        <div class="input-group">
+            <select id="cboDDJJOrigen" class="form-control"></select>
+            <span class="input-group-btn">
+                <button id="btnCopiarDDJJ" class="btn btn-default cursor-pointer boton-deshabilitado" type="button"><i class="fa fa-copy" /></button>
+            </span>
+        </div>
+    </div>
+</div>
+
+<div class="form-group">
+    <div id="lblInfoDDJJ" class="text-center hidden bold"><span>DDJJ copiada. Por favor ed&iacute;tela</span>&nbsp;<i style="color: green" class="fa fa-check" /></div>
+</div>
+
+<div class="form-group text-center">
+    @{
+        string textoBoton = "Cargar DDJJ";
+    }
+    @if (Model.IdVersion.HasValue)
+    {
+        textoBoton = "Editar DDJJ";
+    }
+    <button type="button" id="btnCargarDDJJ" class="btn btn-default text-center">@textoBoton</button>
+    <br />
+    @*********ESTO TIENE QUE IR ASÍ POR COMO ESTÁ ARMADO EL TEXTO DE LAS ENTRADAS********@
+    <label style="display:none" for="IdVersion">Versión</label>
+    <select id="IdVersion" name="IdVersion" style="display:none;" class="visibleArbolObjetos">
+        <option value @(Model.IdVersion.HasValue ? "selected" : "")>SIN SELECCION</option>
+        @foreach (var elem in Model.Versiones)
+        {
+            <option value="@elem.Value" @(Model.IdVersion.ToString() == elem.Value ? "selected" : "")>@elem.Text</option>
+        }
+    </select>
+    @Html.ValidationMessageFor(m => m.IdVersion, "", new { @class = "text-danger" })
+    @***********************************************************************************@
+</div>
+@Html.HiddenFor(x => x.IdDDJJ)
+@Html.HiddenFor(x => x.DeclaracionJurada)
+<label style="display:none" for="Poligono">ID Polígono s/Mensura</label>
+@Html.HiddenFor(x => x.Poligono, new { @class = "form-control" })
+
+
+<script src="~/Scripts/jquery.form.js"></script>
+<script src="~/Scripts/lodash.js"></script>
+<script src="~/Scripts/DeclaracionesJuradas/DeclaracionesJuradas.js"></script>
+
+<script type="text/javascript">
+    $(document).ready(() => {
+        const setDDJJ = (data, esCopia) => {
+            const fecha = moment(data.DDJJ.FechaVigencia, "DD/MM/YYYY");
+            if (fecha.isValid()) {
+                data.DDJJ.FechaVigencia = fecha.toJSON();
+            }
+            $("#DeclaracionJurada", "#divEdicionObjetos").val(JSON.stringify(data));
+            $("#IdVersion", "#divEdicionObjetos").val(data.DDJJ.IdVersion);
+            $("#Poligono", "#divEdicionObjetos").val(data.DDJJ.IdPoligono);
+            $("#btnCargarDDJJ", "#divEdicionObjetos").html("Editar DDJJ");
+            $(window).off("ddjjTemporalGuardada");
+            $('#divEdicionObjetoContainer').valid();
+            $.get(`@Url.Action("GetVersion","DeclaracionesJuradas")/${data.DDJJ.IdVersion}`, (version) => {
+                let texto = `DDJJ ${version.TipoDeclaracionJurada} cargada.`;
+                if (!!esCopia) {
+                    texto = `DDJJ ${version.TipoDeclaracionJurada} copiada. Por favor ed&iacute;tela.`;
+                }
+                const lbl = $("#lblInfoDDJJ", "#divEdicionObjetos").removeClass('hidden');
+                $("span", lbl).html(texto);
+            });
+        };
+        const obtenerUT = function () {
+            return new Promise((ok, err) => {
+                if (parseInt(parent.TipoObjeto.Id) === tipoEntradaParcela) {
+                    const idParcela = Number(parent.Propiedades.find(prop => prop.Id === "hdnIdPartidaPersona").Value);
+                    $.get(`@Url.Action("GetUnidadTributariaByParcela", "MesaEntradas")?idParcela=${idParcela}`, ok);
+                } else if (parseInt(parent.TipoObjeto.Id) === tipoEntradaUT) {
+                    const propIdUT = parent.Propiedades.find(prop => prop.Id === "hdnIdUnidadFuncional"),
+                        propTipoUT = parent.Propiedades.find(prop => prop.Id === "Tipo");
+                    ok({ id: propIdUT ? propIdUT.Value : 0, tipo: propTipoUT ? propTipoUT.Value : null });
+                } else {
+                    err("Padre incorrecto.");
+                }
+            });
+        };
+        const selected = getTreeSelectedElements()[0].data,
+            entradas = getDatosEspecificos(),
+            tipoEntradaDDJJ = Number($("#cboObjetoEspecificoTramite").val()),
+            tipoEntradaParcela = 2, tipoEntradaUT = 3,
+            esEdicion = Number(selected.TipoObjeto.Id) === tipoEntradaDDJJ,
+            parent = entradas.filter(elem => elem.Guid === (esEdicion ? selected.ParentGuids[0] : selected.Guid))[0],
+            ddjjDisponibles = entradas.filter(elem => Number(elem.TipoObjeto.Id) === tipoEntradaDDJJ && elem.Guid !== selected.Guid);
+
+        function reloadCroquisClaseParcela(idClaseParcela) {
+                    $.ajax({
+                        url: BASE_URL + "DeclaracionesJuradas/GetCroquisClaseParcela",
+                        data: { id: idClaseParcela },
+                        type: "POST",
+                        success: (croqui) => {
+                            $("#Croquis_div").removeClass("hidden");
+                            $("#clase_div").removeClass("col-xs-12");
+                            $("#clase_div").addClass("col-xs-6");
+                            document.getElementById("croquisClaseParcela").src = croqui;
+                        },
+                    });
+        };
+
+        if (ddjjDisponibles.length) {
+            $("#cboDDJJOrigen", "#divEdicionObjetos").append($('<option>', { text: "- Seleccione -", value:"" }));
+            for (let ddjj of ddjjDisponibles) {
+                const texto = `${ddjj.TipoObjeto.Text} - ${ddjj.Propiedades.find(p => p.Id === "IdVersion").Text}(Polígono: ${ddjj.Propiedades.find(p => p.Id === "Poligono").Value || "No especificado"})`;
+                $("#cboDDJJOrigen", "#divEdicionObjetos").append($('<option>', {text:texto, value: ddjj.Guid}));
+            }
+            $("#cboDDJJOrigen option:first", "#divEdicionObjetos").attr("selected", true);
+        }
+        $("#divEdicionObjetoContainer").validate({
+            rules: {
+                IdVersion: {
+                    required: true
+                },
+            },
+            messages: {
+                IdVersion: {
+                    required: "No se ha generado ninguna Declaración Jurada"
+                }
+            }
+        });
+        $("#cboDDJJOrigen", "#divEdicionObjetos").off("change").on("change", (evt) => {
+            if (evt.currentTarget.value) {
+                $("#btnCopiarDDJJ", "#divEdicionObjetos").removeClass("boton-deshabilitado");
+            } else {
+                $("#btnCopiarDDJJ", "#divEdicionObjetos").addClass("boton-deshabilitado");
+            }
+        });
+        $("#btnCopiarDDJJ", "#divEdicionObjetos").off("click").on("click", () => {
+            const entradaDDJJ = ddjjDisponibles.find(elem => elem.Guid === $("#cboDDJJOrigen", "#divEdicionObjetos").val());
+            const data = JSON.parse(entradaDDJJ.Propiedades.find(prop => prop.Id === "DeclaracionJurada").Value);
+            obtenerUT()
+                .then(ut => {
+                    data.DDJJ.IdDeclaracionJurada = 0;
+                    data.DDJJ.UnidadTributariaId = ut.id;
+                    setDDJJ(data, true);
+                }).catch(err => console.log(err));
+        });
+        $("#btnCargarDDJJ", "#divEdicionObjetos").off("click").on("click", () => {
+            showLoading();
+            const propClaseParcela = entradas.find(p => p.Guid === parent.ParentGuids[0])?.Propiedades.find(prop => prop.Id === "Tipo"),
+                idClaseParcela = propClaseParcela?.Value;
+            const propZonaParcela = entradas.find(p => p.Guid === parent.ParentGuids[0])?.Propiedades.find(prop => prop.Id === "Zona"),
+                idZonaParcela = propZonaParcela?.Value;
+            const initDDJJ = () => {
+                $(window)
+                    .off("ddjjTemporalGuardada")
+                    .one("ddjjTemporalGuardada", (evt) => {
+                        const flattenArrays = (obj) => {
+                            const keys = Object.keys(obj);
+                            for (let key in keys) {
+                                if (obj[keys[key]] instanceof Object) {
+                                    flattenArrays(obj[keys[key]]);
+                                }
+                                const match = keys[key].match(/\[\d+\]/);
+                                if (match) {
+                                    const propBase = keys[key].replace(match[0], "");
+                                    if (!obj[propBase]) {
+                                        obj[propBase] = []
+                                    }
+                                    obj[propBase] = [...obj[propBase], obj[keys[key]]];
+                                    delete obj[keys[key]];
+                                }
+                            }
+                        };
+                        const ddjj = evt.formulario.ddjj.reduce((accum, elem) => {
+                            let schema = accum;
+                            const paths = elem.name.split(".");
+                            for (let i = 0; i < paths.length - 1; i++) {
+                                const path = paths[i];
+                                if (!schema[path]) {
+                                    schema[path] = {};
+                                }
+                                schema = schema[path];
+                            }
+                            if (Object.keys(schema).indexOf(paths[paths.length - 1]) === -1) {
+                                if (elem.value === "[]") {
+                                    elem.value = [];
+                                }
+                                schema[paths[paths.length - 1]] = elem.value;
+                            } else {
+                                if (!Array.isArray(schema[paths[paths.length - 1]])) {
+                                    schema[paths[paths.length - 1]] = [schema[paths[paths.length - 1]]];
+                                }
+                                schema[paths[paths.length - 1]] = [...schema[paths[paths.length - 1]], elem.value];
+                            }
+                            return accum;
+                        }, {});
+                        flattenArrays(ddjj);
+                        setDDJJ(ddjj, false);
+                    });
+            };
+            if ($("#IdVersion", "#divEdicionObjetos").val()) {
+                debugger;
+                const ddjj = {
+                    IdVersion: $("#IdVersion", "#divEdicionObjetos").val(),
+                    FormularioSeleccionado: $("#DeclaracionJurada", "#divEdicionObjetos").val(),
+                    IdClaseParcela: idClaseParcela,
+                    IdTipoParcela: idZonaParcela,
+                    EsEdicion: true
+                };
+                $("#container-externo").load("@Url.Action("GetFormularioTemporal","DeclaracionesJuradas")", ddjj,
+                    () => {
+                        if (ddjj.IdVersion == 4) {
+                            reloadCroquisClaseParcela(ddjj.IdClaseParcela);
+                        }
+                        initDDJJ();
+                        $('#modalFormulario').one("hidden.bs.modal", () => $("#container-externo").empty());
+                    });
+            } else if (parent) {
+                obtenerUT()
+                    .then(ut => {
+                        const entradasOrigen = entradas.filter(elem => [tipoEntradaUT,tipoEntradaParcela].indexOf(Number(elem.TipoObjeto.Id)) !== -1 && !elem.ParentGuids.length)
+                                                       .map(elem => ({
+                                                           EsParcela: Number(elem.TipoObjeto.Id) === tipoEntradaParcela,
+                                                           Id: elem.Propiedades.find(prop => Number(elem.TipoObjeto.Id) === tipoEntradaParcela && prop.Id === "hdnIdPartidaPersona" ||
+                                                                                             Number(elem.TipoObjeto.Id) === tipoEntradaUT && prop.Id === "hdnIdUnidadFuncional").Value
+                                                       }));
+
+                        let data = {
+                            IdUnidadTributaria: ut.id,
+                            IdTipoUnidadTributaria: ut.tipo,
+                            IdLocalidad: $("#cboLocalidad", "form#divDatosGenerales").val(),
+                            IdClaseParcela: idClaseParcela,
+                            IdTipoParcela: idZonaParcela
+                        };
+                        if (parent && parent.Propiedades.some(prop=>prop.Id==="Plano")) {
+                            data = { ...data, Poligono:parent.Propiedades.find(prop=>prop.Id==="Plano").Value };
+                        }
+                        if (entradasOrigen.length && ![38,66].some(id=>id===Number($("#cboObjetoTramite","#divDatosGenerales").val()))) {
+                            data = { ...data, DominiosOriginales: entradasOrigen}
+                        }
+                        $("#container-externo").load("@Url.Action("IniciarDDJJ","DeclaracionesJuradas")", data,
+                            () => {
+                                initDDJJ();
+                                declaracionesJuradas.init();
+                                $("#modalSeleccionFormulario").modal("show");
+                            });
+                    }).catch(err => console.log(err));
+            }
+        });
+    });
+    //# sourceURL=entradaDDJJ.js
+</script>

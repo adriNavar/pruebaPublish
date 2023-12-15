@@ -1,0 +1,115 @@
+﻿@model GeoSit.Client.Web.Models.MantenimientoModel
+
+<link href="~/Content/toggle-switch.css" rel="stylesheet" />
+@*<link href="~/Content/dataTables.bootstrap.css" rel="stylesheet" />*@
+<link href="~/Content/mantenimiento.css" rel="stylesheet" />
+
+<div class="modal theme_new fade" id="modal-window-tablas-auxiliares" tabindex="-1" data-backdrop="static" role="dialog" aria-labelledby="modal-windowLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div id="scroll-content-tablas-auxiliares" class="scroll-content">
+                <div class="modal-header">
+                    <h3 class="modal-title">Tablas Paramétricas</h3>
+                    <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+                </div>
+                <div class="modal-body tablas-auxiliares-body">
+                    <div class="body-content" id="tablas-auxiliares-datos">
+                        <div class="panel-group accordion" id="accordion-tablas">
+                            <div class="panel panel-default remove-shadow">
+                                <div class='panel-heading bg-primary main-heading' id='headingTablas'>
+                                    <a data-toggle='collapse' data-parent='#accordion-tablas' href='#collapseTablas' aria-expanded='false'
+                                       aria-controls='collapseTablas'>
+                                        <div class='panel-title'>
+                                            Tablas
+                                            <i class="fa"></i>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div id='collapseTablas' class='panel-collapse collapse in main-collapse' aria-labelledby="headingTablas">
+                                    <div class="container-fluid" style="margin-top:10px;">
+                                        <div class="col-xs-12">
+                                            <table id="Tablas" class="table table-bordered table-striped table-responsive">
+                                                <thead>
+                                                    <tr>
+                                                        <th></th>
+                                                        <th>Nombre</th>
+                                                        <th>Esquema - Tabla</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @foreach (GeoSit.Data.BusinessEntities.Mantenimiento.ComponenteTA tabla in Model.ListaComponente)
+                                                    {
+                                                        <tr>
+                                                            <td>@tabla.Id_Compoente</td>
+                                                            <td>@tabla.Descripcion</td>
+                                                            <td>@tabla.Esquema @tabla.Tabla</td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel-group accordion" id="accordion-resultado">
+                            <div class="panel panel-default remove-shadow">
+                                <div class='panel-heading bg-primary main-heading panel-deshabilitado' id='headingResultado'>
+                                    <a data-toggle='collapse' data-parent='#accordion-resultado' href='#collapseResultado' aria-expanded='false'
+                                       aria-controls='collapseResultado' class="collapsed">
+                                        <div class='panel-title'>
+                                            Resultado
+                                            <i class="fa"></i>
+                                        </div>
+                                    </a>
+                                </div>
+                                <div id='collapseResultado' class='panel-collapse collapse main-collapse' aria-labelledby="headingResultado">
+                                    <div class="container-fluid" style="margin-top:10px;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="contenedor-externo-tablas-auxiliares"></div>
+<div class="modal theme_new fade mensaje" id="mensajeModal" tabindex="-2" role="dialog" aria-labelledby="TituloAdvertencia" aria-hidden="true" style="z-index:99999999;">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="TituloAdvertencia">Titulo</h3>
+                <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+            </div>
+            <div class="modal-body">
+                <div id="MensajeAlerta" class="alert alert-warning alert-dismissible" role="alert">
+                    <p id="DescripcionAdvertencia">Está a punto de DESACTIVAR al usuario Perez, Juan <br>Está seguro de continuar?</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal theme_new fade mensaje" id="confirmModal" tabindex="-2" role="dialog" aria-labelledby="TituloAdvertencia" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title" id="TituloAdvertencia">Titulo</h3>
+                <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer pull-right" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+            </div>
+            <div class="modal-body">
+                <div id="MensajeAlerta" class="alert alert-warning alert-dismissible" role="alert">
+                    <p id="DescripcionAdvertencia">Está a punto de DESACTIVAR al usuario Perez, Juan <br>Está seguro de continuar?</p>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <div class="col-xs-4 pull-right">
+                    <span aria-hidden="true" title="Aceptar" data-dismiss="modal" data-original-title="Aceptar" id="btnAdvertenciaOK" class="fa fa-check-circle fa-2x light-blue cursor-pointer"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@*<script src="~/Scripts/jquery.dataTables.min.js"></script>
+    <script src="~/Scripts/dataTables.bootstrap.js"></script>*@
+<script src="~/Scripts/Mantenimiento/tablasAuxiliares.js"></script>

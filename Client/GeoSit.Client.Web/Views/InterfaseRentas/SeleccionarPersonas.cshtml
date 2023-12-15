@@ -1,0 +1,88 @@
+﻿@model GeoSit.Client.Web.Models.InterfaseRentasSeleccionPersonasModel[]
+@{
+    ViewBag.Title = "Seleccionar Contribuyente";
+
+    GeoSit.Client.Web.Models.ResponsableFiscal.ResponsableFiscalViewModel[] encontrados = null;
+    GeoSit.Client.Web.Models.ResponsableFiscal.ResponsableFiscalViewModel[] noEncontrados = null;
+
+    if (Model != null)
+    {
+        encontrados = Model.Where(x => x.Personas != null).Select(x => x.ResponsableFiscal).ToArray();
+        noEncontrados = Model.Where(x => x.NotFound).Select(x => x.ResponsableFiscal).ToArray();
+    }
+    int count = encontrados != null ? encontrados.Length : 0;
+}
+<link rel="stylesheet" href="~/Content/seleccionPersonas.css?v=0" />
+<div class="modal fade" id="modal-window-seleccion-personas" tabindex="-1" data-backdrop="false" role="dialog" aria-labelledby="modal-windowLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div id="scroll-content-seleccion-personas">
+                <div class="modal-header">
+                    <h3 class="modal-title col-lg-11 col-xs-11 col-sm-11 col-md-11">@ViewBag.Title</h3>
+                    <span aria-hidden="true" class="fa fa-close fa-2x white cursor-pointer" style="padding-top: 3px;" data-dismiss="modal" aria-label="Cerrar" title="Cerrar"></span>
+                </div>
+                <div class="modal-body">
+                    @if (encontrados != null && encontrados.Any())
+                    {
+                        <p id="stSelecctionPersonas_Prompt" class="text-center">Seleccione el contribuyente correspondiente a:</p>
+                        <h4 id="stSelecctionPersonas_Nombre" class="target-name"></h4>
+                        <div id="pnlSeleccionPersonas_Grid">
+                            <table id="tblSeleccionPersonas_Grid" class="table table-striped table-bordered table-responsive">
+                                <thead>
+                                    <tr>
+                                        <th class="hide"></th>
+                                        <th>Apellido y Nombre</th>
+                                        <th>Tipo Doc.</th>
+                                        <th>Nro. Documento</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                        <div id="pnlSeleccionPersonas_Info" class="hidden">
+                            <div class="alert alert-info" role="alert">
+                                <p><strong>Atenci&oacute;n!</strong><br />Ha completado el proceso de selecci&oacute;n de contribuyentes.</p>
+                            </div>
+                        </div>
+                    }
+                    @if (noEncontrados != null && noEncontrados.Any())
+                    {
+                        <div class="alert alert-danger" role="alert">
+                            <p><strong>Atenci&oacute;n!</strong><br />No se encontraron resultados para los siguientes contribuyentes:</p>
+                            @foreach (var responsableFiscal in noEncontrados)
+                            {
+                                string descripcion = responsableFiscal.NombreCompleto;
+                                if(!string.IsNullOrEmpty(responsableFiscal.DomicilioFisico)) 
+                                {
+                                    descripcion += string.Format(" ({0})", responsableFiscal.DomicilioFisico);
+                                }
+                                <p><span class="fa fa-caret-right"></span>&ensp;@descripcion</p>
+                            }
+                        </div>
+                    }
+                </div>
+                <div class="modal-footer">
+                    <p id="pnlSeleccionPersonas_Status" class="pull-left text-danger hidden">
+                        <span class="fa fa-exclamation-circle"></span>&ensp;<span>No ha seleccionado ningún registro</span>
+                    </p>
+                    @if (count > 1)
+                    {
+                        <span data-placement="right" title="Siguiente" data-original-title="Siguiente" id="btnSeleccionPersonas_Siguiente" class="fa fa-arrow-circle-right fa-2x light-blue cursor-pointer"></span>
+                    }
+                    <span data-placement="right" title="Aceptar" data-original-title="Aceptar" id="btnSeleccionPersonas_Aceptar" class="fa fa-check-circle fa-2x light-blue @(@count > 1 ? "btn-deshabilitado" : "cursor-pointer")"></span>
+                    <span data-placement="right" title="Cancelar" data-original-title="Cancelar" id="btnSeleccionPersonas_Cancelar" class="fa fa-times-circle fa-2x light-blue cursor-pointer"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    var SeleccionPersonas = {
+        targetCount: @Html.Raw(count),
+        model: @Html.Raw(Json.Encode(Model))
+    };
+</script>
+<script type="text/javascript" src="~/Scripts/jquery.highlight.js"></script>
+<script type="text/javascript" src="~/Scripts/InterfaseRentas/seleccionPersonas.js"></script>
